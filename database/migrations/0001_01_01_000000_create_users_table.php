@@ -18,7 +18,14 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('email')->unique();
             $table->string('xlink')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('youtube')->nullable();
+            $table->string('line')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('image')->nullable();
+            $table->string('header_image')->nullable();
+            $table->string('shop_title')->nullable();
+            $table->string('shop_description')->nullable();
             $table->enum('source', ['web', 'google', 'link'])->default('web');
             $table->enum('user_type', ['admin', 'buyer', 'seller'])->default('seller');
             $table->string('password');

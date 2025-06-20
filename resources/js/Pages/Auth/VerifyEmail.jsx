@@ -35,14 +35,14 @@ export default function VerifyEmail({ status }) {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        {status === 'verification-link-sent' && (
+            {status === 'verification-link-sent' && (
                             <Alert className="mb-4">
                                 <CheckCircle2 className="h-4 w-4" />
                                 <AlertDescription>
                                     A new verification link has been sent to your email address.
                                 </AlertDescription>
                             </Alert>
-                        )}
+            )}
                     </CardContent>
                     <CardFooter className="flex flex-col space-y-4">
                         <form onSubmit={submit} className="w-full">
@@ -51,7 +51,7 @@ export default function VerifyEmail({ status }) {
                                 disabled={processing}
                                 className="w-full"
                             >
-                                Resend Verification Email
+                        Resend Verification Email
                             </Button>
                         </form>
                         <form method="post" action={route('logout')} className="w-full">
@@ -59,13 +59,13 @@ export default function VerifyEmail({ status }) {
                                 type="submit"
                                 variant="outline"
                                 className="w-full"
-                            >
-                                Log Out
+                    >
+                        Log Out
                             </Button>
                         </form>
                     </CardFooter>
                 </Card>
-            </div>
+                </div>
         </>
     );
 }
