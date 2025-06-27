@@ -1,3 +1,351 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Root and body styles for full width */
+html, body {
+  width: 100%;
+  min-width: 100vw;
+  max-width: 100vw;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  background: #F5F5F5;
+}
+
+/* Homepage Animations and Styling */
+.AN-mod-main {
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  background: #f5f5f5;
+}
+
+.AN-bg-infinite-logo {
+  @apply fixed top-0 left-0 w-full h-full pointer-events-none opacity-5;
+  z-index: -1;
+}
+
+.AN-bg-infinite-logo span {
+  @apply absolute text-[120px] font-bold whitespace-nowrap;
+  animation: infiniteScroll 20s linear infinite;
+}
+
+.AN-bg-infinite-logo span:nth-child(2) {
+  top: 50%;
+  animation-delay: -10s;
+}
+
+.AN-fv-container {
+  width: 100vw;
+  max-width: 1920px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  position: relative;
+  min-height: 700px;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.AN-fv-stack-right {
+  @apply absolute top-1/2 right-0 w-[55%] -translate-y-1/2;
+  perspective: 1000px;
+}
+
+.AN-fv-stack-right.__pc {
+  position: relative;
+  height: 540px;
+  min-width: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 300px;
+}
+
+.AN-fv-img {
+  position: relative;
+  width: 800px;
+  height: 900px;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.AN-fv-img1-outer {
+  position: absolute;
+  z-index: 2;
+  width: 557px;
+  height: 801.92px;
+  flex-shrink: 0;
+  left: 200px;
+  top: 0;
+  transform: rotate3d(1, 1, 0, -5deg);
+}
+
+.AN-fv-img2-outer {
+  position: absolute;
+  z-index: 1;
+  width: 577px;
+  height: 655.86px;
+  flex-shrink: 0;
+  right: -250px;
+  top: 120px;
+  transform: rotate3d(1, 1, 0, 5deg);
+}
+
+.AN-fv-img1, .AN-fv-img2 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.AN-fv-stack-left {
+  @apply relative z-20 w-full max-w-[600px] mx-auto lg:mx-0 lg:ml-[10%];
+}
+
+.AN-fv-noti {
+  color: #222;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.AN-fv-noti-me {
+  color: #FF8D4E;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 104px;
+  letter-spacing: -6px;
+}
+
+.AN-fv-noti-chi {
+  color: #FD8068;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 104px;
+  letter-spacing: -6px;
+}
+
+.AN-fv-noti-ya {
+  color: #F77A9A;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 104px;
+  letter-spacing: -6px;
+}
+
+.AN-fv-noti-pu {
+  color: #F357A1;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 104px;
+  letter-spacing: -6px;
+}
+
+.AN-fv-noti-ri {
+  color: #EA2CE2;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 104px;
+  letter-spacing: -6px;
+}
+
+.AN-fv-noti-de {
+  color: #222;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 104px;
+  letter-spacing: -6px;
+}
+
+.AN-fv-title {
+  @apply text-4xl lg:text-[56px] font-black leading-tight mb-8;
+}
+
+.AN-fv-title-line1,
+.AN-fv-title-line2 {
+  @apply mb-4;
+}
+
+.AN-fv-title-animetion-text {
+  color: #222 !important;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 104px;
+  letter-spacing: -4px;
+  display: inline-block;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.AN-fv-title-gradient {
+  background: linear-gradient(102deg, #FF8D4E 0%, #EA2CE2 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+  position: relative;
+  left: -40px;
+  z-index: 3;
+  display: inline-block;
+}
+
+.AN-fv-title-gradient .AN-fv-title-animetion-text {
+  color: inherit !important;
+  background: none !important;
+}
+
+.AN-fv-title-gradient-char {
+  background: linear-gradient(102deg, #FF8D4E 0%, #EA2CE2 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.AN-fv-desc {
+  color: #222;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 27px;
+}
+
+.AN-fv-desc strong {
+  @apply font-bold text-blue-600;
+}
+
+.AN-fv-btn-outer {
+  @apply relative inline-block;
+}
+
+.AN-fv-btn {
+  width: 494px;
+  height: 64px;
+  background: linear-gradient(90deg, #FF8D4E 0%, #EA2CE2 100%);
+  color: #fff;
+  font-weight: bold;
+  padding: 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(234, 44, 226, 0.10);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.AN-fv-btn:hover {
+  filter: brightness(0.95);
+  box-shadow: 0 6px 24px rgba(234, 44, 226, 0.18);
+}
+
+.AN-fv-btn-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.AN-fv-btn-caption {
+  color: #FFF;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: center;
+}
+
+.AN-fv-btn-main {
+  color: #FFF;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 21px;
+  text-align: center;
+  margin-top: 2px;
+}
+
+.AN-fv-btn-lg {
+  @apply block text-2xl mt-1 font-black;
+}
+
+/* Animations */
+@keyframes infiniteScroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .AN-bg-infinite-logo span {
+    font-size: 80px;
+  }
+  
+  .__pc {
+    @apply hidden;
+  }
+
+  .AN-fv-stack-left {
+    @apply text-center mx-auto pt-0;
+  }
+
+  .AN-fv-title {
+    @apply text-4xl;
+  }
+}
+
+/* Feature sections styling will be added here */
+
+.AN-fv-shop-img {
+  width: 370px;
+  height: 111px;
+  flex-shrink: 0;
+  aspect-ratio: 10/3;
+  display: block;
+  margin: 28px 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  border-radius: 18px;
+}
