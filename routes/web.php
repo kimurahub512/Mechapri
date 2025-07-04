@@ -15,10 +15,14 @@ Route::get('/', function () {
     return inertia('Home');
 })->name('home');
 
+Route::get('/register', function () {
+    return inertia('Registration');
+})->name('register');
+
 // Authentication Routes
 Route::middleware('guest')->group(function () {
-    Route::get('/register', [RegisterController::class, 'show'])->name('register');
-    Route::post('/register', [RegisterController::class, 'register']);
+    // Route::get('/register', [RegisterController::class, 'show']);
+    // Route::post('/register', [RegisterController::class, 'register']);
     Route::get('/login', [LoginController::class, 'show'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
 

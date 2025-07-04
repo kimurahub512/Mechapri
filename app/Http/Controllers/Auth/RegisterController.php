@@ -14,7 +14,7 @@ class RegisterController extends Controller
 {
     public function show()
     {
-        return Inertia::render('Auth/Register');
+        return Inertia::render('Registration');
     }
 
     public function register(Request $request)
