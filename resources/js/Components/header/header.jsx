@@ -60,13 +60,13 @@ const Header = ({ authButton }) => {
                       <a href='/register' className='flex h-[26px] px-[6px] py-[1.5px] pb-[2.5px] flex-col justify-center items-center rounded bg-white text-[#222] font-noto text-xs font-normal leading-[22px] border border-gray-300'>
                         会員登録
                       </a>
-                    </li>                    
+                    </li>
                     <li className='inline-block'>
                       <div className='flex h-[26px] px-[6px] py-[1.5px] pb-[2.5px] flex-col justify-center items-center rounded text-[#222] font-noto text-xs font-normal leading-[22px]'>
                         お知らせ
                       </div>
                     </li>
-                    <li className='inline-block'>
+                  <li className='inline-block'>
                       <div className='flex flex-row items-center w-[120px] h-[32px] rounded bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] justify-center px-3'>
                         <img src={arrow} alt="arrow" className='w-4 h-4 mr-2.5' />
                         <span className='text-white text-center font-noto text-[13px] font-black leading-[19.5px] block w-full'>
