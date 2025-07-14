@@ -1,0 +1,921 @@
+/* Footer Styles - Using CSS Custom Properties for Guaranteed Application */
+:root {
+  --footer-bg: #363636;
+  --footer-text: #FFF;
+  --footer-divider: #D1D1D1;
+}
+
+/* Force footer styles with maximum specificity */
+footer.mechapuri-footer,
+.mechapuri-footer {
+  background-color: var(--footer-bg) !important;
+  color: var(--footer-text) !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 9999 !important;
+  margin-top: 5rem !important; /* 80px below the last button */
+}
+
+footer.mechapuri-footer .mechapuri-footer-main-container,
+.mechapuri-footer .mechapuri-footer-main-container {
+  display: flex !important;
+  width: 90rem !important; /* 1440px */
+  height: 27.6875rem !important; /* 443px - original height */
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+}
+
+footer.mechapuri-footer .mechapuri-footer-content-frame,
+.mechapuri-footer .mechapuri-footer-content-frame {
+  position: relative !important;
+  width: 77.5rem !important; /* 1240px - wider to accommodate right side content */
+  height: 27.6875rem !important; /* 443px - full height of main container */
+  margin: 6.1875rem 6.25rem 1rem 6.1875rem !important; /* 99px top, 100px right, 16px bottom, 99px left */
+  box-sizing: border-box !important;
+
+}
+
+footer.mechapuri-footer .mechapuri-footer-logo,
+.mechapuri-footer .mechapuri-footer-logo {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 12.678rem !important; /* 202.849px */
+  height: 2.25rem !important; /* 36px */
+  z-index: 10 !important;
+  
+  filter: brightness(0) invert(1) !important;
+  background-color: transparent !important;
+}
+
+footer.mechapuri-footer .mechapuri-footer-social,
+.mechapuri-footer .mechapuri-footer-social {
+  position: absolute !important;
+  top: 3.25rem !important; /* 52px */
+  left: 2.5rem !important; /* 40px */
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.375rem !important; /* 6px */
+  z-index: 10 !important;
+}
+
+footer.mechapuri-footer .mechapuri-footer-x-logo,
+.mechapuri-footer .mechapuri-footer-x-logo {
+  width: 1.75rem !important; /* 28px */
+  height: 1.75rem !important; /* 28px */
+}
+
+footer.mechapuri-footer .mechapuri-footer-svg2,
+.mechapuri-footer .mechapuri-footer-svg2 {
+  width: 1.75rem !important; /* 28px */
+  height: 1.75rem !important; /* 28px */
+}
+
+footer.mechapuri-footer .mechapuri-footer-text-section-1,
+.mechapuri-footer .mechapuri-footer-text-section-1 {
+  position: absolute !important;
+  top: 0 !important;
+  right: 15.75rem !important; /* 252px */
+  display: flex !important;
+  width: 8.75rem !important; /* 140px */
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 2rem !important; /* 32px */
+  z-index: 10 !important;
+}
+
+footer.mechapuri-footer .mechapuri-footer-text-section-2,
+.mechapuri-footer .mechapuri-footer-text-section-2 {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  display: flex !important;
+  width: 11.75rem !important; /* 188px */
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  z-index: 10 !important;
+}
+
+footer.mechapuri-footer .mechapuri-footer-text-bold,
+.mechapuri-footer .mechapuri-footer-text-bold {
+  color: var(--footer-text) !important;
+  font-family: 'Noto Sans JP' !important;
+  font-size: 1rem !important; /* 16px */
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 1.6rem !important; /* 25.6px */
+  letter-spacing: 0.05rem !important; /* 0.8px */
+}
+
+footer.mechapuri-footer .mechapuri-footer-text-medium,
+.mechapuri-footer .mechapuri-footer-text-medium {
+  color: var(--footer-text) !important;
+  font-family: 'Noto Sans JP' !important;
+  font-size: 0.8125rem !important; /* 13px */
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 1.25rem !important; /* 20px */
+}
+
+footer.mechapuri-footer .mechapuri-footer-text-regular,
+.mechapuri-footer .mechapuri-footer-text-regular {
+  color: var(--footer-text) !important;
+  font-family: 'Noto Sans JP' !important;
+  font-size: 0.75rem !important; /* 12px */
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1.125rem !important; /* 18px */
+}
+
+footer.mechapuri-footer .mechapuri-footer-text-small,
+.mechapuri-footer .mechapuri-footer-text-small {
+  color: var(--footer-text) !important;
+  font-family: 'Noto Sans JP' !important;
+  font-size: 0.625rem !important; /* 10px */
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1rem !important; /* 16px */
+}
+
+footer.mechapuri-footer .mechapuri-footer-text-title,
+.mechapuri-footer .mechapuri-footer-text-title {
+  display: flex !important;
+  height: 1.625rem !important; /* 26px */
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-self: stretch !important;
+  color: var(--footer-text) !important;
+  font-family: 'Noto Sans JP' !important;
+  font-size: 1rem !important; /* 16px */
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 1.6rem !important; /* 25.6px */
+  letter-spacing: 0.05rem !important; /* 0.8px */
+  margin-bottom: 2rem !important; /* 32px */
+}
+
+footer.mechapuri-footer .mechapuri-footer-text-item,
+.mechapuri-footer .mechapuri-footer-text-item {
+  align-self: stretch !important;
+  color: var(--footer-text) !important;
+  font-family: 'Noto Sans JP' !important;
+  font-size: 0.8125rem !important; /* 13px */
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 1.25rem !important; /* 20px */
+  margin-bottom: 0.75rem !important; /* 12px */
+}
+
+footer.mechapuri-footer .mechapuri-footer-text-item:last-child,
+.mechapuri-footer .mechapuri-footer-text-item:last-child {
+  margin-bottom: 0 !important;
+}
+
+footer.mechapuri-footer .mechapuri-footer-copy-section,
+.mechapuri-footer .mechapuri-footer-copy-section {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.3125rem !important; /* 5px */
+}
+
+footer.mechapuri-footer .mechapuri-footer-copy-icon,
+.mechapuri-footer .mechapuri-footer-copy-icon {
+  width: 0.75rem !important; /* 12px */
+  height: 0.75rem !important; /* 12px */
+  filter: brightness(0) invert(1) !important;
+  background-color: transparent !important;
+}
+
+footer.mechapuri-footer .mechapuri-footer-copy-icon-small,
+.mechapuri-footer .mechapuri-footer-copy-icon-small {
+  width: 0.625rem !important; /* 10px */
+  height: 0.625rem !important; /* 10px */
+  flex-shrink: 0 !important;
+  background-color: transparent !important;
+  filter: brightness(0) invert(1) !important;
+}
+
+footer.mechapuri-footer .mechapuri-footer-divider,
+.mechapuri-footer .mechapuri-footer-divider {
+  position: absolute !important;
+  top: 14.8125rem !important; /* 237px */
+  left: 0 !important;
+  width: 77.5rem !important; /* 1240px - match content frame width */
+  height: 0.0625rem !important; /* 1px */
+  flex-shrink: 0 !important;
+  background-color: var(--footer-divider) !important;
+  z-index: 10 !important;
+}
+
+footer.mechapuri-footer .mechapuri-footer-list-frame,
+.mechapuri-footer .mechapuri-footer-list-frame {
+  position: absolute !important;
+  top: 16.6875rem !important; /* 267px */
+  left: 0 !important;
+  display: flex !important;
+  width: 77.5rem !important; /* 1240px - match content frame width */
+  padding: 0.65625rem 0rem 1.9375rem 0rem !important; /* 10.5px 0px 31px 0px */
+  align-items: center !important;
+  gap: 1.5625rem !important; /* 25px */
+  z-index: 10 !important;
+}
+
+footer.mechapuri-footer .mechapuri-footer-list-item,
+.mechapuri-footer .mechapuri-footer-list-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.1875rem !important; /* 3px */
+}
+
+footer.mechapuri-footer .mechapuri-footer-list-text,
+.mechapuri-footer .mechapuri-footer-list-text {
+  color: var(--footer-text) !important;
+  font-family: 'Noto Sans JP' !important;
+  font-size: 0.75rem !important; /* 12px */
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1.125rem !important; /* 18px */
+}
+
+footer.mechapuri-footer .mechapuri-footer-spacer,
+.mechapuri-footer .mechapuri-footer-spacer {
+  flex: 1 !important;
+}
+
+footer.mechapuri-footer .mechapuri-footer-copyright,
+.mechapuri-footer .mechapuri-footer-copyright {
+  color: var(--footer-text) !important;
+  text-align: right !important;
+  font-family: 'Noto Sans JP' !important;
+  font-size: 0.625rem !important; /* 10px */
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1rem !important; /* 16px */
+}
+
+/* Mobile Footer Styles */
+@media screen and (max-width: 768px) {
+  footer.mechapuri-footer,
+  .mechapuri-footer {
+    margin-top: 5rem !important; /* 80px below the last button */
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-main-container,
+  .mechapuri-footer .mechapuri-footer-main-container {
+    width: 100% !important;
+    height: 33.75rem !important; /* 716px - to accommodate content frame + margins + nav section */
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-content-frame,
+  .mechapuri-footer .mechapuri-footer-content-frame {
+    position: relative !important;
+    width: calc(100% - 2rem) !important; /* Account for left and right margins (16px each) */
+    height: 27.25rem !important; /* 436px - content frame height */
+    margin: 2rem 1rem 7.5rem 1rem !important; /* 32px top, 16px right, 120px bottom, 16px left */
+    box-sizing: border-box !important;
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-logo,
+  .mechapuri-footer .mechapuri-footer-logo {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 12.678rem !important; /* 202.849px */
+    height: 2.25rem !important; /* 36px */
+    flex-shrink: 0 !important;
+    z-index: 10 !important;
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-social,
+  .mechapuri-footer .mechapuri-footer-social {
+    position: absolute !important;
+    top: 3.25rem !important; /* 52px (36px + 16px) */
+    left: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.375rem !important; /* 6px */
+    z-index: 10 !important;
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-x-logo,
+  .mechapuri-footer .mechapuri-footer-x-logo {
+    width: 1.5625rem !important; /* 25px */
+    height: 1.5625rem !important; /* 25px */
+    flex-shrink: 0 !important;
+    opacity: var(--opacity-100, 1) !important;
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-svg2,
+  .mechapuri-footer .mechapuri-footer-svg2 {
+    width: 1.5625rem !important; /* 25px */
+    height: 1.5625rem !important; /* 25px */
+    flex-shrink: 0 !important;
+    opacity: var(--opacity-100, 1) !important;
+  }
+
+  /* Mobile text sections */
+  footer.mechapuri-footer .mechapuri-footer-text-section-1,
+  .mechapuri-footer .mechapuri-footer-text-section-1 {
+    position: absolute !important;
+    top: 6rem !important; /* 96px */
+    left: 0.5625rem !important; /* 9px */
+    display: flex !important;
+    width: 9.5rem !important; /* 152px */
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 2rem !important; /* 32px */
+    z-index: 10 !important;
+  }
+
+  /* Three text section styles */
+  footer.mechapuri-footer .mechapuri-footer-text-section-1 .mechapuri-footer-text-bold,
+  .mechapuri-footer .mechapuri-footer-text-section-1 .mechapuri-footer-text-bold {
+    color: var(--color-white-solid, #FFF) !important;
+    font-family: var(--font-family-Font-1, "Noto Sans JP") !important;
+    font-size: var(--font-size-16, 16px) !important;
+    font-style: normal !important;
+    font-weight: var(--font-weight-700, 700) !important;
+    line-height: var(--line-height-25_6, 25.6px) !important; /* 160% */
+    letter-spacing: var(--letter-spacing-0_8, 0.8px) !important;
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-text-section-2,
+  .mechapuri-footer .mechapuri-footer-text-section-2 {
+    position: absolute !important;
+    top: 6rem !important; /* 96px */
+    right: 0.5rem !important; /* 8px */
+    display: flex !important;
+    width: 9.5rem !important; /* 152px */
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    z-index: 10 !important;
+  }
+
+  /* Individual gap control for text-section-2 */
+  footer.mechapuri-footer .mechapuri-footer-text-section-2 .mechapuri-footer-text-title,
+  .mechapuri-footer .mechapuri-footer-text-section-2 .mechapuri-footer-text-title {
+    margin-bottom: 2rem !important; /* 32px - first gap */
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-text-section-2 .mechapuri-footer-text-item,
+  .mechapuri-footer .mechapuri-footer-text-section-2 .mechapuri-footer-text-item {
+    margin-bottom: 0.75rem !important; /* 12px - other gaps */
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-text-section-2 .mechapuri-footer-text-item:last-child,
+  .mechapuri-footer .mechapuri-footer-text-section-2 .mechapuri-footer-text-item:last-child {
+    margin-bottom: 0 !important; /* No margin on last item */
+  }
+
+  /* Four text section styles */
+  footer.mechapuri-footer .mechapuri-footer-text-section-2 .mechapuri-footer-text-title,
+  .mechapuri-footer .mechapuri-footer-text-section-2 .mechapuri-footer-text-title {
+    display: flex !important;
+    height: 1.625rem !important; /* 26px */
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-self: stretch !important;
+    color: var(--color-white-solid, #FFF) !important;
+    font-family: var(--font-family-Font-1, "Noto Sans JP") !important;
+    font-size: var(--font-size-16, 16px) !important;
+    font-style: normal !important;
+    font-weight: var(--font-weight-700, 700) !important;
+    line-height: var(--line-height-25_6, 25.6px) !important; /* 160% */
+    letter-spacing: var(--letter-spacing-0_8, 0.8px) !important;
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-text-section-2 .mechapuri-footer-text-item,
+  .mechapuri-footer .mechapuri-footer-text-section-2 .mechapuri-footer-text-item {
+    align-self: stretch !important;
+    color: var(--color-white-solid, #FFF) !important;
+    font-family: var(--font-family-Font-1, "Noto Sans JP") !important;
+    font-size: var(--font-size-13, 13px) !important;
+    font-style: normal !important;
+    font-weight: var(--font-weight-500, 500) !important;
+    line-height: var(--line-height-20, 20px) !important; /* 153.846% */
+  }
+
+  /* Mobile divider */
+  footer.mechapuri-footer .mechapuri-footer-divider,
+  .mechapuri-footer .mechapuri-footer-divider {
+    position: absolute !important;
+    top: 16.9375rem !important; /* 271px */
+    left: 0 !important;
+    width: 100% !important;
+    height: 0.0625rem !important; /* 1px */
+    background-color: var(--footer-divider) !important;
+    z-index: 10 !important;
+  }
+
+  /* Mobile list frame */
+  footer.mechapuri-footer .mechapuri-footer-list-frame,
+  .mechapuri-footer .mechapuri-footer-list-frame {
+    position: absolute !important;
+    top: 18.5rem !important; /* 296px */
+    left: 0.25rem !important; /* 4px */
+    display: flex !important;
+    padding-top: 0.65625rem !important; /* 10.5px */
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    gap: var(--item-spacing-20, 1.25rem) !important; /* 20px */
+    z-index: 10 !important;
+    width: 100% !important;
+  }
+
+  /* List frame container - arrange items in rows */
+  footer.mechapuri-footer .mechapuri-footer-list-frame,
+  .mechapuri-footer .mechapuri-footer-list-frame {
+    position: absolute !important;
+    top: 18.5rem !important; /* 296px */
+    left: 0.25rem !important; /* 4px */
+    display: block !important;
+    padding-top: 0.65625rem !important; /* 10.5px */
+    z-index: 10 !important;
+    width: 100% !important;
+  }
+
+  /* First row - first two items */
+  footer.mechapuri-footer .mechapuri-footer-list-item:nth-child(1),
+  .mechapuri-footer .mechapuri-footer-list-item:nth-child(1) {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.1rem !important; /* No gap between SVG and text */
+    margin-right: 1.5625rem !important; /* 25px gap to next item */
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-list-item:nth-child(2),
+  .mechapuri-footer .mechapuri-footer-list-item:nth-child(2) {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.1rem !important; /* No gap between SVG and text */
+  }
+
+  /* Second row - next two items */
+  footer.mechapuri-footer .mechapuri-footer-list-text:nth-child(3),
+  .mechapuri-footer .mechapuri-footer-list-text:nth-child(3) {
+    display: inline-block !important;
+    margin-right: 1.5625rem !important; /* 25px gap to next item */
+    margin-top: 1.25rem !important; /* 20px gap from previous row */
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-list-text:nth-child(4),
+  .mechapuri-footer .mechapuri-footer-list-text:nth-child(4) {
+    display: inline-block !important;
+    margin-top: 1.25rem !important; /* 20px gap from previous row */
+  }
+
+  /* Third row - fifth item */
+  footer.mechapuri-footer .mechapuri-footer-list-text:nth-child(5),
+  .mechapuri-footer .mechapuri-footer-list-text:nth-child(5) {
+    display: block !important;
+    margin-top: 1.25rem !important; /* 20px gap from previous row */
+  }
+
+  /* Fourth row - copyright */
+  footer.mechapuri-footer .mechapuri-footer-copyright,
+  .mechapuri-footer .mechapuri-footer-copyright {
+    display: block !important;
+    margin-top: 1.25rem !important; /* 20px gap from previous line */
+    text-align: left !important; /* Override right alignment */
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-list-text,
+  .mechapuri-footer .mechapuri-footer-list-text {
+    color: var(--color-white-solid, #FFF) !important;
+    font-family: var(--font-family-Font-1, "Noto Sans JP") !important;
+    font-size: var(--font-size-12, 12px) !important;
+    font-style: normal !important;
+    font-weight: var(--font-weight-400, 400) !important;
+    line-height: var(--line-height-18, 18px) !important; /* 150% */
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-copyright,
+  .mechapuri-footer .mechapuri-footer-copyright {
+    color: var(--color-white-solid, #FFF) !important;
+    text-align: left !important; /* Left align for mobile */
+    font-family: var(--font-family-Font-1, "Noto Sans JP") !important;
+    font-size: var(--font-size-10, 10px) !important;
+    font-style: normal !important;
+    font-weight: var(--font-weight-400, 400) !important;
+    line-height: var(--font-size-16, 16px) !important; /* 160% */
+  }
+
+  /* Mobile Navigation Section */
+  footer.mechapuri-footer .mechapuri-footer-mobile-nav,
+  .mechapuri-footer .mechapuri-footer-mobile-nav {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    padding: 8px 16px 12px 16px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    border-bottom: 1px solid var(--color-grey-86, #DCDCDC) !important;
+    background: var(--color-white-solid, #FFF) !important;
+    z-index: 10 !important;
+  }
+
+  .mechapuri-footer-nav-content {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    gap: 11px !important;
+    width: 100% !important;
+  }
+  .mechapuri-footer-nav-item {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    max-width: 60px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+  .mechapuri-footer-cart-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    width: auto !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+  .mechapuri-footer-nav-text {
+    width: auto !important;
+    display: inline !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .mechapuri-footer-cart-badge {
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  footer.mechapuri-footer .mechapuri-footer-nav-item:nth-child(2),
+  .mechapuri-footer .mechapuri-footer-nav-item:nth-child(2) {
+    gap: 0.625rem !important; /* 10px */
+  }
+
+  /* Fifth item has 5px gap */
+  footer.mechapuri-footer .mechapuri-footer-nav-item:nth-child(5),
+  .mechapuri-footer .mechapuri-footer-nav-item:nth-child(5) {
+    gap: 0.3125rem !important; /* 5px */
+  }
+
+  /* Default gap for nav SVGs (e.g., 4px for most) */
+  footer.mechapuri-footer .mechapuri-footer-nav-svg,
+  .mechapuri-footer .mechapuri-footer-nav-svg {
+    margin-bottom: 4px !important;
+  }
+
+  /* Heart icon: reduce gap to 10px total */
+  footer.mechapuri-footer .mechapuri-footer-nav-svg.heart,
+  .mechapuri-footer .mechapuri-footer-nav-svg.heart {
+    margin-bottom: -6px !important;
+  }
+
+  /* man_mobile icon: reduce gap to 5px total */
+  footer.mechapuri-footer .mechapuri-footer-nav-svg.man_mobile,
+  .mechapuri-footer .mechapuri-footer-nav-svg.man_mobile {
+    margin-bottom: 0px !important;
+  }
+
+  /* Nav SVG icons */
+  footer.mechapuri-footer .mechapuri-footer-nav-svg,
+  .mechapuri-footer .mechapuri-footer-nav-svg {
+    width: 1.25rem !important; /* 20px */
+    height: 1.25rem !important; /* 20px */
+    flex-shrink: 0 !important;
+  }
+
+  /* Nav text */
+  footer.mechapuri-footer .mechapuri-footer-nav-text,
+  .mechapuri-footer .mechapuri-footer-nav-text {
+    display: flex !important;
+    width: 3.75rem !important; /* 60px */
+    height: 1.625rem !important; /* 26px */
+    flex-direction: column !important;
+    justify-content: center !important;
+    color: var(--mbneppuri-com-dark-21, var(--color-grey-21, #363636)) !important;
+    text-align: center !important;
+    font-family: var(--font-family-Font-1, "Noto Sans JP") !important;
+    font-size: var(--font-size-10, 10px) !important;
+    font-style: normal !important;
+    font-weight: var(--font-weight-500, 500) !important;
+    line-height: 0.8125rem !important; /* 13px - 130% */
+  }
+
+  /* Cart item with badge */
+  footer.mechapuri-footer .mechapuri-footer-nav-item:nth-child(4),
+  .mechapuri-footer .mechapuri-footer-nav-item:nth-child(4) {
+    position: relative !important;
+  }
+
+  .mechapuri-footer-nav-text.cart-text-badge {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    width: auto !important;
+    margin: 0 auto !important;
+  }
+
+  .mechapuri-footer-cart-badge {
+    position: static !important;
+    margin-left: 2px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  /* Cart badge */
+  footer.mechapuri-footer .mechapuri-footer-cart-badge,
+  .mechapuri-footer .mechapuri-footer-cart-badge {
+    position: absolute !important;
+    top: -0.25rem !important; /* Position above the text */
+    right: -0.5rem !important; /* Position to the right of the text */
+    display: flex !important;
+    padding: 0.125rem 0.25rem 0.25rem 0.25rem !important; /* 2px 4px 4px 4px */
+    justify-content: center !important;
+    align-items: center !important;
+    aspect-ratio: 1/1 !important;
+    border-radius: 0.1875rem !important; /* 3px */
+    background: var(--mp_pinkred, #FF2AA1) !important;
+    min-width: 1rem !important; /* Ensure minimum size */
+    min-height: 1rem !important;
+  }
+
+  /* Cart badge number */
+  footer.mechapuri-footer .mechapuri-footer-cart-number,
+  .mechapuri-footer .mechapuri-footer-cart-number {
+    color: var(--color-white-solid, #FFF) !important;
+    font-family: var(--font-family-Font-1, "Noto Sans JP") !important;
+    font-size: var(--font-size-13, 13px) !important;
+    font-style: normal !important;
+    font-weight: var(--font-weight-500, 500) !important;
+    line-height: var(--line-height-10, 10px) !important; /* 76.923% */
+  }
+} 
+
+@media screen and (max-width: 768px) {
+  .mechapuri-footer-cart-badge {
+    position: static !important;
+    right: auto !important;
+    top: auto !important;
+  }
+  .mechapuri-footer-cart-row .mechapuri-footer-nav-text {
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    box-sizing: content-box !important;
+  }
+  .mechapuri-footer-cart-row {
+    width: auto !important;
+    height: auto !important;
+  }
+} 
+
+@media screen and (max-width: 768px) {
+  footer.mechapuri-footer .mechapuri-footer-cart-row .mechapuri-footer-cart-badge,
+  .mechapuri-footer .mechapuri-footer-cart-row .mechapuri-footer-cart-badge {
+    position: static !important;
+    right: auto !important;
+    top: auto !important;
+  }
+} 
+
+@media screen and (max-width: 768px) {
+  .mechapuri-footer-cart-row {
+    gap: 2px !important;
+  }
+  .mechapuri-footer-cart-row .mechapuri-footer-nav-text,
+  .mechapuri-footer-cart-row .mechapuri-footer-cart-badge {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .mechapuri-footer-cart-badge {
+    margin-left: 0 !important;
+  }
+} 
+
+@media screen and (max-width: 768px) {
+  .mechapuri-footer-cart-row {
+    width: 100% !important;
+    max-width: 60px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 2px !important;
+    margin: 0 auto !important;
+  }
+  .mechapuri-footer-nav-item {
+    width: 60px !important;
+    min-width: 0 !important;
+    max-width: 60px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+  .mechapuri-footer-cart-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 60px !important;
+    min-width: 0 !important;
+    max-width: 60px !important;
+    gap: 2px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+  .mechapuri-footer-cart-row .mechapuri-footer-nav-text,
+  .mechapuri-footer-cart-row .mechapuri-footer-cart-badge {
+    display: inline-block !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: content-box !important;
+    vertical-align: middle !important;
+  }
+  .mechapuri-footer-cart-badge {
+    padding: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: content-box !important;
+    vertical-align: middle !important;
+  }
+} 
+
+@media screen and (max-width: 768px) {
+  .mechapuri-footer-cart-row {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 2px !important;
+  }
+  .mechapuri-footer-cart-badge {
+    padding: 0 !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    width: auto !important;
+    height: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 3px !important;
+    background: var(--mp_pinkred, #FF2AA1) !important;
+  }
+} 
+
+@media screen and (max-width: 768px) {
+  .mechapuri-footer-cart-row .mechapuri-footer-nav-text,
+  .mechapuri-footer-cart-row .mechapuri-footer-cart-badge {
+    border: none !important;
+  }
+} 
+
+@media screen and (max-width: 768px) {
+  .mechapuri-footer-cart-row {
+    gap: 2px !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+  }
+  .mechapuri-footer-cart-row .mechapuri-footer-nav-text,
+  .mechapuri-footer-cart-row .mechapuri-footer-cart-badge,
+  .mechapuri-footer-cart-row .mechapuri-footer-cart-number {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    box-sizing: content-box !important;
+    line-height: normal !important;
+    vertical-align: middle !important;
+  }
+  .mechapuri-footer-cart-badge {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    box-sizing: content-box !important;
+    vertical-align: middle !important;
+  }
+} 
+
+@media screen and (max-width: 768px) {
+  .mechapuri-footer-cart-row .mechapuri-footer-nav-text {
+    /* width: auto !important; */
+    width: 35px;
+    /* min-width: 0 !important;
+    max-width: none !important; */
+    display: inline-block !important;
+    text-align: left !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+} 
+
+/* --- Cart Row Tight Alignment Overrides (for tight badge/text alignment) --- */
+footer.mechapuri-footer .mechapuri-footer-cart-row .mechapuri-footer-nav-text {
+  width: auto !important;
+  display: inline-block !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+  vertical-align: middle !important;
+}
+footer.mechapuri-footer .mechapuri-footer-cart-row .mechapuri-footer-cart-badge {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  vertical-align: middle !important;
+  margin-left: 2px !important;
+}
+footer.mechapuri-footer .mechapuri-footer-cart-row .mechapuri-footer-cart-number {
+  padding: 0 4px !important;
+  font-size: 1rem !important;
+  line-height: 1 !important;
+  display: inline-block !important;
+}
+footer.mechapuri-footer .mechapuri-footer-cart-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2px !important;
+} 
+
+/* --- Cart Row Text Baseline Alignment Fix --- */
+footer.mechapuri-footer .mechapuri-footer-cart-row .mechapuri-footer-nav-text {
+  line-height: 1.625rem !important; /* Match the height of other nav texts */
+  height: 1.625rem !important;
+  vertical-align: middle !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+} 
+
+@media screen and (max-width: 768px) {
+  footer.mechapuri-footer {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: relative !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+  }
+  .mechapuri-footer-main-container {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+  .mechapuri-footer-mobile-nav {
+    position: relative !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    z-index: 1 !important;
+    box-shadow: none !important;
+    padding-bottom: 0 !important;
+  }
+} 

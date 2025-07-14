@@ -1,34 +1,27 @@
 import Header from '@/Components/header/header';
 import logo from '@/assets/images/mechapuri-logo.svg';
-import '@/../css/registration.css';
+import '@/../css/login.css';
 import { useForm, Link } from '@inertiajs/react';
 import { useState } from 'react';
 import Modal from '@/Components/Modal';
 
-
-export default function Register() {
+export default function Login() {
     const { data, setData, post, processing, errors: backendErrors } = useForm({
         email: '',
         password: '',
-        password_confirmation: '',
     });
     const [errors, setErrors] = useState({});
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
+    // Frontend validation
     const validate = () => {
         const newErrors = {};
-        // Email: must have @ and at least one dot after @
         if (!data.email.match(/^\S+@\S+\.\S+$/)) {
             newErrors.email = '有効なメールアドレスを入力してください。';
         }
-        // Password: at least 8 chars
         if (!data.password || data.password.length < 8) {
             newErrors.password = 'パスワードは8文字以上で入力してください。';
-        }
-        // Password confirmation
-        if (data.password !== data.password_confirmation) {
-            newErrors.password_confirmation = 'パスワードが一致しません。';
         }
         return newErrors;
     };
@@ -38,7 +31,7 @@ export default function Register() {
         const newErrors = validate();
         setErrors(newErrors);
         if (Object.keys(newErrors).length === 0) {
-            post(route('register'));
+            post(route('login'));
         } else {
             // Show first error in modal
             const firstError = Object.values(newErrors)[0];
@@ -53,7 +46,7 @@ export default function Register() {
                 <div className="p-6 text-center">
                     <div className="text-lg text-red-600 mb-4">{modalMessage}</div>
                     <button
-                        className="registration-button"
+                        className="login-button"
                         type="button"
                         onClick={() => setShowErrorModal(false)}
                     >
@@ -62,12 +55,12 @@ export default function Register() {
                 </div>
             </Modal>
             <Header />
-            <div className="registration-container">
-                <div className="registration-modal">
+            <div className="login-container">
+                <div className="login-modal">
                     {/* X Button */}
                     <button
-                        className="registration-close"
-                        aria-label="Close registration"
+                        className="login-close"
+                        aria-label="Close login"
                         onClick={() => window.location.href = '/'}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -79,79 +72,93 @@ export default function Register() {
                         </svg>
                     </button>
                     {/* Logo at the top */}
-                    <img src={logo} alt="Mechapuri Logo" className="registration-logo" />
+                    <img src={logo} alt="Mechapuri Logo" className="login-logo" />
                     
-                    {/* Registration form fields */}
-                    <form className="registration-form" onSubmit={submit}>
-                        <div className="registration-title">
-                            新規会員登録
+                    {/* Login form fields */}
+                    <form className="login-form" onSubmit={submit}>
+                        <div className="login-title">
+                        ログイン
                         </div>
-                        <div className="registration-label">
+                        <div className="login-label">
                             メールアドレスを入力
                         </div>
                         <input
                             type="email"
                             name="email"
                             placeholder="example@email.com"
-                            className="registration-input placeholder-styled"
+                            className="login-input placeholder-styled"
                             value={data.email}
                             onChange={e => setData('email', e.target.value)}
                             autoComplete="email"
                         />
-                        {backendErrors.email && (
-                            <div className="registration-error">{backendErrors.email}</div>
-                        )}
-                        <div className="registration-label">
+                        {errors.email && <div className="login-error">{errors.email}</div>}
+                        {backendErrors.email && <div className="login-error">{backendErrors.email}</div>}
+                        <div className="login-label">
                             パスワードを入力
                         </div>
                         <input
                             type="password"
                             name="password"
                             placeholder="半角英数字8文字以上"
-                            className="registration-input placeholder-styled"
+                            className="login-input placeholder-styled"
                             value={data.password}
                             onChange={e => setData('password', e.target.value)}
-                            autoComplete="new-password"
+                            autoComplete="current-password"
                         />
-                        {backendErrors.password && (
-                            <div className="registration-error">{backendErrors.password}</div>
-                        )}
-                        <div className="registration-label">
-                            パスワードを入力(確認用)
+                        {errors.password && <div className="login-error">{errors.password}</div>}
+                        {backendErrors.password && <div className="login-error">{backendErrors.password}</div>}
+                        <div className="password-remember-container">
+                            <svg 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                width="24" 
+                                height="24" 
+                                viewBox="0 0 24 25" 
+                                fill="none"
+                            >
+                                <g clipPath="url(#clip0_201_23999)">
+                                    <path d="M19 3.71973H5C3.89 3.71973 3 4.61973 3 5.71973V19.7197C3 20.8197 3.89 21.7197 5 21.7197H19C20.11 21.7197 21 20.8197 21 19.7197V5.71973C21 4.61973 20.11 3.71973 19 3.71973ZM10 17.7197L5 12.7197L6.41 11.3097L10 14.8897L17.59 7.29973L19 8.71973L10 17.7197Z" fill="url(#paint0_linear_201_23999)"/>
+                                </g>
+                                <defs>
+                                    <linearGradient id="paint0_linear_201_23999" x1="21" y1="12.6387" x2="3" y2="12.6387" gradientUnits="userSpaceOnUse">
+                                        <stop stopColor="#FF2AA1"/>
+                                        <stop offset="1" stopColor="#AB31D3"/>
+                                    </linearGradient>
+                                    <clipPath id="clip0_201_23999">
+                                        <rect width="24" height="24" fill="white" transform="translate(0 0.719727)"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <span>パスワードを記憶する</span>
                         </div>
-                        <input
-                            type="password"
-                            name="password_confirmation"
-                            placeholder="半角英数字8文字以上"
-                            className="registration-input placeholder-styled"
-                            value={data.password_confirmation}
-                            onChange={e => setData('password_confirmation', e.target.value)}
-                            autoComplete="new-password"
-                        />
-                        {backendErrors.password_confirmation && (
-                            <div className="registration-error">{backendErrors.password_confirmation}</div>
-                        )}
-                        <button className="registration-button" type="submit" disabled={processing}>
-                            登録する
+                        <button className="login-button" type="submit" disabled={processing}>
+                            ログイン
                         </button>
-                        <div className="registration-login-link">
+                        <div className="login-login-link">
                             <Link
-                                href="/login"
+                                href="/register"
                                 style={{ textDecoration: 'none' }}
                             >
                                 <span style={{ color: '#0D0D0D', fontFamily: '"Hiragino Sans"' }}>
-                                    ログインは
+                                    新規登録の場合は
                                 </span>
                                 <span style={{ color: '#FF2AA1', fontFamily: '"Hiragino Sans"', marginLeft: 4 }}>
                                     こちら
                                 </span>
                             </Link>
                         </div>
-                        <div className="registration-divider">
-                            <span className="registration-divider-text">または</span>
+                        <div className="login-login-link">
+                            <span style={{ color: '#0D0D0D', fontFamily: '"Hiragino Sans"' }}>
+                                パスワードを忘れた場合は
+                            </span>
+                            <span style={{ color: '#FF2AA1', fontFamily: '"Hiragino Sans"' }}>
+                                こちら
+                            </span>
                         </div>
-                        <div className="registration-socials">
-                            <button className="registration-social-btn line" type="button">
+                        <div className="login-divider">
+                            <span className="login-divider-text">または</span>
+                        </div>
+                        <div className="login-socials">
+                            <button className="login-social-btn line" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20" viewBox="0 0 26 21" fill="none">
                                     <path d="M19.9951 8.58595C19.9951 4.11547 15.5059 0.469727 9.99512 0.469727C4.48434 0.469727 -0.00488281 4.10609 -0.00488281 8.58595C-0.00488281 13.0658 3.55651 15.9524 8.35501 16.5897C8.68303 16.6647 9.12352 16.8052 9.23598 17.0864C9.33908 17.3395 9.30159 17.7331 9.2641 17.9861C9.2641 17.9861 9.14226 18.689 9.12352 18.839C9.07666 19.092 8.92671 19.8231 9.98575 19.3826C11.0542 18.9327 15.7402 15.9899 17.8395 13.5813C19.2922 11.988 19.9857 10.376 19.9857 8.58595H19.9951Z" fill="white"/>
                                     <path d="M16.668 11.1729H13.8564C13.7533 11.1729 13.6689 11.0886 13.6689 10.9855V6.62748C13.6689 6.51501 13.7533 6.43066 13.8564 6.43066H16.668C16.7711 6.43066 16.8554 6.51501 16.8554 6.61811V7.33038C16.8554 7.43347 16.7711 7.51782 16.668 7.51782H14.7561V8.25822H16.668C16.7711 8.25822 16.8554 8.34257 16.8554 8.44566V9.15793C16.8554 9.26103 16.7711 9.34538 16.668 9.34538H14.7561V10.0858H16.668C16.7711 10.0858 16.8554 10.1701 16.8554 10.2732V10.9855C16.8554 11.0886 16.7711 11.1729 16.668 11.1729Z" fill="#06C755"/>
@@ -161,7 +168,7 @@ export default function Register() {
                                 </svg>
                                 LINEでログイン
                             </button>
-                            <button className="registration-social-btn google" type="button">
+                            <button className="login-social-btn google" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 21" fill="none">
                                     <mask id="mask0_2_57217" maskUnits="userSpaceOnUse" x="-1" y="0" width="21" height="21">
                                         <path d="M19.9951 0.469727H-0.00488281V20.4697H19.9951V0.469727Z" fill="white"/>
@@ -176,20 +183,16 @@ export default function Register() {
                                 Googleでログイン
                             </button>
                         </div>
-                        <div className="registration-terms">
+                        <div className="login-terms">
                             ログインをすることで
-                            <span>
-                                利用規約
-                            </span>
+                            <span>利用規約</span>
                             及び
-                            <span>
-                                プライバシーポリシー
-                            </span>
+                            <span>プライバシーポリシー</span>
                             に同意したものとみなします。
                         </div>
                     </form>
                 </div>
-        </div>
+            </div>
         </>
     );
 }

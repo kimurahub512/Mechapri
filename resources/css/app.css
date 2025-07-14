@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @import './home-24.css';
+@import './registration.css';
+@import './login.css';
+@import './footer.css';
+
+
 
 /* Root and body styles for full width */
 html, body {

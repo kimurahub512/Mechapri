@@ -21,7 +21,14 @@ class RegisterController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'email' => 'required|string|email|max:255|unique:users',
+                'email' => [
+                    'required',
+                    'string',
+                    'email:rfc,dns',
+                    'max:255',
+                    'unique:users',
+                    'regex:/^[^@]+@[^@]+\.[^@]+$/',
+                ],
                 'password' => 'required|string|min:8|confirmed',
             ]);
 

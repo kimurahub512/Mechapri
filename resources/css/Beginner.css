@@ -1,0 +1,1887 @@
+body {
+  background: var(--color-white-solid, #FFF);
+}
+
+.beginner-hero-section {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.beginner-hero-frame {
+  width: 60rem; /* 960px */
+  height: 11.25rem; /* 180px */
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border-radius: 0.5rem;
+}
+
+.beginner-hero-image {
+  width: 75.375rem; /* 1206px */
+  height: 75.375rem; /* 1206px */
+  position: absolute;
+  top: -20rem; /* -320px, adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  background: url('../js/assets/images/beginner_hero.png') lightgray 50% / cover no-repeat;
+}
+
+.beginner-hero-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%);
+  opacity: 0.25;
+  border-radius: 0.5rem;
+}
+
+.beginner-hero-content {
+  width: 60rem; /* 960px */
+  margin-top: 1.5625rem; /* 25px */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+}
+
+.beginner-hero-title {
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-18, 1.125rem); /* 18px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: var(--line-height-21_6, 1.35rem); /* 21.6px */
+  margin: 0;
+}
+
+.beginner-hero-divider {
+  width: 60rem; /* 960px */
+  height: 1px;
+  background: var(--color-grey-86, #DCDCDC);
+  margin-top: 1.0625rem; /* 17px */
+  margin-bottom: 1.5625rem; /* 25px */
+  position: relative;
+}
+
+.beginner-hero-divider-left {
+  width: 5rem; /* 80px */
+  height: 1px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, var(--color-orange-65, #FF8D4E) 0%, var(--color-magenta-55, #EA2CE2) 100%);
+}
+
+.beginner-hero-description {
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-14, 0.875rem); /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: var(--line-height-25_2, 1.575rem); /* 25.2px */
+}
+
+.beginner-upload-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 60rem; /* 960px */
+  height: 31.25rem; /* 500px */
+  padding: 1.4816rem 9.5rem 3.4375rem 9.5rem; /* 23.705px 152px 55px 152px */
+  gap: 1.0184rem; /* 16.295px */
+  border-radius: 0.5rem; /* 8px */
+  background: var(--color-white-solid, #FFF);
+  box-shadow: 0px 0.25rem 2.25rem 0px rgba(0, 0, 0, 0.10); /* 0px 4px 36px 0px */
+  margin-top: 1.4816rem; /* 23.7px below last text */
+  position: relative;
+  min-height: unset;
+}
+
+.beginner-upload-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem; /* 8px */
+  justify-content: center;
+  width: 100%;
+}
+
+.beginner-upload-svg {
+  width: 2.75rem; /* 44px */
+  height: 2.75rem; /* 44px */
+  position: static;
+}
+
+.beginner-upload-title {
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-18, 1.125rem); /* 18px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: var(--line-height-21_6, 1.35rem); /* 21.6px */
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.beginner-image-section {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 100%;
+  margin-top: 0;
+}
+
+.beginner-image-group {
+  position: absolute;
+  left: 9.5rem; /* 152px, align with frame's left padding */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30.5rem; /* 488px */
+  height: 16.4375rem; /* same as before */
+}
+
+.beginner-image-subframe {
+  width: 25rem; /* 400px */
+  height: 13.75rem; /* 220px */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7.5rem; /* 80.68px */
+  position: absolute;
+  background: none;
+}
+
+.beginner-image-subframe-first {
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
+.beginner-image-subframe-second {
+  top: 2.6875rem; /* 43px */
+  left: 5.5rem; /* 88px */
+  position: absolute;
+}
+
+.beginner-image-photo {
+  width: 4.8376rem; /* 77.402px */
+  height: 9.7853rem; /* 156.564px */
+  aspect-ratio: 77.40 / 156.56;
+  border-radius: 0.6723rem; /* 10.757px */
+  border: 0.1681rem solid var(--color-grey-20, #333); /* 2.689px */
+  background: lightgray 50% / cover no-repeat;
+  box-shadow: 0.5883rem 0.5883rem 1.2186rem -0.1681rem rgba(0, 0, 0, 0.15); /* 9.413px 9.413px 19.498px -2.689px */
+  transform: rotate(15deg);
+  object-fit: cover;
+  display: block;
+}
+
+.beginner-image-note {
+  margin-top: 1rem; /* 16px below image subsection */
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-14, 0.875rem); /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: var(--line-height-25_2, 1.575rem); /* 25.2px */
+  text-align: left;
+}
+
+.beginner-productinfo-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 60rem; /* 960px */
+  height: 20rem; /* 320px */
+  margin-top: 1rem; /* 16px below upload frame */
+  padding: 1.4816rem 9.5rem 1.052rem 9.5rem; /* 23.705px 152px 16.83px 152px */
+  border-radius: 0.5rem; /* 8px */
+  background: var(--color-white-solid, #FFF);
+  box-shadow: 0px 0.25rem 2.25rem 0px rgba(0, 0, 0, 0.10); /* 0px 4px 36px 0px */
+  gap: 0;
+}
+
+.beginner-productinfo-title-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem; /* 8px */
+  justify-content: center;
+  width: 100%;
+}
+
+.beginner-productinfo-title {
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-18, 1.125rem); /* 18px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: var(--line-height-21_6, 1.35rem); /* 21.6px */
+}
+
+.beginner-productinfo-svg {
+  width: 2.75rem; /* 44px */
+  height: 2.75rem; /* 44px */
+  display: block;
+}
+
+.beginner-fee-input-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: 21rem; /* 336px */
+  margin-top: 1rem; /* 16px below title */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.5rem 0.75rem; /* 8px 12px */
+  border-radius: 0.3rem; /* 4.8px */
+  border: 0.05rem solid var(--color-grey-82, #D1D1D1); /* 0.8px */
+  background: #FFF;
+}
+
+.beginner-fee-input-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem; /* 8px */
+  position: relative;
+}
+
+.beginner-fee-radio-svg {
+  width: 1rem; /* 16px */
+  height: 1rem; /* 16px */
+  position: relative;
+  top: 0.1875rem; /* 3px */
+}
+
+.beginner-fee-text {
+  display: flex;
+  width: 2.11rem; /* 33.76px */
+  height: 1.1875rem; /* 19px */
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: 0.875rem; /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: 1.1875rem; /* 19px */
+}
+
+.beginner-fee-input-form-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 0.8125rem; /* 13px below 有料 */
+  margin-left: 1.5rem; /* 24px, aligns with 有料 text */
+}
+
+/* Hide number input spinners for all browsers */
+.beginner-fee-input-form::-webkit-outer-spin-button,
+.beginner-fee-input-form::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.beginner-fee-input-form[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.beginner-fee-input-form {
+  width: 7.9375rem; /* 127px */
+  height: 2.375rem; /* 38px */
+  padding: 0.0625rem 0.5625rem; /* 1px 9px */
+  border-radius: 0.2rem; /* 3.2px */
+  border: 0.05rem solid var(--color-grey-78, #C6C6C6); /* 0.799px */
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: 0.875rem; /* 14px */
+  font-weight: 400;
+  box-sizing: border-box;
+}
+
+.beginner-fee-yen {
+  margin-left: 0.375rem; /* 6px */
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: 0.6875rem; /* 11px */
+  font-style: normal;
+  font-weight: var(--font-weight-500, 500);
+  line-height: 1.25rem; /* 20px */
+}
+
+.beginner-fee-range {
+  margin-left: 1.1875rem; /* 19px */
+  color: var(--mbneppuri-com-regent-gray, var(--color-azure-58, #87969F));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: 0.875rem; /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: 1rem; /* 16px */
+}
+
+.beginner-fee-free-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem; /* 8px */
+  margin-top: 0.8125rem; /* 13px below input form */
+}
+
+.beginner-fee-free-circle {
+  width: 1rem; /* 16px */
+  height: 1rem; /* 16px */
+  flex-shrink: 0;
+  border-radius: 5rem; /* 80px */
+  border: 0.05rem solid var(--color-grey-82, #D1D1D1); /* 0.8px */
+  background: var(--color-grey-97, #F8F8F8);
+  display: inline-block;
+}
+
+.beginner-fee-free-text {
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: 0.875rem; /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: 1.1875rem; /* 19px */
+}
+
+.beginner-productinfo-note {
+  margin-top: 1rem; /* 16px below input frame */
+}
+
+.beginner-productinfo-note-line1 {
+  color: #000;
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-14, 0.875rem); /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: var(--line-height-25_2, 1.575rem); /* 25.2px */
+}
+
+.beginner-productinfo-note-line2 {
+  display: flex;
+  align-items: flex-end;
+  margin-top: 0.25rem;
+}
+
+.beginner-productinfo-note-label {
+  color: #000;
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-14, 0.875rem); /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: var(--line-height-25_2, 1.575rem); /* 25.2px */
+}
+
+.beginner-productinfo-note-em {
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-16, 1rem); /* 16px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: var(--line-height-28_8, 1.8rem); /* 28.8px */
+  margin: 0 0.25rem;
+} 
+
+.beginner-display-frame {
+  width: 60rem; /* 960px */
+  margin-top: 1rem;
+  padding: 1.5rem 2rem 2.5rem 2rem;
+  border-radius: 0.5rem;
+  background: var(--color-white-solid, #FFF);
+  box-shadow: 0px 0.25rem 2.25rem 0px rgba(0, 0, 0, 0.10);
+} 
+
+.beginner-display-title-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* 8px */
+  width: 100%;
+}
+
+.beginner-display-title {
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-18, 1.125rem); /* 18px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: var(--line-height-21_6, 1.35rem); /* 21.6px */
+}
+
+.beginner-display-svg {
+  width: 2.75rem; /* 44px */
+  height: 2.75rem; /* 44px */
+  display: block;
+} 
+
+.beginner-display-desc1 {
+  margin-top: 0.9375rem; /* 15px below title */
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-14, 0.875rem); /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: var(--line-height-25_2, 1.575rem); /* 25.2px */
+}
+
+.beginner-display-gacha {
+  margin-top: 0.9375rem; /* 15px below desc1 */
+}
+
+.beginner-display-gacha-title {
+  color: var(--mbneppuri-com-black, var(--color-black-solid, #000));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-16, 1rem); /* 16px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: var(--line-height-28_8, 1.8rem); /* 28.8px */
+}
+
+.beginner-display-gacha-desc {
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-14, 0.875rem); /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: var(--line-height-25_2, 1.575rem); /* 25.2px */
+} 
+
+.beginner-display-sample-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 2rem; /* 32px below last text */
+}
+
+.beginner-display-sample-image-wrapper {
+  width: 20.5rem; /* 328px */
+  height: 20.5rem; /* 328px */
+  border-radius: 0.95rem; /* 4px */
+  background: lightgray 50% / cover no-repeat;
+  margin: 0 auto;
+  overflow: hidden;
+  display: block;
+  position: relative;
+  border: 0.35rem solid #f130d1; /* 4px border */
+}
+
+.beginner-display-sample-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.95rem; /* 4px */
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.beginner-display-sample-gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20.5rem; /* 328px */
+  height: 20.5rem; /* 328px */
+  border-radius: 0.25rem; /* 4px */
+  opacity: var(--opacity-50, 0.5);
+  background: var(--Gradient-3, linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%));
+  pointer-events: none;
+  z-index: 2;
+}
+
+.beginner-display-bubble-wrapper {
+  position: absolute;
+  top: 5.9375rem; /* 95px */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12rem; /* 192px - wider to accommodate text */
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5625rem; /* 9px */
+  z-index: 3;
+}
+
+.beginner-display-bubble-svg {
+  width: 5rem; /* 80px */
+  height: 5rem; /* 80px */
+  display: block;
+} 
+
+.beginner-display-bubble-title {
+  margin-top: 0.5625rem; /* 9px below SVG */
+  color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+  text-align: center;
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-21, 1.3125rem); /* 21px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: var(--line-height-27, 1.6875rem); /* 27px */
+}
+
+.beginner-display-bubble-desc {
+  color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+  text-align: center;
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-14, 0.875rem); /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: var(--line-height-22, 1.375rem); /* 22px */
+  white-space: nowrap;
+  width: 100%;
+}
+
+.beginner-display-filter-section {
+  margin-top: 2rem; /* 32px below image */
+}
+
+.beginner-display-filter-title {
+  color: var(--mbneppuri-com-black, var(--color-black-solid, #000));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-16, 1rem); /* 16px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: var(--line-height-28_8, 1.8rem); /* 28.8px - 180% */
+}
+
+.beginner-display-filter-desc {
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-14, 0.875rem); /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: var(--line-height-25_2, 1.575rem); /* 25.2px - 180% */
+}
+
+.beginner-display-blurred-container {
+  margin-top: 2rem; /* 32px below filter text */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.beginner-display-blurred-image-wrapper {
+  width: 20.5rem; /* 328px */
+  height: 20.5rem; /* 328px */
+  border-radius: 0.95rem; /* 4px */
+  background: #000;
+  margin: 0 auto;
+  overflow: hidden;
+  display: block;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.beginner-display-blurred-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.95rem; /* 4px */
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 1;
+  opacity: var(--opacity-50, 0.5);
+  filter: blur(6px);
+}
+
+.beginner-display-blurred-overlay {
+  position: absolute;
+  top: 5.8125rem; /* 93px from top */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12rem; /* 192px - wider to accommodate text */
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5625rem; /* 9px */
+  z-index: 3;
+}
+
+.beginner-display-question-svg {
+  width: 5rem; /* 80px */
+  height: 5rem; /* 80px */
+  display: block;
+}
+
+.beginner-display-question-title {
+  color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+  text-align: center;
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-21, 1.3125rem); /* 21px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: var(--line-height-27, 1.6875rem); /* 27px - 128.571% */
+}
+
+.beginner-display-question-desc {
+  align-self: stretch;
+  display: flex;
+  height: 1.375rem; /* 22px */
+  flex-direction: column;
+  justify-content: center;
+  align-self: stretch;
+  color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+  text-align: center;
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-14, 0.875rem); /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: var(--line-height-22, 1.375rem); /* 22px - 157.143% */
+} 
+
+
+.beginner-display-password-section {
+    margin-top: 2rem; /* 32px below image */
+  }
+  
+  .beginner-display-password-title {
+    color: var(--mbneppuri-com-black, var(--color-black-solid, #000));
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: var(--font-size-16, 1rem); /* 16px */
+    font-style: normal;
+    font-weight: var(--font-weight-700, 700);
+    line-height: var(--line-height-28_8, 1.8rem); /* 28.8px - 180% */
+  }
+  
+  .beginner-display-password-desc {
+    color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: var(--font-size-14, 0.875rem); /* 14px */
+    font-style: normal;
+    font-weight: var(--font-weight-400, 400);
+    line-height: var(--line-height-25_2, 1.575rem); /* 25.2px - 180% */
+  }
+  
+  .beginner-display-password-container {
+    margin-top: 2rem; /* 32px below filter text */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .beginner-display-password-image-wrapper {
+    width: 20.5rem; /* 328px */
+    height: 20.5rem; /* 328px */
+    border-radius: 0.95rem; /* 4px */
+    background: #586B88;
+    margin: 0 auto;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    flex-shrink: 0;
+  }
+    
+  .beginner-display-password-overlay {
+    position: absolute;
+    top: 2rem; /* 93px from top */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12rem; /* 192px - wider to accommodate text */
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    z-index: 3;
+  }
+  
+  .beginner-display-lock-svg {
+    width: 5rem; /* 80px */
+    height: 5rem; /* 80px */
+    display: block;
+  }
+  
+  .beginner-display-lock-title {
+    color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+    text-align: center;
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: var(--font-size-21, 1.3125rem); /* 21px */
+    font-style: normal;
+    font-weight: var(--font-weight-700, 700);
+    line-height: var(--line-height-27, 1.6875rem); /* 27px - 128.571% */
+  }
+  
+  .beginner-display-lock-desc {
+    align-self: stretch;
+    display: flex;
+    height: 1.375rem; /* 22px */
+    flex-direction: column;
+    justify-content: center;
+    align-self: stretch;
+    color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+    text-align: center;
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: var(--font-size-14, 0.875rem); /* 14px */
+    font-style: normal;
+    font-weight: var(--font-weight-400, 400);
+    line-height: var(--line-height-22, 1.375rem); /* 22px - 157.143% */
+  } 
+
+.beginner-display-password-form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem; /* 16px between input and button */
+  margin-top: 1.5rem; /* 24px below lock-desc */
+}
+
+.beginner-display-password-input {
+  height: 2.874375rem; /* 45.99px */
+  flex-shrink: 0;
+  align-self: stretch;
+  border-radius: 0.356875rem; /* 5.71px */
+  background: var(--color-white-solid, #FFF);
+  box-shadow: 0px 0px 0px 0.0714375rem #E9E9E9 inset;
+  border: none;
+  padding: 0 0.75rem;
+  color: var(--mbneppuri-com-silver-chalice, var(--color-grey-67, #ACACAC));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-14, 0.875rem); /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: normal;
+}
+
+.beginner-display-password-input::placeholder {
+  color: var(--mbneppuri-com-silver-chalice, var(--color-grey-67, #ACACAC));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-14, 0.875rem); /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: normal;
+}
+
+.beginner-display-password-submit {
+  display: flex;
+  width: 5rem; /* 80px */
+  height: 2.25rem; /* 36px */
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 0.3125rem; /* 5px */
+  background: var(--Gradient-3, linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%));
+  border: none;
+  color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+  text-align: center;
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-13, 0.8125rem); /* 13px */
+  font-style: normal;
+  font-weight: var(--font-weight-900, 900);
+  line-height: var(--line-height-19_5, 1.21875rem); /* 19.5px - 150% */
+  cursor: pointer;
+} 
+
+.beginner-display-warning-section {
+  margin-top: 2rem; /* 32px below previous section */
+}
+
+.beginner-display-warning-title {
+  color: var(--mbneppuri-com-black, var(--color-black-solid, #000));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-16, 1rem); /* 16px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: var(--line-height-28_8, 1.8rem); /* 28.8px - 180% */
+}
+
+.beginner-display-warning-desc {
+  color: var(--mbneppuri-com-mine-shaft, var(--color-grey-21, #363636));
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-14, 0.875rem); /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: var(--line-height-25_2, 1.575rem); /* 25.2px - 180% */
+}
+
+.beginner-display-warning-container {
+  margin-top: 2rem; /* 32px below desc */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.beginner-display-warning-image-wrapper {
+  width: 20.5rem; /* 328px */
+  height: 20.5rem; /* 328px */
+  border-radius: 1rem; /* 16px */
+  background: #A0A5AC;
+  margin: 0 auto;
+  overflow: hidden;
+  display: block;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.beginner-display-warning-overlay {
+  position: absolute;
+  top: 5.8125rem; /* 93px from top */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12rem; /* 192px */
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5625rem; /* 9px */
+  z-index: 3;
+}
+
+.beginner-display-warning-svg {
+  width: 5rem; /* 80px */
+  height: 5rem; /* 80px */
+  display: block;
+  flex-shrink: 0;
+}
+
+.beginner-display-warning-label {
+  color: var(--mbneppuri-com-waikawa-gray, var(--color-azure-44, #586B88));
+  text-align: center;
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-21, 1.3125rem); /* 21px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: var(--line-height-27, 1.6875rem); /* 27px - 128.571% */
+}
+
+.beginner-display-warning-text {
+  align-self: stretch;
+  display: flex;
+  height: 1.375rem; /* 22px */
+  flex-direction: column;
+  justify-content: center;
+  color: var(--mbneppuri-com-waikawa-gray, var(--color-azure-44, #586B88));
+  text-align: center;
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: var(--font-size-14, 0.875rem); /* 14px */
+  font-style: normal;
+  font-weight: var(--font-weight-400, 400);
+  line-height: var(--line-height-22, 1.375rem); /* 22px - 157.143% */
+} 
+
+.beginner-productinfo-cta-section {
+  margin-top: 2.375rem; /* 38px below third section */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.beginner-productinfo-cta-title {
+  text-align: center;
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: 2rem; /* 32px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: normal;
+  background: var(--Gradient-3, linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem; /* 16px below text */
+}
+
+.beginner-productinfo-cta-btn {
+  display: flex;
+  width: 27.5rem; /* 440px */
+  padding: 1.5rem; /* 24px */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.9375rem; /* 15px */
+  border-radius: 0.5rem; /* 8px */
+  background: var(--Gradient-3, linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%));
+  box-shadow: 0px 4px 36px 0px rgba(0, 0, 0, 0.10);
+  border: none;
+  cursor: pointer;
+  color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+  text-align: center;
+  font-family: var(--font-family-Font-3, "Hiragino Sans");
+  font-size: 1.5rem; /* 24px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: 0.875rem; /* 14px */
+} 
+
+.beginner-hero-center-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+  text-align: center;
+  font-family: var(--font-family-Font-1, "Noto Sans JP");
+  font-size: 2rem; /* 32px */
+  font-style: normal;
+  font-weight: var(--font-weight-700, 700);
+  line-height: 1.375rem; /* 22px, 68.75% */
+  z-index: 2;
+} 
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .beginner-hero-section {
+    display: none !important;
+  }
+  
+  .beginner-hero-mobile-section {
+    display: block !important;
+    margin-top: 32px;
+    padding: 0 16px;
+  }
+
+  .beginner-hero-image-mobile {
+    width: 90vw;
+    max-width: 343px;
+    height: 64px;
+    flex-shrink: 0;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .beginner-hero-image-mobile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 31.5%;
+    border-radius: 8px;
+    display: block;
+  }
+
+  .beginner-hero-image-mobile-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mbneppuri-com-white, #FFF);
+    text-align: center;
+    font-family: "Noto Sans JP";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 15.441px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .beginner-hero-mobile-subtext {
+    margin-top: 16px;
+    color: var(--mbneppuri-com-black, #000);
+    text-align: center;
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px;
+  }
+
+  .beginner-hero-mobile-title {
+    margin-top: 16px;
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    text-align: left;
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 21.6px;
+  }
+
+  .beginner-hero-mobile-divider {
+    margin-top: 16px;
+    position: relative;
+    height: 1px;
+    width: 100%;
+    background: var(--color-grey-86, #DCDCDC);
+  }
+
+  .beginner-hero-mobile-divider::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-orange-65, #FF8D4E) 0%, var(--color-magenta-55, #EA2CE2) 100%);
+  }
+
+  .beginner-hero-mobile-description {
+    margin-top: 16px;
+    align-self: stretch;
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 25.2px;
+    white-space: pre-line;
+  }
+
+  /* Mobile Section 1: Photo Upload */
+  .beginner-upload-mobile-frame {
+    margin-top: 32px;
+    margin-left: 16px;
+    margin-right: 16px;
+    display: flex;
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    align-self: stretch;
+    border-radius: 8px;
+    background: var(--color-white-solid, #FFF);
+    box-shadow: 0px 4px 36px 0px rgba(0, 0, 0, 0.10);
+  }
+
+  .beginner-upload-mobile-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 0;
+    margin-top: 24px;
+    flex-shrink: 0;
+    justify-content: center;
+    width: 100%;
+    align-self: stretch;
+  }
+
+  .beginner-upload-mobile-svg {
+    width: 43px;
+    height: 43px;
+    flex-shrink: 0;
+    border-radius: 21.5px;
+    background: linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .beginner-upload-mobile-svg-text {
+    color: #FFF;
+    font-family: 'General Sans', 'Noto Sans JP', sans-serif;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    width: 100%;
+    user-select: none;
+  }
+
+  .beginner-upload-mobile-svg svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .beginner-upload-mobile-title {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    text-align: center;
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 21.6px;
+  }
+
+  .beginner-image-mobile-section {
+    margin-bottom: 0;
+    margin-top: 16px;
+    width: 295px;
+    height: 166px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15.99px;
+    align-self: stretch;
+    margin-left: 24px;
+    margin-right: 24px;
+    position: relative;
+  }
+
+  .beginner-image-mobile-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .beginner-image-mobile-subframe {
+    display: inline-flex;
+    align-items: center;
+    gap: 86.501px;
+    width: 229px;
+    height: 126px;
+  }
+
+  .beginner-image-mobile-subframe-first {
+    position: relative;
+  }
+
+  .beginner-image-mobile-subframe-second {
+    position: absolute;
+    left: 65px;
+    top: 31px;
+  }
+
+  .beginner-image-mobile-photo {
+    width: 57.084px;
+    height: 115.466px;
+    transform: rotate(15deg);
+    aspect-ratio: 57.08/115.47;
+    border-radius: 7.933px;
+    border: 1.983px solid var(--color-grey-20, #333);
+    object-fit: cover;
+    box-shadow: 6.942px 6.942px 14.379px -1.983px rgba(0, 0, 0, 0.15);
+  }
+
+  .beginner-image-mobile-note {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    white-space: pre-line;
+  }
+
+  /* Mobile Section 2: Product Information */
+  .beginner-productinfo-mobile-frame {
+    margin-top: 32px;
+    margin-left: 16px;
+    margin-right: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    align-self: stretch;
+    border-radius: 8px;
+    background: var(--color-white-solid, #FFF);
+    box-shadow: 0px 4px 36px 0px rgba(0, 0, 0, 0.10);
+  }
+
+  .beginner-productinfo-mobile-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    justify-content: center;
+    width: 100%;
+    align-self: stretch;
+  }
+
+  .beginner-productinfo-mobile-svg {
+    width: 43px;
+    height: 43px;
+    flex-shrink: 0;
+    border-radius: 21.5px;
+    background: linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .beginner-productinfo-mobile-svg-text {
+    color: #FFF;
+    font-family: 'General Sans', 'Noto Sans JP', sans-serif;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    width: 100%;
+    user-select: none;
+  }
+
+  .beginner-productinfo-mobile-title {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 21.6px;
+  }
+
+  .beginner-fee-mobile-input-frame {
+    margin-bottom: 24px;
+  }
+
+  .beginner-fee-mobile-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .beginner-fee-mobile-text {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .beginner-fee-mobile-input-form-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .beginner-fee-mobile-input-form {
+    width: 120px;
+    height: 40px;
+    padding: 8px 12px;
+    border: 1px solid var(--color-grey-86, #DCDCDC);
+    border-radius: 4px;
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 14px;
+  }
+
+  .beginner-fee-mobile-yen {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 14px;
+  }
+
+  .beginner-fee-mobile-range {
+    color: var(--color-grey-60, #999);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 12px;
+  }
+
+  .beginner-fee-mobile-free-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .beginner-fee-mobile-free-circle {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--color-grey-86, #DCDCDC);
+    border-radius: 50%;
+  }
+
+  .beginner-fee-mobile-free-text {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .beginner-productinfo-mobile-note {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+  }
+
+  .beginner-productinfo-mobile-note-line1 {
+    margin-bottom: 8px;
+  }
+
+  .beginner-productinfo-mobile-note-em {
+    color: var(--color-orange-65, #000);
+    font-weight: 700;
+  }
+
+  .beginner-productinfo-mobile-price-image {
+    width: 295px;
+    height: 85px;
+    max-width: var(--width-350, 350px);
+    max-height: 100.63px;
+    aspect-ratio: 59/17;
+    background: lightgray 0px 0.002px / 100% 99.995% no-repeat;
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Mobile Section 3: Display Settings */
+  .beginner-display-mobile-frame {
+    margin-top: 32px;
+    margin-left: 16px;
+    margin-right: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 8px;
+    background: var(--color-white-solid, #FFF);
+    box-shadow: 0px 4px 36px 0px rgba(0, 0, 0, 0.10);
+  }
+
+  .beginner-display-mobile-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    justify-content: center;
+    width: 100%;
+    align-self: stretch;
+  }
+
+  .beginner-display-mobile-svg {
+    width: 43px;
+    height: 43px;
+    flex-shrink: 0;
+    border-radius: 21.5px;
+    background: linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .beginner-display-mobile-svg-text {
+    color: #FFF;
+    font-family: 'General Sans', 'Noto Sans JP', sans-serif;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    width: 100%;
+    user-select: none;
+  }
+
+  .beginner-display-mobile-title {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 21.6px;
+  }
+
+  .beginner-display-mobile-desc1 {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    margin-bottom: 15px;
+  }
+
+  .beginner-display-mobile-gacha {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .beginner-display-mobile-gacha-title {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .beginner-display-mobile-gacha-desc {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    margin-bottom: 0;
+  }
+
+  .beginner-display-mobile-sample-container {
+    margin-bottom: 32px;
+  }
+
+  .beginner-display-mobile-sample-image-wrapper {
+    position: relative;
+    width: 279px;
+    height: 288.357px;
+    max-width: 279px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    border-width: 4px;
+    border-color: #f722f7;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 16px;
+  }
+
+  .beginner-display-mobile-sample-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4.253px;
+    display: block;
+  }
+
+  .beginner-display-mobile-sample-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 279px;
+    height: 288.357px;
+    flex-shrink: 0;
+    opacity: var(--opacity-50, 0.5);
+    background: linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%);
+    border-radius: 4.253px;
+    pointer-events: none;
+  }
+
+  .beginner-display-mobile-bubble-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .beginner-display-mobile-bubble-svg {
+    width: 68.049px;
+    height: 68.049px;
+    display: block;
+    margin: 0 auto;
+
+  }
+
+  .beginner-display-mobile-bubble-title {
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 7px;
+    margin-bottom: 7px;
+  }
+
+  .beginner-display-mobile-bubble-desc {
+    display: flex;
+    height: 18.713px;
+    flex-direction: column;
+    justify-content: center;
+    align-self: stretch;
+    color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+    text-align: center;
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 11.909px;
+    font-style: normal;
+    font-weight: var(--font-weight-400, 400);
+    line-height: 18.713px;
+    white-space: nowrap;
+  }
+
+  .beginner-display-mobile-filter-section {
+    margin-bottom: 0;
+  }
+
+  .beginner-display-mobile-filter-title {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .beginner-display-mobile-filter-desc {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    margin-bottom: 0;
+  }
+
+  .beginner-display-mobile-blurred-container {
+    margin-top: 1rem;
+  }
+
+  .beginner-display-mobile-blurred-image-wrapper {
+    position: relative;
+    width: 17.4375rem;      /* 279px */
+    height: 17.4375rem;     /* 279px */
+    flex-shrink: 0;
+    border-radius: 1rem;    /* 16px */
+    background: #000;
+    opacity: var(--opacity-80, 0.9);
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;       /* 16px */
+    display: block;
+  }
+
+  .beginner-display-mobile-blurred-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(6px);
+  }
+
+  .beginner-display-mobile-blurred-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 17.4375rem;
+    height: 17.4375rem;
+    flex-shrink: 0;
+    opacity: var(--opacity-50, 0.4);
+    background: #000;
+    border-radius: 1rem;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .beginner-display-mobile-blurred-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 17.4375rem;
+    height: 17.4375rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .beginner-display-mobile-question-svg {
+    width: 4.253rem;   /* 68.049px */
+    height: 4.253rem;  /* 68.049px */
+    display: block;
+    margin: 0 auto;
+  }
+
+  .beginner-display-mobile-question-title {
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .beginner-display-mobile-question-desc {
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 12px;
+    color: #fff;
+    font-weight: 400;
+  }
+
+  .beginner-display-mobile-password-section {
+    margin-top: 2rem;
+  }
+
+  .beginner-display-mobile-password-title {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .beginner-display-mobile-password-desc {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+  }
+
+  .beginner-display-mobile-password-container {
+    margin-bottom: 32px;
+  }
+
+  .beginner-display-mobile-password-image-wrapper {
+    position: relative;
+    display: flex;
+    width: 17.4375rem;
+    height: 17.4375rem;
+    padding: 0 0.6875rem 0 0.75rem;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 1rem;
+    opacity: 1;
+    background: var(--color-azure-44, #586B88);
+    margin: 1rem auto 0 auto;
+    overflow: hidden;
+  }
+
+  .beginner-display-mobile-password-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    padding: 0;
+  }
+
+  .beginner-display-mobile-lock-svg {
+    width: 3rem;   /* 48px */
+    height: 3rem;  /* 48px */
+    display: block;
+    margin: 2.25rem auto 0 auto; /* 36px from top */
+  }
+
+  .beginner-display-mobile-lock-title {
+    margin-top: 0.5625rem; /* 9px below SVG */
+    color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+    text-align: center;
+    font-family: var(--font-family-Font-3, "Hiragino Sans");
+    font-size: 0.75rem; /* 12px */
+    font-style: normal;
+    font-weight: var(--font-weight-400, 400);
+    line-height: 0.933rem; /* 14.928px */
+    margin-bottom: 0.5rem;
+  }
+
+  .beginner-display-mobile-lock-desc {
+    display: flex;
+    height: 1.375rem; /* 22px */
+    flex-direction: column;
+    justify-content: center;
+    align-self: stretch;
+    color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+    text-align: center;
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 0.625rem; /* 10px */
+    font-style: normal;
+    font-weight: var(--font-weight-400, 400);
+    line-height: 0.855rem; /* 13.684px */
+    margin-bottom: 0.75rem;
+  }
+
+  .beginner-display-mobile-password-form-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center;
+    width: 100%;
+    padding-left: 0.75rem;   /* 12px */
+    padding-right: 0.75rem;  /* 12px */
+  }
+
+  .beginner-display-mobile-password-input {
+    width: 100%;
+    height: 2.5rem;
+    flex-shrink: 0;
+    align-self: stretch;
+    border-radius: 0.357rem;
+    background: var(--color-white-solid, #FFF);
+    box-shadow: 0px 0px 0px 0.071rem #E9E9E9 inset;
+    border: none;
+    padding: 0 0.75rem;
+    box-sizing: border-box;
+    color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+    text-align: center;
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 0.625rem;
+    font-style: normal;
+    font-weight: var(--font-weight-400, 400);
+    line-height: 0.855rem;
+  }
+
+  .beginner-display-mobile-password-input::placeholder {
+    color: var(--mbneppuri-com-silver-chalice, var(--color-grey-67, #ACACAC));
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: var(--font-weight-400, 400);
+    line-height: normal;
+  }
+
+  .beginner-display-mobile-password-submit {
+    margin-top: 1rem; /* 16px below input */
+    display: flex;
+    width: 5rem;
+    height: 2.25rem;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 0.3125rem;
+    background: var(--Gradient-3, linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%));
+    border: none;
+    color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+    text-align: center;
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: var(--font-weight-900, 900);
+    line-height: 1.22rem;
+    cursor: pointer;
+  }
+
+  .beginner-display-mobile-warning-section {
+    margin-bottom: 24px;
+  }
+
+  .beginner-display-mobile-warning-title {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .beginner-display-mobile-warning-desc {
+    color: var(--mbneppuri-com-mine-shaft, #363636);
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+  }
+
+  .beginner-display-mobile-warning-container {
+    margin-bottom: 32px;
+  }
+
+  .beginner-display-mobile-warning-image-wrapper {
+    position: relative;
+    width: 17.4375rem;      /* 279px */
+    height: 17.4375rem;     /* 279px */
+    flex-shrink: 0;
+    border-radius: 1rem; /* 4.253px */
+    border: 0.266rem ; /* 4.253px */
+    background: #A0A5AC;
+    margin: 0 auto;
+    overflow: hidden;
+    display: block;
+  }
+
+  .beginner-display-mobile-warning-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 2;
+    padding: 0;
+  }
+
+  .beginner-display-mobile-warning-svg {
+    width: 4.253rem;   /* 68.049px */
+    height: 4.253rem;  /* 68.049px */
+    display: block;
+    margin: 5rem auto 0 auto; /* 80px from top */
+  }
+
+  .beginner-display-mobile-warning-label {
+    margin-top: 0.5rem; /* 8px below SVG */
+    color: var(--mbneppuri-com-waikawa-gray, var(--color-azure-44, #586B88));
+    text-align: center;
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 1.116rem; /* 17.863px */
+    font-style: normal;
+    font-weight: var(--font-weight-700, 700);
+    line-height: 1.435rem; /* 22.966px */
+  }
+
+  .beginner-display-mobile-warning-text {
+    margin-top: 0.5rem; /* 8px below WARNING */
+    display: flex;
+    height: 1.17rem; /* 18.713px */
+    flex-direction: column;
+    justify-content: center;
+    align-self: stretch;
+    color: var(--mbneppuri-com-waikawa-gray, var(--color-azure-44, #586B88));
+    text-align: center;
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 0.744rem; /* 11.909px */
+    font-style: normal;
+    font-weight: var(--font-weight-400, 400);
+    line-height: 1.17rem; /* 18.713px */
+  }
+
+  .beginner-mobile-cta-section {
+    margin-top: 3rem; /* 48px */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* 16px between title and button */
+  }
+
+  .beginner-mobile-cta-title {
+    text-align: center;
+    font-family: var(--font-family-Font-1, "Noto Sans JP");
+    font-size: 1.5rem; /* 24px */
+    font-style: normal;
+    font-weight: var(--font-weight-700, 700);
+    line-height: normal;
+    background: var(--Gradient-3, linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem; /* 16px below title */
+  }
+
+  .beginner-mobile-cta-btn {
+    display: flex;
+    width: 20.5rem; /* 328px */
+    max-width: 20.5rem;
+    padding: 1.5rem 2.25rem; /* 24px 36px */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.375rem; /* 6px */
+    background: var(--Gradient-3, linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%));
+    border: none;
+    cursor: pointer;
+    color: var(--mbneppuri-com-white, var(--color-white-solid, #FFF));
+    text-align: center;
+    font-family: var(--font-family-Font-3, "Hiragino Sans");
+    font-size: 1.3125rem; /* 21px */
+    font-style: normal;
+    font-weight: var(--font-weight-700, 700);
+    line-height: 0.875rem; /* 14px */
+  }
+}
+
+/* Desktop styles - only hide mobile section, don't change existing desktop layout */
+@media (min-width: 769px) {
+  .beginner-hero-mobile-section,
+  .beginner-upload-mobile-frame,
+  .beginner-productinfo-mobile-frame,
+  .beginner-display-mobile-frame {
+    display: none !important;
+  }
+} 
+
+@media (max-width: 768px) {
+  .beginner-fee-mobile-input-frame {
+    display: none !important;
+  }
+} 
+

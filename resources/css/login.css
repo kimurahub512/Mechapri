@@ -1,5 +1,5 @@
-/* Mobile-first styles for Registration page */
-.registration-container {
+/* Mobile-first styles for Login page */
+.login-container {
   min-height: calc(100vh - 6.125rem);
   display: flex;
   justify-content: center;
@@ -9,7 +9,7 @@
   padding-bottom: 2rem;
 }
 
-.registration-modal {
+.login-modal {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -22,7 +22,7 @@
   padding: 2rem 1rem 1.5rem 1rem;
 }
 
-.registration-close {
+.login-close {
   position: absolute;
   right: 1rem;
   top: 1rem;
@@ -35,14 +35,14 @@
   z-index: 10;
 }
 
-.registration-logo {
+.login-logo {
   display: block;
   margin: 0 auto 1.5rem auto;
   width: 8rem;
   height: auto;
 }
 
-.registration-title {
+.login-title {
   color: #363636;
   text-align: center;
   font-family: "Noto Sans JP";
@@ -51,7 +51,7 @@
   margin-bottom: 1.5rem;
 }
 
-.registration-label {
+.login-label {
   color: #363636;
   font-family: "Hiragino Sans";
   font-size: 1rem;
@@ -59,7 +59,7 @@
   margin-bottom: 0.5rem;
 }
 
-.registration-input {
+.login-input {
   width: 100%;
   height: 2.75rem;
   border-radius: 0.357rem;
@@ -74,76 +74,32 @@
 }
 
 /* Override margin for password input to achieve 4px gap to SVG */
-.registration-input[name="password"] {
-  margin-bottom: 1rem;
+.login-input[name="password"] {
+  margin-bottom: 0.25rem;
 }
 
-/* Override margin for login button to reduce gap from password memory text */
-.registration-button[type="submit"] {
-  margin-top: 0.5rem;
+.password-remember-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.0625rem;
+  margin-bottom: 1.5rem;
 }
 
-/* Specific rule for login page - reduce gap between password memory and login button */
-.registration-form .registration-button[type="submit"] {
-  margin-top: 0.25rem;
+.password-remember-container svg {
+  flex-shrink: 0;
 }
 
-/* Login page specific styles to reduce gaps */
-.min-h-screen form.space-y-6 {
-  gap: 1rem;
+.password-remember-container span {
+  color: #0D0D0D;
+  font-family: "Noto Sans JP";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
 }
 
-.min-h-screen form.space-y-6 > div {
-  margin-bottom: 0.5rem;
-}
-
-.min-h-screen form.space-y-6 > div:last-child {
-  margin-bottom: 0;
-}
-
-/* Override Tailwind space-y-6 for login page */
-.min-h-screen .space-y-6 > * + * {
-  margin-top: 0.5rem !important;
-}
-
-/* More specific login page targeting */
-.min-h-screen .max-w-md form.space-y-6 {
-  gap: 0.5rem !important;
-}
-
-.min-h-screen .max-w-md form.space-y-6 > div {
-  margin-bottom: 0.25rem !important;
-}
-
-.min-h-screen .max-w-md form.space-y-6 > div:last-child {
-  margin-bottom: 0 !important;
-}
-
-/* Target the specific login form structure */
-.min-h-screen .max-w-md .space-y-6 > .rounded-md {
-  margin-bottom: 0.5rem !important;
-}
-
-.min-h-screen .max-w-md .space-y-6 > .flex {
-  margin-bottom: 0.5rem !important;
-}
-
-.min-h-screen .max-w-md .space-y-6 > div:last-child {
-  margin-bottom: 0 !important;
-}
-
-/* Specific rule for gap between パスワードを記憶する text and login button */
-.registration-form .password-remember-container + .registration-button {
-  margin-top: 2.8125rem !important; /* 45px = 2.8125rem */
-  margin-bottom: 2rem !important; /* Increase bottom margin to prevent overlap */
-}
-
-/* Fix overlap between login button and ログインはこちら text */
-.registration-form .registration-button + .registration-login-link {
-  margin-top: 0 !important; /* Remove any top margin since button has bottom margin */
-}
-
-.registration-button {
+.login-button {
   width: 100%;
   padding: 0.9375rem 0;
   border-radius: 0.5rem;
@@ -159,13 +115,13 @@
   cursor: pointer;
 }
 
-.registration-login-link {
+.login-login-link {
   text-align: center;
   font-size: 0.75rem;
   margin-bottom: 1rem;
 }
 
-.registration-divider {
+.login-divider {
   width: 100%;
   height: 0.0625rem;
   background: #E9E9E9;
@@ -173,7 +129,7 @@
   position: relative;
 }
 
-.registration-divider-text {
+.login-divider-text {
   position: absolute;
   left: 50%;
   top: -0.75rem;
@@ -186,14 +142,14 @@
   font-weight: 500;
 }
 
-.registration-socials {
+.login-socials {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
-.registration-social-btn {
+.login-social-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -209,18 +165,18 @@
   max-width: 9.75rem;
 }
 
-.registration-social-btn.line {
+.login-social-btn.line {
   background: #06C755;
   color: #fff;
 }
 
-.registration-social-btn.google {
+.login-social-btn.google {
   background: #fff;
   color: #363636;
   border: 0.0625rem solid #ACACAC;
 }
 
-.registration-terms {
+.login-terms {
   color: #969696;
   text-align: center;
   font-family: "Noto Sans JP";
@@ -233,7 +189,7 @@
   margin-right: auto;
 }
 
-.registration-terms span {
+.login-terms span {
   color: #363636;
   font-family: var(--font-family-Font-1, 'Noto Sans JP');
   font-size: var(--font-size-12, 0.75rem);
@@ -254,11 +210,11 @@
 
 /* Desktop styles */
 @media (min-width: 1024px) {
-  .registration-container {
+  .login-container {
     padding-top: 5rem;
     padding-bottom: 5rem;
   }
-  .registration-modal {
+  .login-modal {
     flex-direction: row;
     width: 60rem;
     max-width: 100vw;
@@ -266,7 +222,7 @@
     padding: 0;
     gap: 2.5rem;
   }
-  .registration-logo {
+  .login-logo {
     position: absolute;
     top: 4rem;
     left: 50%;
@@ -275,7 +231,7 @@
     height: 2.25rem;
     margin: 0;
   }
-  .registration-title {
+  .login-title {
     position: absolute;
     top: 8.25rem;
     left: 50%;
@@ -284,7 +240,7 @@
     line-height: 1.6875rem;
     margin-bottom: 0;
   }
-  .registration-form {
+  .login-form {
     width: 30rem;
     max-width: 100%;
     margin: 0 auto;
@@ -295,34 +251,29 @@
     z-index: 2;
     padding-top: 12rem;
   }
-  .registration-label {
+  .login-label {
     font-size: 1rem;
     line-height: 1.5rem;
     margin-left: 0;
   }
-  .registration-input {
+  .login-input {
     font-size: 1rem;
     height: 3.125rem;
     padding: 0 1rem;
     margin-left: 0;
   }
-  .registration-button {
+  .login-button {
     width: 20.5rem;
     max-width: 20.5rem;
-    margin: 0;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 31.75rem;
+    /* margin-top: ; */
+    margin: 1.5rem auto 1.5rem auto;
   }
-  .registration-login-link {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 36.25rem;
-    margin-bottom: 0;
+  .login-login-link {
+    width: 100%;
+    text-align: center;
+    margin-bottom: .8rem;
   }
-  .registration-divider {
+  .login-divider {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -330,12 +281,12 @@
     top: 38.875rem;
     margin: 0;
   }
-  .registration-divider-text {
+  .login-divider-text {
     top: -0.625rem;
     font-size: 0.875rem;
     line-height: 1.3125rem;
   }
-  .registration-socials {
+  .login-socials {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -344,7 +295,7 @@
     top: 40.5625rem;
     margin-bottom: 0;
   }
-  .registration-terms {
+  .login-terms {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -358,10 +309,10 @@
   header {
     display: none !important;
   }
-  .registration-container .header {
+  .login-container .header {
     display: none !important;
   }
-  .registration-modal {
+  .login-modal {
     width: 100%;
     max-width: 21.4375rem;
     margin: 0 auto;
@@ -372,14 +323,14 @@
     box-shadow: 0rem 0.25rem 2.25rem 0rem rgba(0, 0, 0, 0.10);
     position: relative;
   }
-  .registration-logo {
+  .login-logo {
     margin-top: 3.75rem;
     width: 12.6781rem;
     height: 2.25rem;
     max-width: 100%;
     object-fit: contain;
   }
-  .registration-form {
+  .login-form {
     width: 100%;
     max-width: 21.4375rem;
     margin: 0 auto;
@@ -387,25 +338,37 @@
     display: flex;
     flex-direction: column;
   }
-  .registration-label,
-  .registration-input,
-  .registration-button,
-  .registration-login-link,
-  .registration-divider,
-  .registration-socials,
-  .registration-terms {
+  .login-label,
+  .login-input,
+  .login-button,
+  .login-login-link,
+  .login-divider,
+  .login-socials,
+  .login-terms {
     width: 100%;
     box-sizing: border-box;
     margin-left: 0;
     margin-right: 0;
     max-width: 100%;
   }
-  .registration-button {
+  .login-button {
     width: 15rem;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 16px;
+    margin-top: 0;
   }
-  .registration-socials {
+  .login-login-link {
+    margin-bottom: 6px;
+  }
+  .login-login-link:last-of-type {
+    margin-bottom: 0;
+  }
+  .login-divider {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+  .login-socials {
     display: flex;
     flex-direction: row;
     gap: 1rem;
@@ -413,31 +376,52 @@
     width: 100%;
     margin: 0;
     box-sizing: border-box;
+    margin-top: 1rem;
   }
-  .registration-social-btn {
+  .login-social-btn {
     flex: 1 1 0;
     min-width: 0;
     width: auto;
     max-width: none;
   }
-  .registration-terms {
+  .login-terms {
     align-self: stretch;
-    color: var(--mbneppuri-com-dusty-gray, var(--color-grey-59, #969696));
+    color: #969696;
     text-align: center;
-    font-family: var(--font-family-Font-1, "Noto Sans JP");
-    font-size: var(--font-size-12, 0.75rem);
+    font-family: "Noto Sans JP";
+    font-size: 0.75rem;
     font-style: normal;
-    font-weight: var(--font-weight-400, 400);
-    line-height: var(--line-height-18, 1.125rem);
+    font-weight: 400;
+    line-height: 1.125rem;
     margin: 1rem;
     padding: 1rem;
     white-space: normal;
     margin-left: auto;
     margin-right: auto;
+    max-width: 100%;
+  }
+  .login-terms span {
+    color: #363636;
+    font-family: "Noto Sans JP";
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.125rem;
+  }
+  /* Align password-remember-container with login-input */
+  .password-remember-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.0625rem;
+    margin-bottom: 45px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: flex-start;
   }
 }
 
-.registration-error {
+.login-error {
   color: #FF2A2A;
   font-size: 0.875rem;
   margin-top: 0.25rem;
@@ -445,8 +429,4 @@
   font-family: "Hiragino Sans", sans-serif;
   line-height: 1.2;
   text-align: left;
-}
-
-.registration-input[name="password_confirmation"] {
-  margin-bottom: 45px;
 } 
