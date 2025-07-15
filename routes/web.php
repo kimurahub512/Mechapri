@@ -35,6 +35,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/beginner', function(){
         return Inertia::render('Beginner');
     });
+    
+    Route::get('/shop-management', function(){
+        return Inertia::render('ShopManagement');
+    });
 
     Route::get('/verify-email', function () {
         return Inertia::render('Auth/VerifyEmail');
