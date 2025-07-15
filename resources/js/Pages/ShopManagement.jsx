@@ -17,6 +17,8 @@ import money_hand from '@/assets/images/money_hand.svg';
 import mountain from '@/assets/images/mountain.svg';
 import complex from '@/assets/images/complex.svg';
 import '@/../../resources/css/shopmanagement.css';
+import ShopSidebar from '@/Components/ShopSidebar';
+import ShopMobileTopBlocks from '@/Components/ShopMobileTopBlocks';
 
 const ShopManagement = () => {
   return (
@@ -24,96 +26,9 @@ const ShopManagement = () => {
       <Header />
       <div className="shopmanagement-root">
         {/* Sidebar Section */}
-        <aside className="shopmanagement-sidebar-outer">
-          <div className="shopmanagement-sidebar-content">
-            <img
-              className="sm-hero"
-              src={sm_hero}
-              alt="Shop Hero"
-            />
-            <div className="sm-shop-title">anchiy1005’s SHOP</div>
-            <div className="sm-shop-view-btn">自分のショップを見る</div>
-            <div className="sm-shop-edit-frame">
-              <img src={pen_paper} alt="Edit" className="sm-shop-edit-icon" />
-              <span className="sm-shop-edit-text">ショップ情報編集</span>
-            </div>
-            <div className="sm-shop-menu-container">
-              <div className="sm-shop-menu-item sm-shop-menu-item--active">
-                <img src={shop} alt="Shop" className="sm-shop-menu-icon" />
-                <span className="sm-shop-menu-text">ショップ管理トップ</span>
-              </div>
-              <div className="sm-shop-menu-item">
-                <img src={select_multiple} alt="Product" className="sm-shop-menu-icon sm-shop-menu-icon--gray" />
-                <span className="sm-shop-menu-text sm-shop-menu-text--gray">商品管理</span>
-              </div>
-              <div className="sm-shop-menu-item">
-                <img src={cart2} alt="Category" className="sm-shop-menu-icon sm-shop-menu-icon--gray" />
-                <span className="sm-shop-menu-text sm-shop-menu-text--gray">商品カテゴリ</span>
-              </div>
-              <div className="sm-shop-menu-item">
-                <img src={p_circle} alt="Payout" className="sm-shop-menu-icon sm-shop-menu-icon--gray" />
-                <span className="sm-shop-menu-text sm-shop-menu-text--gray">出金・売上</span>
-              </div>
-              <div className="sm-shop-menu-item">
-                <img src={clock} alt="History" className="sm-shop-menu-icon sm-shop-menu-icon--gray" />
-                <span className="sm-shop-menu-text sm-shop-menu-text--gray">販売履歴</span>
-              </div>
-              <div className="sm-shop-menu-item sm-shop-menu-item--register">
-                <img src={file_add} alt="Add" className="sm-shop-menu-icon sm-shop-menu-icon--register" />
-                <span className="sm-shop-menu-text sm-shop-menu-text--register">写真を商品登録</span>
-              </div>
-            </div>
-          </div>
-        </aside>
-        {/* Mobile Header */}
-        <div className="shopmanagement-mobile-header">
-          <div className="shopmanagement-mobile-header-frame">
-            <div className="shopmanagement-mobile-header-left">
-              <img
-                className="shopmanagement-mobile-hero"
-                src={sm_hero}
-                alt="Shop Hero"
-              />
-              <span className="shopmanagement-mobile-title">anchiy1005's SHOP</span>
-            </div>
-            <div className="shopmanagement-mobile-shop-btn">自分のショップ</div>
-          </div>
-        </div>
-        {/* Mobile Navigation Block */}
-        <div className="shopmanagement-mobile-nav">
-          <div className="shopmanagement-mobile-nav-list">
-            <div className="shopmanagement-mobile-nav-item">
-              <div className="shopmanagement-mobile-nav-item-content">
-                <img src={mountain} alt="mountain" className="shopmanagement-mobile-nav-icon" />
-                <span className="shopmanagement-mobile-nav-text">商品管理</span>
-              </div>
-            </div>
-            <div className="shopmanagement-mobile-nav-item">
-              <div className="shopmanagement-mobile-nav-item-content">
-                <img src={select_multiple} alt="Category" className="shopmanagement-mobile-nav-icon" />
-                <span className="shopmanagement-mobile-nav-text">商品カテゴリ</span>
-              </div>
-            </div>
-            <div className="shopmanagement-mobile-nav-item">
-              <div className="shopmanagement-mobile-nav-item-content">
-                <img src={p_circle} alt="Payout" className="shopmanagement-mobile-nav-icon" />
-                <span className="shopmanagement-mobile-nav-text">出金・売上</span>
-              </div>
-            </div>
-            <div className="shopmanagement-mobile-nav-item">
-              <div className="shopmanagement-mobile-nav-item-content">
-                <img src={clock} alt="History" className="shopmanagement-mobile-nav-icon" />
-                <span className="shopmanagement-mobile-nav-text">販売履歴</span>
-              </div>
-            </div>
-            <div className="shopmanagement-mobile-nav-item">
-              <div className="shopmanagement-mobile-nav-item-content">
-                <img src={pen_paper} alt="Edit" className="shopmanagement-mobile-nav-icon" />
-                <span className="shopmanagement-mobile-nav-text">ショップ編集</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ShopSidebar />
+        {/* Mobile Header and Navigation */}
+        <ShopMobileTopBlocks />
         {/* Mobile Main Section */}
         <div className="shopmanagement-mobile-main-section">
           <div className="shopmanagement-mobile-container31">
@@ -164,9 +79,9 @@ const ShopManagement = () => {
                     </div>
                     <div className="shopmanagement-mobile-container32-3221-row2">
                       <div className="shopmanagement-mobile-container32-3221-row2-x1">
-                        <span className="shopmanagement-mobile-container32-3221-value">0</span>
+                      <span className="shopmanagement-mobile-container32-3221-value">0</span>
                         <div className="shopmanagement-mobile-container32-3221-row2-x2">
-                          <span className="shopmanagement-mobile-container32-3221-unit">円</span>
+                      <span className="shopmanagement-mobile-container32-3221-unit">円</span>
                         </div>
                       </div>
                     </div>

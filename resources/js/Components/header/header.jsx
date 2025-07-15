@@ -70,7 +70,7 @@ const Header = ({ authButton }) => {
                   {/* 会員登録 or ショップ管理 */}
                   {auth?.user ? (
                     <li className='inline-block'>
-                      <a href='/shop/manage' className='flex h-[26px] px-[6px] py-[1.5px] pb-[2.5px] flex-row items-center rounded bg-white text-[#222] font-noto text-xs font-normal leading-[22px]'>
+                      <a href='/shop-management' className='flex h-[26px] px-[6px] py-[1.5px] pb-[2.5px] flex-row items-center rounded bg-white text-[#222] font-noto text-xs font-normal leading-[22px]'>
                         <span className='mr-1.5 flex items-center'>
                           <img src={shop} alt="shop" className="w-[22px] h-[18px]" />
                         </span>
@@ -162,7 +162,7 @@ const Header = ({ authButton }) => {
                 alignItems: 'flex-start'
               }}
             >
-              <a href='/shop/manage' className='mobile-header-nav-item' style={{ alignItems: 'center', height: '100%', display: 'flex' }}>
+              <a href='/shop-management' className='mobile-header-nav-item' style={{ alignItems: 'center', height: '100%', display: 'flex' }}>
                 <img src={shop} alt='shop' className='mobile-header-nav-shop-svg' />
                 <span className='mobile-header-nav-label'>ショップ管理</span>
               </a>

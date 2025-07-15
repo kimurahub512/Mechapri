@@ -39,6 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/shop-management', function(){
         return Inertia::render('ShopManagement');
     });
+    Route::get('/myshop/edit', function(){
+        return Inertia::render('MyShopEdit');
+    });
 
     Route::get('/verify-email', function () {
         return Inertia::render('Auth/VerifyEmail');
