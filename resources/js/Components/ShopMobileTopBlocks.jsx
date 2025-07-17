@@ -1,13 +1,15 @@
 import React from 'react';
 import sm_hero from '@/assets/images/sm_hero.png';
 import mountain from '@/assets/images/mountain.svg';
-import select_multiple from '@/assets/images/select_multiple.svg';
+import list_unordered from '@/assets/images/list_unordered.svg';
 import p_circle from '@/assets/images/p_circle.svg';
 import clock from '@/assets/images/clock.svg';
 import pen_paper from '@/assets/images/pen_paper.svg';
 
 const ShopMobileTopBlocks = () => {
   const isEditPage = window.location.pathname === '/myshop/edit';
+  const isMyContents = window.location.pathname === '/myshop/contents';
+  const isTransaction = window.location.pathname === '/myshop/transaction';
   
   return (
     <>
@@ -29,21 +31,79 @@ const ShopMobileTopBlocks = () => {
       <div className="shopmanagement-mobile-nav">
         <div className="shopmanagement-mobile-nav-list">
           <div className="shopmanagement-mobile-nav-item">
-            <div className="shopmanagement-mobile-nav-item-content">
+            <div
+              className="shopmanagement-mobile-nav-item-content"
+              style={isMyContents ? {
+                display: 'flex',
+                height: '48px',
+                padding: '12px 8px',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: '8px',
+                background: '#FFEFF8'
+              } : {}}
+            >
               <img src={mountain} alt="mountain" className="shopmanagement-mobile-nav-icon" />
-              <span className="shopmanagement-mobile-nav-text">商品管理</span>
+              <a 
+                href="/myshop/contents" 
+                className="shopmanagement-mobile-nav-text"
+                style={isMyContents ? {
+                  textDecoration: 'none',
+                  fontFamily: 'Noto Sans JP',
+                  fontSize: '9px',
+                  fontWeight: 400,
+                  lineHeight: '10px',
+                  background: 'linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  color: 'transparent',
+                  WebkitTextFillColor: 'transparent',
+                } : { textDecoration: 'none' }}
+              >
+                商品管理
+              </a>
             </div>
           </div>
           <div className="shopmanagement-mobile-nav-item">
             <div className="shopmanagement-mobile-nav-item-content">
-              <img src={select_multiple} alt="Category" className="shopmanagement-mobile-nav-icon" />
+              <img src={list_unordered} alt="Category" className="shopmanagement-mobile-nav-icon" />
               <span className="shopmanagement-mobile-nav-text">商品カテゴリ</span>
             </div>
           </div>
           <div className="shopmanagement-mobile-nav-item">
-            <div className="shopmanagement-mobile-nav-item-content">
+            <div
+              className="shopmanagement-mobile-nav-item-content"
+              style={isTransaction ? {
+                display: 'flex',
+                height: '48px',
+                padding: '12px 8px',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: '8px',
+                background: '#FFEFF8'
+              } : {}}
+            >
               <img src={p_circle} alt="Payout" className="shopmanagement-mobile-nav-icon" />
-              <span className="shopmanagement-mobile-nav-text">出金・売上</span>
+              <a 
+                href="/myshop/transaction" 
+                className="shopmanagement-mobile-nav-text"
+                style={isTransaction ? {
+                  textDecoration: 'none',
+                  fontFamily: 'Noto Sans JP',
+                  fontSize: '9px',
+                  fontWeight: 400,
+                  lineHeight: '10px',
+                  background: 'linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  color: 'transparent',
+                  WebkitTextFillColor: 'transparent',
+                } : { textDecoration: 'none' }}
+              >
+                出金・売上
+              </a>
             </div>
           </div>
           <div className="shopmanagement-mobile-nav-item">

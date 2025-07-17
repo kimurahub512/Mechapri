@@ -9,18 +9,7 @@ import photo1 from '@/assets/images/shopedit/photo1.png';
 import circle_plus from '@/assets/images/shopedit/circle_plus.svg';
 
 const MyShopEdit = () => {
-    useEffect(() => {
-        const logInfo = () => {
-            const main = document.querySelector('main');
-            console.log('Window width:', window.innerWidth);
-            if (main) {
-                console.log('Main className:', main.className);
-            }
-        };
-        logInfo();
-        window.addEventListener('resize', logInfo);
-        return () => window.removeEventListener('resize', logInfo);
-    }, []);
+ 
     return (
         <>
         <Header/>
@@ -42,7 +31,7 @@ const MyShopEdit = () => {
                 <div className="flex flex-col items-center gap-4 px-4 py-5 rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch
                     md:flex-row md:w-[874px] md:px-[36px] md:py-[32px] md:justify-center md:items-center md:gap-[10px] md:rounded-none">
                     {/* Inner frame 21 */}
-                    <div className="flex flex-col items-center gap-4 w-full md:w-[802px] md:items-start md:gap-[22px] md:flex-shrink-0 border border-dashed border-pink-400">
+                    <div className="flex flex-col items-center gap-4 w-full md:w-[802px] md:items-start md:gap-[22px] md:flex-shrink-0 ">
                         {/* Frame 211 */}
                         <div className="flex flex-col items-start gap-1 w-full md:w-[802px] md:gap-[4px]">
                             {/* Text and frame 2111 */}

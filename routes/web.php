@@ -37,10 +37,16 @@ Route::middleware('auth')->group(function () {
     });
     
     Route::get('/shop-management', function(){
-        return Inertia::render('ShopManagement');
+        return Inertia::render('MyShopManagement/ShopManagement');
     });
     Route::get('/myshop/edit', function(){
-        return Inertia::render('MyShopEdit');
+        return Inertia::render('MyShopManagement/MyShopEdit');
+    });
+    Route::get('/myshop/contents', function(){
+        return Inertia::render('MyShopManagement/MyContents');
+    });
+    Route::get('/myshop/transaction', function(){
+        return Inertia::render('MyShopManagement/Transaction');
     });
 
     Route::get('/verify-email', function () {

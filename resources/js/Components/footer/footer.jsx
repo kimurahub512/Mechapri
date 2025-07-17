@@ -108,7 +108,7 @@ const Footer = () => {
       </div>
       
       {/* Mobile Navigation Section */}
-      <div className="mechapuri-footer-mobile-nav">
+      <div className="mechapuri-footer-mobile-nav block md:hidden">
         <div className="mechapuri-footer-nav-content">
           {/* Home */}
           <div className="mechapuri-footer-nav-item">
