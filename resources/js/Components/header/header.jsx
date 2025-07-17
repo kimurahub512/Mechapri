@@ -70,7 +70,7 @@ const Header = ({ authButton }) => {
                   {/* 会員登録 or ショップ管理 */}
                   {auth?.user ? (
                     <li className='inline-block'>
-                      <a href='/shop-management' className='flex h-[26px] px-[6px] py-[1.5px] pb-[2.5px] flex-row items-center rounded bg-white text-[#222] font-noto text-xs font-normal leading-[22px]'>
+                      <a href='/shop-management' className={`flex h-[26px] px-[6px] py-[1.5px] pb-[2.5px] flex-row items-center rounded bg-white text-[#222] font-noto text-xs font-normal leading-[22px]${window.location.pathname === '/shop-management' ? ' shopmanagement-nav-active-desktop' : ''}`}>
                         <span className='mr-1.5 flex items-center'>
                           <img src={shop} alt="shop" className="w-[22px] h-[18px]" />
                         </span>
@@ -150,7 +150,7 @@ const Header = ({ authButton }) => {
               borderBottom: '1px solid #DCDCDC'
             }}
           >
-            <div style={{ width: '100%', display: 'flex', alignItems: 'center', paddingLeft: 16, paddingRight: 16 }}>
+            <div style={{ width: '100%', display: 'flex', alignItems: 'center', paddingLeft: 12, paddingRight: 12 }}>
             <a href='/' className='flex items-center flex-shrink-0' style={{ height: '100%' }}>
               <img src={logo} className='mobile-header-logo' alt='mechapuri Logo' />
             </a>
@@ -162,7 +162,7 @@ const Header = ({ authButton }) => {
                 alignItems: 'flex-start'
               }}
             >
-              <a href='/shop-management' className='mobile-header-nav-item' style={{ alignItems: 'center', height: '100%', display: 'flex' }}>
+              <a href='/shop-management' className={`mobile-header-nav-item${window.location.pathname === '/shop-management' ? ' shopmanagement-nav-active-mobile' : ''}`} style={{ alignItems: 'center', height: '100%', display: 'flex' }}>
                 <img src={shop} alt='shop' className='mobile-header-nav-shop-svg' />
                 <span className='mobile-header-nav-label'>ショップ管理</span>
               </a>
@@ -177,8 +177,8 @@ const Header = ({ authButton }) => {
                   display: 'flex',
                   marginTop: 7,
                   height: 51,
-                  padding: '4px 12px',
-                  borderRadius: 8,
+                  padding: '4px 6px',
+                  borderRadius: 6,
                   marginBottom: 6,
                   marginRight: 0,
                   boxSizing: 'border-box',
