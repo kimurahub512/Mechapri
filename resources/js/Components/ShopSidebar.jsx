@@ -36,7 +36,7 @@ const ShopSidebar = () => {
             <div className={`sm-shop-menu-item${isShopManagement ? ' sm-shop-menu-item--active' : ''}`}
               style={!isShopManagement ? { background: 'transparent' } : {}}>
               <svg className="sm-shop-menu-icon" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.77279 15.0004H17.9395M2.93945 15.0004H5.43945M5.43945 15.0004V16.6671M5.43945 15.0004V13.3337M17.1061 10.0004H17.9395M2.93945 10.0004H13.7728M13.7728 10.0004V11.6671M13.7728 10.0004V8.33374M12.1061 5.00041H17.9395M2.93945 5.00041H8.77279M8.77279 5.00041V6.66707M8.77279 5.00041V3.33374" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8.77279 15.0004H17.9395M2.93945 15.0004H5.43945M5.43945 15.0004V16.6671M5.43945 15.0004V13.3337M17.1061 10.0004H17.9395M2.93945 10.0004H13.7728M13.7728 10.0004V11.6671M13.7728 10.0004V8.33374M12.1061 5.00041H17.9395M2.93945 5.00041H8.77279M8.77279 5.00041V6.66707M8.77279 5.00041V3.33374" stroke="currentColor" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               <span className="sm-shop-menu-text" style={!isShopManagement ? { color: '#222' } : {}}>ショップ管理トップ</span>
             </div>

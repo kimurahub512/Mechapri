@@ -5,8 +5,6 @@ import ShopSidebar from '@/Components/ShopSidebar';
 import ShopMobileTopBlock from '@/Components/ShopMobileTopBlocks';
 import '@/../../resources/css/shopmanagement.css';
 import photo1 from '@/assets/images/shopcontents/photo1.png';
-import lock from '@/assets/images/lock.svg';
-import pencil_line from '@/assets/images/pencil_line.svg';
 import recyclebin from '@/assets/images/recyclebin.svg';
 
 const MyContents = () => {
@@ -94,7 +92,7 @@ const MyContents = () => {
                                     <div className="absolute left-[121px] top-[18.5px] inline-flex items-center gap-1 px-1 py-0 rounded-[30px]">
                                         <svg width="20" height="20" viewBox="0 0 81 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M62.4258 28C66.2918 28 69.4258 31.134 69.4258 35V69C69.4258 72.866 66.2918 76 62.4258 76H16.4258C12.5598 76 9.42578 72.866 9.42578 69V35C9.42578 31.134 12.5598 28 16.4258 28H62.4258ZM39.4258 42C35.0075 42 31.4258 45.5817 31.4258 50C31.4258 52.9606 33.0353 55.5433 35.4258 56.9268V63C35.4258 65.2091 37.2166 67 39.4258 67C41.6349 67 43.4258 65.2091 43.4258 63V56.9268C45.8163 55.5433 47.4258 52.9606 47.4258 50C47.4258 45.5817 43.8441 42 39.4258 42Z" fill="#FF2AA1"/>
-                                            <path d="M39.4258 9.16211C49.2772 9.16211 57.2637 17.1486 57.2637 27V33.8379H21.5879V27C21.5879 17.1486 29.5744 9.16211 39.4258 9.16211Z" stroke="#FF2AA1" stroke-width="8.32502"/>
+                                            <path d="M39.4258 9.16211C49.2772 9.16211 57.2637 17.1486 57.2637 27V33.8379H21.5879V27C21.5879 17.1486 29.5744 9.16211 39.4258 9.16211Z" stroke="#FF2AA1" strokeWidth="8.32502"/>
                                         </svg>
                                         <span className="text-[#FF2AA1] font-['Noto_Sans_JP'] text-[13px] font-bold leading-[15px]">非公開中</span>
                                     </div>
@@ -102,7 +100,7 @@ const MyContents = () => {
                                     <div className="absolute top-[58px] right-[9px] inline-flex items-center gap-2">
                                         <div className="flex items-center gap-2 w-[90px] h-[34px] px-4 rounded-[5px] bg-[#E9E9E9]">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2 17.9997H18M2 17.9997V13.9997L10 5.99975M2 17.9997L6 17.9997L14 9.99974M10 5.99975L12.8686 3.1311L12.8704 3.1294C13.2652 2.73451 13.463 2.53672 13.691 2.46264C13.8919 2.39738 14.1082 2.39738 14.3091 2.46264C14.5369 2.53667 14.7345 2.73424 15.1288 3.12856L16.8686 4.86836C17.2646 5.26437 17.4627 5.46247 17.5369 5.6908C17.6022 5.89164 17.6021 6.10799 17.5369 6.30883C17.4628 6.537 17.265 6.7348 16.8695 7.13025L16.8686 7.1311L14 9.99974M10 5.99975L14 9.99974" stroke="#767676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M2 17.9997H18M2 17.9997V13.9997L10 5.99975M2 17.9997L6 17.9997L14 9.99974M10 5.99975L12.8686 3.1311L12.8704 3.1294C13.2652 2.73451 13.463 2.53672 13.691 2.46264C13.8919 2.39738 14.1082 2.39738 14.3091 2.46264C14.5369 2.53667 14.7345 2.73424 15.1288 3.12856L16.8686 4.86836C17.2646 5.26437 17.4627 5.46247 17.5369 5.6908C17.6022 5.89164 17.6021 6.10799 17.5369 6.30883C17.4628 6.537 17.265 6.7348 16.8695 7.13025L16.8686 7.1311L14 9.99974M10 5.99975L14 9.99974" stroke="#767676" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <span className="flex-1 text-[#767676] font-['Noto_Sans_JP'] text-[12px] font-bold leading-[18px]">編集</span>
                                         </div>
@@ -135,7 +133,7 @@ const MyContents = () => {
                                     <div className="absolute left-[121px] top-[18.5px] inline-flex items-center gap-1 px-1 py-0 rounded-[30px]">
                                         <svg width="20" height="20" viewBox="0 0 81 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M62.4258 28C66.2918 28 69.4258 31.134 69.4258 35V69C69.4258 72.866 66.2918 76 62.4258 76H16.4258C12.5598 76 9.42578 72.866 9.42578 69V35C9.42578 31.134 12.5598 28 16.4258 28H62.4258ZM39.4258 42C35.0075 42 31.4258 45.5817 31.4258 50C31.4258 52.9606 33.0353 55.5433 35.4258 56.9268V63C35.4258 65.2091 37.2166 67 39.4258 67C41.6349 67 43.4258 65.2091 43.4258 63V56.9268C45.8163 55.5433 47.4258 52.9606 47.4258 50C47.4258 45.5817 43.8441 42 39.4258 42Z" fill="#FF2AA1"/>
-                                            <path d="M39.4258 9.16211C49.2772 9.16211 57.2637 17.1486 57.2637 27V33.8379H21.5879V27C21.5879 17.1486 29.5744 9.16211 39.4258 9.16211Z" stroke="#FF2AA1" stroke-width="8.32502"/>
+                                            <path d="M39.4258 9.16211C49.2772 9.16211 57.2637 17.1486 57.2637 27V33.8379H21.5879V27C21.5879 17.1486 29.5744 9.16211 39.4258 9.16211Z" stroke="#FF2AA1" strokeWidth="8.32502"/>
                                         </svg>
                                         <span className="text-[#FF2AA1] font-['Noto_Sans_JP'] text-[13px] font-bold leading-[15px]">非公開中</span>
                                     </div>
@@ -143,7 +141,7 @@ const MyContents = () => {
                                     <div className="absolute top-[58px] right-[9px] inline-flex items-center gap-2">
                                         <div className="flex items-center gap-2 w-[90px] h-[34px] px-4 rounded-[5px] bg-[#E9E9E9]">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2 17.9997H18M2 17.9997V13.9997L10 5.99975M2 17.9997L6 17.9997L14 9.99974M10 5.99975L12.8686 3.1311L12.8704 3.1294C13.2652 2.73451 13.463 2.53672 13.691 2.46264C13.8919 2.39738 14.1082 2.39738 14.3091 2.46264C14.5369 2.53667 14.7345 2.73424 15.1288 3.12856L16.8686 4.86836C17.2646 5.26437 17.4627 5.46247 17.5369 5.6908C17.6022 5.89164 17.6021 6.10799 17.5369 6.30883C17.4628 6.537 17.265 6.7348 16.8695 7.13025L16.8686 7.1311L14 9.99974M10 5.99975L14 9.99974" stroke="#767676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M2 17.9997H18M2 17.9997V13.9997L10 5.99975M2 17.9997L6 17.9997L14 9.99974M10 5.99975L12.8686 3.1311L12.8704 3.1294C13.2652 2.73451 13.463 2.53672 13.691 2.46264C13.8919 2.39738 14.1082 2.39738 14.3091 2.46264C14.5369 2.53667 14.7345 2.73424 15.1288 3.12856L16.8686 4.86836C17.2646 5.26437 17.4627 5.46247 17.5369 5.6908C17.6022 5.89164 17.6021 6.10799 17.5369 6.30883C17.4628 6.537 17.265 6.7348 16.8695 7.13025L16.8686 7.1311L14 9.99974M10 5.99975L14 9.99974" stroke="#767676" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <span className="flex-1 text-[#767676] font-['Noto_Sans_JP'] text-[12px] font-bold leading-[18px]">編集</span>
                                         </div>
@@ -176,7 +174,7 @@ const MyContents = () => {
                                     <div className="absolute left-[121px] top-[18.5px] inline-flex items-center gap-1 px-1 py-0 rounded-[30px]">
                                         <svg width="20" height="20" viewBox="0 0 81 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M62.4258 28C66.2918 28 69.4258 31.134 69.4258 35V69C69.4258 72.866 66.2918 76 62.4258 76H16.4258C12.5598 76 9.42578 72.866 9.42578 69V35C9.42578 31.134 12.5598 28 16.4258 28H62.4258ZM39.4258 42C35.0075 42 31.4258 45.5817 31.4258 50C31.4258 52.9606 33.0353 55.5433 35.4258 56.9268V63C35.4258 65.2091 37.2166 67 39.4258 67C41.6349 67 43.4258 65.2091 43.4258 63V56.9268C45.8163 55.5433 47.4258 52.9606 47.4258 50C47.4258 45.5817 43.8441 42 39.4258 42Z" fill="#FF2AA1"/>
-                                            <path d="M39.4258 9.16211C49.2772 9.16211 57.2637 17.1486 57.2637 27V33.8379H21.5879V27C21.5879 17.1486 29.5744 9.16211 39.4258 9.16211Z" stroke="#FF2AA1" stroke-width="8.32502"/>
+                                            <path d="M39.4258 9.16211C49.2772 9.16211 57.2637 17.1486 57.2637 27V33.8379H21.5879V27C21.5879 17.1486 29.5744 9.16211 39.4258 9.16211Z" stroke="#FF2AA1" strokeWidth="8.32502"/>
                                         </svg>
                                         <span className="text-[#FF2AA1] font-['Noto_Sans_JP'] text-[13px] font-bold leading-[15px]">非公開中</span>
                                     </div>
@@ -184,7 +182,7 @@ const MyContents = () => {
                                     <div className="absolute top-[58px] right-[9px] inline-flex items-center gap-2">
                                         <div className="flex items-center gap-2 w-[90px] h-[34px] px-4 rounded-[5px] bg-[#E9E9E9]">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2 17.9997H18M2 17.9997V13.9997L10 5.99975M2 17.9997L6 17.9997L14 9.99974M10 5.99975L12.8686 3.1311L12.8704 3.1294C13.2652 2.73451 13.463 2.53672 13.691 2.46264C13.8919 2.39738 14.1082 2.39738 14.3091 2.46264C14.5369 2.53667 14.7345 2.73424 15.1288 3.12856L16.8686 4.86836C17.2646 5.26437 17.4627 5.46247 17.5369 5.6908C17.6022 5.89164 17.6021 6.10799 17.5369 6.30883C17.4628 6.537 17.265 6.7348 16.8695 7.13025L16.8686 7.1311L14 9.99974M10 5.99975L14 9.99974" stroke="#767676" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M2 17.9997H18M2 17.9997V13.9997L10 5.99975M2 17.9997L6 17.9997L14 9.99974M10 5.99975L12.8686 3.1311L12.8704 3.1294C13.2652 2.73451 13.463 2.53672 13.691 2.46264C13.8919 2.39738 14.1082 2.39738 14.3091 2.46264C14.5369 2.53667 14.7345 2.73424 15.1288 3.12856L16.8686 4.86836C17.2646 5.26437 17.4627 5.46247 17.5369 5.6908C17.6022 5.89164 17.6021 6.10799 17.5369 6.30883C17.4628 6.537 17.265 6.7348 16.8695 7.13025L16.8686 7.1311L14 9.99974M10 5.99975L14 9.99974" stroke="#767676" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                                             </svg>
                                             <span className="flex-1 text-[#767676] font-['Noto_Sans_JP'] text-[12px] font-bold leading-[18px]">編集</span>
                                         </div>
