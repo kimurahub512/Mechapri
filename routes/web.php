@@ -48,6 +48,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/myshop/transaction', function(){
         return Inertia::render('MyShopManagement/Transaction');
     });
+    Route::get('/myshop/saleshistory', function(){
+        return Inertia::render('MyShopManagement/SalesHistory');
+    });
 
     Route::get('/verify-email', function () {
         return Inertia::render('Auth/VerifyEmail');

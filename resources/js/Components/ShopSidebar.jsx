@@ -13,6 +13,7 @@ const ShopSidebar = () => {
   const isMyShopEdit = window.location.pathname === '/myshop/edit';
   const isMyContents = window.location.pathname === '/myshop/contents';
   const isTransaction = window.location.pathname === '/myshop/transaction';
+  const isSalesHistory = window.location.pathname === '/myshop/saleshistory';
   return (
     <aside className="shopmanagement-sidebar-outer">
       <div className="shopmanagement-sidebar-content">
@@ -120,10 +121,21 @@ const ShopSidebar = () => {
               <span className="sm-shop-menu-text" style={isTransaction ? { color: '#fff' } : { color: '#222' }}>出金・売上</span>
             </div>
           </a>
-          <div className="sm-shop-menu-item">
-            <img src={clock} alt="History" className="sm-shop-menu-icon sm-shop-menu-icon--gray" />
-            <span className="sm-shop-menu-text sm-shop-menu-text--gray">販売履歴</span>
-          </div>
+          <a href="/myshop/saleshistory" style={{ textDecoration: 'none' }}>
+            <div className={`sm-shop-menu-item${isSalesHistory ? ' sm-shop-menu-item--active' : ''}`}
+              style={isSalesHistory ? {
+                display: 'flex',
+                width: '168px',
+                padding: '12px',
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderRadius: '8px',
+                background: '#FF2AA1'
+              } : { background: 'transparent' }}>
+              <img src={clock} alt="History" className="sm-shop-menu-icon" style={isSalesHistory ? { filter: 'brightness(0) invert(1)' } : {}} />
+              <span className="sm-shop-menu-text" style={isSalesHistory ? { color: '#fff' } : { color: '#222' }}>販売履歴</span>
+            </div>
+          </a>
           <div className="sm-shop-menu-item sm-shop-menu-item--register">
             <img src={file_add} alt="Add" className="sm-shop-menu-icon sm-shop-menu-icon--register" />
             <span className="sm-shop-menu-text sm-shop-menu-text--register">写真を商品登録</span>

@@ -10,6 +10,7 @@ const ShopMobileTopBlocks = () => {
   const isEditPage = window.location.pathname === '/myshop/edit';
   const isMyContents = window.location.pathname === '/myshop/contents';
   const isTransaction = window.location.pathname === '/myshop/transaction';
+  const isSalesHistory = window.location.pathname === '/myshop/saleshistory';
   
   return (
     <>
@@ -107,9 +108,38 @@ const ShopMobileTopBlocks = () => {
             </div>
           </div>
           <div className="shopmanagement-mobile-nav-item">
-            <div className="shopmanagement-mobile-nav-item-content">
-              <img src={clock} alt="History" className="shopmanagement-mobile-nav-icon" />
-              <span className="shopmanagement-mobile-nav-text">販売履歴</span>
+            <div
+              className="shopmanagement-mobile-nav-item-content"
+              style={isSalesHistory ? {
+                display: 'flex',
+                height: '48px',
+                padding: '12px 8px',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: '8px',
+                background: '#FFEFF8'
+              } : {}}
+            >
+              <img src={clock} alt="History" className="shopmanagement-mobile-nav-icon" style={isSalesHistory ? { filter: 'brightness(0) saturate(100%) invert(36%) sepia(99%) saturate(7492%) hue-rotate(292deg) brightness(101%) contrast(101%)' } : {}} />
+              <a 
+                href="/myshop/saleshistory" 
+                className="shopmanagement-mobile-nav-text"
+                style={isSalesHistory ? {
+                  textDecoration: 'none',
+                  fontFamily: 'Noto Sans JP',
+                  fontSize: '9px',
+                  fontWeight: 400,
+                  lineHeight: '10px',
+                  background: 'linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  color: 'transparent',
+                  WebkitTextFillColor: 'transparent',
+                } : { textDecoration: 'none' }}
+              >
+                販売履歴
+              </a>
             </div>
           </div>
           <div className="shopmanagement-mobile-nav-item">
