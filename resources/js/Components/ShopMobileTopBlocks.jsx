@@ -143,22 +143,24 @@ const ShopMobileTopBlocks = () => {
             </div>
           </div>
           <div className="shopmanagement-mobile-nav-item">
-            <div 
-              className="shopmanagement-mobile-nav-item-content"
-              style={isEditPage ? {
-                display: 'flex',
-                height: '48px',
-                padding: '12px 4px',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '8px',
-                background: '#FFEFF8'
-              } : {}}
-            >
-              <img src={pen_paper} alt="Edit" className="shopmanagement-mobile-nav-icon" />
-              <a href="/myshop/edit" className="shopmanagement-mobile-nav-text" style={{textDecoration: 'none'}}>ショップ編集</a>
-            </div>
+            <a href="/myshop/registerproduct" style={{ textDecoration: 'none' }}>
+              <div 
+                className="shopmanagement-mobile-nav-item-content"
+                style={isEditPage ? {
+                  display: 'flex',
+                  height: '48px',
+                  padding: '12px 4px',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: '8px',
+                  background: '#FFEFF8'
+                } : {}}
+              >
+                <img src={pen_paper} alt="Edit" className="shopmanagement-mobile-nav-icon" />
+                <span className="shopmanagement-mobile-nav-text">写真を商品登録</span>
+              </div>
+            </a>
           </div>
         </div>
       </div>

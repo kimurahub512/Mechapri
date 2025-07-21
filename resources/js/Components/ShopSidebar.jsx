@@ -136,10 +136,12 @@ const ShopSidebar = () => {
               <span className="sm-shop-menu-text" style={isSalesHistory ? { color: '#fff' } : { color: '#222' }}>販売履歴</span>
             </div>
           </a>
-          <div className="sm-shop-menu-item sm-shop-menu-item--register">
-            <img src={file_add} alt="Add" className="sm-shop-menu-icon sm-shop-menu-icon--register" />
-            <span className="sm-shop-menu-text sm-shop-menu-text--register">写真を商品登録</span>
-          </div>
+          <a href="/myshop/registerproduct" style={{ textDecoration: 'none' }}>
+            <div className="sm-shop-menu-item sm-shop-menu-item--register">
+              <img src={file_add} alt="Add" className="sm-shop-menu-icon sm-shop-menu-icon--register" />
+              <span className="sm-shop-menu-text sm-shop-menu-text--register">写真を商品登録</span>
+            </div>
+          </a>
         </div>
       </div>
     </aside>

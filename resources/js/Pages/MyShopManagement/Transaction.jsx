@@ -676,7 +676,7 @@ const Transaction = () => {
                 </section>
             </main>
             {/* Mobile Top Block (not shown on desktop) */}
-            <ShopMobileTopBlock/>
+            <ShopMobileTopBlock/>            
         </div>
         <Footer/>
         </>
