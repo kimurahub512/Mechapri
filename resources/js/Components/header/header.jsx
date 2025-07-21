@@ -85,9 +85,9 @@ const Header = ({ authButton }) => {
                     </li>
                   )}
                   <li className='inline-block'>
-                    <div className='flex h-[26px] px-[6px] py-[1.5px] pb-[2.5px] flex-col justify-center items-center rounded text-[#222] font-noto text-xs font-normal leading-[22px]'>
+                    <a href='/notification' className='flex h-[26px] px-[6px] py-[1.5px] pb-[2.5px] flex-col justify-center items-center rounded text-[#222] font-noto text-xs font-normal leading-[22px]'>
                       お知らせ
-                    </div>
+                    </a>
                   </li>
                 <li className='inline-block'>
                     <div className='flex flex-row items-center w-[120px] h-[32px] rounded bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] justify-center px-3'>
@@ -116,7 +116,7 @@ const Header = ({ authButton }) => {
                     </a>
                   </li>
                   <li>
-                    <a href='/about' className='font-1 font-normal text-[15px] leading-[22px] tracking-normal align-middle py-4 lg:py-2 pr-2 pl-2 text-whitewash bg-transparent flex items-center whitespace-nowrap'>
+                    <a href='/accountsetting' className='font-1 font-normal text-[15px] leading-[22px] tracking-normal align-middle py-4 lg:py-2 pr-2 pl-2 text-whitewash bg-transparent flex items-center whitespace-nowrap'>
                       {auth?.user?.image ? (
                         <img
                           src={auth.user.image.startsWith('http') ? auth.user.image : `/storage/${auth.user.image}`}
@@ -166,7 +166,7 @@ const Header = ({ authButton }) => {
                 <img src={shop} alt='shop' className='mobile-header-nav-shop-svg' />
                 <span className='mobile-header-nav-label'>ショップ管理</span>
               </a>
-              <a href='/notifications' className='mobile-header-nav-item' style={{ alignItems: 'center', height: '100%', display: 'flex' }}>
+              <a href='/notification' className='mobile-header-nav-item' style={{ alignItems: 'center', height: '100%', display: 'flex' }}>
                 <img src={bell} alt='bell' className='mobile-header-nav-bell-svg' />
                 <span className='mobile-header-nav-label'>お知らせ</span>
               </a>

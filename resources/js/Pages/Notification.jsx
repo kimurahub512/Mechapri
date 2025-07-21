@@ -3,51 +3,62 @@ import React, { useEffect } from 'react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import '@/../../resources/css/shopmanagement.css';
-
-
+import photo1 from '@/assets/images/shopcontents/photo1.png';
 
 const Notification = () => {
-
     return (
-        <>
+        <div className="bg-white">
             <Header />
-            {/* Desktop Main Section */}
-            <main className="hidden md:flex flex-col w-full bg-white">
-                {/* Title */}
-                <h1 className="text-[#363636] font-bold text-[36px] leading-[54px] font-[\'Noto Sans JP\'] text-center">商品登録</h1>
+            {/* Main Section */}
+            <main className="hidden md:flex flex-col items-center self-stretch h-[1020px] pb-[60px] bg-white">
                 {/* Frame 1 */}
-                <section className="flex flex-col w-[850px] max-w-[880px] p-[32px_24px_49px_24px] gap-[10px]  shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] items-start">
-                    {/* Image Section (Frame 11) */}
-                    <div className="flex p-[64px_300px_40px_316px] justify-end items-center self-stretch rounded-[2px] border-2 border-dashed border-[#ACACAC] bg-[#F1F3F4] w-full">                        
+                <div className="flex flex-col items-start w-[880px] min-w-[880px] max-w-[880px] gap-[24px] ">
+                    {/* Frame 11 */}
+                    <div className="flex flex-col items-center h-[118px] p-[40px_0_1px_0] self-stretch border-b border-[#D1D1D1] bg-white ">
+                        <h1 className="text-[#363636] text-center font-bold text-[36px] leading-[54px] font-['Noto Sans JP'] self-stretch">通知</h1>
                     </div>
                     {/* Frame 12 */}
-                    <div className="flex flex-col items-start self-stretch w-full">
-                        {/* Frame 121 */}
-                        <div className="flex items-start gap-[16px] self-stretch">
-                            <span className="text-[#ACACAC] font-normal text-[16px] leading-[24px] font-[\'Noto Sans JP\']">ファイル数 &nbsp;0/10</span>
-                            <span className="text-[#ACACAC] font-normal text-[16px] leading-[24px] font-[\'Noto Sans JP\']">容量25MBまで &nbsp;0/25</span>
-                        </div>
-                        {/* Frame 122 */}
-                        <div className="flex flex-col items-start gap-[4px] self-stretch w-full">
-                            {/* Frame 1221 */}
-                            <div className="flex items-center gap-[12px] p-[25px_0_6px_0] self-stretch">
-                                <span className="text-[#363636] font-bold text-[21px] leading-[27px] font-[\'Noto Sans JP\']">タイトル</span>
-                                <span className="text-[#ACACAC] font-normal text-[16px] leading-[24px] font-[\'Noto Sans JP\']">0/30</span>
+                    <div className="flex flex-col items-start self-stretch">
+                        {[1, 2, 3].map((_, i) => (                        
+                        < div key={i} className="flex p-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9]" >
+                            <div className="flex w-[112px] h-[112px] p-[2.205px_19.843px_1.323px_19.843px] justify-center items-center rounded-[4.409px] bg-[#F6F6F6]">
+                                <img src={photo1} alt="notification" />
                             </div>
-                            {/* Frame 1222 */}
-                            <div className="flex flex-col items-start pb-[6.57px] self-stretch w-full">
-                                <input
-                                    type="text"
-                                    className="w-[800px] h-[48px] px-[11px] py-[1px] rounded-[10px] border border-[#FF2AA1] bg-[#FFEFF8] shadow-[0_4px_4px_0_rgba(255,42,161,0.10)] text-[#C9177A] font-medium text-[16px] font-[\'Noto Sans JP\'] focus:outline-none"
-                                    placeholder="郊外のカフェにて"
-                                />
+                            {/* Frame 1211 */}
+                            < div className="flex flex-col h-[118px] pr-[32px] justify-between items-start flex-1" >
+                                <span className="text-black font-normal text-[14px] leading-[21px] font-['Noto Sans JP'] self-stretch">anchiy1005さんが「郊外のカフェにて」を投稿しました</span>
+                                <span className="text-[#363636] font-medium text-[14px] leading-[25.2px] font-['Noto Sans JP']">2025/10/05まで</span>
                             </div>
                         </div>
-                    </div>                    
-                </section>
-            </main>
+                    ))}
+                    </div>
+                </div >
+            </main >
+            {/* Mobile Main Section */}
+            < main className="flex md:hidden flex-col items-center self-stretch bg-white" >
+                {/* Title */}
+                < div className="flex flex-col items-center p-[16px_0_16px_0] self-stretch border-b border-[#D1D1D1]" >
+                    <h1 className="w-full text-center text-[#363636] font-noto font-bold text-[24px] leading-[24px]">通知</h1>
+                </div >
+                {/* Frame 12 */}
+                < div className="flex flex-col items-start w-[375px] self-stretch" >
+                {[1, 2, 3].map((_, i) => ( 
+                    < div key={i} className="flex p-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9]" >
+                        {/* Image */}
+                        < div className="flex w-[64px] h-[64px] p-[1.26px_11.339px_0.756px_11.339px] justify-center items-center rounded-[2.52px] bg-[#F6F6F6]" >
+                            <img src={photo1} alt="notification" />
+                        </div >
+                        {/* 1211 */}
+                        < div className="flex flex-col h-[88px] pr-[32px] justify-between items-start flex-1" >
+                            <span className="self-stretch text-black font-noto font-normal text-[14px] leading-[21px]">anchiy1005さんが「郊外のカフェにて」を投稿しました</span>
+                            <span className="self-stretch text-[#363636] font-noto font-medium text-[14px] leading-[25.2px]">2025/10/05まで</span>
+                        </div >
+                    </div >
+                ))}
+                </div >
+            </main >
             <Footer />
-        </>
+        </div >
     );
 };
 

@@ -21,13 +21,13 @@ import overlay_m from '@/assets/images/saleshistory/overlay_m.png';
 
 
 const RegisterProduct = () => {
-
+ 
     return (
         <>
             <Header />
-            <div className="shopmanagement-root flex flex-col w-full overflow-x-hidden md:flex-row">
-                {/* Sidebar Section */}
-                <div className="hidden md:block">
+        <div className="shopmanagement-root flex flex-col w-full overflow-x-hidden md:flex-row">
+            {/* Sidebar Section */}
+            <div className="hidden md:block">
                     <ShopSidebar />
                 </div>
                 <ShopMobileTopBlock />
@@ -722,8 +722,8 @@ const RegisterProduct = () => {
                                         ※ 登録後は商品ファイルの変更はできません。
                                     </span>
                                 </div>
-                            </div>
-                        </div>
+            </div>            
+        </div>
 
                     </section>
                 </main>

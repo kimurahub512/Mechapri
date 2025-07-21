@@ -164,7 +164,7 @@ const Footer = () => {
               alt="Account" 
               className="mechapuri-footer-nav-svg man_mobile"
             />
-            <div className="mechapuri-footer-nav-text">アカウント</div>
+            <a href='/accountsetting' className="mechapuri-footer-nav-text">アカウント</a>
           </div>
         </div>
       </div>
