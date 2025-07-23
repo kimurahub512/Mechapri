@@ -127,7 +127,7 @@ const Footer = () => {
               alt="Favorites" 
               className="mechapuri-footer-nav-svg heart"
             />
-            <div className="mechapuri-footer-nav-text">お気に入り</div>
+            <a href='/favoriteproducts' className="mechapuri-footer-nav-text">お気に入り</a>
           </div>
           
           {/* Purchase History */}

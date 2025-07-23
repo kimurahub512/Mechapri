@@ -104,7 +104,7 @@ const Header = ({ authButton }) => {
                     <a href='/' className='inline-block lg:block font-1 font-normal text-[15px] leading-[22px] tracking-normal align-middle py-4 lg:py-2 pr-4 pl-3 text-whitewash bg-transparent'>ホーム</a>
                 </li>
                 <li>
-                    <a href='how-it-works' className='inline-block lg:block font-1 font-normal text-[15px] leading-[22px] tracking-normal align-middle py-4 lg:py-2 pr-4 pl-3 text-whitewash bg-transparent'>お気に入り</a>
+                    <a href='favoriteproducts' className='inline-block lg:block font-1 font-normal text-[15px] leading-[22px] tracking-normal align-middle py-4 lg:py-2 pr-4 pl-3 text-whitewash bg-transparent'>お気に入り</a>
                 </li>
                 <li>
                     <a href='/about' className='inline-block lg:block font-1 font-normal text-[15px] leading-[22px] tracking-normal align-middle py-4 lg:py-2 pr-4 pl-3 text-whitewash bg-transparent'>購入履歴</a>
