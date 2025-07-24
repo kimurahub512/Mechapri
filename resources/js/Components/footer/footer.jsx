@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '@/assets/images/mechapuri-logo.svg';
-import footerSvg2 from '@/assets/images/footer_svg2.svg';
+import footerSvg2 from '@/assets/images/instagram.svg';
 import xLogo from '@/assets/images/x_logo.svg';
 import copy from '@/assets/images/copy.svg';
 import home from '@/assets/images/home.svg';

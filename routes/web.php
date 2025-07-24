@@ -78,6 +78,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', function(){
         return Inertia::render('Cart');
     });
+    
+    Route::get('/shoptop', function(){
+        return Inertia::render('shoptop');
+    });
 
     Route::get('/verify-email', function () {
         return Inertia::render('Auth/VerifyEmail');

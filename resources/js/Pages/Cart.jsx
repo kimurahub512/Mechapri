@@ -142,7 +142,7 @@ const Cart = () => {
                             <div className="flex flex-col items-start self-stretch gap-[18px]">
                                 <div className="flex flex-col items-start self-stretch gap-[16px]">
                                     <span className="text-left text-[#363636] font-['Noto Sans JP'] font-medium text-[21px] leading-[32px]">お支払いについて</span>
-                                    <div className="flex flex-col items-start self-stretch">
+                    <div className="flex flex-col items-start self-stretch">
                                         <span className="text-left text-[#363636] font-['Noto Sans JP'] font-medium text-[18px] leading-[32px]">めちゃプリはお客様のセキュリティ保護のため、決済システム <img src={stripe} alt="stripe" className="inline h-[18px] w-auto" /> を利用しています。</span>
                                         <span className="text-left text-[#363636] font-['Noto Sans JP'] font-medium text-[18px] leading-[32px]">クレジットカード等のお支払い情報は当社には伝わらずに暗号化された状態でstripeで処理され、より安全に
                                             ご利用いただけます。</span>

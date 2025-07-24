@@ -94,8 +94,8 @@ const PurchaseHistory = () => {
                         <div key={i} className="relative w-[360px] h-[270px] bg-white rounded-[8px] border-b border-[#E9E9E9]">
                             {/* photo1 */}
                             <div className="absolute top-[16px] left-[16px] flex w-[64px] h-[64px] p-[1.26px_11.339px_0.756px_11.339px] justify-center items-center rounded-[2.52px] bg-[#F6F6F6]">
-                                <img src={photo1} alt="notification" />
-                            </div>
+                                        <img src={photo1} alt="notification" />
+                                    </div>
                             {/* 1211 */}
                             <div className="absolute top-[16px] left-[96px] flex flex-col justify-between items-start">
                                 {/* 12111 */}
@@ -103,7 +103,7 @@ const PurchaseHistory = () => {
                                     <span className="text-[#363636] font-medium text-[14px] leading-[21px]">郊外のカフェにて</span>
                                     <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[11px] leading-[15px]">3枚セット</span>
                                     <div className="flex items-center gap-[5px] m-[4px]">
-                                        <img src={girl} alt="girl" className="w-[20px] h-[20px] rounded-full object-cover bg-gray-200" />
+                                                <img src={girl} alt="girl" className="w-[20px] h-[20px] rounded-full object-cover bg-gray-200" />
                                         <span className="text-[#222] font-noto text-[13px] leading-[20px] font-normal">anchly1005</span>
                                     </div>
                                     <span className="text-[#363636] font-noto font-medium text-[14px] leading-[25px] mb-[4px]">2025/10/05 19:20に購入</span>
@@ -112,15 +112,15 @@ const PurchaseHistory = () => {
                                     <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷番号：2CNM9FX279</span>
                                     <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷期限：2025/10/05まで</span>
                                 </div>
-                            </div>
+                                    </div>
                             {/* QR Button with gradient border */}
                             <div className="absolute top-[220px] left-[68px] w-[240px] h-[34px] p-[1px] rounded-[5px] bg-gradient-to-r from-[#FF2AA1] to-[#A770EF]">
                                 <button className="flex w-full h-full px-[16px] py-0 justify-center items-center gap-[8px] flex-shrink-0 rounded-[5px] bg-white">
                                     <img src={qr} alt="QR" className="flex w-[20px] h-[20px] p-[2px_0_0_2px] justify-end items-center flex-shrink-0 aspect-square opacity-100" />
                                     <span className="text-[#E862CB] font-noto font-bold text-[12px] leading-[18px]">QRコードを表示</span>
-                                </button>
-                            </div>
-                        </div>
+                                            </button>
+                                    </div>
+                                </div>
                             ))}
                 </div>
             </main>
