@@ -71,6 +71,14 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('FavoriteShops');
     });
 
+    Route::get('/purchasehistory', function(){
+        return Inertia::render('PurchaseHistory');
+    });
+
+    Route::get('/cart', function(){
+        return Inertia::render('Cart');
+    });
+
     Route::get('/verify-email', function () {
         return Inertia::render('Auth/VerifyEmail');
     })->name('verification.notice');

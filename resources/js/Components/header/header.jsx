@@ -107,10 +107,10 @@ const Header = ({ authButton }) => {
                     <a href='favoriteproducts' className='inline-block lg:block font-1 font-normal text-[15px] leading-[22px] tracking-normal align-middle py-4 lg:py-2 pr-4 pl-3 text-whitewash bg-transparent'>お気に入り</a>
                 </li>
                 <li>
-                    <a href='/about' className='inline-block lg:block font-1 font-normal text-[15px] leading-[22px] tracking-normal align-middle py-4 lg:py-2 pr-4 pl-3 text-whitewash bg-transparent'>購入履歴</a>
+                    <a href='/purchasehistory' className='inline-block lg:block font-1 font-normal text-[15px] leading-[22px] tracking-normal align-middle py-4 lg:py-2 pr-4 pl-3 text-whitewash bg-transparent'>購入履歴</a>
                   </li>
                   <li>
-                    <a href='/about' className='font-1 font-normal text-[15px] leading-[22px] tracking-normal align-middle py-4 lg:py-2 pr-2 pl-2 text-whitewash bg-transparent flex items-center whitespace-nowrap'>
+                    <a href='/cart' className='font-1 font-normal text-[15px] leading-[22px] tracking-normal align-middle py-4 lg:py-2 pr-2 pl-2 text-whitewash bg-transparent flex items-center whitespace-nowrap'>
                       <img src={cart} alt='cart' className='w-4 h-4 mr-2' />
                       カート
                     </a>

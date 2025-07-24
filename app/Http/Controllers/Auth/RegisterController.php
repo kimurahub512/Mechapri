@@ -45,7 +45,7 @@ class RegisterController extends Controller
             auth()->login($user);
             Log::info('User registered successfully', ['user_id' => $user->id]);
 
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/shop-management');
         } catch (\Exception $e) {
             Log::error('Registration failed', [
                 'error' => $e->getMessage(),

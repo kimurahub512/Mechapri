@@ -137,18 +137,18 @@ const Footer = () => {
               alt="History" 
               className="mechapuri-footer-nav-svg"
             />
-            <div className="mechapuri-footer-nav-text">購入履歴</div>
+            <a href='/purchasehistory' className="mechapuri-footer-nav-text">購入履歴</a>
           </div>
           
           {/* Cart */}
           <div className="mechapuri-footer-nav-item">
-            <div>
+            <a href='/cart'>
               <img 
                 src={cart} 
                 alt="Cart" 
                 className="mechapuri-footer-nav-svg"
               />
-            </div>
+            </a>
             <div className="mechapuri-footer-cart-row">
               <span className="mechapuri-footer-nav-text">カート</span>
               <span className="mechapuri-footer-cart-badge">
