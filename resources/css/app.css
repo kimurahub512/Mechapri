@@ -362,3 +362,9 @@ html, body {
   box-sizing: border-box;
   border-radius: 18px;
 }
+
+@media screen and (max-width: 768px) {
+  .product-details-no-footer-gap .mechapuri-footer {
+    margin-top: 0 !important;
+  }
+}

@@ -78,9 +78,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', function(){
         return Inertia::render('Cart');
     });
-    
+        
     Route::get('/shoptop', function(){
         return Inertia::render('shoptop');
+    });
+
+    Route::get('/productdetailsfree', function(){
+        return Inertia::render('ProductDetailsFree');
+    });
+
+    Route::get('/purchasedproduct', function(){
+        return Inertia::render('PurchasedProduct');
     });
 
     Route::get('/verify-email', function () {

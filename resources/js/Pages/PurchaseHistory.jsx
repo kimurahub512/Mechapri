@@ -6,7 +6,7 @@ import Footer from '@/Components/footer/footer';
 import TabButtons from '@/Components/TabButtons';
 import TabButtonsDesktop from '@/Components/TabButtonsDesktop';
 import '@/../../resources/css/shopmanagement.css';
-import photo1 from '@/assets/images/shopcontents/photo1.png';
+import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 import qr from '@/assets/images/qr.svg';
 import girl from '@/assets/images/favoriteproducts/girl.svg';
 

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import '@/../../resources/css/shopmanagement.css';
-import photo1 from '@/assets/images/shopcontents/photo1.png';
+import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 import recyclebin from '@/assets/images/recyclebin.svg';
 import sub from '@/assets/images/sub.svg';
 import add from '@/assets/images/add.svg';
@@ -79,8 +79,8 @@ const Cart = () => {
                                     <span className="text-[#767676] font-['Noto Sans JP'] font-normal text-[12px] leading-[19.2px]">カートから削除</span>
                                 </div>
                                 {/* Purchase button */}
-                                <button className="flex w-[240px] h-[60px] px-[24px] justify-between items-center flex-shrink-0 rounded-[10px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]">
-                                    <span className="text-white text-center font-['Noto Sans JP'] font-bold text-[18px] leading-[20.7px]">すぐにプリントコード購入</span>
+                                <button className="flex w-[240px] h-[60px] px-[12px] justify-between items-center flex-shrink-0 rounded-[10px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]">
+                                    <span className="text-white text-center font-['Noto Sans JP'] font-bold text-[18px] leading-[20.7px] whitespace-nowrap">すぐにプリントコード購入</span>
                                 </button>
                             </div>
                         </div>
@@ -132,8 +132,8 @@ const Cart = () => {
                                     <span className="text-[#767676] font-['Noto Sans JP'] font-normal text-[12px] leading-[19.2px]">カートから削除</span>
                                 </div>
                                 {/* Purchase button */}
-                                <button className="flex w-[240px] h-[60px] px-[24px] justify-between items-center flex-shrink-0 rounded-[10px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]">
-                                    <span className="text-white text-center font-['Noto Sans JP'] font-bold text-[18px] leading-[20.7px]">すぐにプリントコード購入</span>
+                                <button className="flex w-[240px] h-[60px] px-[12px] justify-between items-center flex-shrink-0 rounded-[10px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]">
+                                    <span className="text-white text-center font-['Noto Sans JP'] font-bold text-[18px] leading-[20.7px] whitespace-nowrap">すぐにプリントコード購入</span>
                                 </button>
                             </div>
                         </div>
