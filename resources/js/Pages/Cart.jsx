@@ -1,7 +1,8 @@
 
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
+import QuantityControl from '@/Components/QuantityControl';
 import '@/../../resources/css/shopmanagement.css';
 import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 import recyclebin from '@/assets/images/recyclebin.svg';
@@ -18,6 +19,20 @@ import express from '@/assets/images/express.svg';
 import stripe from '@/assets/images/stripe.svg';
 
 const Cart = () => {
+  const [quantities, setQuantities] = useState({
+    item1: 1,
+    item2: 1,
+    mobileItem1: 1,
+    mobileItem2: 1
+  });
+
+  const handleQuantityChange = (itemKey, newQuantity) => {
+    setQuantities(prev => ({
+      ...prev,
+      [itemKey]: newQuantity
+    }));
+  };
+
     return (
         <div className="bg-white">
             <Header />
@@ -53,21 +68,13 @@ const Cart = () => {
                                     <div className="flex w-[306px] justify-end items-center gap-[16px]  relative ml-[-56px] ">
                                         <span className="text-[#222] font-['Noto Sans JP'] font-bold text-[16px] leading-[25.6px] tracking-[0.8px]">数量</span>
                                         {/* 121121 */}
-                                        <div className="flex p-[0px_4px] justify-center items-center gap-[8px] rounded-[40px] border border-[#E9E9E9] bg-white">
-                                            {/* Sub SVG */}
-                                            <img src={sub} alt="sub" className="w-[32px] h-[32px] flex-shrink-0 opacity-100" />
-                                            {/* 1211211 */}
-                                            <div className="flex items-center gap-[4px]">
-                                                <input
-                                                    type="number"
-                                                    defaultValue="1"
-                                                    className="w-[40px] text-[#222] text-center font-['Red Hat Display'] font-bold text-[20px] leading-[23px] border-none outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                                />
-                                                <span className="text-[#222] font-['Noto Sans JP'] font-bold text-[14px] leading-[14px]">枚</span>
-                                            </div>
-                                            {/* Add SVG */}
-                                            <img src={add} alt="add" className="w-[32px] h-[32px] flex-shrink-0 opacity-100" />
-                                        </div>
+                                        <QuantityControl 
+                                          quantity={quantities.item1}
+                                          onQuantityChange={(newQuantity) => handleQuantityChange('item1', newQuantity)}
+                                          addIcon={add}
+                                          subIcon={sub}
+                                          unit="枚"
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -106,21 +113,13 @@ const Cart = () => {
                                     <div className="flex w-[306px] justify-end items-center gap-[16px]  relative ml-[-56px] ">
                                         <span className="text-[#222] font-['Noto Sans JP'] font-bold text-[16px] leading-[25.6px] tracking-[0.8px]">数量</span>
                                         {/* 121121 */}
-                                        <div className="flex p-[0px_4px] justify-center items-center gap-[8px] rounded-[40px] border border-[#E9E9E9] bg-white">
-                                            {/* Sub SVG */}
-                                            <img src={sub} alt="sub" className="w-[32px] h-[32px] flex-shrink-0 opacity-100" />
-                                            {/* 1211211 */}
-                                            <div className="flex items-center gap-[4px]">
-                                                <input
-                                                    type="number"
-                                                    defaultValue="1"
-                                                    className="w-[40px] text-[#222] text-center font-['Red Hat Display'] font-bold text-[20px] leading-[23px] border-none outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                                />
-                                                <span className="text-[#222] font-['Noto Sans JP'] font-bold text-[14px] leading-[14px]">枚</span>
-                                            </div>
-                                            {/* Add SVG */}
-                                            <img src={add} alt="add" className="w-[32px] h-[32px] flex-shrink-0 opacity-100" />
-                                        </div>
+                                        <QuantityControl 
+                                          quantity={quantities.item2}
+                                          onQuantityChange={(newQuantity) => handleQuantityChange('item2', newQuantity)}
+                                          addIcon={add}
+                                          subIcon={sub}
+                                          unit="枚"
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -203,27 +202,13 @@ const Cart = () => {
                         <div className="inline-flex justify-end items-center gap-[16px] mt-[16px]">
                             <span className="text-[#222] font-['Noto Sans JP'] font-bold text-[12px] leading-[18px]">数量</span>
                             {/* Frame 12121 */}
-                            <div className="flex p-[0px_4px] justify-center items-center gap-[8px] rounded-[40px] border border-[#E9E9E9] bg-white">
-                                {/* Sub SVG */}
-                                <img src={sub} alt="sub" className="w-[32px] h-[32px] flex-shrink-0 opacity-100" />
-                                {/* Frame 121211 */}
-                                <div className="flex items-center gap-[6px]">
-                                    {/* Frame 1212111 */}
-                                    <div className="flex w-[44px] h-[40px] p-[8.5px_4px] flex-col items-start">
-                                        <input 
-                                            type="number" 
-                                            defaultValue="1" 
-                                            className="w-full text-[#222] text-center font-['Red Hat Display'] font-bold text-[20px] leading-[23px] border-none p-0"
-                                        />
-                                    </div>
-                                    {/* Frame 1212112 */}
-                                    <div className="flex p-[17px_0px_9px_0px] flex-col justify-end items-center self-stretch">
-                                        <span className="text-[#222] font-['Noto Sans JP'] font-bold text-[14px] leading-[14px]">枚</span>
-                                    </div>
-                                </div>
-                                {/* Add SVG */}
-                                <img src={add} alt="add" className="w-[32px] h-[32px] flex-shrink-0 opacity-100" />
-                            </div>
+                            <QuantityControl 
+                              quantity={quantities.mobileItem1}
+                              onQuantityChange={(newQuantity) => handleQuantityChange('mobileItem1', newQuantity)}
+                              addIcon={add}
+                              subIcon={sub}
+                              unit="枚"
+                            />
                         </div>
                         {/* Purchase button */}
                         <button className="flex w-[240px] h-[40px] px-[24px] justify-between items-center flex-shrink-0 rounded-[10px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] mt-[16px] mx-auto">
@@ -258,27 +243,13 @@ const Cart = () => {
                         <div className="inline-flex justify-end items-center gap-[16px] mt-[16px]">
                             <span className="text-[#222] font-['Noto Sans JP'] font-bold text-[12px] leading-[18px]">数量</span>
                             {/* Frame 12121 */}
-                            <div className="flex p-[0px_4px] justify-center items-center gap-[8px] rounded-[40px] border border-[#E9E9E9] bg-white">
-                                {/* Sub SVG */}
-                                <img src={sub} alt="sub" className="w-[32px] h-[32px] flex-shrink-0 opacity-100" />
-                                {/* Frame 121211 */}
-                                <div className="flex items-center gap-[6px]">
-                                    {/* Frame 1212111 */}
-                                    <div className="flex w-[44px] h-[40px] p-[8.5px_4px] flex-col items-start">
-                                        <input 
-                                            type="number" 
-                                            defaultValue="1" 
-                                            className="w-full text-[#222] text-center font-['Red Hat Display'] font-bold text-[20px] leading-[23px] border-none p-0"
-                                        />
-                                    </div>
-                                    {/* Frame 1212112 */}
-                                    <div className="flex p-[17px_0px_9px_0px] flex-col justify-end items-center self-stretch">
-                                        <span className="text-[#222] font-['Noto Sans JP'] font-bold text-[14px] leading-[14px]">枚</span>
-                                    </div>
-                                </div>
-                                {/* Add SVG */}
-                                <img src={add} alt="add" className="w-[32px] h-[32px] flex-shrink-0 opacity-100" />
-                            </div>
+                            <QuantityControl 
+                              quantity={quantities.mobileItem2}
+                              onQuantityChange={(newQuantity) => handleQuantityChange('mobileItem2', newQuantity)}
+                              addIcon={add}
+                              subIcon={sub}
+                              unit="枚"
+                            />
                         </div>
                         {/* Purchase button */}
                         <button className="flex w-[240px] h-[40px] px-[24px] justify-between items-center flex-shrink-0 rounded-[10px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] mt-[16px] mx-auto">
