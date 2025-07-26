@@ -95,6 +95,10 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('UnpurchasedProduct');
     });
 
+    Route::get('/unpurchasedproductexpand', function(){
+        return Inertia::render('UnpurchasedProductExpand');
+    });
+
     Route::get('/verify-email', function () {
         return Inertia::render('Auth/VerifyEmail');
     })->name('verification.notice');
