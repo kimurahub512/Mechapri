@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
-import BadgeDisplay from '@/Components/BadgeDisplay';
 import '@/../../resources/css/shopmanagement.css';
 import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 import girl from '@/assets/images/favoriteshops/girl.svg';
@@ -10,20 +9,13 @@ import share from '@/assets/images/share.svg';
 import complex from '@/assets/images/complex.svg';
 import complex_black from '@/assets/images/complex_black.svg';
 import question_circle from '@/assets/images/question_circle.svg';
-import shop1 from '@/assets/images/productdetails/printshop.svg';
-import shop2 from '@/assets/images/productdetails/lawson.svg';
-import shop3 from '@/assets/images/productdetails/ministop.svg';
-import eleven from '@/assets/images/productdetails/eleven.png';
-import qr from '@/assets/images/productdetails/qr.jpg';
+
 import x from '@/assets/images/x_logo.svg';
 import instagram from '@/assets/images/instagram.svg';
 import favoriteshops from '@/assets/images/favoriteshop.svg';
-import logo from '@/assets/images/logo_white.svg';
 import cart from '@/assets/images/icon-cart.svg';
 import QuantityControl from '@/Components/QuantityControl';
-import photo2 from '@/assets/images/Shoptop/photo1.png';
-import photo3 from '@/assets/images/Shoptop/photo2.png';
-import photo4 from '@/assets/images/Shoptop/photo3.png';
+
 import purchase_qr from '@/assets/images/purchase_qr.svg';
 import print_qr from '@/assets/images/print_qr.svg';
 

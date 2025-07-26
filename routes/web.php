@@ -99,6 +99,10 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('UnpurchasedProductExpand');
     });
 
+    Route::get('/howtoprint', function(){
+        return Inertia::render('HowToPrint');
+    });
+
     Route::get('/verify-email', function () {
         return Inertia::render('Auth/VerifyEmail');
     })->name('verification.notice');
