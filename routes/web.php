@@ -55,6 +55,10 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('MyShopManagement/RegisterProduct');
     });
     
+    Route::get('/myshop/category', function(){
+        return Inertia::render('MyShopManagement/Category');
+    });
+
     Route::get('/notification', function(){
         return Inertia::render('Notification');
     });

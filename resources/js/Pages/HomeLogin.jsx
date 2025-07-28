@@ -67,12 +67,12 @@ const HomeLogin = () => {
             <main className="hidden md:flex flex-col items-center px-[120px] py-[32px] w-full">
                 <div className="flex flex-row items-center justify-between p-[10px] w-full border-b border-solid border-[#DCDCDC]">
                     <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">
-                        おすすめ写真
+                    おすすめ写真
                     </span>
                     <div className="flex flex-row items-center p-[12px] gap-[4px]">
                         <img src={list} alt="list" className="w-[16px] h-[16px]" />
                         <span className="text-[#363636] font-noto text-[14px] font-medium leading-[10px]">
-                            詳細を見る
+                        詳細を見る
                         </span>
                         <img src={arrow} alt="arrow" className="w-[16px] h-[16px] " />
                     </div>

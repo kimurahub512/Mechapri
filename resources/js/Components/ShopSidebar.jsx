@@ -14,6 +14,7 @@ const ShopSidebar = () => {
   const isMyContents = window.location.pathname === '/myshop/contents';
   const isTransaction = window.location.pathname === '/myshop/transaction';
   const isSalesHistory = window.location.pathname === '/myshop/saleshistory';
+  const isCategory = window.location.pathname === '/myshop/category';
   return (
     <aside className="shopmanagement-sidebar-outer">
       <div className="shopmanagement-sidebar-content">
@@ -102,10 +103,21 @@ const ShopSidebar = () => {
               <span className="sm-shop-menu-text" style={isMyContents ? { color: '#fff' } : { color: '#222' }}>商品管理</span>
             </div>
           </a>
-          <div className="sm-shop-menu-item">
-            <img src={cart2} alt="Category" className="sm-shop-menu-icon sm-shop-menu-icon--gray" />
-            <span className="sm-shop-menu-text sm-shop-menu-text--gray">商品カテゴリ</span>
-          </div>
+                    <a href="/myshop/category" style={{ textDecoration: 'none' }}>
+            <div className={`sm-shop-menu-item${isCategory ? ' sm-shop-menu-item--active' : ''}`}
+              style={isCategory ? {
+                display: 'flex',
+                width: '168px',
+                padding: '12px',
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderRadius: '8px',
+                background: '#FF2AA1'
+              } : { background: 'transparent' }}>
+              <img src={cart2} alt="Category" className="sm-shop-menu-icon" style={isCategory ? { filter: 'brightness(0) invert(1)' } : {}} />
+              <span className="sm-shop-menu-text" style={isCategory ? { color: '#fff' } : { color: '#222' }}>商品カテゴリ</span>
+            </div>
+          </a>
           <a href="/myshop/transaction" style={{ textDecoration: 'none' }}>
             <div className={`sm-shop-menu-item${isTransaction ? ' sm-shop-menu-item--active' : ''}`}
               style={isTransaction ? {

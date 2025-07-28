@@ -64,7 +64,7 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false }) => {
 
     // Desktop version
     return (
-        <div className="flex w-[274px] p-[10px] flex-col items-start rounded-[10px] bg-white shadow-[0_16px_32px_0_rgba(0,0,0,0.15)] flex-shrink-0">
+        <div className="flex w-[274px] p-[10px] flex-col items-start rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] flex-shrink-0">
             {/* 212111: Image and Badge */}
             <div className="flex flex-col items-start self-stretch relative">
                     {/* 2121112: 1日 以内 badge */}

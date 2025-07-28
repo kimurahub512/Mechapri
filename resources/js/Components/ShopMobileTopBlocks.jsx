@@ -11,7 +11,7 @@ const ShopMobileTopBlocks = () => {
   const isMyContents = window.location.pathname === '/myshop/contents';
   const isTransaction = window.location.pathname === '/myshop/transaction';
   const isSalesHistory = window.location.pathname === '/myshop/saleshistory';
-  
+  const isCategory = window.location.pathname === '/myshop/category';
   return (
     <>
       {/* Mobile Header */}
@@ -67,9 +67,38 @@ const ShopMobileTopBlocks = () => {
             </div>
           </div>
           <div className="shopmanagement-mobile-nav-item">
-            <div className="shopmanagement-mobile-nav-item-content">
+            <div
+              className="shopmanagement-mobile-nav-item-content"
+              style={isCategory ? {
+                display: 'flex',
+                height: '48px',
+                padding: '12px 8px',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: '8px',
+                background: '#FFEFF8'
+              } : {}}
+            >
               <img src={list_unordered} alt="Category" className="shopmanagement-mobile-nav-icon" />
-              <span className="shopmanagement-mobile-nav-text">商品カテゴリ</span>
+              <a 
+                href="/myshop/category" 
+                className="shopmanagement-mobile-nav-text"
+                style={isCategory ? {
+                  textDecoration: 'none',
+                  fontFamily: 'Noto Sans JP',
+                  fontSize: '9px',
+                  fontWeight: 400,
+                  lineHeight: '10px',
+                  background: 'linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  color: 'transparent',
+                  WebkitTextFillColor: 'transparent',
+                } : { textDecoration: 'none' }}
+              >
+                商品カテゴリ
+              </a>
             </div>
           </div>
           <div className="shopmanagement-mobile-nav-item">

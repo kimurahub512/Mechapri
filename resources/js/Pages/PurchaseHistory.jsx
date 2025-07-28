@@ -5,6 +5,7 @@ import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import TabButtons from '@/Components/TabButtons';
 import TabButtonsDesktop from '@/Components/TabButtonsDesktop';
+import QrCodeModal from '@/Components/QrCodeModal';
 import '@/../../resources/css/shopmanagement.css';
 import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 import qr from '@/assets/images/qr.svg';
@@ -12,6 +13,7 @@ import girl from '@/assets/images/favoriteproducts/girl.svg';
 
 const PurchaseHistory = () => {
     const [activeTab, setActiveTab] = useState('favorite'); // or 'follow'
+    const [showQrModal, setShowQrModal] = useState(false);
 
     const handleTabChange = (tabId) => {
         if (tabId === 'follow') {
@@ -19,6 +21,14 @@ const PurchaseHistory = () => {
         } else {
             setActiveTab(tabId);
         }
+    };
+
+    const handleQrButtonClick = () => {
+        setShowQrModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowQrModal(false);
     };
 
     return (
@@ -70,7 +80,10 @@ const PurchaseHistory = () => {
                                 {/* 1213: Date and Favorite */}
                                 <div className="inline-flex flex-col items-center gap-[10px] mt-[2px] mr-[62px]">
                                     <span className="text-[#363636] font-noto font-medium text-[14px] leading-[25.2px]">2025/10/05 19:20に購入</span>
-                                    <button className="inline-flex h-[34px] px-[16px] py-0 items-center gap-[8px] flex-shrink-0 rounded-[5px] border border-[#FF2AA1] bg-white">
+                                    <button 
+                                        onClick={handleQrButtonClick}
+                                        className="inline-flex h-[34px] px-[16px] py-0 items-center gap-[8px] flex-shrink-0 rounded-[5px] border border-[#FF2AA1] bg-white cursor-pointer hover:bg-gray-50"
+                                    >
                                         <img src={qr} alt="QR" className="w-[17px] h-[15.867px] flex-shrink-0" />
                                         <span className="text-[#E862CB] mt-[-2px] font-noto font-bold text-[12px] leading-[21px]">QRコードを表示</span>
                                     </button>
@@ -115,7 +128,10 @@ const PurchaseHistory = () => {
                                     </div>
                             {/* QR Button with gradient border */}
                             <div className="absolute top-[220px] left-[68px] w-[240px] h-[34px] p-[1px] rounded-[5px] bg-gradient-to-r from-[#FF2AA1] to-[#A770EF]">
-                                <button className="flex w-full h-full px-[16px] py-0 justify-center items-center gap-[8px] flex-shrink-0 rounded-[5px] bg-white">
+                                <button 
+                                    onClick={handleQrButtonClick}
+                                    className="flex w-full h-full px-[16px] py-0 justify-center items-center gap-[8px] flex-shrink-0 rounded-[5px] bg-white cursor-pointer hover:bg-gray-50"
+                                >
                                     <img src={qr} alt="QR" className="flex w-[20px] h-[20px] p-[2px_0_0_2px] justify-end items-center flex-shrink-0 aspect-square opacity-100" />
                                     <span className="text-[#E862CB] font-noto font-bold text-[12px] leading-[18px]">QRコードを表示</span>
                                             </button>
@@ -125,8 +141,19 @@ const PurchaseHistory = () => {
                 </div>
             </main>
             <Footer />
-            {/* Mobile Main Section */}
-        </div >
+            
+            {/* QR Code Modal Overlay */}
+            {showQrModal && (
+                <div 
+                    className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-50 pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto"
+                    onClick={handleCloseModal}
+                >
+                    <div onClick={(e) => e.stopPropagation()} className="min-h-screen w-full flex justify-center px-[16px]">
+                        <QrCodeModal />
+                    </div>
+                </div>
+            )}
+        </div>
     );
 };
 
