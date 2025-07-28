@@ -13,7 +13,7 @@ import '@/../../resources/css/footer.css';
 
 const Footer = () => {
   return (
-    <footer className="mechapuri-footer border-2 border-dashed border-blue-500">
+    <footer className="mechapuri-footer">
       <div className="mechapuri-footer-main-container">
         <div className="mechapuri-footer-content-frame">
           <img 

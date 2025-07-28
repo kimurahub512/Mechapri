@@ -103,6 +103,10 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('HowToPrint');
     });
 
+    Route::get('/homelogin', function(){
+        return Inertia::render('HomeLogin');
+    });
+
     Route::get('/verify-email', function () {
         return Inertia::render('Auth/VerifyEmail');
     })->name('verification.notice');

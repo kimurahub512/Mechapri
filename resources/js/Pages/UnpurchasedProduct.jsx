@@ -136,7 +136,7 @@ const UnpurchasedProduct = () => {
                                         <div className="flex w-[320px] max-w-[396px] flex-col justify-center items-center flex-shrink-0 relative logo">
                                             <img src={photo1} alt="main" className="h-[480px] max-w-[396px] w-full object-cover rounded-[8px]" />
                                         </div>
-                                        {/* Blurred image */}
+                                {/* Blurred image */}
                                         {/* Overlay Area: 12111~12115 */}
                                         <div
                                             className="flex flex-col items-start absolute top-0 left-3 h-full opacity-75"
@@ -246,7 +246,7 @@ const UnpurchasedProduct = () => {
                                                 quantity={quantities.item1}
                                                 onQuantityChange={(newQuantity) => handleQuantityChange('item1', newQuantity)}
                                             />
-                                        </div>
+                            </div>
                                         <button className="flex w-[240px] h-[74px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] ml-auto">
                                             <img src={cart} alt="favoriteshop" style={{ filter: 'brightness(0) invert(1)' }} />
                                             <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-['Noto Sans JP']">カートに入れる</span>
@@ -286,7 +286,7 @@ const UnpurchasedProduct = () => {
                                                     プリント用コードを購入したら…
                                                 </span>
                                             </div>
-                                        </div>
+                                                </div>
                                         {/* 121112 */}
                                         <div
                                             className="absolute flex justify-between items-center"
@@ -533,7 +533,7 @@ const UnpurchasedProduct = () => {
                             <div className="flex w-full px-[16px] py-[10px] justify-center items-center rounded-[10px] bg-[#F6F6F6] mx-auto mt-[24px] relative">
                                 {/* Blurred image */}
                                 <div className="flex w-full max-w-[200px] flex-col justify-center items-center flex-shrink-0 relative">
-                                    <img src={photo1} alt="main" className="h-[298px] w-full object-cover rounded-[6px]" />
+                                    <img src={photo1} alt="main" className="h-[298px] w-full object-cover rounded-[6px]" />                                    
                                 </div>
                                 {/* Overlay Area: Mobile inclined logos */}
                                 <div
@@ -670,8 +670,8 @@ const UnpurchasedProduct = () => {
                                             <span className="text-white text-center font-bold font-['Noto Sans JP'] text-[12px] leading-[16px] whitespace-nowrap">
                                                 プリント用コードを購入したら…
                                             </span>
-                                        </div>
-                                    </div>
+                                                </div>
+                                            </div>
                                     {/* 121612 */}
                                     <div className="absolute flex justify-between items-center" style={{ top: 78, left: 6, width: 300 }}>
                                         {/* 1216121 */}
@@ -680,7 +680,7 @@ const UnpurchasedProduct = () => {
                                             <span className="text-[#363636] text-center font-normal font-['Noto Sans JP'] text-[12px] leading-[18px]">
                                                 QRや番号などの<br />コードをGET
                                             </span>
-                                        </div>
+                                            </div>
                                         {/* 1216122 */}
                                         <div className="flex flex-col items-center gap-[3px] w-[147px] flex-shrink-0">
                                             <img src={print_qr} alt="Print QR" className="w-[68px] h-[68px]" />
@@ -709,7 +709,7 @@ const UnpurchasedProduct = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                         {/* 122: Ranking */}
                         <div className="flex flex-col items-start w-full px-[16px] py-[24px] gap-[8px] bg-white rounded-[16px] shadow-[0_2px_8px_0_rgba(0,0,0,0.10)]">
