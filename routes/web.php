@@ -53,12 +53,14 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/myshop/registerproduct', function(){
         return Inertia::render('MyShopManagement/RegisterProduct');
-    });
-    
+    });    
     Route::get('/myshop/category', function(){
         return Inertia::render('MyShopManagement/Category');
     });
-
+    Route::get('/myshop/categoryedit', function(){  
+        return Inertia::render('MyShopManagement/CategoryEdit');
+    });
+    
     Route::get('/notification', function(){
         return Inertia::render('Notification');
     });

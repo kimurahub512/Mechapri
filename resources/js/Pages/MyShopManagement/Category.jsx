@@ -65,7 +65,7 @@ const Category = () => {
                             </div>
                             <div className="flex flex-col items-start py-5 px-[16px] gap-2 rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch">
                                 <div className="flex flex-col items-start justify-between w-full">
-                                    <span className="text-[#363636] font-['Noto_Sans_JP'] text-[24px] font-bold leading-[24px]">最新の出品</span>
+                                    <span className="text-[#363636] font-['Noto_Sans_JP'] text-[24px] font-bold leading-[24px]">新しいリスト</span>
                                     <div className="flex flex-row items-center py-[12px] gap-[4px]">
                                         <img src={list} alt="list" className="w-[16px] h-[16px]" />
                                         <span className="text-[#363636] font-noto text-[14px] font-medium leading-[10px]">
@@ -157,7 +157,7 @@ const Category = () => {
                             </div>
                             <div className="flex flex-col items-start py-5 px-[50px] gap-4 rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch">
                                 <div className="flex flex-row items-start justify-between w-full">
-                                    <span className="text-[#363636] font-['Noto_Sans_JP'] text-[24px] font-medium leading-[37.8px]">最新の出品</span>
+                                    <span className="text-[#363636] font-['Noto_Sans_JP'] text-[24px] font-medium leading-[37.8px]">新しいリスト</span>
                                     <div className="flex flex-row items-center p-[12px] gap-[4px]">
                                         <img src={list} alt="list" className="w-[16px] h-[16px]" />
                                         <span className="text-[#363636] font-noto text-[14px] font-medium leading-[10px]">
