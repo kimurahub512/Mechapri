@@ -82,7 +82,7 @@ const Category = () => {
                                     <span className="text-black font-['Noto Sans JP'] text-[12px] font-normal leading-[32px] tracking-[0.9px] px-[1px]">
                                         点
                                     </span>
-                                </div>
+                                        </div>
                                 {/* 1213: 編集/削除 */}
                                 <div className="flex flex-row items-start justify-between self-stretch">
                                     {/* 12131: add button */}
@@ -90,7 +90,7 @@ const Category = () => {
                                         <div className="flex w-[120px] h-[35px] justify-center items-center gap-[10px] flex-shrink-0">
                                             <div className="flex w-[16px] h-[16px] justify-center items-center flex-shrink-0">
                                                 <img src={file_add} alt="file_add" className="w-[16px] h-[16px]" />
-                                            </div>
+                                        </div>
                                             <span className="text-white text-center font-['Noto Sans JP'] text-[13px] font-black leading-[19.5px]">商品登録</span>
                                         </div>
                                     </div>
@@ -190,14 +190,14 @@ const Category = () => {
                                     {/* 12132: 編集/削除 */}
                                     <div className="inline-flex items-center gap-2">
                                         <div className="flex items-center gap-2 w-[80px] h-[32px] px-3 rounded-[5px] bg-[#E9E9E9]">
-                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2 17.9997H18M2 17.9997V13.9997L10 5.99975M2 17.9997L6 17.9997L14 9.99974M10 5.99975L12.8686 3.1311L12.8704 3.1294C13.2652 2.73451 13.463 2.53672 13.691 2.46264C13.8919 2.39738 14.1082 2.39738 14.3091 2.46264C14.5369 2.53667 14.7345 2.73424 15.1288 3.12856L16.8686 4.86836C17.2646 5.26437 17.4627 5.46247 17.5369 5.6908C17.6022 5.89164 17.6021 6.10799 17.5369 6.30883C17.4628 6.537 17.265 6.7348 16.8695 7.13025L16.8686 7.1311L14 9.99974M10 5.99975L14 9.99974" stroke="#767676" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            </svg>
-                                            <span className="flex-1 text-[#767676] font-['Noto_Sans_JP'] text-[12px] font-bold leading-[18px]">編集</span>
-                                        </div>
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M2 17.9997H18M2 17.9997V13.9997L10 5.99975M2 17.9997L6 17.9997L14 9.99974M10 5.99975L12.8686 3.1311L12.8704 3.1294C13.2652 2.73451 13.463 2.53672 13.691 2.46264C13.8919 2.39738 14.1082 2.39738 14.3091 2.46264C14.5369 2.53667 14.7345 2.73424 15.1288 3.12856L16.8686 4.86836C17.2646 5.26437 17.4627 5.46247 17.5369 5.6908C17.6022 5.89164 17.6021 6.10799 17.5369 6.30883C17.4628 6.537 17.265 6.7348 16.8695 7.13025L16.8686 7.1311L14 9.99974M10 5.99975L14 9.99974" stroke="#767676" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                                <span className="flex-1 text-[#767676] font-['Noto_Sans_JP'] text-[12px] font-bold leading-[18px]">編集</span>
+                                            </div>
                                         <div className="flex items-center gap-2 w-[80px] h-[32px] px-3 rounded-[5px] bg-[#E9E9E9]">
-                                            <img src={recyclebin} alt="delete" className="w-5 h-5" />
-                                            <span className="flex-1 text-[#767676] font-['Noto_Sans_JP'] text-[12px] font-bold leading-[18px]">削除</span>
+                                                <img src={recyclebin} alt="delete" className="w-5 h-5" />
+                                                <span className="flex-1 text-[#767676] font-['Noto_Sans_JP'] text-[12px] font-bold leading-[18px]">削除</span>
                                         </div>
                                     </div>
                                 </div>

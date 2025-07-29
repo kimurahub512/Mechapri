@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import ShopSidebar from '@/Components/ShopSidebar';
@@ -17,10 +17,11 @@ import photo2_m from '@/assets/images/saleshistory/photo2_m.png';
 import photo3_m from '@/assets/images/saleshistory/photo3_m.png';
 import photo4_m from '@/assets/images/saleshistory/photo4_m.png';
 import overlay_m from '@/assets/images/saleshistory/overlay_m.png';
-
+import PostRegistrationModal from '@/Components/PostRegistrationModal';
 
 
 const RegisterProduct = () => {
+    const [showModal, setShowModal] = useState(false);
  
     return (
         <>
@@ -364,6 +365,7 @@ const RegisterProduct = () => {
                             <button
                                 className="flex flex-col justify-center items-center w-[802px] px-[36px] py-[15px] rounded-[8px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] shadow-[0_4px_8px_0_rgba(255,42,161,0.20)]"
                                 type="button"
+                                onClick={() => setShowModal(true)}
                             >
                                 <span className="text-white text-center font-bold text-[18px] leading-[14px] font-['Noto Sans JP']">登録する</span>
                             </button>
@@ -374,6 +376,17 @@ const RegisterProduct = () => {
                         </div>
                     </section>
                 </main>
+                {/* Show modal on all screen sizes */}
+                {showModal && (
+                    <div 
+                        className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-[1000] pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto"
+                        onClick={() => setShowModal(false)}
+                    >
+                        <div onClick={(e) => e.stopPropagation()} className="min-h-screen w-full flex justify-center px-[16px]">
+                            <PostRegistrationModal />
+                        </div>
+                    </div>
+                )}
 
                 {/* Mobile Main Section */}
                 <main className="flex md:hidden flex-col items-start gap-[16px] mt-[132px] mx-[16px]">
@@ -714,6 +727,7 @@ const RegisterProduct = () => {
                                     <button
                                         className="flex flex-col justify-center items-center w-[311px] px-[36px] py-[15px] rounded-[8px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] shadow-[0_4px_8px_0_rgba(255,42,161,0.20)]"
                                         type="button"
+                                        onClick={() => setShowModal(true)}
                                     >
                                         <span className="text-white text-center font-bold text-[18px] leading-[14px] font-['Noto Sans JP']">登録する</span>
                                     </button>

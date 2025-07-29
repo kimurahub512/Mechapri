@@ -169,7 +169,7 @@ const QrCodeModal = () => {
                             <span className="text-[#767676] font-['Noto Sans JP'] text-[12px] font-normal leading-[16px] underline cursor-pointer">プリントの方法が分からない時は</span>
                         </div>
                     </div>
-        </div>
+                </div>
             </section>
         </>
     );
