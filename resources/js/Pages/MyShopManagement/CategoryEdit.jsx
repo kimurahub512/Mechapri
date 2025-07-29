@@ -28,7 +28,7 @@ const CategoryEdit = () => {
                 <ShopMobileTopBlock />
                 {/* Main Section */}
                 {/* MOBILE ONLY */}
-                <div className="block md:hidden px-[16px] mt-[160px] flex flex-col items-start gap-4 border border-green-500">
+                <div className="block md:hidden px-[16px] mt-[160px] flex flex-col items-start gap-4">
                     <div className="flex flex-row items-center justify-between w-full">
                         <h1 className="text-[#363636] font-['Noto_Sans_JP'] text-[24px] font-bold leading-[24px]">商品カテゴリ編集</h1>
                     </div>

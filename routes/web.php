@@ -60,6 +60,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/myshop/categoryedit', function(){  
         return Inertia::render('MyShopManagement/CategoryEdit');
     });
+    Route::get('/myshop/settransferaccount', function(){
+        return Inertia::render('MyShopManagement/SetTransferAccount');
+    });
     
     Route::get('/notification', function(){
         return Inertia::render('Notification');
