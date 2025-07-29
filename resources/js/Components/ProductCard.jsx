@@ -2,7 +2,7 @@ import React from 'react';
 import girl from '@/assets/images/favoriteshops/girl.svg';
 
 
-const ProductCard = ({ product, isMobile = false, haveAccount = false }) => {
+const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 1 }) => {
     if (isMobile) {
         return (
             <div className="flex w-[160px] p-[5.839px] flex-col items-start rounded-[5.839px] bg-white shadow-[0_2.236px_21.022px_0_rgba(0,0,0,0.10)] relative flex-shrink-0">

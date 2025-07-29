@@ -86,9 +86,15 @@ Route::middleware('auth')->group(function () {
     });
         
     Route::get('/shoptop', function(){
-        return Inertia::render('shoptop');
+        return Inertia::render('ShopTop');
     });
-
+    Route::get('/shop-newproducts', function(){
+        return Inertia::render('ShopNewProducts');
+    });
+    Route::get('/shoplow', function(){
+        return Inertia::render('ShopLow');
+    });
+    
     Route::get('/productdetailsfree', function(){
         return Inertia::render('ProductDetailsFree');
     });
