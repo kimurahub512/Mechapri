@@ -379,7 +379,7 @@ const RegisterProduct = () => {
                 {/* Show modal on all screen sizes */}
                 {showModal && (
                     <div 
-                        className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-[1000] pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto"
+                        className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-[1000] pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto border-[1px] border-red-500 mr-[16px] md:mr-[0px]"
                         onClick={() => setShowModal(false)}
                     >
                         <div onClick={(e) => e.stopPropagation()} className="min-h-screen w-full flex justify-center px-[16px]">

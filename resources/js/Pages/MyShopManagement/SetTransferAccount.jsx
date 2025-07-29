@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import ShopSidebar from '@/Components/ShopSidebar';
 import ShopMobileTopBlock from '@/Components/ShopMobileTopBlocks';
+import TransferAccountConfirmModal from '@/Components/TransferAccountConfirmModal';
 import '@/../../resources/css/shopmanagement.css';
 import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 import recyclebin from '@/assets/images/recyclebin.svg';
@@ -16,6 +17,7 @@ import lock from '@/assets/images/lock.svg';
 
 
 const SetTransferAccount = () => {
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <>
@@ -80,7 +82,7 @@ const SetTransferAccount = () => {
                             </div>
                         </div>
                         <div className="flex flex-col items-center w-full">
-                            <div className="flex w-[240px] p-[17px] flex-col justify-center items-center rounded-[8px] shadow-[0px_4px_8px_0px_rgba(255, 42, 161, 0.20)] bg-[#E9EEF1]">
+                            <div className="flex w-[240px] p-[17px] flex-col justify-center items-center rounded-[8px] shadow-[0px_4px_8px_0px_rgba(255, 42, 161, 0.20)] bg-[#E9EEF1] cursor-pointer" onClick={() => setShowModal(true)}>
                                 <span className="text-[#969696] text-center font-['Noto Sans JP'] text-[18px] font-bold leading-[21px]">登録する</span>
                             </div>
                         </div>
@@ -140,7 +142,7 @@ const SetTransferAccount = () => {
                                 </div>
                             </div>
                             <div className="flex flex-col items-center w-full">
-                                <div className="flex w-full p-[17px] flex-col justify-center items-center rounded-[8px] shadow-[0px_4px_8px_0px_rgba(255, 42, 161, 0.20)] bg-[#E9EEF1]">
+                                <div className="flex w-full p-[17px] flex-col justify-center items-center rounded-[8px] shadow-[0px_4px_8px_0px_rgba(255, 42, 161, 0.20)] bg-[#E9EEF1] cursor-pointer" onClick={() => setShowModal(true)}>
                                     <span className="text-[#969696] text-center font-['Noto Sans JP'] text-[18px] font-bold leading-[21px]">登録する</span>
                                 </div>
                             </div>
@@ -148,6 +150,19 @@ const SetTransferAccount = () => {
                     </div>
                 </main>
             </div>
+
+            {/* Modal Overlay */}
+            {showModal && (
+                <div 
+                    className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-[1000] pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto"
+                    onClick={() => setShowModal(false)}
+                >
+                    <div onClick={(e) => e.stopPropagation()} className="min-h-screen w-full flex justify-center px-[16px]">
+                        <TransferAccountConfirmModal isOpen={showModal} onClose={() => setShowModal(false)} />
+                    </div>
+                </div>
+            )}
+
             <Footer />
         </>
     );
