@@ -25,7 +25,7 @@ const Category = () => {
                 {/* Main Section */}
                 {/* MOBILE: custom layout, DESKTOP: keep as is */}
                 {/* MOBILE ONLY */}
-                <div className="block md:hidden mx-4 mt-[160px] flex flex-col items-start gap-8">
+                <div className="block md:hidden mx-4 mt-[32px] flex flex-col items-start gap-8">
                     {/* Title */}
                     <div className="flex flex-row items-center justify-between w-full">
                         <h1 className="text-[#363636] font-['Noto_Sans_JP'] text-[24px] font-bold leading-[24px]">商品のカテゴリ</h1>
@@ -35,10 +35,10 @@ const Category = () => {
                     <div className="flex flex-col gap-2 item-start  w-full">
                         <div className="flex flex-row gap-2 item-center">
                             <div className="flex w-[120px] h-[34px] flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white my-[7px]">
-                                <span className="text-center font-['Noto Sans JP'] text-[12px] font-bold leading-[18px] bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent">カテゴリの並び替え</span>
+                                <span className="text-center font-noto text-[12px] font-bold leading-[18px] bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent">カテゴリの並び替え</span>
                             </div>
                             <div className="flex w-[120px] h-[34px] flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white my-[7px]">
-                                <span className="text-center font-['Noto Sans JP'] text-[12px] font-bold leading-[18px] bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent">カテゴリを追加</span>
+                                <span className="text-center font-noto text-[12px] font-bold leading-[18px] bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent">カテゴリを追加</span>
                             </div>
                         </div>
                         <div className="flex flex-col items-center gap-4 self-stretch">
@@ -58,7 +58,7 @@ const Category = () => {
                                     <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[40px]">
                                         4
                                     </span>
-                                    <span className="text-black font-['Noto Sans JP'] text-[12px] font-normal leading-[32px] tracking-[0.9px] px-[1px]">
+                                    <span className="text-black font-noto text-[12px] font-normal leading-[32px] tracking-[0.9px] px-[1px]">
                                         点
                                     </span>
                                 </div>
@@ -79,7 +79,7 @@ const Category = () => {
                                     <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[40px]">
                                         4
                                     </span>
-                                    <span className="text-black font-['Noto Sans JP'] text-[12px] font-normal leading-[32px] tracking-[0.9px] px-[1px]">
+                                    <span className="text-black font-noto text-[12px] font-normal leading-[32px] tracking-[0.9px] px-[1px]">
                                         点
                                     </span>
                                         </div>
@@ -91,7 +91,7 @@ const Category = () => {
                                             <div className="flex w-[16px] h-[16px] justify-center items-center flex-shrink-0">
                                                 <img src={file_add} alt="file_add" className="w-[16px] h-[16px]" />
                                         </div>
-                                            <span className="text-white text-center font-['Noto Sans JP'] text-[13px] font-black leading-[19.5px]">商品登録</span>
+                                            <span className="text-white text-center font-noto text-[13px] font-black leading-[19.5px]">商品登録</span>
                                         </div>
                                     </div>
 
@@ -126,10 +126,10 @@ const Category = () => {
                     <div className="flex flex-col gap-4 item-start">
                         <div className="flex flex-row gap-6 item-center">
                             <div className="flex w-[165px] h-[34px] flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white my-[7px]">
-                                <span className="text-center font-['Noto Sans JP'] text-[14px] font-bold leading-[22px] bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent">カテゴリの並び替え</span>
+                                <span className="text-center font-noto text-[14px] font-bold leading-[22px] bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent">カテゴリの並び替え</span>
                             </div>
                             <div className="flex w-[165px] h-[34px] flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white my-[7px]">
-                                <span className="text-center font-['Noto Sans JP'] text-[14px] font-bold leading-[22px] bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent">カテゴリを追加</span>
+                                <span className="text-center font-noto text-[14px] font-bold leading-[22px] bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent">カテゴリを追加</span>
                             </div>
                         </div>
                         <div className="flex flex-col items-center gap-4 self-stretch">
@@ -149,7 +149,7 @@ const Category = () => {
                                     <span className="text-[#363636] font-['Noto_Sans_JP'] text-[46px] font-bold leading-[40.5px]">
                                         4
                                     </span>
-                                    <span className="text-black font-['Noto Sans JP'] text-[18px] font-normal leading-[18px] tracking-[0.9px] px-[1px]">
+                                    <span className="text-black font-noto text-[18px] font-normal leading-[18px] tracking-[0.9px] px-[1px]">
                                         点
                                     </span>
                                 </div>
@@ -171,7 +171,7 @@ const Category = () => {
                                     <span className="text-[#363636] font-['Noto_Sans_JP'] text-[46px] font-bold leading-[40.5px]">
                                         4
                                     </span>
-                                    <span className="text-black font-['Noto Sans JP'] text-[18px] font-normal leading-[18px] tracking-[0.9px] px-[1px]">
+                                    <span className="text-black font-noto text-[18px] font-normal leading-[18px] tracking-[0.9px] px-[1px]">
                                         点
                                     </span>
                                 </div>
@@ -183,7 +183,7 @@ const Category = () => {
                                             <div className="flex w-[16px] h-[16px] justify-center items-center flex-shrink-0">
                                                 <img src={file_add} alt="file_add" className="w-[16px] h-[16px]" />
                                             </div>
-                                            <span className="text-white text-center font-['Noto Sans JP'] text-[13px] font-black leading-[19.5px]">写真を商品登録</span>
+                                            <span className="text-white text-center font-noto text-[13px] font-black leading-[19.5px]">写真を商品登録</span>
                                         </div>
                                     </div>
 

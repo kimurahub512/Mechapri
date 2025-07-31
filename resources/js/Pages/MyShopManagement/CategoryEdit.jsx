@@ -39,7 +39,7 @@ const CategoryEdit = () => {
                                     <span className="text-[#363636] font-['Noto_Sans_JP'] text-[14px] font-bold leading-[14px]">カテゴリ名</span>
                                     <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[14px] font-normal leading-[21px]">0/200</span>
                                 </div>
-                                <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="2025/11/24" />
+                                <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="2025/11/24" />
                             </div>
                         </div>
 
@@ -49,7 +49,7 @@ const CategoryEdit = () => {
                                     <span className="text-[#363636] font-['Noto_Sans_JP'] text-[14px] font-bold leading-[14px]">カテゴリ説明文</span>
                                     <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[14px] font-normal leading-[21px]">0/200</span>
                                 </div>
-                                <textarea className="w-full min-h-[128px] p-[12.5px_12px_12.5px_12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-[25px] resize-none" placeholder="商品の説明文" />
+                                <textarea className="w-full min-h-[128px] p-[12.5px_12px_12.5px_12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-[25px] resize-none" placeholder="商品の説明文" />
                             </div>
                         </div>
                         <div className="flex flex-col items-start gap-[20px] w-full">
@@ -92,8 +92,8 @@ const CategoryEdit = () => {
                                                 </div>
                                                 {/* 11111 */}
                                                 <div className="flex flex-col items-center gap-[1px] self-stretch">
-                                                    <span className="text-[#586B88] text-center font-['Noto Sans JP'] text-[7px] font-bold leading-[9px]">カテゴリに</span>
-                                                    <span className="text-[#586B88] text-center font-['Noto Sans JP'] text-[7px] font-bold leading-[9px]">商品を追加</span>
+                                                    <span className="text-[#586B88] text-center font-noto text-[7px] font-bold leading-[9px]">カテゴリに</span>
+                                                    <span className="text-[#586B88] text-center font-noto text-[7px] font-bold leading-[9px]">商品を追加</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -139,7 +139,7 @@ const CategoryEdit = () => {
                         </div>
                         <div className="flex flex-col items-center gap-[10px] pt-[32px] w-full">
                             <div className="flex w-full py-[15px] flex-col justify-center items-center rounded-[8px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]">
-                                <span className="text-white text-center font-['Noto Sans JP'] text-[18px] font-bold leading-[14px]">登録する</span>
+                                <span className="text-white text-center font-noto text-[18px] font-bold leading-[14px]">登録する</span>
                             </div>
                             <span className="text-[#87969F] font-['Noto_Sans_JP'] text-[12px] font-normal leading-[18px]">※ 登録後は商品ファイルの変更はできません。</span>
                         </div>
@@ -160,7 +160,7 @@ const CategoryEdit = () => {
                                     <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[27px]">カテゴリ名</span>
                                     <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px]">0/200</span>
                                 </div>
-                                <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="2025/11/24" />
+                                <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="2025/11/24" />
                             </div>
                         </div>
 
@@ -170,7 +170,7 @@ const CategoryEdit = () => {
                                     <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[27px]">カテゴリ説明文</span>
                                     <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px]">0/200</span>
                                 </div>
-                                <textarea className="w-full min-h-[90px] p-[12.5px_12px_12.5px_12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-[25px] resize-none" placeholder="商品の説明文" />
+                                <textarea className="w-full min-h-[90px] p-[12.5px_12px_12.5px_12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-[25px] resize-none" placeholder="商品の説明文" />
                             </div>
                         </div>
                         <div className="flex flex-col items-start gap-[20px] w-full">
@@ -213,8 +213,8 @@ const CategoryEdit = () => {
                                                 </div>
                                                 {/* 11111 */}
                                                 <div className="flex flex-col items-center gap-[2px] self-stretch">
-                                                    <span className="text-[#586B88] text-center font-['Noto Sans JP'] text-[18px] font-bold leading-[22.966px]">カテゴリに</span>
-                                                    <span className="text-[#586B88] text-center font-['Noto Sans JP'] text-[18px] font-bold leading-[22.966px]">商品を追加</span>
+                                                    <span className="text-[#586B88] text-center font-noto text-[18px] font-bold leading-[22.966px]">カテゴリに</span>
+                                                    <span className="text-[#586B88] text-center font-noto text-[18px] font-bold leading-[22.966px]">商品を追加</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -259,7 +259,7 @@ const CategoryEdit = () => {
                         </div>
                         <div className="flex flex-col items-center gap-[10px] pt-[32px] w-full">
                             <div className="flex w-full py-[15px] flex-col justify-center items-center rounded-[8px] shadow-[0px_4px_8px_0px_rgba(255, 42, 161, 0.20)] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]">
-                                <span className="text-white text-center font-['Noto Sans JP'] text-[18px] font-bold leading-[14px]">登録する</span>
+                                <span className="text-white text-center font-noto text-[18px] font-bold leading-[14px]">登録する</span>
                             </div>
                             <span className="text-[#87969F] font-['Noto_Sans_JP'] text-[12px] font-normal leading-[18px]">※ 登録後は商品ファイルの変更はできません。</span>
                         </div>

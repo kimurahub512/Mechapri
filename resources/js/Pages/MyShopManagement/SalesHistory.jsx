@@ -4,7 +4,7 @@ import Footer from '@/Components/footer/footer';
 import ShopSidebar from '@/Components/ShopSidebar';
 import ShopMobileTopBlock from '@/Components/ShopMobileTopBlocks';
 import '@/../../resources/css/shopmanagement.css';
-import photo1 from '@/assets/images/shopcontents/photo1.png';
+import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 
 
 const SalesHistory = () => {
@@ -17,6 +17,7 @@ const SalesHistory = () => {
             <div className="hidden md:block">
                 <ShopSidebar/>
             </div>
+            <ShopMobileTopBlock />
             {/* Desktop Main Section */}
             <main className="hidden md:flex flex-col items-center max-w-[928px] p-[50px_0_40px_0] gap-[32px] bg-[#F1F3F4] self-stretch mx-auto">
                 {/* Title */}
@@ -52,7 +53,7 @@ const SalesHistory = () => {
                 </section>
             </main>
             {/* Mobile Main Section */}
-            <main className="md:hidden inline-flex flex-col items-start gap-4 mt-[132px] mx-4">
+            <main className="md:hidden inline-flex flex-col items-start gap-4 mt-[32px] mx-4">
                 {/* Title */}
                 <h1 className="w-full text-left font-bold text-[24px] leading-[24px] text-[#363636] font-[\'Noto Sans JP\']">販売履歴</h1>
                 {/* Frame 1 */}

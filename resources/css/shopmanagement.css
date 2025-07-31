@@ -751,7 +751,6 @@
     max-width: 100%;
     padding: 0;
     gap: 0;
-    padding-top: 172px; /* 64px (header) + 44px (first block) + 64px (second block) */
   }
 
   /* Show mobile blocks on mobile */
@@ -777,11 +776,6 @@
     background: var(--color-white-solid, #FFF);
     margin-top: 0;
     padding-top: 0;
-    position: fixed;
-    top: 64px;
-    left: 0;
-    right: 0;
-    z-index: 999;
   }
 
   .shopmanagement-mobile-header-frame {
@@ -849,11 +843,6 @@
     border-top: 1px solid var(--color-grey-86, #DCDCDC);
     border-bottom: 1px solid var(--color-grey-86, #DCDCDC);
     background: var(--color-white-solid, #FFF);
-    position: fixed;
-    top: 108px; /* 64px (header) + 44px (first block) */
-    left: 0;
-    right: 0;
-    z-index: 998;
   }
 
   .shopmanagement-mobile-nav-list {
@@ -902,7 +891,7 @@
   /* Mobile Main Section */
   .shopmanagement-mobile-main-section {
     display: flex;
-    padding-top: 172px;
+    padding-top: 32px;
     width: 375px;
     max-width: var(--width-928, 928px);
     padding-left: 16px;

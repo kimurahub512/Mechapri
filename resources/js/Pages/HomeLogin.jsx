@@ -125,8 +125,8 @@ const HomeLogin = () => {
                         <div className="flex flex-col ">
                             {/* Title & Badge */}
                             <div className="inline-flex items-center gap-2">
-                                <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-['Noto Sans JP']">郊外のカフェにて</span>
-                                <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[13px] leading-[15px] font-['Noto Sans JP']">3枚セット</span>
+                                <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-noto">郊外のカフェにて</span>
+                                <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[13px] leading-[15px] font-noto">3枚セット</span>
                             </div>
 
                             <div className="inline-flex h-[32px] p-[6px_0] flex-row items-center flex-shrink-0 rounded-[3px] mt-[32px]">
@@ -144,8 +144,8 @@ const HomeLogin = () => {
                     <div className="flex flex-col ">
                         {/* Title & Badge */}
                         <div className="inline-flex items-center gap-2">
-                            <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-['Noto Sans JP']">Gウェルネス💪疲れ知らず</span>
-                            <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[13px] leading-[15px] font-['Noto Sans JP']">ガチャ</span>
+                            <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-noto">Gウェルネス💪疲れ知らず</span>
+                            <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[13px] leading-[15px] font-noto">ガチャ</span>
                         </div>
 
                         <div className="inline-flex h-[32px] p-[6px_0] flex-row items-center flex-shrink-0 rounded-[3px] mt-[32px]">
@@ -162,8 +162,8 @@ const HomeLogin = () => {
                     <div className="flex flex-col ">
                         {/* Title & Badge */}
                         <div className="inline-flex items-center gap-2">
-                            <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-['Noto Sans JP']">エネルギー全開💪</span>
-                            <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[13px] leading-[15px] font-['Noto Sans JP']">3枚セット</span>
+                            <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-noto">エネルギー全開💪</span>
+                            <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[13px] leading-[15px] font-noto">3枚セット</span>
                         </div>
 
                         <div className="inline-flex h-[32px] p-[6px_0] flex-row items-center flex-shrink-0 rounded-[3px] mt-[32px]">
@@ -235,8 +235,8 @@ const HomeLogin = () => {
                             </div>
                             {/* Title & Badge */}
                             <div className="flex flex-col items-start gap-[2px]">
-                                <span className="text-[#363636] font-normal text-[14px] leading-[21px] font-['Noto Sans JP']">郊外のカフェにて</span>
-                                <span className="inline-flex items-center gap-1 px-2 py-[2px] rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[12px] leading-[15px] font-['Noto Sans JP']">3枚セット</span>
+                                <span className="text-[#363636] font-normal text-[14px] leading-[21px] font-noto">郊外のカフェにて</span>
+                                <span className="inline-flex items-center gap-1 px-2 py-[2px] rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[12px] leading-[15px] font-noto">3枚セット</span>
                                 <div className="inline-flex flex-row items-center flex-shrink-0 rounded-[3px]">
                                     <span className="ml -[6px] text-[#222] font-noto text-[18px] leading-[20px] font-bold">300</span>
                                     <span className="mt-[4px] text-[#222] font-noto text-[12px] leading-[12px] font-bold">円</span>
@@ -252,8 +252,8 @@ const HomeLogin = () => {
                             </div>
                             {/* Title & Badge */}
                             <div className="flex flex-col items-start gap-[2px]">
-                                <span className="text-[#363636] font-normal text-[14px] leading-[21px] font-['Noto Sans JP']">郊外のカフェにて</span>
-                                <span className="inline-flex items-center gap-1 px-2 py-[2px] rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[12px] leading-[15px] font-['Noto Sans JP']">3枚セット</span>
+                                <span className="text-[#363636] font-normal text-[14px] leading-[21px] font-noto">郊外のカフェにて</span>
+                                <span className="inline-flex items-center gap-1 px-2 py-[2px] rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[12px] leading-[15px] font-noto">3枚セット</span>
                                 <div className="inline-flex flex-row items-center flex-shrink-0 rounded-[3px]">
                                     <span className="ml -[6px] text-[#222] font-noto text-[18px] leading-[20px] font-bold">600</span>
                                     <span className="mt-[4px] text-[#222] font-noto text-[12px] leading-[12px] font-bold">円</span>
@@ -269,8 +269,8 @@ const HomeLogin = () => {
                             </div>
                             {/* Title & Badge */}
                             <div className="flex flex-col items-start gap-[2px]">
-                                <span className="text-[#363636] font-normal text-[14px] leading-[21px] font-['Noto Sans JP']">郊外のカフェにて</span>
-                                <span className="inline-flex items-center gap-1 px-2 py-[2px] rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[12px] leading-[15px] font-['Noto Sans JP']">3枚セット</span>
+                                <span className="text-[#363636] font-normal text-[14px] leading-[21px] font-noto">郊外のカフェにて</span>
+                                <span className="inline-flex items-center gap-1 px-2 py-[2px] rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[12px] leading-[15px] font-noto">3枚セット</span>
                                 <div className="inline-flex flex-row items-center flex-shrink-0 rounded-[3px]">
                                     <span className="ml -[6px] text-[#222] font-noto text-[18px] leading-[20px] font-bold">1200</span>
                                     <span className="mt-[4px] text-[#222] font-noto text-[12px] leading-[12px] font-bold">円</span>

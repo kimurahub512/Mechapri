@@ -61,19 +61,19 @@ const SetTransferAccount = () => {
                         </div>
                         <div className="flex flex-col items-start gap-[4px] w-full">
                             <span className="text-[#363636] font-['Noto_Sans_JP'] text-[14px] font-bold leading-[14px] mt-[12px] mb-[6px]">支店コード</span>
-                            <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
+                            <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
                         </div>
                         <div className="flex flex-col items-start gap-[4px] w-full">
                             <span className="text-[#363636] font-['Noto_Sans_JP'] text-[14px] font-bold leading-[14px] mt-[12px] mb-[6px]">口座番号</span>
-                            <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
+                            <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
                         </div>
                         <div className="flex flex-col items-start gap-[4px] w-full">
                             <span className="text-[#363636] font-['Noto_Sans_JP'] text-[14px] font-bold leading-[14px] mt-[12px] mb-[6px]">口座名義 (セイ)</span>
-                            <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
+                            <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
                         </div>
                         <div className="flex flex-col items-start gap-[4px] w-full">
                             <span className="text-[#363636] font-['Noto_Sans_JP'] text-[14px] font-bold leading-[14px] mt-[12px] mb-[6px]">口座名義 (メイ)</span>
-                            <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
+                            <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
                         </div>
                         <div className="flex flex-col items-start gap-[4px] w-full">
                             <div className="flex items-start">
@@ -83,7 +83,7 @@ const SetTransferAccount = () => {
                         </div>
                         <div className="flex flex-col items-center w-full">
                             <div className="flex w-[240px] p-[17px] flex-col justify-center items-center rounded-[8px] shadow-[0px_4px_8px_0px_rgba(255, 42, 161, 0.20)] bg-[#E9EEF1] cursor-pointer" onClick={() => setShowModal(true)}>
-                                <span className="text-[#969696] text-center font-['Noto Sans JP'] text-[18px] font-bold leading-[21px]">登録する</span>
+                                <span className="text-[#969696] text-center font-noto text-[18px] font-bold leading-[21px]">登録する</span>
                             </div>
                         </div>
                     </div>
@@ -121,19 +121,19 @@ const SetTransferAccount = () => {
                             </div>
                             <div className="flex flex-col items-start gap-[4px] w-full">
                                 <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[27px] mt-[25px] mb-[6px]">支店コード</span>
-                                <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
+                                <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
                             </div>
                             <div className="flex flex-col items-start gap-[4px] w-full">
                                 <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[27px] mt-[25px] mb-[6px]">口座番号</span>
-                                <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
+                                <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
                             </div>
                             <div className="flex flex-col items-start gap-[4px] w-full">
                                 <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[27px] mt-[25px] mb-[6px]">口座名義 (セイ)</span>
-                                <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
+                                <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
                             </div>
                             <div className="flex flex-col items-start gap-[4px] w-full">
                                 <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[27px] mt-[25px] mb-[6px]">口座名義 (メイ)</span>
-                                <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
+                                <input type="text" className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="私のめちゃプリショップ" />
                             </div>
                             <div className="flex flex-col items-start gap-[4px] w-full">
                                 <div className="flex items-start">
@@ -143,7 +143,7 @@ const SetTransferAccount = () => {
                             </div>
                             <div className="flex flex-col items-center w-full">
                                 <div className="flex w-full p-[17px] flex-col justify-center items-center rounded-[8px] shadow-[0px_4px_8px_0px_rgba(255, 42, 161, 0.20)] bg-[#E9EEF1] cursor-pointer" onClick={() => setShowModal(true)}>
-                                    <span className="text-[#969696] text-center font-['Noto Sans JP'] text-[18px] font-bold leading-[21px]">登録する</span>
+                                    <span className="text-[#969696] text-center font-noto text-[18px] font-bold leading-[21px]">登録する</span>
                                 </div>
                             </div>
                         </div>

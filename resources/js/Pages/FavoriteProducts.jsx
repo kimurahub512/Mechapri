@@ -30,7 +30,7 @@ const FavoriteProducts = () => {
         <div className="flex flex-col items-start w-[880px] min-w-[880px] max-w-[880px] gap-[32px] ">
           {/* Frame 11 */}
           <div className="flex flex-col items-center h-[118px] p-[40px_0_1px_0] self-stretch border-b border-[#D1D1D1]">
-            <h1 className="text-[#363636] text-center font-bold text-[36px] leading-[54px] font-['Noto Sans JP'] self-stretch">お気に入り</h1>
+            <h1 className="text-[#363636] text-center font-bold text-[36px] leading-[54px] font-noto self-stretch">お気に入り</h1>
           </div>
           {/*frame 13*/}
           <TabButtonsDesktop
@@ -66,8 +66,8 @@ const FavoriteProducts = () => {
                       <div className="flex flex-col ">
                         {/* Title & Badge */}
                         <div className="inline-flex items-center gap-2">
-                          <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-['Noto Sans JP']">郊外のカフェにて</span>
-                          <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[13px] leading-[15px] font-['Noto Sans JP']">3枚セット</span>
+                          <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-noto">郊外のカフェにて</span>
+                          <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[13px] leading-[15px] font-noto">3枚セット</span>
                         </div>
                         {/* 12121: User Info */}
                         <div className="inline-flex h-[32px] p-[6px_0] flex-row items-center flex-shrink-0 rounded-[3px]">
@@ -77,7 +77,7 @@ const FavoriteProducts = () => {
                       </div>
                       {/* Price */}
                       <div className="inline-flex items-center gap-[2px] mt-2">
-                        <span className="text-[#363636] font-medium text-[24px] leading-[40px] font-['Noto Sans JP'] ">0</span><span className="text-[#363636] font-medium text-[14px] leading-[32px] font-['Noto Sans JP'] mt-[6px]">円</span>
+                        <span className="text-[#363636] font-medium text-[24px] leading-[40px] font-noto ">0</span><span className="text-[#363636] font-medium text-[14px] leading-[32px] font-noto mt-[6px]">円</span>
                       </div>
                     </div>
                     {/* 1213: Date and Favorite */}
@@ -104,13 +104,13 @@ const FavoriteProducts = () => {
                     <div className="flex flex-col h-[118px] pr-[32px] justify-between items-start flex-1">
                       {/* Shop Name */}
                       <div className="flex flex-col">
-                        <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-['Noto Sans JP']">カフェ・ド・パリ</span>
+                        <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-noto">カフェ・ド・パリ</span>
                         <span className="text-[#767676] font-noto text-[14px] leading-[22px] mt-[4px]">東京都渋谷区</span>
                       </div>
                       {/* Shop Stats */}
                       <div className="flex items-center gap-[16px] mt-2">
-                        <span className="text-[#363636] font-medium text-[16px] leading-[24px] font-['Noto Sans JP']">フォロワー: 1,234</span>
-                        <span className="text-[#363636] font-medium text-[16px] leading-[24px] font-['Noto Sans JP']">商品: 56</span>
+                        <span className="text-[#363636] font-medium text-[16px] leading-[24px] font-noto">フォロワー: 1,234</span>
+                        <span className="text-[#363636] font-medium text-[16px] leading-[24px] font-noto">商品: 56</span>
                       </div>
                     </div>
                     {/* Follow Button */}

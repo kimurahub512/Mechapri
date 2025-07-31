@@ -32,7 +32,7 @@ const ProductDetailsFree = () => {
                     <div className="flex flex-col items-start gap-[24px] w-full relative">
                         {/* 111: 非公開中の作品です */}
                         <div className="flex flex-col items-center w-full p-[8px_9px] border border-[#FF8D4E] bg-[#FF2AA1] rounded">
-                            <span className="text-white text-center font-['Noto Sans JP'] text-[14px] font-bold leading-[22px]">非公開中の作品です</span>
+                            <span className="text-white text-center font-noto text-[14px] font-bold leading-[22px]">非公開中の作品です</span>
                         </div>
                         {/* 112 */}
                         <div className="flex flex-col justify-center items-start h-[66px] w-full relative">
@@ -47,7 +47,7 @@ const ProductDetailsFree = () => {
                                 </div>
                                 {/* 11212 */}
                                 <div className="flex flex-col items-start">
-                                    <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                                 </div>
                             </div>
                             {/* 1122: Edit/Delete buttons */}
@@ -55,12 +55,12 @@ const ProductDetailsFree = () => {
                                 {/* 11221: Edit */}
                                 <button className="flex items-center gap-[8px] w-[90px] h-[34px] px-[16px] rounded-[5px] bg-[#E9E9E9]">
                                     <img src={pen} alt="edit" className="w-[20px] h-[20px]" />
-                                    <span className="text-[#767676] font-['Noto Sans JP'] text-[12px] font-bold leading-[18px]">編集</span>
+                                    <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">編集</span>
                                 </button>
                                 {/* 11222: Delete */}
                                 <button className="flex items-center gap-[8px] w-[90px] h-[34px] px-[16px] rounded-[5px] bg-[#E9E9E9]">
                                     <img src={recyclebin} alt="delete" className="w-[20px] h-[20px]" />
-                                    <span className="text-[#767676] font-['Noto Sans JP'] text-[12px] font-bold leading-[18px]">削除</span>
+                                    <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">削除</span>
                                 </button>
                             </div>
                         </div>
@@ -68,12 +68,12 @@ const ProductDetailsFree = () => {
                         <div className="flex flex-col items-start gap-[8px] w-full">
                             {/* 1131: Title */}
                             <div className="flex flex-col items-start w-[1200px]">
-                                <span className="text-[#363636] font-['Noto Sans JP'] text-[36px] font-bold leading-[54px]">郊外のカフェにて</span>
+                                <span className="text-[#363636] font-noto text-[36px] font-bold leading-[54px]">郊外のカフェにて</span>
                             </div>
                             {/* 1132: Description and Date */}
                             <div className="flex flex-col items-start gap-[4px] w-full">
-                                <span className="text-[#363636] font-['Noto Sans JP'] text-[18px] font-normal leading-[32.4px]">郊外のカフェです</span>
-                                <span className="text-[#363636] font-['Noto Sans JP'] text-[12px] font-normal leading-[18px]">2025/10/05まで販売</span>
+                                <span className="text-[#363636] font-noto text-[18px] font-normal leading-[32.4px]">郊外のカフェです</span>
+                                <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">2025/10/05まで販売</span>
                             </div>
                         </div>
                         {/* 114 */}
@@ -85,8 +85,8 @@ const ProductDetailsFree = () => {
                                     {/* 114111: Heart, お気に入り, 1000 */}
                                     <div className="flex items-center gap-[4px]">
                                         <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                        <span className="text-[#222] font-['Noto Sans JP'] text-[14px] font-bold leading-[21px]">お気に入り</span>
-                                        <span className="text-[#222] font-['Noto Sans JP'] text-[14px] font-bold leading-[21px]">1000</span>
+                                        <span className="text-[#222] font-noto text-[14px] font-bold leading-[21px]">お気に入り</span>
+                                        <span className="text-[#222] font-noto text-[14px] font-bold leading-[21px]">1000</span>
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@ const ProductDetailsFree = () => {
                                 <div className="flex flex-col items-start pl-[4px]">
                                     <div className="flex items-center gap-[4px]">
                                         <img src={share} alt="share" className="w-[20px] h-[20px]" />
-                                        <span className="text-[#222] font-['Noto Sans JP'] text-[12px] font-normal leading-[13.8px]">シェア</span>
+                                        <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                                     </div>
                                 </div>
                                 {/* 11422 */}
@@ -105,7 +105,7 @@ const ProductDetailsFree = () => {
                                         <div className="flex items-center justify-end w-full">
                                             <img src={complex} alt="complex" className="w-[20px] h-[20px]" />
                                             <span className="text-[#767676] font-['Hiragino Sans'] text-[14px] font-medium leading-[14px] ml-[4px]">プリント実績</span>
-                                            <span className="text-[#767676] text-right font-['Noto Sans JP'] text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
+                                            <span className="text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
                                         </div>
                                     </div>
                                 </div>
@@ -137,10 +137,10 @@ const ProductDetailsFree = () => {
                                 <div className="flex px-[140px] py-[13.649px] pr-[137px] rounded-t-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] items-center gap-[10px] w-full whitespace-nowrap">
                                     <div className="flex items-center gap-[8px] ">
                                         <img src={complex_white} alt="complex_white" className="w-[20px] h-[20px]" />
-                                        <span className="text-white font-['Noto Sans JP'] text-[14px] font-bold leading-[14px] ">プリント期限</span>
+                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px] ">プリント期限</span>
                                     </div>
                                     <div className="flex flex-col items-start ml-[24px]">
-                                        <span className="text-white font-['Noto Sans JP'] text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
                                     </div>
                                 </div>
                                 {/* 12122: Print options */}
@@ -149,7 +149,7 @@ const ProductDetailsFree = () => {
                                     <div className="flex w-[480px] px-[24px] justify-between items-center rounded-[10px] bg-white shadow-[0_2px_8px_0_rgba(0,0,0,0.25)] ">
                                         <div className="flex flex-col items-center flex-1">
                                             <div className="flex h-[74px] py-[30px] justify-between items-center w-full ">
-                                                <span className="w-[201px] font-['Noto Sans JP'] text-[18px] font-bold leading-[20.7px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">ファミマ・ローソン・<br />ミニストップで印刷する</span>
+                                                <span className="w-[201px] font-noto text-[18px] font-bold leading-[20.7px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">ファミマ・ローソン・<br />ミニストップで印刷する</span>
                                                 <div className="flex items-center gap-[12px] ml-[16px]">
                                                     <img src={shop1} alt="printshop" className="w-[64.863px] h-[48px]" />
                                                     <img src={shop2} alt="lawson" className="w-[64.863px] h-[48px]" />
@@ -159,15 +159,15 @@ const ProductDetailsFree = () => {
                                             {/*12122112*/}
                                             <div className="relative w-[358px] h-[150px] mt-[12px]">
                                                 <img src={qr} alt="qr" className="absolute top-0 left-0 w-[150px] h-[150px] " />
-                                                <span className="absolute top-[44.5px] left-[226px] text-[#000] font-['Noto Sans JP'] text-[14px] font-normal leading-[21px]">印刷番号</span>
-                                                <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-['Noto Sans JP'] text-[24px] font-bold leading-[24px] text-center">2CNM9FX279</span>
+                                                <span className="absolute top-[44.5px] left-[226px] text-[#000] font-noto text-[14px] font-normal leading-[21px]">印刷番号</span>
+                                                <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">2CNM9FX279</span>
                                             </div>
                                         </div>
                                     </div>
                                     {/* 121222: Seven Eleven */}
                                     <div className="flex w-[480px] h-[74px] px-[24px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50 ">
                                         <div className="flex items-center w-[425px] h-[74px] py-[30px] justify-between">
-                                            <span className="font-['Noto Sans JP'] text-[18px] font-bold leading-[20.7px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
+                                            <span className="font-noto text-[18px] font-bold leading-[20.7px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
                                             <img src={eleven} alt="eleven" className="w-[59px] h-[59px] rounded-full object-cover ml-[16px]" />
                                         </div>
                                     </div>
@@ -177,7 +177,7 @@ const ProductDetailsFree = () => {
                             <div className="flex flex-col items-center w-[386px] h-[20px] mt-[24px] ml-[287px]">
                                 <div className="flex items-center gap-[8px]">
                                     <img src={question_circle} alt="question_circle" className="w-[20px] h-[20px]" />
-                                    <span className="text-[#767676] font-['Noto Sans JP'] text-[14px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</span>
+                                    <span className="text-[#767676] font-noto text-[14px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</span>
                                 </div>
                             </div>
                         </div>
@@ -185,14 +185,14 @@ const ProductDetailsFree = () => {
                         <div className="flex flex-col items-start w-[960px] px-[66px] py-[32px] gap-[10px] bg-white rounded-[24px] shadow-[0_2px_8px_0_rgba(0,0,0,0.10)]">
                             {/* 1221: Ranking title and list */}
                             <div className="flex flex-col items-start gap-[16px] w-full">
-                                <span className="text-[#000] font-['Noto Sans JP'] text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">ランキング</span>
+                                <span className="text-[#000] font-noto text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">ランキング</span>
                                 {/* 12211: Ranking list */}
                                 <div className="flex flex-col items-start gap-[24px] w-full">
                                     {/* 122111: Ranking item example */}
                                     <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[24px]">
                                             <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-['Noto Sans JP'] text-[36px] font-bold leading-[54px]">1</span>
+                                                <span className="text-[#AB31D3] font-noto text-[36px] font-bold leading-[54px]">1</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
@@ -201,7 +201,7 @@ const ProductDetailsFree = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -210,7 +210,7 @@ const ProductDetailsFree = () => {
                                     <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[24px]">
                                             <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-['Noto Sans JP'] text-[28px] font-bold leading-[42px]">2</span>
+                                                <span className="text-[#AB31D3] font-noto text-[28px] font-bold leading-[42px]">2</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
@@ -219,7 +219,7 @@ const ProductDetailsFree = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -228,7 +228,7 @@ const ProductDetailsFree = () => {
                                     <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[24px]">
                                             <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-['Noto Sans JP'] text-[28px] font-bold leading-[42px]">3</span>
+                                                <span className="text-[#AB31D3] font-noto text-[28px] font-bold leading-[42px]">3</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
@@ -237,7 +237,7 @@ const ProductDetailsFree = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -246,7 +246,7 @@ const ProductDetailsFree = () => {
                                     <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[24px]">
                                             <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#222] font-['Noto Sans JP'] text-[24px] font-bold leading-[24px]">4</span>
+                                                <span className="text-[#222] font-noto text-[24px] font-bold leading-[24px]">4</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
@@ -255,7 +255,7 @@ const ProductDetailsFree = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -264,7 +264,7 @@ const ProductDetailsFree = () => {
                                     <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[24px]">
                                             <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#222] font-['Noto Sans JP'] text-[24px] font-bold leading-[24px]">5</span>
+                                                <span className="text-[#222] font-noto text-[24px] font-bold leading-[24px]">5</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
@@ -273,7 +273,7 @@ const ProductDetailsFree = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -293,7 +293,7 @@ const ProductDetailsFree = () => {
                         {/* 211 */}
                         <div className="flex flex-col pl-[16px] items-start">
                             <div className="flex flex-col items-start gap-[12px]">
-                                <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy2005</span>
+                                <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy2005</span>
                                 <div className="flex pt-[10px] gap-[4px]">
                                     <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
                                     <img src={instagram} alt="instagram" className="w-[46.429px] h-[46.429px] opacity-100" />
@@ -304,7 +304,7 @@ const ProductDetailsFree = () => {
                     {/* Right: 22 */}
                     <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
                         <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
-                            <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-normal leading-[27.2px]">
+                            <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
                                 こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
                             </span>
                         </div>
@@ -318,7 +318,7 @@ const ProductDetailsFree = () => {
                 <div className="flex flex-col items-start gap-[24px] w-[343px]">
                     {/* 111: 非公開中の作品です */}
                     <div className="flex flex-col justify-center items-center w-full p-[8px_9px] border border-[#FF8D4E] bg-[#FF2AA1]">
-                        <span className="w-full text-white text-center font-['Noto Sans JP'] text-[14px] font-bold leading-[22px]">非公開中の作品です</span>
+                        <span className="w-full text-white text-center font-noto text-[14px] font-bold leading-[22px]">非公開中の作品です</span>
                     </div>
                     {/* 112 */}
                     <div className="flex flex-col items-start gap-[12px] w-full">
@@ -332,19 +332,19 @@ const ProductDetailsFree = () => {
                                         <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
                                     </div>
                                 </div>
-                                <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                             </div>
                         </div>
                         {/* 1122 */}
                         <div className="flex flex-col items-start gap-[10px] w-full">
                             {/* 11221 */}
                             <div className="flex flex-col justify-center items-start gap-[12px] w-full">
-                                <span className="text-[#363636] text-left font-['Noto Sans JP'] text-[24px] font-bold leading-[24px] w-full">郊外のカフェにて</span>
+                                <span className="text-[#363636] text-left font-noto text-[24px] font-bold leading-[24px] w-full">郊外のカフェにて</span>
                             </div>
                             {/* 11222 */}
                             <div className="flex flex-col items-start gap-[4px] w-full">
-                                <span className="text-[#363636] font-['Noto Sans JP'] text-[14px] font-bold leading-[14px] w-full">郊外のカフェです</span>
-                                <span className="text-[#363636] font-['Noto Sans JP'] text-[12px] font-normal leading-[18px]">2025/10/05まで販売</span>
+                                <span className="text-[#363636] font-noto text-[14px] font-bold leading-[14px] w-full">郊外のカフェです</span>
+                                <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">2025/10/05まで販売</span>
                             </div>
                         </div>
                         {/* 1123: Edit/Delete */}
@@ -352,12 +352,12 @@ const ProductDetailsFree = () => {
                             {/* 11231: Edit */}
                             <button className="flex items-center gap-[8px] bg-[#E9E9E9] rounded-[5px] px-[16px] py-[9px]">
                                 <img src={pen} alt="edit" className="w-[20px] h-[20px]" />
-                                <span className="text-[#767676] font-['Noto Sans JP'] text-[12px] font-bold leading-[18px]">編集</span>
+                                <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">編集</span>
                             </button>
                             {/* 11232: Delete */}
                             <button className="flex items-center gap-[8px] bg-[#E9E9E9] rounded-[5px]  px-[16px] py-[9px]">
                                 <img src={recyclebin} alt="delete" className="w-[20px] h-[20px]" />
-                                <span className="text-[#767676] font-['Noto Sans JP'] text-[12px] font-bold leading-[18px]">削除</span>
+                                <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">削除</span>
                             </button>
                         </div>
                     </div>
@@ -367,7 +367,7 @@ const ProductDetailsFree = () => {
                         <div className="flex flex-col items-start gap-[10px] p-[8px] rounded-[6px]">
                             <div className="flex items-center gap-[4px]">
                                 <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                <span className="text-[#363636] font-['Noto Sans JP'] text-[12px] font-normal leading-[18px]">お気に入り</span>
+                                <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">お気に入り</span>
                                 <span className="text-[#363636] font-['Red Hat Display'] text-[14px] font-bold leading-[21px]">1000</span>
                             </div>
                         </div>
@@ -376,14 +376,14 @@ const ProductDetailsFree = () => {
                             {/* 11321: Share */}
                             <div className="flex items-center gap-[4px]">
                                 <img src={share} alt="share" className="w-[20px] h-[20px]" />
-                                <span className="text-[#222] font-['Noto Sans JP'] text-[12px] font-normal leading-[13.8px]">シェア</span>
+                                <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                             </div>
                             {/* 11322: Print count */}
                             <div className="flex flex-col items-start ml-[16px]">
                                 <div className="flex items-center justify-end w-full">
                                     <img src={complex} alt="complex" className="w-[20px] h-[20px]" />
                                     <span className="text-[#767676] font-['Hiragino Sans'] text-[14px] font-medium leading-[14px] ml-[4px]">プリント実績</span>
-                                    <span className="w-[12px] text-[#767676] text-right font-['Noto Sans JP'] text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
+                                    <span className="w-[12px] text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
                                 </div>
                             </div>
                         </div>
@@ -414,10 +414,10 @@ const ProductDetailsFree = () => {
                             <div className="flex px-[44px] py-[13.5px] rounded-t-[16px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] items-center gap-[8px] w-full whitespace-nowrap">
                                 <div className="flex items-center gap-[6px]">
                                     <img src={complex_white} alt="complex_white" className="w-[20px] h-[20px]" />
-                                    <span className="text-white font-['Noto Sans JP'] text-[14px] font-bold leading-[14px]">プリント期限</span>
+                                    <span className="text-white font-noto text-[14px] font-bold leading-[14px]">プリント期限</span>
                                 </div>
                                 <div className="flex flex-col items-start ml-[16px]">
-                                    <span className="text-white font-['Noto Sans JP'] text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                    <span className="text-white font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
                                 </div>
                             </div>
                             {/* 12122: Print options */}
@@ -426,7 +426,7 @@ const ProductDetailsFree = () => {
                                 <div className="flex w-full px-[16px] justify-between items-center rounded-[10px] bg-white shadow-[0_2px_8px_0_rgba(0,0,0,0.25)]">
                                     <div className="flex flex-col items-center flex-1">
                                         <div className="flex h-[60px] py-[20px] justify-between items-center w-full">
-                                            <span className="w-[160px] font-['Noto Sans JP'] text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent whitespace-nowrap">ファミマ・ローソン・<br />ミニストップで印刷する</span>
+                                            <span className="w-[160px] font-noto text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent whitespace-nowrap">ファミマ・ローソン・<br />ミニストップで印刷する</span>
                                             <div className="flex items-center gap-[8px] ml-[12px]">
                                                 <img src={shop1} alt="printshop" className="w-[33.2px] h-[24.5px]" />
                                                 <img src={shop2} alt="lawson" className="w-[33.2px] h-[24.4px]" />
@@ -436,15 +436,15 @@ const ProductDetailsFree = () => {
                                         {/*12122112*/}
                                         <div className="relative w-[240px] h-[100px] mt-[8px]">
                                             <img src={qr} alt="qr" className="absolute top-0 left-0 w-[100px] h-[100px]" />
-                                            <span className="absolute top-[30px] left-[150px] text-[#000] font-['Noto Sans JP'] text-[12px] font-normal leading-[16px]">印刷番号</span>
-                                            <span className="absolute top-[50px] left-[120px] text-[#363636] font-['Noto Sans JP'] text-[16px] font-bold leading-[16px] text-center">2CNM9FX279</span>
+                                            <span className="absolute top-[30px] left-[150px] text-[#000] font-noto text-[12px] font-normal leading-[16px]">印刷番号</span>
+                                            <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">2CNM9FX279</span>
                                         </div>
                                     </div>
                                 </div>
                                 {/* 121222: Seven Eleven */}
                                 <div className="flex w-full h-[60px] px-[16px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50">
                                     <div className="flex items-center w-full h-[60px] py-[20px] justify-between">
-                                        <span className="font-['Noto Sans JP'] text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
+                                        <span className="font-noto text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
                                         <img src={eleven} alt="eleven" className="w-[40px] h-[40px] rounded-full object-cover ml-[12px]" />
                                     </div>
                                 </div>
@@ -454,7 +454,7 @@ const ProductDetailsFree = () => {
                         <div className="flex flex-col items-center w-full h-[20px] mt-[32px] px-[16px]">
                             <div className="flex items-center gap-[6px]">
                                 <img src={question_circle} alt="question_circle" className="w-[16px] h-[16px]" />
-                                <span className="text-[#767676] font-['Noto Sans JP'] text-[12px] font-normal leading-[16px] underline cursor-pointer">プリントの方法が分からない時は</span>
+                                <span className="text-[#767676] font-noto text-[12px] font-normal leading-[16px] underline cursor-pointer">プリントの方法が分からない時は</span>
                             </div>
                         </div>
                     </div>
@@ -462,14 +462,14 @@ const ProductDetailsFree = () => {
                     <div className="flex flex-col items-start w-full px-[16px] py-[24px] gap-[8px] bg-white rounded-[16px] shadow-[0_2px_8px_0_rgba(0,0,0,0.10)]">
                         {/* 1221: Ranking title and list */}
                         <div className="flex flex-col items-start gap-[12px] w-full">
-                            <span className="text-[#000] font-['Noto Sans JP'] text-[18px] font-bold leading-[24px]">ランキング</span>
+                            <span className="text-[#000] font-noto text-[18px] font-bold leading-[24px]">ランキング</span>
                             {/* 12211: Ranking list */}
                             <div className="flex flex-col items-start gap-[16px] w-full">
                                 {/* 122111: Ranking item example */}
                                 <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
                                     <div className="flex items-center gap-[16px]">
                                         <div className="flex flex-col items-center pb-[8px]">
-                                            <span className="text-[#AB31D3] font-['Noto Sans JP'] text-[24px] font-bold leading-[32px]">1</span>
+                                            <span className="text-[#AB31D3] font-noto text-[24px] font-bold leading-[32px]">1</span>
                                         </div>
                                         <div className="flex items-center">
                                             <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
@@ -478,7 +478,7 @@ const ProductDetailsFree = () => {
                                                 </div>
                                             </div>
                                             <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-bold leading-[24px]">anchiy1005</span>
+                                                <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
                                             </div>
                                         </div>
                                     </div>
@@ -487,7 +487,7 @@ const ProductDetailsFree = () => {
                                 <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
                                     <div className="flex items-center gap-[16px]">
                                         <div className="flex flex-col items-center pb-[8px]">
-                                            <span className="text-[#AB31D3] font-['Noto Sans JP'] text-[20px] font-bold leading-[28px]">2</span>
+                                            <span className="text-[#AB31D3] font-noto text-[20px] font-bold leading-[28px]">2</span>
                                         </div>
                                         <div className="flex items-center">
                                             <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
@@ -496,7 +496,7 @@ const ProductDetailsFree = () => {
                                                 </div>
                                             </div>
                                             <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-bold leading-[24px]">anchiy1005</span>
+                                                <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
                                             </div>
                                         </div>
                                     </div>
@@ -505,7 +505,7 @@ const ProductDetailsFree = () => {
                                 <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
                                     <div className="flex items-center gap-[16px]">
                                         <div className="flex flex-col items-center pb-[8px]">
-                                            <span className="text-[#AB31D3] font-['Noto Sans JP'] text-[20px] font-bold leading-[28px]">3</span>
+                                            <span className="text-[#AB31D3] font-noto text-[20px] font-bold leading-[28px]">3</span>
                                         </div>
                                         <div className="flex items-center">
                                             <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
@@ -514,7 +514,7 @@ const ProductDetailsFree = () => {
                                                 </div>
                                             </div>
                                             <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-bold leading-[24px]">anchiy1005</span>
+                                                <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
                                             </div>
                                         </div>
                                     </div>
@@ -523,7 +523,7 @@ const ProductDetailsFree = () => {
                                 <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
                                     <div className="flex items-center gap-[16px]">
                                         <div className="flex flex-col items-center pb-[8px]">
-                                            <span className="text-[#222] font-['Noto Sans JP'] text-[18px] font-bold leading-[24px]">4</span>
+                                            <span className="text-[#222] font-noto text-[18px] font-bold leading-[24px]">4</span>
                                         </div>
                                         <div className="flex items-center">
                                             <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
@@ -532,7 +532,7 @@ const ProductDetailsFree = () => {
                                                 </div>
                                             </div>
                                             <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-bold leading-[24px]">anchiy1005</span>
+                                                <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
                                             </div>
                                         </div>
                                     </div>
@@ -541,7 +541,7 @@ const ProductDetailsFree = () => {
                                 <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
                                     <div className="flex items-center gap-[16px]">
                                         <div className="flex flex-col items-center pb-[8px]">
-                                            <span className="text-[#222] font-['Noto Sans JP'] text-[18px] font-bold leading-[24px]">5</span>
+                                            <span className="text-[#222] font-noto text-[18px] font-bold leading-[24px]">5</span>
                                         </div>
                                         <div className="flex items-center">
                                             <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
@@ -550,7 +550,7 @@ const ProductDetailsFree = () => {
                                                 </div>
                                             </div>
                                             <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-bold leading-[24px]">anchiy1005</span>
+                                                <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
                                             </div>
                                         </div>
                                     </div>
@@ -569,7 +569,7 @@ const ProductDetailsFree = () => {
                         {/* 211 */}
                         <div className="flex flex-col pl-[16px] items-start">
                             <div className="flex flex-col items-start gap-[12px]">
-                                <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-bold leading-[18px]">anchiy1005</span>
+                                <span className="text-[#000] font-noto text-[16px] font-bold leading-[18px]">anchiy1005</span>
                                 <div className="flex pt-[10px] gap-[4px]">
                                     <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
                                     <img src={instagram} alt="instagram" className="w-[40px] h-[40px] opacity-100" />
@@ -580,7 +580,7 @@ const ProductDetailsFree = () => {
                     {/* Right: 22 */}
                     <div className="flex flex-col items-start flex-shrink-0 ">
                         <div className="flex flex-col items-start flex-shrink-0">
-                            <span className="text-[#000] font-['Noto Sans JP'] text-[14px] font-normal leading-[21px]">
+                            <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">
                                 こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
                             </span>
                         </div>

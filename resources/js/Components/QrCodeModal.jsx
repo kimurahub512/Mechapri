@@ -18,7 +18,7 @@ const QrCodeModal = () => {
             <section className="hidden md:flex flex-col w-[960px] h-[820px] flex-shrink-0 rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]">
                 {/* Header Section */}
                 <div className="flex w-[960px] h-[98px] p-[20px_0_1px_0] flex-col items-center flex-shrink-0 border-b border-[#D1D1D1] bg-white rounded-t-[40px]">
-                    <h1 className="text-[#363636] text-center font-['Noto Sans JP'] text-[36px] font-bold leading-[54px]">QRコード発行完了</h1>
+                    <h1 className="text-[#363636] text-center font-noto text-[36px] font-bold leading-[54px]">QRコード発行完了</h1>
                 </div>
 
                 <div className="flex pt-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[226px] mt-[32px] relative">
@@ -32,7 +32,7 @@ const QrCodeModal = () => {
                         <div className="flex flex-col pb-[18px]">
                             {/* Title & Badge */}
                             <div className="inline-flex items-center gap-2">
-                                <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-['Noto Sans JP']">郊外のカフェにて</span>
+                                <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-noto">郊外のカフェにて</span>
                             </div>
                             {/* 12121: User Info */}
                             <div className="inline-flex h-[32px] p-[6px_0] flex-row items-center flex-shrink-0 rounded-[3px]">
@@ -41,7 +41,7 @@ const QrCodeModal = () => {
                             </div>
                             {/* 12122: User Info */}
                             <div className="inline-flex pt-[6px] flex-row items-center rounded-[3px]">
-                                <div className="text-[#363636] font-medium text-[14px] leading-[25px] font-['Noto Sans JP']">
+                                <div className="text-[#363636] font-medium text-[14px] leading-[25px] font-noto">
                                     <span className="block">枚数：1</span>
                                     <span className="block">購入金額： 300円</span>
                                     <span className="block">印刷番号：2CNM9FX279</span>
@@ -59,7 +59,7 @@ const QrCodeModal = () => {
                         <div className="flex w-[480px] px-[24px] justify-between items-center rounded-[10px] bg-white shadow-[0_2px_8px_0_rgba(0,0,0,0.25)] ">
                             <div className="flex flex-col items-center flex-1">
                                 <div className="flex h-[74px] py-[30px] justify-between items-center w-full ">
-                                    <span className="w-[201px] font-['Noto Sans JP'] text-[18px] font-bold leading-[20.7px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">ファミマ・ローソン・<br />ミニストップで印刷する</span>
+                                    <span className="w-[201px] font-noto text-[18px] font-bold leading-[20.7px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">ファミマ・ローソン・<br />ミニストップで印刷する</span>
                                     <div className="flex items-center gap-[12px] ml-[16px]">
                                         <img src={shop1} alt="printshop" className="w-[64.863px] h-[48px]" />
                                         <img src={shop2} alt="lawson" className="w-[64.863px] h-[48px]" />
@@ -69,15 +69,15 @@ const QrCodeModal = () => {
                                 {/*12122112*/}
                                 <div className="relative w-[358px] h-[150px] mt-[12px]">
                                     <img src={qr} alt="qr" className="absolute top-0 left-0 w-[150px] h-[150px] " />
-                                    <span className="absolute top-[44.5px] left-[226px] text-[#000] font-['Noto Sans JP'] text-[14px] font-normal leading-[21px]">印刷番号</span>
-                                    <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-['Noto Sans JP'] text-[24px] font-bold leading-[24px] text-center">2CNM9FX279</span>
+                                    <span className="absolute top-[44.5px] left-[226px] text-[#000] font-noto text-[14px] font-normal leading-[21px]">印刷番号</span>
+                                    <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">2CNM9FX279</span>
                                 </div>
                             </div>
                         </div>
                         {/* 121222: Seven Eleven */}
                         <div className="flex w-[480px] h-[74px] px-[24px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50 ">
                             <div className="flex items-center w-[425px] h-[74px] py-[30px] justify-between">
-                                <span className="font-['Noto Sans JP'] text-[18px] font-bold leading-[20.7px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
+                                <span className="font-noto text-[18px] font-bold leading-[20.7px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
                                 <img src={eleven} alt="eleven" className="w-[59px] h-[59px] rounded-full object-cover ml-[16px]" />
                             </div>
                         </div>
@@ -87,14 +87,14 @@ const QrCodeModal = () => {
                 <div className="flex flex-col items-center w-[386px] h-[20px] mt-[23px] mx-[287px]">
                     <div className="flex items-center gap-[8px]">
                         <img src={question_circle} alt="question_circle" className="w-[20px] h-[20px]" />
-                        <span className="text-[#767676] font-['Noto Sans JP'] text-[14px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</span>
+                        <span className="text-[#767676] font-noto text-[14px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</span>
                     </div>
                 </div>
             </section>
             {/* mobile version */}
             <section className="flex md:hidden flex-col w-full flex-shrink-0 rounded-[16px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] pb-[40px]">
                 <div className="flex w-full p-[20px_0_20px_0] flex-col items-center flex-shrink-0 border-b border-[#D1D1D1] bg-white rounded-t-[40px]">
-                    <h1 className="text-[#363636] text-center font-['Noto Sans JP'] text-[24px] font-bold leading-[24px]">QRコード発行完了</h1>
+                    <h1 className="text-[#363636] text-center font-noto text-[24px] font-bold leading-[24px]">QRコード発行完了</h1>
                 </div>
                 <div className="flex flex-row pt-[16px] pb-[40px] pl-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[14px] mt-[16px] relative">
                     {/* photo1 */}
@@ -126,10 +126,10 @@ const QrCodeModal = () => {
                         <div className="flex px-[44px] py-[13.5px] rounded-t-[16px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] items-center gap-[8px] w-full whitespace-nowrap">
                             <div className="flex items-center gap-[6px]">
                                 <img src={complex_white} alt="complex_white" className="w-[20px] h-[20px]" />
-                                <span className="text-white font-['Noto Sans JP'] text-[14px] font-bold leading-[14px]">プリント期限</span>
+                                <span className="text-white font-noto text-[14px] font-bold leading-[14px]">プリント期限</span>
                             </div>
                             <div className="flex flex-col items-start ml-[16px]">
-                                <span className="text-white font-['Noto Sans JP'] text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                <span className="text-white font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
                             </div>
                         </div>
                         {/* 12122: Print options */}
@@ -138,7 +138,7 @@ const QrCodeModal = () => {
                             <div className="flex w-full px-[16px] justify-between items-center rounded-[10px] bg-white shadow-[0_2px_8px_0_rgba(0,0,0,0.25)]">
                                 <div className="flex flex-col items-center flex-1">
                                     <div className="flex h-[60px] py-[20px] justify-between items-center w-full">
-                                        <span className="w-[160px] font-['Noto Sans JP'] text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent whitespace-nowrap">ファミマ・ローソン・<br />ミニストップで印刷する</span>
+                                        <span className="w-[160px] font-noto text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent whitespace-nowrap">ファミマ・ローソン・<br />ミニストップで印刷する</span>
                                         <div className="flex items-center gap-[8px] ml-[12px]">
                                             <img src={shop1} alt="printshop" className="w-[33.2px] h-[24.5px]" />
                                             <img src={shop2} alt="lawson" className="w-[33.2px] h-[24.4px]" />
@@ -148,15 +148,15 @@ const QrCodeModal = () => {
                                     {/*12122112*/}
                                     <div className="relative w-[240px] h-[100px] mt-[8px]">
                                         <img src={qr} alt="qr" className="absolute top-0 left-0 w-[100px] h-[100px]" />
-                                        <span className="absolute top-[30px] left-[150px] text-[#000] font-['Noto Sans JP'] text-[12px] font-normal leading-[16px]">印刷番号</span>
-                                        <span className="absolute top-[50px] left-[120px] text-[#363636] font-['Noto Sans JP'] text-[16px] font-bold leading-[16px] text-center">2CNM9FX279</span>
+                                        <span className="absolute top-[30px] left-[150px] text-[#000] font-noto text-[12px] font-normal leading-[16px]">印刷番号</span>
+                                        <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">2CNM9FX279</span>
                                     </div>
                                 </div>
                             </div>
                             {/* 121222: Seven Eleven */}
                             <div className="flex w-full h-[60px] px-[16px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50">
                                 <div className="flex items-center w-full h-[60px] py-[20px] justify-between">
-                                    <span className="font-['Noto Sans JP'] text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
+                                    <span className="font-noto text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
                                     <img src={eleven} alt="eleven" className="w-[40px] h-[40px] rounded-full object-cover ml-[12px]" />
                                 </div>
                             </div>
@@ -166,7 +166,7 @@ const QrCodeModal = () => {
                     <div className="flex flex-col items-center w-full">
                         <div className="flex items-center gap-[6px]">
                             <img src={question_circle} alt="question_circle" className="w-[16px] h-[16px]" />
-                            <span className="text-[#767676] font-['Noto Sans JP'] text-[12px] font-normal leading-[16px] underline cursor-pointer">プリントの方法が分からない時は</span>
+                            <span className="text-[#767676] font-noto text-[12px] font-normal leading-[16px] underline cursor-pointer">プリントの方法が分からない時は</span>
                         </div>
                     </div>
                 </div>

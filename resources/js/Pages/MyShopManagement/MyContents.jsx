@@ -24,7 +24,7 @@ const MyContents = () => {
                   className="md:flex flex-col items-left gap-[32px] max-w-[928px] py-[50px] pb-[40px] self-stretch md:ml-[79px]"
                 >
                   {/* MOBILE ONLY */}
-                  <div className="block md:hidden mx-4 mt-[92px] inline-flex flex-col items-start gap-4 ">
+                  <div className="block md:hidden mx-4 mt-[12px] inline-flex flex-col items-start gap-4 ">
                     {/* Title */}
                     <h1 className="w-[343px] text-[#363636] text-left font-['Noto_Sans_JP'] font-bold text-[24px] leading-[24px]">商品管理</h1>
                     {/* Frame 1 */}

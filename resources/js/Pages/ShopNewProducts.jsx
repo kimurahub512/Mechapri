@@ -183,13 +183,13 @@ const ShopNewProducts = () => {
                     <div className="flex flex-row items-center justify-center w-[20px] h-[15px] p-[1.25px_1px_0.625px_0.625px]">
                         <img src={arrow_left} alt="arrow left" className="w-[18.375px] h-[13.125px]" />
                     </div>
-                    <span className="text-[#000] font-['Noto Sans JP'] text-[14px] font-medium leading-[18px]">ショップに戻る</span>
+                    <span className="text-[#000] font-noto text-[14px] font-medium leading-[18px]">ショップに戻る</span>
                 </div>
                 {/* Frame 12 */}
                 <div className="flex flex-col items-start gap-[4px] w-full">
                     {/* 211: 最新の出品 + arrow */}
                     <div className="flex pt-[12px] pb-[6px] items-center w-full">
-                        <span className="text-[#363636] font-['Noto Sans JP'] font-bold text-[16px] leading-[20px]">最新の出品</span>
+                        <span className="text-[#363636] font-noto font-bold text-[16px] leading-[20px]">最新の出品</span>
                     </div>
                     {/* 212: Product List */}
                     <ProductCarousel
@@ -206,12 +206,12 @@ const ShopNewProducts = () => {
                     <div className="flex flex-row items-center justify-center w-[20px] h-[15px] p-[1.25px_1px_0.625px_0.625px]">
                         <img src={arrow_left} alt="arrow left" className="w-[18.375px] h-[13.125px]" />
                     </div>
-                    <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-normal leading-[24px]">ショップに戻る</span>
+                    <span className="text-[#000] font-noto text-[16px] font-normal leading-[24px]">ショップに戻る</span>
                 </div>
                 <div className="flex flex-col items-start gap-[8px] self-stretch">
                     {/* 211: 最新の出品 + arrow */}
                     <div className="flex w-[277px] py-[25px] pr-0 pb-[6px] pl-0 items-center gap-[12px]">
-                        <span className="text-[#000] font-['Noto Sans JP'] text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">最新の出品</span>
+                        <span className="text-[#000] font-noto text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">最新の出品</span>
                         <img src={arrow_right} alt="arrow right" className="w-[24px] h-[24px]" />
                     </div>
                     {/* 212: Product List */}

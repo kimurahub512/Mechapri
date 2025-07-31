@@ -64,14 +64,14 @@ const UnpurchasedProduct = () => {
                                 </div>
                                 {/* 11212 */}
                                 <div className="flex flex-col items-start">
-                                    <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                                 </div>
                             </div>
                             {/* 1122: Edit/Delete buttons */}
                             <div className="flex items-center absolute right-0 top-[15px]">
                                 <button className="flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border border-[#FF2AA1]">
                                     <img src={favoriteshops} alt="favoriteshop" />
-                                    <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-['Noto Sans JP']">ショップをフォロー</span>
+                                    <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-noto">ショップをフォロー</span>
                                 </button>
                             </div>
                         </div>
@@ -79,12 +79,12 @@ const UnpurchasedProduct = () => {
                         <div className="flex flex-col items-start gap-[8px] w-full">
                             {/* 1131: Title */}
                             <div className="flex flex-col items-start w-[1200px]">
-                                <span className="text-[#363636] font-['Noto Sans JP'] text-[36px] font-bold leading-[54px]">郊外のカフェにて</span>
+                                <span className="text-[#363636] font-noto text-[36px] font-bold leading-[54px]">郊外のカフェにて</span>
                             </div>
                             {/* 1132: Description and Date */}
                             <div className="flex flex-col items-start gap-[4px] w-full">
-                                <span className="text-[#363636] font-['Noto Sans JP'] text-[18px] font-normal leading-[32.4px]">郊外のカフェです</span>
-                                <span className="text-[#363636] font-['Noto Sans JP'] text-[12px] font-normal leading-[18px]">2025/10/05まで販売</span>
+                                <span className="text-[#363636] font-noto text-[18px] font-normal leading-[32.4px]">郊外のカフェです</span>
+                                <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">2025/10/05まで販売</span>
                             </div>
                         </div>
                         {/* 114 */}
@@ -96,8 +96,8 @@ const UnpurchasedProduct = () => {
                                     {/* 114111: Heart, お気に入り, 1000 */}
                                     <div className="flex items-center gap-[4px] border-[1px] border-solid border-[#FF2AA1] rounded-[6px] p-[8px]">
                                         <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                        <span className="text-[#FF2AA1] font-['Noto Sans JP'] text-[14px] font-bold leading-[21px]">お気に入り</span>
-                                        <span className="text-[#FF2AA1] font-['Noto Sans JP'] text-[14px] font-bold leading-[21px]">1000</span>
+                                        <span className="text-[#FF2AA1] font-noto text-[14px] font-bold leading-[21px]">お気に入り</span>
+                                        <span className="text-[#FF2AA1] font-noto text-[14px] font-bold leading-[21px]">1000</span>
                                     </div>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@ const UnpurchasedProduct = () => {
                                 <div className="flex flex-col items-start pl-[4px]">
                                     <div className="flex items-center gap-[4px]">
                                         <img src={share} alt="share" className="w-[20px] h-[20px]" />
-                                        <span className="text-[#222] font-['Noto Sans JP'] text-[12px] font-normal leading-[13.8px]">シェア</span>
+                                        <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                                     </div>
                                 </div>
                                 {/* 11422 */}
@@ -118,7 +118,7 @@ const UnpurchasedProduct = () => {
                                         <div className="flex items-center justify-end w-full">
                                             <img src={complex_black} alt="complex" className="w-[20px] h-[20px]" />
                                             <span className="text-[#767676] font-['Hiragino Sans'] text-[14px] font-medium leading-[14px] ml-[4px]">プリント実績</span>
-                                            <span className="text-[#767676] text-right font-['Noto Sans JP'] text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
+                                            <span className="text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
                                         </div>
                                     </div>
                                 </div>
@@ -233,10 +233,10 @@ const UnpurchasedProduct = () => {
                                     />
                                 </div>
                                 <div className="flex flex-col items-center gap-[4px]">
-                                    <span className="text-black font-['Noto Sans JP'] text-[18px] leading-[32px] ">2025/07/25 まで購入できます</span>
+                                    <span className="text-black font-noto text-[18px] leading-[32px] ">2025/07/25 まで購入できます</span>
                                     <div className="flex flex-row items-center">
-                                        <span className="text-black font-['Noto Sans JP'] font-bold text-[46px] leading-[54px]">300</span>
-                                        <span className="text-black font-['Noto Sans JP'] font-bold text-[24px] leading-[24px]">円</span>
+                                        <span className="text-black font-noto font-bold text-[46px] leading-[54px]">300</span>
+                                        <span className="text-black font-noto font-bold text-[24px] leading-[24px]">円</span>
                                     </div>
                                 </div>
                                 <div className="flex flex-col items-center gap-[16px] w-full">
@@ -249,7 +249,7 @@ const UnpurchasedProduct = () => {
                             </div>
                                         <button className="flex w-[240px] h-[74px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] ml-auto">
                                             <img src={cart} alt="favoriteshop" style={{ filter: 'brightness(0) invert(1)' }} />
-                                            <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-['Noto Sans JP']">カートに入れる</span>
+                                            <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-noto">カートに入れる</span>
                                         </button>
                                     </div>
                                     <div className="flex flex-row items-center px-[24px] w-full">
@@ -260,7 +260,7 @@ const UnpurchasedProduct = () => {
                                             />
                                         </div>
                                         <button className="flex w-[240px] h-[74px] px-[24px] justify-center items-center rounded-[10px] bg-[#AB31D3] ml-auto">
-                                            <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-['Noto Sans JP'] whitespace-nowrap">すぐにプリントコード購入</span>
+                                            <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-noto whitespace-nowrap">すぐにプリントコード購入</span>
                                         </button>
                                     </div>
                                 </div>
@@ -282,7 +282,7 @@ const UnpurchasedProduct = () => {
                                         >
                                             {/* 1211111 */}
                                             <div className="flex flex-col items-center px-[18.5px] py-[7px] rounded-[40px] bg-[#363636]">
-                                                <span className="text-white text-center font-light font-['Noto Sans JP'] text-[14px] leading-[22px] whitespace-nowrap">
+                                                <span className="text-white text-center font-light font-noto text-[14px] leading-[22px] whitespace-nowrap">
                                                     プリント用コードを購入したら…
                                                 </span>
                                             </div>
@@ -295,21 +295,21 @@ const UnpurchasedProduct = () => {
                                             {/* 1211121 */}
                                             <div className="flex flex-col items-center gap-[4px] w-[172px] flex-shrink-0">
                                                 <img src={purchase_qr} alt="QR" />
-                                                <span className="text-[#363636] text-center font-normal font-['Noto Sans JP'] text-[14px] leading-[21px]">
+                                                <span className="text-[#363636] text-center font-normal font-noto text-[14px] leading-[21px]">
                                                     QRや番号などの<br />コードをGET
                                                 </span>
                                             </div>
                                             {/* 1211122 */}
                                             <div className="flex flex-col items-center gap-[4px] w-[172px] flex-shrink-0">
                                                 <img src={print_qr} alt="Print QR" />
-                                                <span className="text-[#363636] text-center font-normal font-['Noto Sans JP'] text-[14px] leading-[21px] whitespace-pre-line">
+                                                <span className="text-[#363636] text-center font-normal font-noto text-[14px] leading-[21px] whitespace-pre-line">
                                                     コンビニのマルチコピー機{`\n`}にかざしてプリント
                                                 </span>
                                             </div>
                                         </div>
                                         <div className=" absolute flex items-center gap-[8px]" style={{ top: 222, left: 142}}>
                                             <img src={question_circle} alt="question_circle" className="w-[20px] h-[20px]" />
-                                            <span className="text-[#767676] font-['Noto Sans JP'] text-[13px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</span>
+                                            <span className="text-[#767676] font-noto text-[13px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</span>
                                         </div>
                                     </div>
                                     {/* 12112 */}
@@ -319,11 +319,11 @@ const UnpurchasedProduct = () => {
                                             {/* 1211211 */}
                                             <div className="flex items-center gap-[8px]">
                                                 <img src={complex} alt="complex" />
-                                                <span className="text-[#E862CB] font-['Noto Sans JP'] text-[14px] font-bold leading-[14px]">プリント期限</span>
+                                                <span className="text-[#E862CB] font-noto text-[14px] font-bold leading-[14px]">プリント期限</span>
                                             </div>
                                             {/* 1211212 */}
                                             <div className="flex flex-col items-start opacity-70">
-                                                <span className="text-[#E862CB] font-['Noto Sans JP'] text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                                <span className="text-[#E862CB] font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
                                             </div>
                                         </div>
                                     </div>
@@ -334,14 +334,14 @@ const UnpurchasedProduct = () => {
                         <div className="flex flex-col items-start w-[960px] px-[66px] py-[32px] gap-[10px] bg-white rounded-[24px] shadow-[0_2px_8px_0_rgba(0,0,0,0.10)]">
                             {/* 1221: Ranking title and list */}
                             <div className="flex flex-col items-start gap-[16px] w-full">
-                                <span className="text-[#000] font-['Noto Sans JP'] text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">ランキング</span>
+                                <span className="text-[#000] font-noto text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">ランキング</span>
                                 {/* 12211: Ranking list */}
                                 <div className="flex flex-col items-start gap-[24px] w-full">
                                     {/* 122111: Ranking item example */}
                                     <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[24px]">
                                             <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-['Noto Sans JP'] text-[36px] font-bold leading-[54px]">1</span>
+                                                <span className="text-[#AB31D3] font-noto text-[36px] font-bold leading-[54px]">1</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
@@ -350,7 +350,7 @@ const UnpurchasedProduct = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -359,7 +359,7 @@ const UnpurchasedProduct = () => {
                                     <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[24px]">
                                             <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-['Noto Sans JP'] text-[28px] font-bold leading-[42px]">2</span>
+                                                <span className="text-[#AB31D3] font-noto text-[28px] font-bold leading-[42px]">2</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
@@ -368,7 +368,7 @@ const UnpurchasedProduct = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -377,7 +377,7 @@ const UnpurchasedProduct = () => {
                                     <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[24px]">
                                             <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-['Noto Sans JP'] text-[28px] font-bold leading-[42px]">3</span>
+                                                <span className="text-[#AB31D3] font-noto text-[28px] font-bold leading-[42px]">3</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
@@ -386,7 +386,7 @@ const UnpurchasedProduct = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -395,7 +395,7 @@ const UnpurchasedProduct = () => {
                                     <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[24px]">
                                             <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#222] font-['Noto Sans JP'] text-[24px] font-bold leading-[24px]">4</span>
+                                                <span className="text-[#222] font-noto text-[24px] font-bold leading-[24px]">4</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
@@ -404,7 +404,7 @@ const UnpurchasedProduct = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -413,7 +413,7 @@ const UnpurchasedProduct = () => {
                                     <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[24px]">
                                             <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#222] font-['Noto Sans JP'] text-[24px] font-bold leading-[24px]">5</span>
+                                                <span className="text-[#222] font-noto text-[24px] font-bold leading-[24px]">5</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
@@ -422,7 +422,7 @@ const UnpurchasedProduct = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -442,7 +442,7 @@ const UnpurchasedProduct = () => {
                         {/* 211 */}
                         <div className="flex flex-col pl-[16px] items-start">
                             <div className="flex flex-col items-start gap-[12px]">
-                                <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy2005</span>
+                                <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy2005</span>
                                 <div className="flex pt-[10px] gap-[4px]">
                                     <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
                                     <img src={instagram} alt="instagram" className="w-[46.429px] h-[46.429px] opacity-100" />
@@ -453,7 +453,7 @@ const UnpurchasedProduct = () => {
                     {/* Right: 22 */}
                     <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
                         <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
-                            <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-normal leading-[27.2px]">
+                            <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
                                 こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
                             </span>
                         </div>
@@ -477,29 +477,29 @@ const UnpurchasedProduct = () => {
                                             <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
                                         </div>
                                     </div>
-                                    <span className="text-[#000] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
                                 </div>
                             </div>
                             <button className="flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border border-[#FF2AA1]">
                                 <img src={favoriteshops} alt="favoriteshop" />
-                                <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-['Noto Sans JP']">ショップをフォロー</span>
+                                <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-noto">ショップをフォロー</span>
                             </button>
                             {/* 1122 */}
                             <div className="flex flex-col items-start gap-[10px] w-full">
                                 {/* 11221 */}
                                 <div className="flex flex-col justify-center items-start gap-[12px] w-full">
-                                    <span className="text-[#363636] text-left font-['Noto Sans JP'] text-[24px] font-bold leading-[24px] w-full">郊外のカフェにて</span>
+                                    <span className="text-[#363636] text-left font-noto text-[24px] font-bold leading-[24px] w-full">郊外のカフェにて</span>
                                 </div>
                                 {/* 11222 */}
                                 <div className="flex flex-col items-start gap-[4px] w-full">
-                                    <span className="text-[#363636] font-['Noto Sans JP'] text-[14px] font-bold leading-[14px] w-full">郊外のカフェです</span>
-                                    <span className="text-[#363636] font-['Noto Sans JP'] text-[12px] font-normal leading-[18px]">2025/10/05まで販売</span>
+                                    <span className="text-[#363636] font-noto text-[14px] font-bold leading-[14px] w-full">郊外のカフェです</span>
+                                    <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">2025/10/05まで販売</span>
                                 </div>
                                 {/* 1131 */}
                                 <div className="flex flex-col items-start gap-[10px] p-[8px] rounded-[6px] border-[1px] border-solid border-[#FF2AA1]">
                                     <div className="flex items-center gap-[4px]">
                                         <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                        <span className="text-[#FF2AA1] font-['Noto Sans JP'] text-[12px] font-normal leading-[21px]">お気に入り</span>
+                                        <span className="text-[#FF2AA1] font-noto text-[12px] font-normal leading-[21px]">お気に入り</span>
                                         <span className="text-[#FF2AA1] font-['Red Hat Display'] text-[14px] font-bold leading-[15px]">1000</span>
                                     </div>
                                 </div>
@@ -512,14 +512,14 @@ const UnpurchasedProduct = () => {
                                 {/* 11321: Share */}
                                 <div className="flex items-center gap-[4px]">
                                     <img src={share} alt="share" className="w-[20px] h-[20px]" />
-                                    <span className="text-[#222] font-['Noto Sans JP'] text-[12px] font-normal leading-[13.8px]">シェア</span>
+                                    <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                                 </div>
                                 {/* 11322: Print count */}
                                 <div className="flex flex-col items-start ml-[16px]">
                                     <div className="flex items-center justify-end w-full">
                                         <img src={complex_black} alt="complex" className="w-[20px] h-[20px]" />
                                         <span className="text-[#767676] font-['Hiragino Sans'] text-[14px] font-medium leading-[14px] ml-[4px]">プリント実績</span>
-                                        <span className="w-[12px] text-[#767676] text-right font-['Noto Sans JP'] text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
+                                        <span className="w-[12px] text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
                                     </div>
                                 </div>
                             </div>
@@ -626,10 +626,10 @@ const UnpurchasedProduct = () => {
                             </div>
                             {/* 1213: Price and purchase info */}
                             <div className="flex flex-col items-center gap-[4px] mt-[24px]">
-                                <span className="text-black font-['Noto Sans JP'] text-[16px] leading-[27px]">2025/07/25 まで購入できます</span>
+                                <span className="text-black font-noto text-[16px] leading-[27px]">2025/07/25 まで購入できます</span>
                                 <div className="flex flex-row items-center gap-[4px]">
-                                    <span className="text-black font-['Noto Sans JP'] font-bold text-[36px] leading-[48px]">300</span>
-                                    <span className="text-black font-['Noto Sans JP'] font-bold text-[20px] leading-[23px]">円</span>
+                                    <span className="text-black font-noto font-bold text-[36px] leading-[48px]">300</span>
+                                    <span className="text-black font-noto font-bold text-[20px] leading-[23px]">円</span>
                                 </div>
                             </div>
                             {/* 1214: Quantity controls and action buttons */}
@@ -643,7 +643,7 @@ const UnpurchasedProduct = () => {
                                     </div>
                                     <button className="flex w-[160px] h-[40px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] mr-auto">
                                         <img src={cart} alt="cart" style={{ filter: 'brightness(0) invert(1)' }} className="w-[20px] h-[19px]" />
-                                        <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-['Noto Sans JP'] whitespace-nowrap">カートに入れる</span>
+                                        <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-noto whitespace-nowrap">カートに入れる</span>
                                     </button>
                                 </div>
                                 <div className="flex flex-row items-center w-full">
@@ -654,7 +654,7 @@ const UnpurchasedProduct = () => {
                                         />
                                     </div>
                                     <button className="flex w-[160px] h-[40px] px-[16px] justify-center items-center rounded-[10px] bg-[#AB31D3] mr-auto">
-                                        <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-['Noto Sans JP'] whitespace-nowrap">すぐにプリントコード購入</span>
+                                        <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-noto whitespace-nowrap">すぐにプリントコード購入</span>
                                     </button>
                                 </div>
                             </div>
@@ -667,7 +667,7 @@ const UnpurchasedProduct = () => {
                                     <div className="absolute flex justify-center items-center" style={{ top: 24, left: 38, width: 233 }}>
                                         {/* 1216111 */}
                                         <div className="flex flex-col items-center px-[18.5px] py-[6px] rounded-[30px] bg-[#363636]">
-                                            <span className="text-white text-center font-bold font-['Noto Sans JP'] text-[12px] leading-[16px] whitespace-nowrap">
+                                            <span className="text-white text-center font-bold font-noto text-[12px] leading-[16px] whitespace-nowrap">
                                                 プリント用コードを購入したら…
                                             </span>
                                                 </div>
@@ -677,21 +677,21 @@ const UnpurchasedProduct = () => {
                                         {/* 1216121 */}
                                         <div className="flex flex-col items-center gap-[3px] w-[147px] flex-shrink-0">
                                             <img src={purchase_qr} alt="QR" className="w-[68px] h-[68px]" />
-                                            <span className="text-[#363636] text-center font-normal font-['Noto Sans JP'] text-[12px] leading-[18px]">
+                                            <span className="text-[#363636] text-center font-normal font-noto text-[12px] leading-[18px]">
                                                 QRや番号などの<br />コードをGET
                                             </span>
                                             </div>
                                         {/* 1216122 */}
                                         <div className="flex flex-col items-center gap-[3px] w-[147px] flex-shrink-0">
                                             <img src={print_qr} alt="Print QR" className="w-[68px] h-[68px]" />
-                                            <span className="text-[#363636] text-center font-normal font-['Noto Sans JP'] text-[12px] leading-[18px]">
+                                            <span className="text-[#363636] text-center font-normal font-noto text-[12px] leading-[18px]">
                                                 コンビニのマルチコピー機{`\n`}にかざしてプリント
                                             </span>
                                         </div>
                                     </div>
                                     <div className="absolute flex items-center gap-[6px]" style={{ top: 209, left: 45 }}>
                                         <img src={question_circle} alt="question_circle" className="w-[20px] h-[20px]" />
-                                        <span className="text-[#767676] font-['Noto Sans JP'] text-[13px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</span>
+                                        <span className="text-[#767676] font-noto text-[13px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</span>
                                     </div>
                                 </div>
                                 {/* 12162 */}
@@ -701,11 +701,11 @@ const UnpurchasedProduct = () => {
                                         {/* 1216211 */}
                                         <div className="flex items-center gap-[8px]">
                                             <img src={complex} alt="complex" className="w-[20px] h-[20px]" />
-                                            <span className="text-[#E862CB] font-['Noto Sans JP'] text-[14px] font-bold leading-[14px]">プリント期限</span>
+                                            <span className="text-[#E862CB] font-noto text-[14px] font-bold leading-[14px]">プリント期限</span>
                                         </div>
                                         {/* 1216212 */}
                                         <div className="flex flex-col items-start opacity-70">
-                                            <span className="text-[#E862CB] font-['Noto Sans JP'] text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                            <span className="text-[#E862CB] font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
                                         </div>
                                     </div>
                                 </div>
@@ -715,14 +715,14 @@ const UnpurchasedProduct = () => {
                         <div className="flex flex-col items-start w-full px-[16px] py-[24px] gap-[8px] bg-white rounded-[16px] shadow-[0_2px_8px_0_rgba(0,0,0,0.10)]">
                             {/* 1221: Ranking title and list */}
                             <div className="flex flex-col items-start gap-[12px] w-full">
-                                <span className="text-[#000] font-['Noto Sans JP'] text-[18px] font-bold leading-[24px]">ランキング</span>
+                                <span className="text-[#000] font-noto text-[18px] font-bold leading-[24px]">ランキング</span>
                                 {/* 12211: Ranking list */}
                                 <div className="flex flex-col items-start gap-[16px] w-full">
                                     {/* 122111: Ranking item example */}
                                     <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[16px]">
                                             <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#AB31D3] font-['Noto Sans JP'] text-[24px] font-bold leading-[32px]">1</span>
+                                                <span className="text-[#AB31D3] font-noto text-[24px] font-bold leading-[32px]">1</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
@@ -731,7 +731,7 @@ const UnpurchasedProduct = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-bold leading-[24px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -740,7 +740,7 @@ const UnpurchasedProduct = () => {
                                     <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[16px]">
                                             <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#AB31D3] font-['Noto Sans JP'] text-[20px] font-bold leading-[28px]">2</span>
+                                                <span className="text-[#AB31D3] font-noto text-[20px] font-bold leading-[28px]">2</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
@@ -749,7 +749,7 @@ const UnpurchasedProduct = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-bold leading-[24px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -758,7 +758,7 @@ const UnpurchasedProduct = () => {
                                     <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[16px]">
                                             <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#AB31D3] font-['Noto Sans JP'] text-[20px] font-bold leading-[28px]">3</span>
+                                                <span className="text-[#AB31D3] font-noto text-[20px] font-bold leading-[28px]">3</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
@@ -767,7 +767,7 @@ const UnpurchasedProduct = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-bold leading-[24px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -776,7 +776,7 @@ const UnpurchasedProduct = () => {
                                     <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[16px]">
                                             <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#222] font-['Noto Sans JP'] text-[18px] font-bold leading-[24px]">4</span>
+                                                <span className="text-[#222] font-noto text-[18px] font-bold leading-[24px]">4</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
@@ -785,7 +785,7 @@ const UnpurchasedProduct = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-bold leading-[24px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -794,7 +794,7 @@ const UnpurchasedProduct = () => {
                                     <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[16px]">
                                             <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#222] font-['Noto Sans JP'] text-[18px] font-bold leading-[24px]">5</span>
+                                                <span className="text-[#222] font-noto text-[18px] font-bold leading-[24px]">5</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
@@ -803,7 +803,7 @@ const UnpurchasedProduct = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-bold leading-[24px]">anchiy1005</span>
+                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -822,7 +822,7 @@ const UnpurchasedProduct = () => {
                             {/* 211 */}
                             <div className="flex flex-col pl-[16px] items-start">
                                 <div className="flex flex-col items-start gap-[12px]">
-                                    <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-bold leading-18px]">anchiy1005</span>
+                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-18px]">anchiy1005</span>
                                     <div className="flex pt-[10px] gap-[4px]">
                                         <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
                                         <img src={instagram} alt="instagram" className="w-[40px] h-[40px] opacity-100" />
@@ -833,7 +833,7 @@ const UnpurchasedProduct = () => {
                         {/* Right: 22 */}
                         <div className="flex flex-col items-start flex-shrink-0 ">
                             <div className="flex flex-col items-start flex-shrink-0">
-                                <span className="text-[#000] font-['Noto Sans JP'] text-[14px] font-normal leading-[21px]">
+                                <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">
                                     こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
                                 </span>
                             </div>

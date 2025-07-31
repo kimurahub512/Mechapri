@@ -22,7 +22,7 @@ const BadgeDisplay = ({
         ))}
       </div>
       <span 
-        className={`font-['Noto Sans JP'] ${textClassName}`}
+        className={`font-noto ${textClassName}`}
       >
         {text}
       </span>

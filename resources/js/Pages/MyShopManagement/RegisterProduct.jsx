@@ -22,13 +22,13 @@ import PostRegistrationModal from '@/Components/PostRegistrationModal';
 
 const RegisterProduct = () => {
     const [showModal, setShowModal] = useState(false);
- 
+
     return (
         <>
             <Header />
-        <div className="shopmanagement-root flex flex-col w-full overflow-x-hidden md:flex-row">
-            {/* Sidebar Section */}
-            <div className="hidden md:block">
+            <div className="shopmanagement-root flex flex-col w-full overflow-x-hidden md:flex-row">
+                {/* Sidebar Section */}
+                <div className="hidden md:block">
                     <ShopSidebar />
                 </div>
                 <ShopMobileTopBlock />
@@ -190,7 +190,7 @@ const RegisterProduct = () => {
                                         <img src={photo1} alt="設定しない" className="w-[148px] h-[88px] rounded-[12px] object-cover" />
                                         <div className="flex items-center gap-[10px] w-full">
                                             <img src={radio} alt="radio" className="w-[20px] h-[20px]" />
-                                            <span className="text-[#363636] font-normal text-[14px] leading-[22px] font-['Noto Sans JP']">設定しない</span>
+                                            <span className="text-[#363636] font-normal text-[14px] leading-[22px] font-noto">設定しない</span>
                                         </div>
                                     </div>
                                     {/* 1234212: ガチャ */}
@@ -198,10 +198,10 @@ const RegisterProduct = () => {
                                         <img src={photo2} alt="ガチャ" className="w-[148px] h-[88px] rounded-[12px] object-cover" />
                                         <div className="flex items-center gap-[10px] w-full">
                                             <span className="flex w-[20px] h-[20px] flex-shrink-0 rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" />
-                                            <span className="text-[#363636] font-normal text-[14px] leading-[22px] font-['Noto Sans JP']">ガチャ</span>
+                                            <span className="text-[#363636] font-normal text-[14px] leading-[22px] font-noto">ガチャ</span>
                                         </div>
                                         <div className="flex flex-col items-start w-full">
-                                            <span className="text-[#87969F] font-medium text-[12px] leading-[19.5px] font-['Noto Sans JP']">複数の写真の中からランダムで1枚だけ印刷されます。アップ画像が2枚以上で選択できます。</span>
+                                            <span className="text-[#87969F] font-medium text-[12px] leading-[19.5px] font-noto">複数の写真の中からランダムで1枚だけ印刷されます。アップ画像が2枚以上で選択できます。</span>
                                         </div>
                                     </div>
                                     {/* 1234213: ぼかしフィルター */}
@@ -223,14 +223,14 @@ const RegisterProduct = () => {
                                         <img src={photo4} alt="パスワード" className="w-[148px] h-[88px] rounded-[12px] object-cover" />
                                         <div className="flex items-center gap-[10px] w-full">
                                             <img src={radio} alt="radio" className="w-[20px] h-[20px]" />
-                                            <span className="text-[#363636] font-normal text-[14px] leading-[22px] font-['Noto Sans JP']">パスワード</span>
+                                            <span className="text-[#363636] font-normal text-[14px] leading-[22px] font-noto">パスワード</span>
                                         </div>
                                         <div className="flex flex-col items-start w-full">
-                                            <span className="text-[#87969F] font-medium text-[12px] leading-[19.5px] font-['Noto Sans JP']">写真は非公開。パスワードを知っている人だけに公開します。</span>
+                                            <span className="text-[#87969F] font-medium text-[12px] leading-[19.5px] font-noto">写真は非公開。パスワードを知っている人だけに公開します。</span>
                                         </div>
                                         <input
                                             type="text"
-                                            className="flex h-[45.99px] w-full rounded-[5.71px] bg-white border border-[#E9E9E9] text-[#ACACAC] font-normal text-[14px] font-['Noto Sans JP'] focus:outline-none mt-2"
+                                            className="flex h-[45.99px] w-full rounded-[5.71px] bg-white border border-[#E9E9E9] text-[#ACACAC] font-normal text-[14px] font-noto focus:outline-none mt-2"
                                             placeholder="半角英数16文字まで"
                                         />
                                     </div>
@@ -334,28 +334,28 @@ const RegisterProduct = () => {
                             <div className="flex flex-col items-start gap-[20px] self-stretch">
                                 {/* 123451 */}
                                 <div className="flex items-center gap-[12px] p-[25px_0_6px_0] self-stretch border-b border-[#E9E9E9]">
-                                    <span className="text-[#363636] font-bold text-[21px] leading-[27px] font-['Noto Sans JP']">公開設定</span>
-                                    <span className="text-[#ACACAC] font-normal text-[16px] leading-[24px] font-['Noto Sans JP']">いずれかを選択</span>
+                                    <span className="text-[#363636] font-bold text-[21px] leading-[27px] font-noto">公開設定</span>
+                                    <span className="text-[#ACACAC] font-normal text-[16px] leading-[24px] font-noto">いずれかを選択</span>
                                 </div>
                                 {/* 123452 */}
                                 <div className="flex flex-col items-start gap-[8px] self-stretch">
                                     {/* 1234521 */}
                                     <div className="flex items-start gap-[10px] self-stretch">
                                         <img src={radio} alt="radio" className="w-[20px] h-[20px]" />
-                                        <span className="text-[#363636] font-normal text-[18px] leading-[24px] font-['Noto Sans JP']">公開</span>
+                                        <span className="text-[#363636] font-normal text-[18px] leading-[24px] font-noto">公開</span>
                                     </div>
                                     {/* 1234522 */}
-                                    <span className="self-stretch text-[#87969F] font-medium text-[13px] leading-[19.5px] font-['Noto Sans JP']">誰でも商品ページを見ることができます</span>
+                                    <span className="self-stretch text-[#87969F] font-medium text-[13px] leading-[19.5px] font-noto">誰でも商品ページを見ることができます</span>
                                 </div>
                                 {/* 123453 */}
                                 <div className="flex flex-col items-start gap-[8px] self-stretch">
                                     {/* 1234531 */}
                                     <div className="flex items-start gap-[10px] self-stretch">
                                         <span className="flex w-[20px] h-[20px] flex-shrink-0 rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" />
-                                        <span className="text-[#363636] font-normal text-[18px] leading-[24px] font-['Noto Sans JP']">非公開</span>
+                                        <span className="text-[#363636] font-normal text-[18px] leading-[24px] font-noto">非公開</span>
                                     </div>
                                     {/* 1234532 */}
-                                    <span className="self-stretch text-[#87969F] font-medium text-[13px] leading-[19.5px] font-['Noto Sans JP']">自分だけが商品ページを見ることができます</span>
+                                    <span className="self-stretch text-[#87969F] font-medium text-[13px] leading-[19.5px] font-noto">自分だけが商品ページを見ることができます</span>
                                 </div>
                             </div>
                         </div>
@@ -367,10 +367,10 @@ const RegisterProduct = () => {
                                 type="button"
                                 onClick={() => setShowModal(true)}
                             >
-                                <span className="text-white text-center font-bold text-[18px] leading-[14px] font-['Noto Sans JP']">登録する</span>
+                                <span className="text-white text-center font-bold text-[18px] leading-[14px] font-noto">登録する</span>
                             </button>
                             {/* 12352: Note */}
-                            <span className="self-stretch text-[#87969F] text-center font-normal text-[12px] leading-[18px] font-['Noto Sans JP']">
+                            <span className="self-stretch text-[#87969F] text-center font-normal text-[12px] leading-[18px] font-noto">
                                 ※ 登録後は商品ファイルの変更はできません。
                             </span>
                         </div>
@@ -378,7 +378,7 @@ const RegisterProduct = () => {
                 </main>
                 {/* Show modal on all screen sizes */}
                 {showModal && (
-                    <div 
+                    <div
                         className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-[1000] pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto border-[1px] border-red-500 mr-[16px] md:mr-[0px]"
                         onClick={() => setShowModal(false)}
                     >
@@ -389,9 +389,9 @@ const RegisterProduct = () => {
                 )}
 
                 {/* Mobile Main Section */}
-                <main className="flex md:hidden flex-col items-start gap-[16px] mt-[132px] mx-[16px]">
+                <main className="flex md:hidden flex-col items-start gap-[16px] mt-[32px] mx-[16px]">
                     {/* Title */}
-                    <h1 className="w-full text-left text-[#363636] font-bold text-[24px] leading-[24px] font-['Noto Sans JP']">商品登録</h1>
+                    <h1 className="w-full text-left text-[#363636] font-bold text-[24px] leading-[24px] font-noto">商品登録</h1>
                     {/* Frame 1 */}
                     <section className="flex flex-col items-start p-[20px_16px] gap-[16px] self-stretch rounded-[10px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]">
                         {/* Frame 11 */}
@@ -404,14 +404,14 @@ const RegisterProduct = () => {
                                 </div>
                                 {/* 1121 */}
                                 <div className="flex flex-col items-start gap-[4px] self-stretch">
-                                    <span className="w-full text-center text-[#ACACAC] font-bold text-[16px] leading-[12px] font-['Noto Sans JP']">ファイルを選択</span>
-                                    <span className="w-full text-center text-[#ACACAC] font-medium text-[12px] leading-[12px] font-['Noto Sans JP']">サイズ:6000px*6000px以内</span>
+                                    <span className="w-full text-center text-[#ACACAC] font-bold text-[16px] leading-[12px] font-noto">ファイルを選択</span>
+                                    <span className="w-full text-center text-[#ACACAC] font-medium text-[12px] leading-[12px] font-noto">サイズ:6000px*6000px以内</span>
                                     {/* 11211 */}
                                     <div className="flex flex-row items-center gap-[4px] w-full pt-[4px]">
-                                        <span className="text-[#ACACAC] font-medium text-[12px] leading-[12px] font-['Noto Sans JP'] whitespace-nowrap">対応フォーマット:</span>
-                                        <span className="flex w-[26px] h-[16px] px-[2px] items-center justify-center rounded-[4px] bg-white text-[#87969F] text-center font-normal text-[9px] leading-[10px] font-['Noto Sans JP']">JPG</span>
-                                        <span className="flex w-[26px] h-[16px] px-[2px] items-center justify-center rounded-[4px] bg-white text-[#87969F] text-center font-normal text-[9px] leading-[10px] font-['Noto Sans JP']">PNG</span>
-                                        <span className="flex w-[26px] h-[16px] px-[2px] items-center justify-center rounded-[4px] bg-white text-[#87969F] text-center font-normal text-[9px] leading-[10px] font-['Noto Sans JP']">PDF</span>
+                                        <span className="text-[#ACACAC] font-medium text-[12px] leading-[12px] font-noto whitespace-nowrap">対応フォーマット:</span>
+                                        <span className="flex w-[26px] h-[16px] px-[2px] items-center justify-center rounded-[4px] bg-white text-[#87969F] text-center font-normal text-[9px] leading-[10px] font-noto">JPG</span>
+                                        <span className="flex w-[26px] h-[16px] px-[2px] items-center justify-center rounded-[4px] bg-white text-[#87969F] text-center font-normal text-[9px] leading-[10px] font-noto">PNG</span>
+                                        <span className="flex w-[26px] h-[16px] px-[2px] items-center justify-center rounded-[4px] bg-white text-[#87969F] text-center font-normal text-[9px] leading-[10px] font-noto">PDF</span>
                                     </div>
                                 </div>
                             </div>
@@ -420,23 +420,23 @@ const RegisterProduct = () => {
                         <div className="flex flex-col items-start self-stretch">
                             {/* 121 */}
                             <div className="flex items-start gap-[16px] self-stretch">
-                                <span className="text-[#ACACAC] font-normal text-[14px] leading-[21px] tracking-[0.7px] font-['Noto Sans JP']">
+                                <span className="text-[#ACACAC] font-normal text-[14px] leading-[21px] tracking-[0.7px] font-noto">
                                     ファイル数&nbsp;0/10
                                 </span>
-                                <span className="text-[#ACACAC] font-normal text-[14px] leading-[21px] tracking-[0.7px] font-['Noto Sans JP']">
+                                <span className="text-[#ACACAC] font-normal text-[14px] leading-[21px] tracking-[0.7px] font-noto">
                                     容量25MBまで&nbsp;0/25
                                 </span>
                             </div>
                             {/* 122 */}
                             <div className="flex flex-col items-start gap-[4px] self-stretch mt-2">
                                 <div className="flex items-center gap-[12px] pt-[12px] self-stretch">
-                                    <span className="text-[#363636] font-bold text-[14px] leading-[14px] font-['Noto Sans JP']">タイトル</span>
-                                    <span className="text-[#ACACAC] font-normal text-[14px] leading-[21px] tracking-[0.7px] font-['Noto Sans JP']">0/30</span>
+                                    <span className="text-[#363636] font-bold text-[14px] leading-[14px] font-noto">タイトル</span>
+                                    <span className="text-[#ACACAC] font-normal text-[14px] leading-[21px] tracking-[0.7px] font-noto">0/30</span>
                                 </div>
                                 <div className="flex flex-col items-start pb-[6.57px] self-stretch w-full">
                                     <input
                                         type="text"
-                                        className="w-[311px] h-[48px] px-[11px] py-[1px] rounded-[10px] border-1 border-[#FF2AA1] bg-[#FFEFF8] text-[#C9177A] font-medium text-[16px] font-['Noto Sans JP'] focus:outline-none"
+                                        className="w-[311px] h-[48px] px-[11px] py-[1px] rounded-[10px] border-1 border-[#FF2AA1] bg-[#FFEFF8] text-[#C9177A] font-medium text-[16px] font-noto focus:outline-none"
                                         placeholder="郊外のカフェにて"
                                     />
                                 </div>
@@ -544,7 +544,7 @@ const RegisterProduct = () => {
                                                 <img src={photo1_m} alt="設定しない" className="w-[148px] h-[88px] rounded-[12px] object-cover" />
                                                 <div className="flex items-center gap-[10px] w-full">
                                                     <img src={radio} alt="radio" className="w-[20px] h-[20px]" />
-                                                    <span className="text-[#363636] font-normal text-[14px] leading-[22px] font-['Noto Sans JP']">設定しない</span>
+                                                    <span className="text-[#363636] font-normal text-[14px] leading-[22px] font-noto">設定しない</span>
                                                 </div>
                                             </div>
                                             {/* 1234212: ガチャ */}
@@ -552,10 +552,10 @@ const RegisterProduct = () => {
                                                 <img src={photo2_m} alt="ガチャ" className="w-[148px] h-[88px] rounded-[12px] object-cover" />
                                                 <div className="flex items-center gap-[10px] w-full">
                                                     <span className="flex w-[20px] h-[20px] flex-shrink-0 rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" />
-                                                    <span className="text-[#363636] font-normal text-[14px] leading-[22px] font-['Noto Sans JP']">ガチャ</span>
+                                                    <span className="text-[#363636] font-normal text-[14px] leading-[22px] font-noto">ガチャ</span>
                                                 </div>
                                                 <div className="flex flex-col items-start w-full">
-                                                    <span className="text-[#87969F] font-medium text-[12px] leading-[19.5px] font-['Noto Sans JP']">複数の写真の中からランダムで1枚だけ印刷されます。アップ画像が2枚以上で選択できます。</span>
+                                                    <span className="text-[#87969F] font-medium text-[12px] leading-[19.5px] font-noto">複数の写真の中からランダムで1枚だけ印刷されます。アップ画像が2枚以上で選択できます。</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -578,14 +578,14 @@ const RegisterProduct = () => {
                                                 <img src={photo4_m} alt="パスワード" className="w-[148px] h-[88px] rounded-[12px] object-cover" />
                                                 <div className="flex items-center gap-[10px] w-full pt-2.5">
                                                     <img src={radio} alt="radio" className="w-[20px] h-[20px]" />
-                                                    <span className="text-[#363636] font-normal text-[14px] leading-[22px] font-['Noto Sans JP']">パスワード</span>
+                                                    <span className="text-[#363636] font-normal text-[14px] leading-[22px] font-noto">パスワード</span>
                                                 </div>
                                                 <div className="flex flex-col items-start w-full">
-                                                    <span className="text-[#87969F] font-medium text-[12px] leading-[19.5px] font-['Noto Sans JP']">写真は非公開。パスワードを知っている人だけに公開します。</span>
+                                                    <span className="text-[#87969F] font-medium text-[12px] leading-[19.5px] font-noto">写真は非公開。パスワードを知っている人だけに公開します。</span>
                                                 </div>
                                                 <input
                                                     type="text"
-                                                    className="flex h-[45.99px] w-full rounded-[5.71px] bg-white border border-[#E9E9E9] text-[#ACACAC] font-normal text-[14px] font-['Noto Sans JP'] focus:outline-none mt-2"
+                                                    className="flex h-[45.99px] w-full rounded-[5.71px] bg-white border border-[#E9E9E9] text-[#ACACAC] font-normal text-[14px] font-noto focus:outline-none mt-2"
                                                     placeholder="半角英数16文字まで"
                                                 />
                                             </div>
@@ -600,7 +600,7 @@ const RegisterProduct = () => {
                                                 <span className="flex w-[20px] h-[20px] flex-shrink-0 rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" />
                                                 <span className="text-[#363636] font-normal text-[14px] leading-[19.5px] font-[\'Noto Sans JP\']">ワンクッション</span>
                                             </div>
-                                            <span className="text-[#87969F] font-medium text-[13px] leading-[19.5px] font-['Noto Sans JP'] mt-2">閲覧注意を促しワンタップして写真を公開します。</span>
+                                            <span className="text-[#87969F] font-medium text-[13px] leading-[19.5px] font-noto mt-2">閲覧注意を促しワンタップして写真を公開します。</span>
                                         </div>
                                     </div>
                                     {/* Frame 12343 */}
@@ -696,28 +696,28 @@ const RegisterProduct = () => {
                                     <div className="flex flex-col items-start gap-[20px] self-stretch">
                                         {/* 123451 */}
                                         <div className="flex items-center gap-[12px] p-[25px_0_6px_0] self-stretch border-b border-[#E9E9E9]">
-                                            <span className="text-[#363636] font-bold text-[14px] leading-[27px] font-['Noto Sans JP']">公開設定</span>
-                                            <span className="text-[#ACACAC] font-normal text-[14px] leading-[24px] font-['Noto Sans JP']">いずれかを選択</span>
+                                            <span className="text-[#363636] font-bold text-[14px] leading-[27px] font-noto">公開設定</span>
+                                            <span className="text-[#ACACAC] font-normal text-[14px] leading-[24px] font-noto">いずれかを選択</span>
                                         </div>
                                         {/* 123452 */}
                                         <div className="flex flex-col items-start gap-[8px] self-stretch">
                                             {/* 1234521 */}
                                             <div className="flex items-start gap-[10px] self-stretch">
                                                 <img src={radio} alt="radio" className="w-[20px] h-[20px]" />
-                                                <span className="text-[#363636] font-normal text-[14px] leading-[24px] font-['Noto Sans JP']">公開</span>
+                                                <span className="text-[#363636] font-normal text-[14px] leading-[24px] font-noto">公開</span>
                                             </div>
                                             {/* 1234522 */}
-                                            <span className="self-stretch text-[#87969F] pl-[30px] font-medium text-[13px] leading-[19.5px] font-['Noto Sans JP']">誰でも商品ページを見ることができます</span>
+                                            <span className="self-stretch text-[#87969F] pl-[30px] font-medium text-[13px] leading-[19.5px] font-noto">誰でも商品ページを見ることができます</span>
                                         </div>
                                         {/* 123453 */}
                                         <div className="flex flex-col items-start gap-[8px] self-stretch">
                                             {/* 1234531 */}
                                             <div className="flex items-start gap-[10px] self-stretch">
                                                 <span className="flex w-[20px] h-[20px] flex-shrink-0 rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" />
-                                                <span className="text-[#363636] font-normal text-[14px] leading-[24px] font-['Noto Sans JP']">非公開</span>
+                                                <span className="text-[#363636] font-normal text-[14px] leading-[24px] font-noto">非公開</span>
                                             </div>
                                             {/* 1234532 */}
-                                            <span className="self-stretch text-[#87969F] pl-[30px] font-medium text-[13px] leading-[19.5px] font-['Noto Sans JP']">自分だけが商品ページを見ることができます</span>
+                                            <span className="self-stretch text-[#87969F] pl-[30px] font-medium text-[13px] leading-[19.5px] font-noto">自分だけが商品ページを見ることができます</span>
                                         </div>
                                     </div>
                                 </div>
@@ -729,15 +729,15 @@ const RegisterProduct = () => {
                                         type="button"
                                         onClick={() => setShowModal(true)}
                                     >
-                                        <span className="text-white text-center font-bold text-[18px] leading-[14px] font-['Noto Sans JP']">登録する</span>
+                                        <span className="text-white text-center font-bold text-[18px] leading-[14px] font-noto">登録する</span>
                                     </button>
                                     {/* 12352: Note */}
-                                    <span className="self-stretch text-[#87969F] text-center font-normal text-[12px] leading-[18px] font-['Noto Sans JP']">
+                                    <span className="self-stretch text-[#87969F] text-center font-normal text-[12px] leading-[18px] font-noto">
                                         ※ 登録後は商品ファイルの変更はできません。
                                     </span>
                                 </div>
-            </div>            
-        </div>
+                            </div>
+                        </div>
 
                     </section>
                 </main>

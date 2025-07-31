@@ -15,7 +15,7 @@ const Notification = () => {
                 <div className="flex flex-col items-start w-[880px] min-w-[880px] max-w-[880px] gap-[24px] ">
                     {/* Frame 11 */}
                     <div className="flex flex-col items-center h-[118px] p-[40px_0_1px_0] self-stretch border-b border-[#D1D1D1] bg-white ">
-                        <h1 className="text-[#363636] text-center font-bold text-[36px] leading-[54px] font-['Noto Sans JP'] self-stretch">通知</h1>
+                        <h1 className="text-[#363636] text-center font-bold text-[36px] leading-[54px] font-noto self-stretch">通知</h1>
                     </div>
                     {/* Frame 12 */}
                     <div className="flex flex-col items-start self-stretch">
@@ -26,8 +26,8 @@ const Notification = () => {
                             </div>
                             {/* Frame 1211 */}
                             < div className="flex flex-col h-[118px] pr-[32px] justify-between items-start flex-1" >
-                                <span className="text-black font-normal text-[14px] leading-[21px] font-['Noto Sans JP'] self-stretch">anchiy1005さんが「郊外のカフェにて」を投稿しました</span>
-                                <span className="text-[#363636] font-medium text-[14px] leading-[25.2px] font-['Noto Sans JP']">2025/10/05まで</span>
+                                <span className="text-black font-normal text-[14px] leading-[21px] font-noto self-stretch">anchiy1005さんが「郊外のカフェにて」を投稿しました</span>
+                                <span className="text-[#363636] font-medium text-[14px] leading-[25.2px] font-noto">2025/10/05まで</span>
                             </div>
                         </div>
                     ))}

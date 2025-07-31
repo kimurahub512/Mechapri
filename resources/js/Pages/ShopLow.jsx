@@ -186,7 +186,7 @@ const ShopLow = () => {
                     <div className="flex flex-row items-center justify-center w-[20px] h-[15px] p-[1.25px_1px_0.625px_0.625px]">
                         <img src={arrow_left} alt="arrow left" className="w-[18.375px] h-[13.125px]" />
                     </div>
-                    <span className="text-[#000] font-['Noto Sans JP'] text-[14px] font-medium leading-[18px]">ショップに戻る</span>
+                    <span className="text-[#000] font-noto text-[14px] font-medium leading-[18px]">ショップに戻る</span>
                 </div>
                 <div className="flex flex-col items-start self-stretch w-full gap-[8px]">
                     <div className="inline-flex h-[40px] flex-row items-center">
@@ -196,15 +196,15 @@ const ShopLow = () => {
                     <div className="flex flex-row items-center gap-[4px] self-stretch">
                         <div className="flex flex-row items-center gap-[4px] pr-[24px] self-stretch">
                             <img src={recyclebin} alt="recyclebin" className="w-[16px] h-[16px]" />
-                            <span className="text-[#000] font-['Noto Sans JP'] text-[12px] font-normal leading-[18px]">削除</span>
+                            <span className="text-[#000] font-noto text-[12px] font-normal leading-[18px]">削除</span>
                         </div>
                         <div className="flex flex-row items-center gap-[4px] pr-[24px] self-stretch">
                             <img src={pencil_line_black} alt="pencil_line_black" className="w-[16px] h-[16px]" />
-                            <span className="text-[#000] font-['Noto Sans JP'] text-[12px] font-normal leading-[18px]">編集</span>
+                            <span className="text-[#000] font-noto text-[12px] font-normal leading-[18px]">編集</span>
                         </div>
                         <div className="flex flex-row items-center gap-[4px] pr-[24px] self-stretch">
                             <img src={share} alt="share" className="w-[16px] h-[16px]" />
-                            <span className="text-[#000] font-['Noto Sans JP'] text-[12px] font-normal leading-[18px]">シェア</span>
+                            <span className="text-[#000] font-noto text-[12px] font-normal leading-[18px]">シェア</span>
                         </div>
                     </div>
                 </div>
@@ -212,8 +212,8 @@ const ShopLow = () => {
                 <div className="flex flex-col items-start gap-[4px] w-full">
                     {/* 211: 最新の出品 + arrow */}
                     <div className="flex pt-[12px] pb-[6px] gap-[12px] items-center w-full">
-                        <span className="text-[#363636] font-['Noto Sans JP'] font-bold text-[16px] leading-[20px]">新しいリスト</span>
-                        <span className="text-[#ACACAC] font-['Noto Sans JP'] text-[16px] font-normal leading-[24px]">16点</span> 
+                        <span className="text-[#363636] font-noto font-bold text-[16px] leading-[20px]">新しいリスト</span>
+                        <span className="text-[#ACACAC] font-noto text-[16px] font-normal leading-[24px]">16点</span> 
                     </div>
                     {/* 212: Product List */}
                     <ProductCarousel
@@ -230,7 +230,7 @@ const ShopLow = () => {
                     <div className="flex flex-row items-center justify-center w-[20px] h-[15px] p-[1.25px_1px_0.625px_0.625px]">
                         <img src={arrow_left} alt="arrow left" className="w-[18.375px] h-[13.125px]" />
                     </div>
-                    <span className="text-[#000] font-['Noto Sans JP'] text-[16px] font-normal leading-[24px]">一覧に戻る</span>
+                    <span className="text-[#000] font-noto text-[16px] font-normal leading-[24px]">一覧に戻る</span>
                 </div>
                 
                 <div className="flex flex-row items-start justify-between self-stretch w-full">
@@ -241,23 +241,23 @@ const ShopLow = () => {
                     <div className="flex flex-row items-center gap-[4px] self-stretch">
                         <div className="flex flex-row items-center gap-[4px] pl-[24px] self-stretch">
                             <img src={recyclebin} alt="recyclebin" className="w-[16px] h-[16px]" />
-                            <span className="text-[#000] font-['Noto Sans JP'] text-[12px] font-normal leading-[18px]">削除</span>
+                            <span className="text-[#000] font-noto text-[12px] font-normal leading-[18px]">削除</span>
                         </div>
                         <div className="flex flex-row items-center gap-[4px] pl-[24px] self-stretch">
                             <img src={pencil_line_black} alt="pencil_line_black" className="w-[16px] h-[16px]" />
-                            <span className="text-[#000] font-['Noto Sans JP'] text-[12px] font-normal leading-[18px]">編集</span>
+                            <span className="text-[#000] font-noto text-[12px] font-normal leading-[18px]">編集</span>
                         </div>
                         <div className="flex flex-row items-center gap-[4px] pl-[24px] self-stretch">
                             <img src={share} alt="share" className="w-[16px] h-[16px]" />
-                            <span className="text-[#000] font-['Noto Sans JP'] text-[12px] font-normal leading-[18px]">シェア</span>
+                            <span className="text-[#000] font-noto text-[12px] font-normal leading-[18px]">シェア</span>
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-col items-start gap-[8px] self-stretch">
                     {/* 211: 最新の出品 + arrow */}
                     <div className="flex w-[277px] py-[25px] pr-0 pb-[6px] pl-0 items-center gap-[12px]">
-                        <span className="text-[#000] font-['Noto Sans JP'] text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">新しいリスト</span>
-                        <span className="text-[#ACACAC] font-['Noto Sans JP'] text-[16px] font-normal leading-[24px]">16点</span>                        
+                        <span className="text-[#000] font-noto text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">新しいリスト</span>
+                        <span className="text-[#ACACAC] font-noto text-[16px] font-normal leading-[24px]">16点</span>                        
                     </div>
                     {/* 212: Product List */}
                     <ProductCarousel

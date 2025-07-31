@@ -22,7 +22,7 @@ const PostRegistrationModal = () => {
             <section className="hidden md:flex flex-col w-[960px] h-[820px] flex-shrink-0 rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] relative">
                 {/* Header Section */}
                 <div className="flex h-[98px] p-[20px_0_1px_0] flex-col items-center flex-shrink-0 border-b border-[#D1D1D1] bg-white rounded-t-[40px]">
-                    <h1 className="text-[#363636] text-center font-['Noto Sans JP'] text-[36px] font-bold leading-[54px]">商品登録完了</h1>
+                    <h1 className="text-[#363636] text-center font-noto text-[36px] font-bold leading-[54px]">商品登録完了</h1>
                 </div>
                 <img src={close} alt="close" className="absolute top-[34px] right-[32px] w-[40px] h-[40px]" />
 
@@ -37,7 +37,7 @@ const PostRegistrationModal = () => {
                         <div className="flex flex-col pb-[18px]">
                             {/* Title & Badge */}
                             <div className="inline-flex items-center gap-2">
-                                <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-['Noto Sans JP']">郊外のカフェにて</span>
+                                <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-noto">郊外のカフェにて</span>
                             </div>
                             {/* 12121: User Info */}
                             <div className="inline-flex h-[32px] p-[6px_0] flex-row items-center flex-shrink-0 rounded-[3px]">
@@ -46,7 +46,7 @@ const PostRegistrationModal = () => {
                             </div>
                             {/* 12122: User Info */}
                             <div className="inline-flex pt-[6px] flex-row items-center rounded-[3px]">
-                                <div className="text-[#363636] font-medium text-[14px] leading-[25px] font-['Noto Sans JP']">
+                                <div className="text-[#363636] font-medium text-[14px] leading-[25px] font-noto">
                                     <span className="block">枚数：1</span>
                                     <span className="block">購入金額： 300円</span>
                                     <span className="block">印刷番号：2CNM9FX279</span>
@@ -59,16 +59,16 @@ const PostRegistrationModal = () => {
                 </div>
                 <div className="flex flex-col items-start gap-[24px] self-stretch mx-[226px] mt-[23px] relative">
                     <div className="flex flex-col items-start w-full gap-[18px]">
-                        <span className="text-[#363636] font-['Noto Sans JP'] text-[21px] font-bold leading-[32px]">
+                        <span className="text-[#363636] font-noto text-[21px] font-bold leading-[32px]">
                             商品を共有しましょう!
                         </span>
-                        <span className="text-[#363636] font-['Noto Sans JP'] text-[16px] font-normal leading-[24px]">
+                        <span className="text-[#363636] font-noto text-[16px] font-normal leading-[24px]">
                             登録した商品を共有することで、多くの方に素晴らしいアイデアやお得な情報を分かち合えます。新しい発見を楽しむことができ、購入の参考にもなります。ぜひ、あなたのおすすめ商品を周りの人とシェアしてみてください！
                         </span>
                     </div>
                     <div className="flex flex-col items-center w-full gap-[16px]">
                         <div className="flex items-start w-full">
-                            <span className="text-[#363636] font-['Noto Sans JP'] text-[16px] font-bold leading-[24px]">
+                            <span className="text-[#363636] font-noto text-[16px] font-bold leading-[24px]">
                                 メールアドレスを入力
                             </span>
                         </div>
@@ -80,14 +80,14 @@ const PostRegistrationModal = () => {
                         </div>
                     </div>
                     <div className="flex flex-col items-start w-full gap-[6px]">
-                        <span className="text-[#363636] font-['Noto Sans JP'] text-[16px] font-bold leading-[24px]">
+                        <span className="text-[#363636] font-noto text-[16px] font-bold leading-[24px]">
                             共有用URL
                         </span>
                         <div className="flex flex-row items-start w-full rounded-[5.71px] border border-[#E9E9E9] relative">
-                            <input type="text" className="w-full h-[50px] px-[12px] py-[14px] border-none bg-transparent rounded-[5.71px] placeholder-[#ACACAC] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="example@email.com" />
+                            <input type="text" className="w-full h-[50px] px-[12px] py-[14px] border-none bg-transparent rounded-[5.71px] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="example@email.com" />
                             
                             <div className="absolute right-[8px] top-[6px] px-3 py-[6px] rounded-[5.71px] bg-[#D1D1D1]">
-                                <span className="text-[#363636] font-['Noto Sans JP'] text-[14px] font-normal leading-[26px]">URLをコピー</span>
+                                <span className="text-[#363636] font-noto text-[14px] font-normal leading-[26px]">URLをコピー</span>
                             </div>
                         </div>
                     </div>
@@ -98,7 +98,7 @@ const PostRegistrationModal = () => {
 
                 {/* Header Section */}
                 <div className="flex h-[64px] p-[20px_0_1px_0] flex-col items-center flex-shrink-0 border-b border-[#D1D1D1] bg-white rounded-t-[40px]">
-                    <h1 className="text-[#363636] text-center font-['Noto Sans JP'] text-[24px] font-bold leading-[24px]">商品登録完了</h1>
+                    <h1 className="text-[#363636] text-center font-noto text-[24px] font-bold leading-[24px]">商品登録完了</h1>
                 </div>
 
                 <img src={close} alt="close" className="absolute top-[16px] right-[12px] w-[32px] h-[32px]" />
@@ -129,16 +129,16 @@ const PostRegistrationModal = () => {
 
                 <div className="flex flex-col items-start gap-[24px] self-stretch mx-[16px] mt-[24px] relative">
                     <div className="flex flex-col items-start w-full gap-[18px]">
-                        <span className="text-[#363636] font-['Noto Sans JP'] text-[16px] font-bold leading-[25px]">
+                        <span className="text-[#363636] font-noto text-[16px] font-bold leading-[25px]">
                             商品を共有しましょう!
                         </span>
-                        <span className="text-[#363636] font-['Noto Sans JP'] text-[13px] font-normal leading-[24px]">
+                        <span className="text-[#363636] font-noto text-[13px] font-normal leading-[24px]">
                             登録した商品を共有することで、多くの方に素晴らしいアイデアやお得な情報を分かち合えます。新しい発見を楽しむことができ、購入の参考にもなります。ぜひ、あなたのおすすめ商品を周りの人とシェアしてみてください！
                         </span>
                     </div>
                     <div className="flex flex-col items-center w-full gap-[16px]">
                         <div className="flex items-start w-full">
-                            <span className="text-[#363636] font-['Noto Sans JP'] text-[16px] font-bold leading-[25px]">
+                            <span className="text-[#363636] font-noto text-[16px] font-bold leading-[25px]">
                                 メールアドレスを入力
                             </span>
                         </div>
@@ -150,14 +150,14 @@ const PostRegistrationModal = () => {
                         </div>
                     </div>
                     <div className="flex flex-col items-start w-full gap-[6px]">
-                        <span className="text-[#363636] font-['Noto Sans JP'] text-[16px] font-bold leading-[24px]">
+                        <span className="text-[#363636] font-noto text-[16px] font-bold leading-[24px]">
                             共有用URL
                         </span>
                         <div className="flex flex-row items-start w-full rounded-[5.71px] border border-[#E9E9E9] relative">
-                            <input type="text" className="w-full h-[50px] px-[12px] py-[14px] border-none bg-transparent rounded-[5.71px] placeholder-[#363636] placeholder:font-['Noto Sans JP'] placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="example@email.com" />
+                            <input type="text" className="w-full h-[50px] px-[12px] py-[14px] border-none bg-transparent rounded-[5.71px] placeholder-[#363636] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" placeholder="example@email.com" />
                             
                             <div className="absolute right-[8px] top-[6px] px-3 py-[6px] rounded-[5.71px] bg-[#D1D1D1]">
-                                <span className="text-[#363636] font-['Noto Sans JP'] text-[14px] font-normal leading-[26px]">URLをコピー</span>
+                                <span className="text-[#363636] font-noto text-[14px] font-normal leading-[26px]">URLをコピー</span>
                             </div>
                         </div>
                     </div>

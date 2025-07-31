@@ -21,6 +21,7 @@ const Transaction = () => {
             <div className="hidden md:block">
                 <ShopSidebar/>
             </div>
+            <ShopMobileTopBlock />
             {/* Main Section - Desktop Only */}
             <main className="hidden md:flex flex-col w-[880px] p-[80px_0_50px_0] gap-[22px] mx-20 bg-[#F1F3F4] min-h-screen">
                 {/* Title Section */}
@@ -99,8 +100,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -115,8 +116,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -131,8 +132,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">-0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -147,8 +148,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">-0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -163,8 +164,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -187,8 +188,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -203,8 +204,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -219,8 +220,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">-0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -235,8 +236,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">-0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -251,8 +252,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -275,8 +276,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -291,8 +292,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -307,8 +308,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">-0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -323,8 +324,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">-0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -339,8 +340,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center gap-[10px] ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -353,7 +354,7 @@ const Transaction = () => {
                 </section>
             </main>
             {/* Mobile Main Section */}
-            <main className="md:hidden inline-flex flex-col items-start gap-4 mt-[142px] mx-4 border-2 border-dashed border-blue-500">
+            <main className="md:hidden inline-flex flex-col items-start gap-4 mt-[32px] mx-4">
                 {/* Title */}
                 <h1 className="w-full text-left font-bold text-[24px] leading-[24px] text-[#363636] font-[\'Noto Sans JP\']">出金・売上</h1>
                 {/* Frame 1 */}
@@ -424,8 +425,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -440,8 +441,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -456,8 +457,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">-0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -472,8 +473,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">-0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -488,8 +489,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -511,8 +512,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -527,8 +528,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -543,8 +544,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">-0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -559,8 +560,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">-0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -575,8 +576,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -598,8 +599,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -614,8 +615,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -630,8 +631,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">-0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -646,8 +647,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">-0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -662,8 +663,8 @@ const Transaction = () => {
                                     </div>
                                     <div className="flex items-center ml-auto">
                                         <span className="flex items-center">
-                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-['Noto Sans JP']">0</span>
-                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-['Noto Sans JP'] ml-[1px]">円</span>
+                                            <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">0</span>
+                                            <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                         </span>
                                         <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

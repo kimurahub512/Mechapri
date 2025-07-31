@@ -31,7 +31,7 @@ const FavoriteShops = () => {
                 <div className="flex flex-col items-start w-[880px] min-w-[880px] max-w-[880px] gap-[32px] ">
                     {/* Frame 11 */}
                     <div className="flex flex-col items-center h-[118px] p-[40px_0_1px_0] self-stretch border-b border-[#D1D1D1]">
-                        <h1 className="text-[#363636] text-center font-bold text-[36px] leading-[54px] font-['Noto Sans JP'] self-stretch">お気に入り</h1>
+                        <h1 className="text-[#363636] text-center font-bold text-[36px] leading-[54px] font-noto self-stretch">お気に入り</h1>
                     </div>
                     {/*frame 13*/}
                     <TabButtonsDesktop 
@@ -66,8 +66,8 @@ const FavoriteShops = () => {
                                 </div>
                                 {/* 1212 */}
                                 <div className="flex flex-col justify-center items-start flex-1">
-                                    <span className="text-[#000] font-bold text-[21px] leading-[32px] font-['Noto Sans JP']">anchiy1005</span>
-                                    <span className="self-stretch text-[#000] font-normal text-[14px] leading-[21px] font-['Noto Sans JP'] mt-[8px]">こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！</span>
+                                    <span className="text-[#000] font-bold text-[21px] leading-[32px] font-noto">anchiy1005</span>
+                                    <span className="self-stretch text-[#000] font-normal text-[14px] leading-[21px] font-noto mt-[8px]">こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！</span>
                                 </div>
                             </div>
                             {/* 1213 */}
@@ -75,7 +75,7 @@ const FavoriteShops = () => {
                                 {/* 12131 */}
                                 <button className="flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border border-[#FF2AA1] bg-white">
                                     <img src={favoriteshops} alt="favoriteshop" />
-                                    <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-['Noto Sans JP']">ショップをフォロー</span>
+                                    <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-noto">ショップをフォロー</span>
                                 </button>
                                         </div>
                                                 </div>
@@ -91,8 +91,8 @@ const FavoriteShops = () => {
                                             </div>
                                 {/* 1212 */}
                                 <div className="flex flex-col justify-center items-start flex-1">
-                                    <span className="text-[#000] font-bold text-[21px] leading-[32px] font-['Noto Sans JP']">anchiy1005</span>
-                                    <span className="self-stretch text-[#000] font-normal text-[14px] leading-[21px] font-['Noto Sans JP'] mt-[8px]">こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！</span>
+                                    <span className="text-[#000] font-bold text-[21px] leading-[32px] font-noto">anchiy1005</span>
+                                    <span className="self-stretch text-[#000] font-normal text-[14px] leading-[21px] font-noto mt-[8px]">こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！</span>
                                             </div>
                                         </div>
                             {/* 1213 */}
@@ -100,7 +100,7 @@ const FavoriteShops = () => {
                                 {/* 12131 */}
                                 <button className="flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border border-[#FF2AA1] bg-[#FF2AA1]">
                                     <img src={favoriteshops_follow} alt="favoriteshop" />
-                                    <span className="text-[#fff] text-center font-medium text-[14px] leading-[21px] font-['Noto Sans JP']">フォロー中</span>
+                                    <span className="text-[#fff] text-center font-medium text-[14px] leading-[21px] font-noto">フォロー中</span>
                                 </button>
                                             </div>
                                         </div>
@@ -116,8 +116,8 @@ const FavoriteShops = () => {
                                         </div>
                                 {/* 1212 */}
                                 <div className="flex flex-col justify-center items-start flex-1">
-                                    <span className="text-[#000] font-bold text-[21px] leading-[32px] font-['Noto Sans JP']">anchiy1005</span>
-                                    <span className="self-stretch text-[#000] font-normal text-[14px] leading-[21px] font-['Noto Sans JP'] mt-[8px]">こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！</span>
+                                    <span className="text-[#000] font-bold text-[21px] leading-[32px] font-noto">anchiy1005</span>
+                                    <span className="self-stretch text-[#000] font-normal text-[14px] leading-[21px] font-noto mt-[8px]">こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！</span>
                                             </div>
                                         </div>
                             {/* 1213 */}
@@ -125,7 +125,7 @@ const FavoriteShops = () => {
                                 {/* 12131 */}
                                 <button className="flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border border-[#FF2AA1] bg-white">
                                     <img src={favoriteshops} alt="favoriteshop" />
-                                    <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-['Noto Sans JP']">ショップをフォロー</span>
+                                    <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-noto">ショップをフォロー</span>
                                             </button>
                                         </div>
                                     </div>
@@ -172,14 +172,14 @@ const FavoriteShops = () => {
                             </div>
                             {/* 1212 */}
                             <div className="flex flex-col justify-center items-start flex-1">
-                                <span className="text-[#000] font-bold text-[16px] leading-[20px] font-['Noto Sans JP']">anchiy1005</span>
-                                <span className="self-stretch text-[#000] font-normal text-[12px] leading-[18px] font-['Noto Sans JP'] mt-[8px]">こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！</span>
+                                <span className="text-[#000] font-bold text-[16px] leading-[20px] font-noto">anchiy1005</span>
+                                <span className="self-stretch text-[#000] font-normal text-[12px] leading-[18px] font-noto mt-[8px]">こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！</span>
                                 {/* 1213 */}
                                 <div className="flex h-[48px] justify-end items-center">
                                     {/* 12131 */}
                                     <button className="flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border border-[#FF2AA1] bg-white">
                                         <img src={favoriteshops} alt="favoriteshop" />
-                                        <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-['Noto Sans JP']">ショップをフォロー</span>
+                                        <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-noto">ショップをフォロー</span>
                                     </button>
                               </div>
                             </div>
@@ -197,15 +197,15 @@ const FavoriteShops = () => {
                             </div>
                             {/* 1212 */}
                             <div className="flex flex-col justify-center items-start flex-1">
-                                <span className="text-[#000] font-bold text-[16px] leading-[20px] font-['Noto Sans JP']">anchiy1005</span>
-                                <span className="self-stretch text-[#000] font-normal text-[12px] leading-[18px] font-['Noto Sans JP'] mt-[8px]">こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！</span>
+                                <span className="text-[#000] font-bold text-[16px] leading-[20px] font-noto">anchiy1005</span>
+                                <span className="self-stretch text-[#000] font-normal text-[12px] leading-[18px] font-noto mt-[8px]">こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！</span>
                             </div>
                             {/* 1213 */}
                             <div className="flex h-[48px] justify-end items-center">
                                 {/* 12131 */}
                                 <button className="flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border border-[#FF2AA1] bg-[#FF2AA1]">
                                     <img src={favoriteshops_follow} alt="favoriteshop" />
-                                    <span className="text-[#fff] text-center font-medium text-[14px] leading-[21px] font-['Noto Sans JP']">フォロー中</span>
+                                    <span className="text-[#fff] text-center font-medium text-[14px] leading-[21px] font-noto">フォロー中</span>
                                 </button>
                             </div>
                         </div>
@@ -222,14 +222,14 @@ const FavoriteShops = () => {
                             </div>
                             {/* 1212 */}
                             <div className="flex flex-col justify-center items-start flex-1">
-                                <span className="text-[#000] font-bold text-[16px] leading-[20px] font-['Noto Sans JP']">anchiy1005</span>
-                                <span className="self-stretch text-[#000] font-normal text-[12px] leading-[18px] font-['Noto Sans JP'] mt-[8px]">こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！</span>
+                                <span className="text-[#000] font-bold text-[16px] leading-[20px] font-noto">anchiy1005</span>
+                                <span className="self-stretch text-[#000] font-normal text-[12px] leading-[18px] font-noto mt-[8px]">こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！</span>
                                 {/* 1213 */}
                                 <div className="flex h-[48px] justify-end items-center">
                                     {/* 12131 */}
                                     <button className="flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border border-[#FF2AA1] bg-white">
                                         <img src={favoriteshops} alt="favoriteshop" />
-                                        <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-['Noto Sans JP']">ショップをフォロー</span>
+                                        <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-noto">ショップをフォロー</span>
                               </button>
                             </div>
                           </div>

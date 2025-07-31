@@ -14,14 +14,14 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                     </div>
                     {/* 2121112: 1日 以内 badge */}
                     <div className="flex w-[31.6px] p-[1.167px_4.884px_1.46px_2.919px] justify-center items-end gap-[-0.117px] absolute left-[2.201px] top-[2.336px] rounded-[8.759px] bg-[#FF2AA1]">
-                        <span className="flex w-[12.18px] h-[11.67px] justify-center items-center text-white font-['Noto Sans JP'] text-[7.6px] font-bold leading-[11.5px] whitespace-nowrap">{product.badge1}</span>
-                        <span className="flex w-[11.8px] h-[8.75px] justify-center items-center text-white font-['Noto Sans JP'] text-[5.8px] font-bold leading-[8.75px] whitespace-nowrap">{product.badge2}</span>
+                        <span className="flex w-[12.18px] h-[11.67px] justify-center items-center text-white font-noto text-[7.6px] font-bold leading-[11.5px] whitespace-nowrap">{product.badge1}</span>
+                        <span className="flex w-[11.8px] h-[8.75px] justify-center items-center text-white font-noto text-[5.8px] font-bold leading-[8.75px] whitespace-nowrap">{product.badge2}</span>
                     </div>
                     {/* 2121113: Info (absolute bottom) */}
                     <div className={`flex flex-col items-start ${haveAccount ? 'gap-[18.69px]' : 'gap-[18.69px]'} absolute left-[0.584px] bottom-[3.015px] rounded-b-[2.92px]`}>
                         {/* 21211131: Title and Badge */}
                         <div className="flex flex-col items-start gap-[4.672px]">
-                            <span className="flex w-[143.65px] h-[18.686px] items-center text-[#363636] font-['Noto Sans JP'] text-[10.511px] font-bold leading-[10.511px]">{product.title}</span>
+                            <span className="flex w-[143.65px] h-[18.686px] items-center text-[#363636] font-noto text-[10.511px] font-bold leading-[10.511px]">{product.title}</span>
                             {/* 212111311: Badge with images and text */}
                             <div className="flex px-[4.672px] py-[2.336px] items-center gap-[2.336px] rounded-[17.518px] bg-[#FF2AA1]">
                                 {/* 2121113111: Images */}
@@ -30,14 +30,14 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                                         <img key={i} src={img} alt={`badge${i + 1}`} className={`w-[12px] h-[12px] rounded-full${i > 0 ? ' -ml-[4px]' : ''}`} />
                                     ))}
                                 </div>
-                                <span className="text-white font-['Noto Sans JP'] text-[7.591px] font-bold leading-[8.759px]">{product.badgeText}</span>
+                                <span className="text-white font-noto text-[7.591px] font-bold leading-[8.759px]">{product.badgeText}</span>
                             </div>
                         </div>
                         {/* 21211132: Price and Like */}
                         <div className="flex justify-between items-center self-stretch w-full ">
                             {/* 212111321: 無料 */}
                             <div className="flex w-[52.216px] flex-col items-start">
-                                <span className="text-[#363636] font-['Noto Sans JP'] text-[10.511px] font-bold leading-[10.511px]">{product.price}</span>
+                                <span className="text-[#363636] font-noto text-[10.511px] font-bold leading-[10.511px]">{product.price}</span>
                             </div>
                             {/* 212111322: Like and Count */}
                             <div className="flex w-[50.838px] h-[10.511px] pb-[0.584px] justify-end items-center gap-[3.504px]">
@@ -53,7 +53,7 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                                         </defs>
                                     </svg>
                                 </div>
-                                <span className="text-[#FE7878] font-['Noto Sans JP'] text-[10.511px] font-bold leading-[10.511px] mt-[2px]">{product.like}</span>
+                                <span className="text-[#FE7878] font-noto text-[10.511px] font-bold leading-[10.511px] mt-[2px]">{product.like}</span>
                             </div>
                         </div>
                     </div>
@@ -69,8 +69,8 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
             <div className="flex flex-col items-start self-stretch relative">
                     {/* 2121112: 1日 以内 badge */}
                     <div className="flex py-[2px] px-[8.363px] pb-[2.5px] pl-[5px] justify-center items-end gap-[-0.2px] absolute left-[3.77px] top-[4px] rounded-[15px] bg-[#FF2AA1]">
-                        <span className="flex w-[20.87px] h-[20px] justify-center items-center text-white font-['Noto Sans JP'] text-[13px] font-bold leading-[19.5px]">{product.badge1}</span>
-                        <span className="flex w-[20.2px] h-[15px] justify-center items-center text-white font-['Noto Sans JP'] text-[10px] font-bold leading-[15px] whitespace-nowrap">{product.badge2}</span>
+                        <span className="flex w-[20.87px] h-[20px] justify-center items-center text-white font-noto text-[13px] font-bold leading-[19.5px]">{product.badge1}</span>
+                        <span className="flex w-[20.2px] h-[15px] justify-center items-center text-white font-noto text-[10px] font-bold leading-[15px] whitespace-nowrap">{product.badge2}</span>
                     </div>
                     {/* 2121111: Main Image */}
                     <div className="flex h-[256px] max-w-[269.5px] px-[45px] py-[5px] flex-col justify-center items-center flex-shrink-0 self-stretch rounded-[10px] bg-[#F6F6F6]">
@@ -84,10 +84,10 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                             {haveAccount && (
                                 <div className="flex flex-row items-start gap-[5px] mb-[-8px]">
                                     <img src={girl} alt="girl" className="w-[24px] h-[24px] rounded-full" />
-                                    <span className="flex items-center text-[#222] font-['Noto Sans JP'] text-[16px] font-normal leading-[22px]">アカウント</span>
+                                    <span className="flex items-center text-[#222] font-noto text-[16px] font-normal leading-[22px]">アカウント</span>
                                 </div>
                             )}
-                            <span className="flex w-[246px] h-[32px] items-center text-[#363636] font-['Noto Sans JP'] text-[18px] font-bold leading-[18px]">{product.title}</span>
+                            <span className="flex w-[246px] h-[32px] items-center text-[#363636] font-noto text-[18px] font-bold leading-[18px]">{product.title}</span>
                             
                             {/* 212111311: Badge with images and text */}
                             <div className="flex px-[8px] py-[4px] items-center gap-[4px] rounded-[30px] bg-[#FF2AA1]">
@@ -97,14 +97,14 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                                         <img key={i} src={img} alt={`badge${i + 1}`} className={`w-[24px] h-[24px] rounded-full${i > 0 ? ' -ml-[7px]' : ''}`} />
                                     ))}
                                 </div>
-                                <span className="text-white font-['Noto Sans JP'] text-[13px] font-bold leading-[15px]">{product.badgeText}</span>
+                                <span className="text-white font-noto text-[13px] font-bold leading-[15px]">{product.badgeText}</span>
                             </div>
                         </div>
                         {/* 21211132: Price and Like */}
                         <div className="flex justify-between items-center self-stretch w-full ">
                             {/* 212111321: 無料 */}
                             <div className="flex w-[89.42px] flex-col items-start">
-                                <span className="text-[#363636] font-['Noto Sans JP'] text-[18px] font-bold leading-[18px]">{product.price}</span>
+                                <span className="text-[#363636] font-noto text-[18px] font-bold leading-[18px]">{product.price}</span>
                             </div>
                             {/* 212111322: Like and Count */}
                             <div className="flex w-[87.06px] h-[18px] pb-[1px] justify-end items-center gap-[6px]">
@@ -120,7 +120,7 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                                         </defs>
                                     </svg>
                                 </div>
-                                <span className="text-[#FE7878] font-['Noto Sans JP'] text-[18px] font-bold leading-[18px] mt-[4px]">{product.like}</span>
+                                <span className="text-[#FE7878] font-noto text-[18px] font-bold leading-[18px] mt-[4px]">{product.like}</span>
                             </div>
                         </div>
                     </div>

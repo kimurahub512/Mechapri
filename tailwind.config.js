@@ -15,6 +15,8 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
                 noto: ['"Noto Sans JP"', 'sans-serif'],
+                general: ['"General Sans"', 'sans-serif'],
+                mplus: ['"M PLUS 1p"', 'sans-serif'],
             },
         },
     },
