@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
-import { vw, vwd } from '@/lib/utils';
+import { vw, vwd, responsiveText, responsivePosition, responsiveMetric } from '@/lib/utils';
 import logo_group from '@/assets/images/homepage/logo_group.png';
 import header_image from '@/assets/images/homepage/hero.png';
 import hero_m1 from '@/assets/images/homepage/hero_m1.png';
@@ -325,8 +325,8 @@ export default function Home() {
             <span className="text-[#FFF] font-mplus text-[18px] font-bold leading-[25px]">1分でカンタン登録完了！</span>
             <span className="text-[#FFF] font-mplus text-[60px] font-black leading-[81px]">めちゃプリで今すぐ写真を出品する</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="75" height="54" viewBox="0 0 75 54" fill="none">
-              <path d="M47.1143 1.31641L72.7607 26.9649L47.1143 52.6134" stroke="white" stroke-width="2" />
-              <path d="M72.7601 26.9648H0.75293" stroke="white" stroke-width="2" />
+              <path d="M47.1143 1.31641L72.7607 26.9649L47.1143 52.6134" stroke="white" strokeWidth="2" />
+              <path d="M72.7601 26.9648H0.75293" stroke="white" strokeWidth="2" />
             </svg>
           </div>
         </div>
@@ -629,25 +629,46 @@ export default function Home() {
           </div>
         </div>
         {/*section7*/}
-        <div className='flex flex-col gap-[16px] py-[16px] px-[32px] items-center justify-center w-full'>
-          <span className="text-[#363636] text-center font-noto text-[18px] font-bold leading-[27px]">全国のコンビニがであなたのグッズを販売しましょう！</span>
-          <div className='flex flex-col items-center justify-center w-full rounded-[4] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]' style={{ height: vw(64), borderRadius: vw(4) }}>
+        <div className='flex flex-col gap-[calc(100vw*16/375)] py-[calc(100vw*16/375)] px-[calc(100vw*32/375)] items-center justify-center w-full'>
+          <span className="text-center" style={{...responsiveText(18, 27, null, 'bold', 'noto', '#363636')}}>全国のコンビニがであなたのグッズを販売しましょう！</span>
+          <div className='flex flex-col items-center justify-center w-full rounded-[4] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]' style={{...responsiveMetric(null, 64), borderRadius: vw(4) }}>
             <div className='flex flex-col items-center justify-center'>
-              <span className="text-[#FFF] font-noto text-[14px] font-normal leading-[21px]">１分で無料</span>
-              <span className="text-[#FFF] font-noto text-[18px] font-black leading-[21px]">今すぐ出品する！</span>
+              <span style={{...responsiveText(14, 21, null, 'normal', 'noto', '#FFF')}}>１分で無料</span>
+              <span style={{...responsiveText(18, 21, null, 'black', 'noto', '#FFF')}}>今すぐ出品する！</span>
             </div>
           </div>
         </div>
         {/*section8*/}
-        <div className='flex flex-col items-center w-full h-[calc(100vw*(920/375))] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] mt-[97px] relative'>
-          <span className="absolute top-[102px] right-[-237px] font-general text-[80px] italic font-bold leading-[84px] tracking-[6px] uppercase opacity-50" style={{ WebkitTextStroke: '2px #FFF', color: 'transparent', width: vw(371) }}>List your photos</span>
-          <span className="absolute top-[836px] left-[64px] font-general text-[140px] italic font-bold leading-[84px] tracking-[6px] uppercase opacity-50 whitespace-nowrap" style={{ WebkitTextStroke: '2px #FFF', color: 'transparent' }}>right now</span>
-          <span className="absolute top-[408px] left-[-340px] font-general text-[110px] italic font-bold leading-[84px] tracking-[6px] uppercase opacity-50 rotate-[90deg] whitespace-nowrap" style={{ WebkitTextStroke: '2px #FFF', color: 'transparent' }}>mechapuri</span>
-          <img src={section8} alt="section8" className='absolute top-[40px] right-[67px] object-cover' style={{ width: vw(240), height: vw(490) }} />
-          <div className='absolute top-[566px] left-[32px] flex flex-col w-[calc(100vw*(311/375))] items-start gap-[16px]'>
-            <span className="text-[#FFF] font-mplus text-[18px] font-bold leading-[25px]">1分でカンタン登録完了！</span>
-            <span className="text-[#FFF] font-mplus text-[40px] font-black leading-[48px]">めちゃプリで今すぐ写真を出品する</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="75" height="54" viewBox="0 0 75 54" fill="none">
+        <div className='flex flex-col items-center bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] mt-[97px] relative' style={{...responsiveMetric('full', 920)}}>
+          <span className="italic uppercase opacity-50" style={{ 
+            WebkitTextStroke: '2px #FFF', 
+            color: 'transparent', 
+            ...responsivePosition(102, null),
+            ...responsiveMetric(-237, 371),
+            ...responsiveText(80, 84, 6, 'bold', 'general')
+          }}>List your photos</span>
+
+          <span className="italic uppercase opacity-50 whitespace-nowrap" style={{ 
+            WebkitTextStroke: '2px #FFF', 
+            color: 'transparent', 
+            ...responsivePosition(836, 64),
+            ...responsiveText(140, 84, 6, 'bold', 'general')
+          }}>right now</span>
+
+          <span className="italic uppercase opacity-50 rotate-[90deg] whitespace-nowrap" style={{ 
+            WebkitTextStroke: '2px #FFF', 
+            color: 'transparent', 
+            ...responsivePosition(400, -348, null),
+            ...responsiveMetric(null, 110),
+            ...responsiveText(110, 84, 6, 'bold', 'general')
+          }}>mechapuri</span>
+
+          <img src={section8} alt="section8" className='object-cover' style={{ ...responsivePosition(40, null, 67), ...responsiveMetric(240, 490) }} />
+
+          <div className='flex flex-col items-start gap-[16px]' style={{ ...responsivePosition(566, 32), ...responsiveMetric(311) }}>
+            <span style={{ ...responsiveText(18, 25, null, 'bold', 'mplus', '#FFF') }}>1分でカンタン登録完了！</span>
+            <span style={{ ...responsiveText(40, 48, null, 'black', 'mplus', '#FFF') }}>めちゃプリで今すぐ写真を出品する</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 54" fill="none" style={{ ...responsiveMetric(75, 54) }}>
               <path d="M47.1143 1.31641L72.7607 26.9649L47.1143 52.6134" stroke="white" strokeWidth="2" />
               <path d="M72.7601 26.9648H0.75293" stroke="white" strokeWidth="2" />
             </svg>
