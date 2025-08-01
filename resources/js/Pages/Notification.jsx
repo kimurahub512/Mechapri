@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import '@/../../resources/css/shopmanagement.css';
-import photo1 from '@/assets/images/shopcontents/photo1.png';
+import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 
 const Notification = () => {
     return (
