@@ -7,7 +7,7 @@ import '@/../../resources/css/shopmanagement.css';
 import recyclebin from '@/assets/images/recyclebin.svg';
 import list from '@/assets/images/list_unordered.svg';
 import arrow from '@/assets/images/arrow_right.svg';
-import file_add from '@/assets/images/file_Add.svg';
+import file_add from '@/assets/images/file_add.svg';
 
 
 const Category = () => {

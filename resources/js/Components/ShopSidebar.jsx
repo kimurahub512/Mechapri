@@ -6,7 +6,7 @@ import select_multiple from '@/assets/images/select_multiple.svg';
 import cart2 from '@/assets/images/cart2.svg';
 import p_circle from '@/assets/images/p_circle.svg';
 import clock from '@/assets/images/clock.svg';
-import file_add from '@/assets/images/File_Add.svg';
+import file_add from '@/assets/images/file_add.svg';
 
 const ShopSidebar = () => {
   const isShopManagement = window.location.pathname === '/shop-management';
