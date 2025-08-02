@@ -4,11 +4,10 @@ import Footer from '@/Components/footer/footer';
 import ShopSidebar from '@/Components/ShopSidebar';
 import ShopMobileTopBlock from '@/Components/ShopMobileTopBlocks';
 import '@/../../resources/css/shopmanagement.css';
-import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 import recyclebin from '@/assets/images/recyclebin.svg';
 import list from '@/assets/images/list_unordered.svg';
 import arrow from '@/assets/images/arrow_right.svg';
-import file_add from '@/assets/images/File_Add.svg';
+import file_add from '@/assets/images/file_Add.svg';
 
 
 const Category = () => {

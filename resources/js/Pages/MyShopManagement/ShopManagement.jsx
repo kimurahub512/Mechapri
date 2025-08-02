@@ -1,20 +1,13 @@
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
-import sm_hero from '@/assets/images/sm_hero.png';
-import pen_paper from '@/assets/images/pen_paper.svg';
-import shop from '@/assets/images/Slider_03.svg';
-import cart2 from '@/assets/images/cart2.svg';
-import clock from '@/assets/images/clock.svg';
+
 import p_circle from '@/assets/images/p_circle.svg';
-import select_multiple from '@/assets/images/select_multiple.svg';
-import file_add from '@/assets/images/File_Add.svg';
 import arrow_right from '@/assets/images/arrow_right.svg';
 import sm_photo1 from '@/assets/images/sm_photo1.png';
 import sm_photo2 from '@/assets/images/sm_photo2.png';
 import sm_photo3 from '@/assets/images/sm_photo3.png';
 import list_unordered from '@/assets/images/list_unordered.svg';
 import money_hand from '@/assets/images/money_hand.svg';
-import mountain from '@/assets/images/mountain.svg';
 import complex from '@/assets/images/complex.svg';
 import '@/../../resources/css/shopmanagement.css';
 import ShopSidebar from '@/Components/ShopSidebar';

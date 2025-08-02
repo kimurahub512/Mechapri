@@ -5,15 +5,9 @@ import ShopSidebar from '@/Components/ShopSidebar';
 import ShopMobileTopBlock from '@/Components/ShopMobileTopBlocks';
 import TransferAccountConfirmModal from '@/Components/TransferAccountConfirmModal';
 import '@/../../resources/css/shopmanagement.css';
-import photo1 from '@/assets/images/shopcontents/photo1.jpg';
-import recyclebin from '@/assets/images/recyclebin.svg';
-import list from '@/assets/images/list_unordered.svg';
-import arrow from '@/assets/images/arrow_right.svg';
-import file_add from '@/assets/images/File_Add.svg';
+
 import radio from '@/assets/images/beginner_radio.svg';
-import add from '@/assets/images/add.svg';
-import close from '@/assets/images/close.svg';
-import lock from '@/assets/images/lock.svg';
+
 
 
 const SetTransferAccount = () => {

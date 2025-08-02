@@ -7,7 +7,6 @@ import '@/../../resources/css/shopmanagement.css';
 import list_unordered from '@/assets/images/list_unordered.svg';
 import money_out from '@/assets/images/money_out.svg';
 import money_hand from '@/assets/images/money_hand_filled.svg';
-import direct_right from '@/assets/images/direct_right.svg';
 import three_money from '@/assets/images/three_money.svg';
 
 
