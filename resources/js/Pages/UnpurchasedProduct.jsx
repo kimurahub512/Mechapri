@@ -21,9 +21,9 @@ import favoriteshops from '@/assets/images/favoriteshop.svg';
 import logo from '@/assets/images/logo_white.svg';
 import cart from '@/assets/images/icon-cart.svg';
 import QuantityControl from '@/Components/QuantityControl';
-import photo2 from '@/assets/images/Shoptop/photo1.png';
-import photo3 from '@/assets/images/Shoptop/photo2.png';
-import photo4 from '@/assets/images/Shoptop/photo3.png';
+import photo2 from '@/assets/images/shoptop/photo1.png';
+import photo3 from '@/assets/images/shoptop/photo2.png';
+import photo4 from '@/assets/images/shoptop/photo3.png';
 import purchase_qr from '@/assets/images/purchase_qr.svg';
 import print_qr from '@/assets/images/print_qr.svg';
 

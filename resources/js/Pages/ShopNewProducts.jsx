@@ -3,10 +3,10 @@ import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import ProductCarousel from '@/Components/ProductCarousel';
 import '@/../../resources/css/shopmanagement.css';
-import photo1 from '@/assets/images/Shoptop/photo4.png';
-import photo2 from '@/assets/images/Shoptop/photo1.png';
-import photo3 from '@/assets/images/Shoptop/photo2.png';
-import photo4 from '@/assets/images/Shoptop/photo3.png';
+import photo1 from '@/assets/images/shoptop/photo4.png';
+import photo2 from '@/assets/images/shoptop/photo1.png';
+import photo3 from '@/assets/images/shoptop/photo2.png';
+import photo4 from '@/assets/images/shoptop/photo3.png';
 import girl from '@/assets/images/favoriteshops/girl.svg';
 import instagram from '@/assets/images/instagram.svg';
 import x from '@/assets/images/x_logo.svg';
@@ -15,7 +15,7 @@ import heart from '@/assets/images/heart.svg';
 import arrow_right from '@/assets/images/arrow_right.svg';
 import arrow_left from '@/assets/images/arrow_left.svg';
 
-// Add this above the return statement in the Shoptop component
+// Add this above the return statement in the shoptop component
 const products = [
     {
         id: 1,
