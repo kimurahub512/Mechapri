@@ -27,12 +27,70 @@ export const responsiveSpacing = (mobileSpacing, desktopSpacing) => {
 export const responsiveText = (fontSize, lineHeight, letterSpacing = null, fontWeight = 'bold', fontFamily = 'noto', color = null) => {
   const style = {
     fontSize: vw(fontSize),
-    lineHeight: vw(lineHeight),
-    fontWeight
+    lineHeight: vw(lineHeight)
   };
+  
+  // Map font weight values to valid CSS values
+  const fontWeightMap = {
+    'normal': 400,
+    'bold': 700,
+    'black': 900,
+    'light': 300,
+    'medium': 500,
+    'semibold': 600
+  };
+  
+  if (fontWeight && fontWeightMap[fontWeight]) {
+    style.fontWeight = fontWeightMap[fontWeight];
+  } else if (fontWeight) {
+    style.fontWeight = fontWeight;
+  }
   
   if (letterSpacing) {
     style.letterSpacing = vw(letterSpacing);
+  }
+  
+  // Map font family names to actual CSS values
+  const fontFamilyMap = {
+    'noto': 'Noto Sans JP, sans-serif',
+    'mplus': 'M PLUS 1p, sans-serif',
+    'general': 'General Sans, sans-serif'
+  };
+  
+  if (fontFamily && fontFamilyMap[fontFamily]) {
+    style.fontFamily = fontFamilyMap[fontFamily];
+  }
+  
+  if (color !== null) {
+    style.color = color;
+  }
+  
+  return style;
+};
+export const responsiveTextD = (fontSize, lineHeight, letterSpacing = null, fontWeight = 'bold', fontFamily = 'noto', color = null) => {
+  const style = {
+    fontSize: vwd(fontSize),
+    lineHeight: vwd(lineHeight)
+  };
+  
+  // Map font weight values to valid CSS values
+  const fontWeightMap = {
+    'normal': 400,
+    'bold': 700,
+    'black': 900,
+    'light': 300,
+    'medium': 500,
+    'semibold': 600
+  };
+  
+  if (fontWeight && fontWeightMap[fontWeight]) {
+    style.fontWeight = fontWeightMap[fontWeight];
+  } else if (fontWeight) {
+    style.fontWeight = fontWeight;
+  }
+  
+  if (letterSpacing) {
+    style.letterSpacing = vwd(letterSpacing);
   }
   
   // Map font family names to actual CSS values
@@ -65,6 +123,16 @@ export const responsivePosition = (top, left = null, right = null) => {
   return style;
 }; 
 
+export const responsivePositionD = (top, left = null, right = null) => {
+  const style = {
+    position: 'absolute'
+  };
+  
+  if (top !== null) style.top = vwd(top);
+  if (left !== null) style.left = vwd(left);
+  if (right !== null) style.right = vwd(right);
+  return style;
+}; 
 
 // Responsive metric helper function
 export const responsiveMetric = (width = null, height = null) => {
@@ -75,6 +143,19 @@ export const responsiveMetric = (width = null, height = null) => {
   if (width !== null && width !== 'full') style.width = vw(width);
   if (height === 'full') style.height = '100%';
   if (height !== null && height !== 'full') style.height = vw(height);
+
+  return style;
+}; 
+
+
+export const responsiveMetricD = (width = null, height = null) => {
+  const style = {
+  };
+  
+  if (width === 'full') style.width = '100%';
+  if (width !== null && width !== 'full') style.width = vwd(width);
+  if (height === 'full') style.height = '100%';
+  if (height !== null && height !== 'full') style.height = vwd(height);
 
   return style;
 }; 

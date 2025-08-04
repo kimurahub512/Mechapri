@@ -8,6 +8,8 @@ import heart from '@/assets/images/heart.svg';
 import clock from '@/assets/images/clock.svg';
 import man_mobile from '@/assets/images/man2.svg';
 import cart from '@/assets/images/icon-cart.svg';
+import { vw, responsiveText, responsiveMetric } from '@/lib/utils';
+
 
 import '@/../../resources/css/footer.css';
 
@@ -16,20 +18,20 @@ const Footer = () => {
     <footer className="mechapuri-footer">
       <div className="mechapuri-footer-main-container">
         <div className="mechapuri-footer-content-frame">
-          <img 
-            src={logo} 
-            alt="Mechapuri Logo" 
+          <img
+            src={logo}
+            alt="Mechapuri Logo"
             className="mechapuri-footer-logo"
           />
           <div className="mechapuri-footer-social">
-            <img 
-              src={xLogo} 
-              alt="X Logo" 
+            <img
+              src={xLogo}
+              alt="X Logo"
               className="mechapuri-footer-x-logo"
             />
-            <img 
-              src={footerSvg2} 
-              alt="Footer SVG" 
+            <img
+              src={footerSvg2}
+              alt="Footer SVG"
               className="mechapuri-footer-svg2"
             />
           </div>
@@ -49,9 +51,9 @@ const Footer = () => {
               X連携の権限について
             </div>
             <div className="mechapuri-footer-copy-section">
-              <img 
-                src={copy} 
-                alt="Copy" 
+              <img
+                src={copy}
+                alt="Copy"
                 className="mechapuri-footer-copy-icon"
               />
               <div className="mechapuri-footer-text-medium">
@@ -65,9 +67,9 @@ const Footer = () => {
           <div className="mechapuri-footer-list-frame">
             {/* First item */}
             <div className="mechapuri-footer-list-item">
-              <img 
-                src={copy} 
-                alt="Copy" 
+              <img
+                src={copy}
+                alt="Copy"
                 className="mechapuri-footer-copy-icon-small"
               />
               <div className="mechapuri-footer-list-text">
@@ -76,9 +78,9 @@ const Footer = () => {
             </div>
             {/* Second item */}
             <div className="mechapuri-footer-list-item">
-              <img 
-                src={copy} 
-                alt="Copy" 
+              <img
+                src={copy}
+                alt="Copy"
                 className="mechapuri-footer-copy-icon-small"
               />
               <div className="mechapuri-footer-list-text">
@@ -106,69 +108,66 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Mobile Navigation Section */}
-      <div className="mechapuri-footer-mobile-nav block md:hidden">
-        <div className="mechapuri-footer-nav-content">
+      <div className='flex flex-row justify-between p-[8px_16px_12px_16px] bg-[#FFF]'>
+        <div className='flex flex-col items-center gap-[10px]' style={{...responsiveMetric(60, null)}}>
           {/* Home */}
-          <div className="mechapuri-footer-nav-item">
-            <img 
-              src={home} 
-              alt="Home" 
-              className="mechapuri-footer-nav-svg"
+          <img
+            src={home}
+            alt="Home"
+            style={{ ...responsiveMetric(20, 20) }}
+          />
+          <div className="text-center" style={{ ...responsiveText(10, 13, null, 'medium', 'noto', '#363636') }}>ホーム</div>
+        </div>
+        {/* Favorites */}
+        <div className='flex flex-col items-center gap-[10px]' style={{...responsiveMetric(60, null)}}>
+          <img
+            src={heart}
+            alt="Favorites"
+            style={{ ...responsiveMetric(20, 20) }}
+          />
+          <a href='/favoriteproducts' style={{ ...responsiveText(10, 13, null, 'medium', 'noto', '#363636') }}>お気に入り</a>
+        </div>
+
+        {/* Purchase History */}
+        <div className='flex flex-col items-center gap-[10px]'>
+          <img
+            src={clock}
+            alt="History"
+            style={{ ...responsiveMetric(20, 20) }}
+          />
+          <a href='/purchasehistory' style={{ ...responsiveText(10, 13, null, 'medium', 'noto', '#363636') }}>購入履歴</a>
+        </div>
+
+        {/* Cart */}
+        <div className='flex flex-col items-center gap-[10px]' style={{...responsiveMetric(60, null)}}>
+          <a href='/cart'>
+            <img
+              src={cart}
+              alt="Cart"
+              style={{ ...responsiveMetric(20, 20) }}
             />
-            <div className="mechapuri-footer-nav-text">ホーム</div>
-          </div>
-          
-          {/* Favorites */}
-          <div className="mechapuri-footer-nav-item">
-            <img 
-              src={heart} 
-              alt="Favorites" 
-              className="mechapuri-footer-nav-svg heart"
-            />
-            <a href='/favoriteproducts' className="mechapuri-footer-nav-text">お気に入り</a>
-          </div>
-          
-          {/* Purchase History */}
-          <div className="mechapuri-footer-nav-item">
-            <img 
-              src={clock} 
-              alt="History" 
-              className="mechapuri-footer-nav-svg"
-            />
-            <a href='/purchasehistory' className="mechapuri-footer-nav-text">購入履歴</a>
-          </div>
-          
-          {/* Cart */}
-          <div className="mechapuri-footer-nav-item">
-            <a href='/cart'>
-              <img 
-                src={cart} 
-                alt="Cart" 
-                className="mechapuri-footer-nav-svg"
-              />
-            </a>
-            <div className="mechapuri-footer-cart-row">
-              <span className="mechapuri-footer-nav-text">カート</span>
-              <span className="mechapuri-footer-cart-badge">
-                <span className="mechapuri-footer-cart-number">1</span>
-              </span>
+          </a>
+          <div className='flex flex-row items-center gap-[2px]'>
+            <span style={{ ...responsiveText(10, 13, null, 'medium', 'noto', '#363636') }}>カート</span>
+            <div className='flex items-center justify-center p-[2px]' style={{ ...responsiveMetric(16, 18), borderRadius: vw(3), background: '#FF2AA1' }}>
+              <span style={{ ...responsiveText(13, 10, null, 'medium', 'noto', '#FFF') }}>1</span>
             </div>
           </div>
-          
-          {/* Account */}
-          <div className="mechapuri-footer-nav-item">
-            <img 
-              src={man_mobile} 
-              alt="Account" 
-              className="mechapuri-footer-nav-svg man_mobile"
-            />
-            <a href='/accountsetting' className="mechapuri-footer-nav-text">アカウント</a>
-          </div>
+        </div>
+
+        {/* Account */}
+        <div className='flex flex-col items-center gap-[10px]'>
+          <img
+            src={man_mobile}
+            alt="Account"
+            style={{ ...responsiveMetric(20, 20) }}
+          />
+          <a href='/accountsetting' style={{ ...responsiveText(10, 13, null, 'medium', 'noto', '#363636') }}>アカウント</a>
         </div>
       </div>
-    </footer>
+    </footer >
   );
 };
 

@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
-import { vw, vwd, responsiveText, responsivePosition, responsiveMetric } from '@/lib/utils';
+import { vw, vwd, responsiveText, responsivePosition, responsiveMetric, responsiveTextD, responsivePositionD, responsiveMetricD  } from '@/lib/utils';
 import logo_group from '@/assets/images/homepage/logo_group.png';
 import header_image from '@/assets/images/homepage/hero.png';
 import hero_m1 from '@/assets/images/homepage/hero_m1.png';
@@ -41,116 +41,116 @@ export default function Home() {
         <div className='flex flex-col items-center w-full relative px-[120px] pt-[66px] pb-[150px]'>
           <div className='flex flex-col items-start w-full gap-5'>
             <div className='flex flex-row items-start'>
-              <span className="text-[#363636] font-noto text-[80px] font-black leading-[104px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={responsiveTextD(80, 104, null, 'black', 'noto', '#363636')}>
                 めちゃプリ
               </span>
-              <span className="text-[#363636] font-noto text-[64px] font-black leading-[104px]">
+              <span style={responsiveTextD(64, 104, null, 'black', 'noto', '#363636')}>
                 であなたの写真を
               </span>
             </div>
             <div className='flex flex-col items-starttext-[16px]'>
-              <span className="font-mplus text-[88px] font-black leading-[94px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={responsiveTextD(88, 94, null, 'black', 'mplus')}>
                 "公式グッズ"
               </span>
               <div className='flex flex-row items-start'>
-                <span className="text-[#363636] font-mplus text-[64px] font-black leading-[94px]">
+                <span style={responsiveTextD(64, 94, null, 'black', 'mplus', '#363636')}>
                   として
                 </span>
-                <span className="font-mplus text-[80px] font-black leading-[94px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={responsiveTextD(80, 94, null, 'black', 'mplus')}>
                   販売
                 </span>
               </div>
             </div>
-            <span className="text-[#222] font-noto text-[18px] font-bold leading-[27px] w-[643px] mt-[36px]text-[16px]">
+            <span style={{...responsiveTextD(18, 27, null, 'bold', 'noto', '#222'), width: vwd(643), marginTop: vwd(36)}}>
               写真をアップするだけで、全国のコンビニががあなたのグッズ販売ブースに。
               めちゃプリであなたの写真を"公式グッズ"として販売 しましょう！
             </span>
-            <div className='flex flex-row items-center w-[546px] px-[42px] py-[12px]'>
+            <div className='flex flex-row items-center px-[30px] py-[12px] mt-[49px]' style={responsiveMetricD(546, null)}>
               <div className='flex flex-row items-start gap-[22px]'>
-                <span className='text-[#222] font-noto text-[18px] font-bold leading-[27px] whitespace-nowrap'>
+                <span className='whitespace-nowrap' style={responsiveTextD(18, 27, null, 'bold', 'noto', '#222')}>
                   対象コンビニ
                 </span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="2" height="60" viewBox="0 0 2 60" fill="none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="2" height="60" viewBox="0 0 2 60" fill="none" style={responsiveMetricD(2, 60)}>
                   <path d="M1 0.25V59.75" stroke="#222222" />
                 </svg>
-                <img src={logo_group} alt="logo_group" className='w-[303px] h-[62px]' />
+                <img src={logo_group} alt="logo_group" style={responsiveMetricD(303, 62)} />
               </div>
             </div>
-            <button className='flex flex-col items-center justify-center w-[494px] h-[64px] rounded-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]'>
-              <span className='text-[#FFF] font-noto text-[14px] font-bold leading-[21px]'>
+            <button className='flex flex-col items-center justify-center' style={responsiveMetricD(494, 64)}>
+              <span style={responsiveTextD(14, 21, null, 'bold', 'noto', '#FFF')}>
                 １分で無料
               </span>
-              <span className='text-[#FFF] font-noto text-[18px] font-black leading-[21px]'>
+              <span style={responsiveTextD(18, 21, null, 'black', 'noto', '#FFF')}>
                 今すぐ出品する
               </span>
             </button>
           </div>
-          <img src={header_image} alt="header_image" className='w-[656px] h-[677px] absolute top-[93px] right-0' />
+          <img src={header_image} alt="header_image" style={{...responsiveMetricD(656, 677), ...responsivePositionD(99, null, 0)}} />
         </div>
         {/*section2*/}
         <div className='relative w-full'>
           <img src={section2_image} alt="section2_image" className='w-[100%] h-[100%] overflow-hidden relative' />
           <div className='absolute inset-0 w-full h-full opacity-50 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] mix-blend-overlay'></div>
           <div className='absolute inset-0 w-full h-full opacity-75 bg-gradient-to-l from-[#FF285E] to-[#AB31D3]'></div>
-          <img src={section2_phones} alt="section2_image" className='w-[505px] h-[674px] overflow-hidden absolute top-[44px] left-[22.5px]' />
-          <div className='absolute top-[115px] right-[116px] flex flex-col items-start w-[720px] py-[40px] px-[80px] gap-[20px] rounded-[26px] bg-white'>
+          <img src={section2_phones} alt="section2_image" className='overflow-hidden'  style={{...responsiveMetricD(505, 674), ...responsivePositionD(44, 22.5)}}/>
+          <div className='flex flex-col items-start py-[40px] px-[80px] gap-[20px] rounded-[26px] bg-white' style={{...responsiveMetricD(720, null), ...responsivePositionD(115,null, 116), paddingTop: vwd(40), paddingBottom: vwd(40), paddingLeft: vwd(80), paddingRight: vwd(80), gap: vwd(20), borderRadius: vwd(26),}}>
             <div className='flex flex-col items-start justify-center'>
-              <span className='text-[#222] font-noto text-[24px] font-bold leading-normal'>
+              <span style={responsiveTextD(24, 32, null, 'bold', 'noto', '#222')}>
                 使い方
               </span>
-              <span className='text-[#222] font-noto text-[16px] font-semibold leading-normal bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent'>
+              <span className='bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent' style={responsiveTextD(16, 29, null, 'semibold', 'noto')}>
                 How to use
               </span>
             </div>
-            <span className="text-[#222] font-mplus text-[58px] font-black leading-[72px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={responsiveTextD(58, 72, null, 'black', 'mplus')}>
               スマホ1つで<br />
               “公式グッズ”が販売<br />
               できる
             </span>
-            <span className="text-[#363636] font-noto text-[18px] font-normal leading-[32.76px]">スマホ1つで公式グッズを簡単に販売できます。写真をアップするだけで在庫管理や発送作業も一切不要。ファンの手元に写真がすぐに届きます。</span>
+            <span style={responsiveTextD(18, 32.76, null, 'normal', 'noto', '#363636')}>スマホ1つで公式グッズを簡単に販売できます。写真をアップするだけで在庫管理や発送作業も一切不要。ファンの手元に写真がすぐに届きます。</span>
           </div>
         </div>
         {/*section3 シークレット販売でファンの*/}
-        <div className='flex flex-col items-center w-full pb-[64px]'>
+        <div className='flex flex-col items-center w-full' style={{paddingBottom: vwd(64)}}>
           <div className='flex flex-col items-center w-[831.6px]'>
             <div className='flex flex-row items-center justify-center w-full gap-[8px]'>
-              <span className='text-[#222] font-noto text-[24px] font-bold leading-normal'>
+              <span style={responsiveTextD(24, 32, null, 'bold', 'noto', '#222')}>
                 活用事例
               </span>
-              <span className='text-[#222] font-noto text-[16px] font-semibold leading-normal bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent'>
+              <span className='bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent' style={responsiveTextD(16, 24, null, 'semibold', 'noto')}>
                 Use case
               </span>
             </div>
             <div className='flex flex-col items-center w-full mt-[6px]'>
               <div className='flex flex-row items-center'>
-                <span className="font-mplus text-[60px] font-black leading-[84px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent whitespace-nowrap">
+                <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent whitespace-nowrap" style={responsiveTextD(60, 84, null, 'black', 'mplus')}>
                   シークレット販売
                 </span>
-                <span className="text-[#363636] font-mplus text-[60px] font-black leading-[84px]">
+                <span style={responsiveTextD(60, 84, null, 'black', 'mplus', '#363636')}>
                   で
                 </span>
-                <span className="font-mplus text-[60px] font-black leading-[84px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent whitespace-nowrap">
+                <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent whitespace-nowrap" style={responsiveTextD(60, 84, null, 'black', 'mplus')}>
                   ファンの
                 </span>
               </div>
-              <span className="font-mplus text-[60px] font-black leading-[84px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent whitespace-nowrap">
+              <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent whitespace-nowrap" style={responsiveTextD(60, 84, null, 'black', 'mplus')}>
                 ドキドキが倍増！
               </span>
             </div>
             <div className='flex flex-row items-center w-full mt-[19px]'>
-              <span className="text-[#E862CB] font-noto text-[18px] font-black leading-[32px]">
+              <span style={responsiveTextD(18, 32, null, 'black', 'noto', '#E862CB')}>
                 「開けてみるまで分からない」
               </span>
-              <span className="text-[#222] font-noto text-[18px] font-normal leading-[32px]">
+              <span style={responsiveTextD(18, 32, null, 'normal', 'noto', '#222')}>
                 楽しさで、
               </span>
-              <span className="text-[#E862CB] font-noto text-[18px] font-black leading-[32px]">
+              <span style={responsiveTextD(18, 32, null, 'black', 'noto', '#E862CB')}>
                 "見えない魅力"
               </span>
-              <span className="text-[#222] font-noto text-[18px] font-normal leading-[32px]">
+              <span style={responsiveTextD(18, 32, null, 'normal', 'noto', '#222')}>
                 を仕掛けられます。活用次第で
               </span>
-              <span className="text-[#E862CB] font-noto text-[18px] font-black leading-[32px]">
+              <span style={responsiveTextD(18, 32, null, 'black', 'noto', '#E862CB')}>
                 収益爆上げ！
               </span>
             </div>
@@ -336,53 +336,55 @@ export default function Home() {
         {/* section 1*/}
         <div className='flex flex-col items-center w-full  px-[32px] gap-[24px]'>
           {/*hero section*/}
-          <div className='flex flex-col items-center w-full h-[350px] relative'>
-            <img src={hero_m2} alt="header_image" className='w-[178px] h-[291px] absolute top-[4px] right-[36px]' />
-            <img src={hero_m1} alt="header_image" className='w-[472px] h-[394px] object-cover absolute top-[0px] left-[-28px]' style={{
+          <div className='flex flex-col items-center relative' style={{...responsiveMetric('full', 350)}}>
+            <img src={hero_m2} alt="header_image" style={{...responsiveMetric(178, 291), ...responsivePosition(4, 36, null)}}/>
+            <img src={hero_m1} alt="header_image" className='object-cover' style={{
               maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
               WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
               filter: 'blur(0.5px)',
-              transform: 'scale(1.02)'
+              transform: 'scale(1.02)',
+              ...responsiveMetric(472, 394),
+              ...responsivePosition(0, -28, null)
             }} />
-            <img src={header_image_3} alt="header_image" className='absolute top-[103px] right-[-10px] w-[227px] h-[238px]' />
+            <img src={header_image_3} alt="header_image" style={{...responsiveMetric(227, 238), ...responsivePosition(103, null, -10)}}/>
           </div>
           <div className='flex flex-col items-center w-full relative'>
             <div className='flex flex-col items-start w-full gap-[8px]'>
               <div className='flex flex-col items-start text-center'>
                 <div className='flex flex-row items-center justify-center'>
-                  <span className="text-[#363636] font-noto text-[40px] font-black leading-[56px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{...responsiveText(40, 56, null, 'black', 'noto')}}>
                     めちゃプリ
                   </span>
-                  <span className="text-[#363636] font-noto text-[40px] font-black leading-[56px]">
+                  <span style={{...responsiveText(40, 56, null, 'black', 'noto', '#363636')}}>
                     で
                   </span>
                 </div>
-                <span className="text-[#363636] font-noto text-[40px] font-black leading-[56px]">
+                <span style={{...responsiveText(40, 56, null, 'black', 'noto', '#363636')}}>
                   あなたの写真を
                 </span>
               </div>
               <div className='flex flex-col items-start text-center'>
-                <span className="font-mplus text-[40px] font-black leading-[56px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{...responsiveText(40, 56, null, 'black', 'mplus')}}>
                   "公式グッズ"
                 </span>
                 <div className='flex flex-row items-center justify-center'>
-                  <span className="text-[#363636] font-mplus text-[40px] font-black leading-[56px]">
+                  <span style={{...responsiveText(40, 56, null, 'black', 'mplus', '#363636')}}>
                     として
                   </span>
-                  <span className="font-mplus text-[40px] font-black leading-[56px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{...responsiveText(40, 56, null, 'black', 'mplus')}}>
                     販売
                   </span>
                 </div>
               </div>
             </div>
           </div>
-          <span className="text-[#222] font-noto text-[16px] font-bold leading-[24px] text-center w-full">
+          <span style={{...responsiveText(16, 24, null, 'bold', 'noto', '#222')}} className="text-center w-full">
             写真をアップするだけで、全国のコンビニががあなたのグッズ販売ブースに。<br />
             めちゃプリであなたの写真を"公式グッズ"として販売 しましょう！
           </span>
           <div className='flex flex-col items-center w-full px-[30px] py-[6px]'>
             <div className='flex flex-col items-center w-full gap-[10px]'>
-              <span className='text-[#222] font-noto text-[16px] font-bold leading-[27px]'>
+              <span style={{...responsiveText(16, 27, null, 'bold', 'noto', '#222')}}>
                 対象コンビニ
               </span>
               <div className='w-full border-[#222] border-b-[1px]' />
@@ -390,83 +392,83 @@ export default function Home() {
             </div>
           </div>
           <button className='flex flex-col items-center justify-center w-full max-w-[311px] h-[64px] rounded-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]'>
-            <span className='text-[#FFF] font-noto text-[14px] font-normal leading-[21px]'>
+            <span style={{...responsiveText(14, 21, null, 'normal', 'noto', '#FFF')}}>
               １分で無料
             </span>
-            <span className='text-[#FFF] font-noto text-[18px] font-black leading-[21px]'>
+            <span style={{...responsiveText(18, 21, null, 'black', 'noto', '#FFF')}}>
               今すぐ出品する
             </span>
           </button>
         </div>
         {/* section 2*/}
-        <div className='flex flex-col items-center w-full h-[768px] relative'>
+        <div className='flex flex-col items-center relative' style={{...responsiveMetric('full', 768)}}>
           <img src={section2_image_m} alt="section2_image" className='w-full h-full object-cover' />
-          <img src={section2_phones_m} alt="section2_image" className='absolute top-[46px] right-[20px] w-[311px] h-[505px] ' />
-          <div className='absolute bottom-[24px] right-[32px] flex flex-col items-start w-[311px] py-[24px] px-[24px] gap-[12px] rounded-[26px] bg-white'>
+          <img src={section2_phones_m} alt="section2_image" style={{...responsivePosition(46, null, 20), ...responsiveMetric(311, 505)}}/>
+          <div className='flex flex-col items-start py-[24px] px-[24px] gap-[12px] rounded-[26px] bg-white' style={{...responsivePosition(394, null, 32), ...responsiveMetric(311)}}>
             <div className='flex flex-row items-start justify-center gap-4'>
-              <span className='text-[#222] font-mplus text-[16px] font-bold leading-[20px]'>
+              <span style={{...responsiveText(16, 20, null, 'bold', 'mplus', '#222')}}>
                 使い方
               </span>
-              <span className='text-[#222] font-general text-[14px] font-semibold leading-[20px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent'>
+              <span className='bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent' style={{...responsiveText(14, 20, null, 'semibold', 'general')}}>
                 How to use
               </span>
             </div>
-            <span className="text-[#222] font-mplus text-[32px] font-black leading-[44px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{...responsiveText(32, 44, null, 'black', 'mplus')}}>
               スマホ1つで<br />
               “公式グッズ”が販<br />
               売できる
             </span>
-            <span className="text-[#363636] font-noto text-[16px] font-normal leading-[24px]">スマホ1つで公式グッズを簡単に販売できます。写真をアップするだけで在庫管理や発送作業も一切不要。ファンの手元に写真がすぐに届きます。</span>
+            <span style={{...responsiveText(16, 24, null, 'normal', 'noto', '#363636')}}>スマホ1つで公式グッズを簡単に販売できます。写真をアップするだけで在庫管理や発送作業も一切不要。ファンの手元に写真がすぐに届きます。</span>
           </div>
         </div>
         {/* use cases*/}
         <div className='flex flex-col items-center w-full gap-[32px] px-[32px]'>
           <div className='flex flex-col items-center gap-[16px] w-full'>
             <div className='flex flex-row items-center justify-center w-full gap-[8px]'>
-              <span className='text-[#222] font-mplus text-[16px] font-bold leading-[20px]'>
+              <span style={{...responsiveText(16, 20, null, 'bold', 'mplus', '#222')}}>
                 活用事例
               </span>
-              <span className='text-[#222] font-general text-[14px] font-semibold leading-[20px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent'>
+              <span className='bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent' style={{...responsiveText(14, 20, null, 'semibold', 'general')}}>
                 Use case
               </span>
             </div>
             <div className='flex flex-col items-center w-full'>
               <div className='flex flex-row items-center'>
-                <span className="font-mplus text-[32px] font-black leading-[44px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{...responsiveText(32, 44, null, 'black', 'mplus')}}>
                   シークレット販売
                 </span>
-                <span className="text-[#363636] font-mplus text-[32px] font-black leading-[44px]">
+                <span style={{...responsiveText(32, 44, null, 'black', 'mplus', '#363636')}}>
                   で
                 </span>
               </div>
-              <span className="font-mplus text-[32px] font-black leading-[44px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{...responsiveText(32, 44, null, 'black', 'mplus')}}>
                 ファンの
               </span>
-              <span className="font-mplus text-[32px] font-black leading-[44px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent whitespace-nowrap">
+              <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent whitespace-nowrap" style={{...responsiveText(32, 44, null, 'black', 'mplus')}}>
                 ドキドキが倍増！
               </span>
             </div>
             <div className='flex flex-col items-center w-full'>
               <div className='flex flex-row items-center justify-center'>
-                <span className="text-[#E862CB] font-noto text-[16px] font-black leading-[24px] whitespace-nowrap">
+                <span className="whitespace-nowrap" style={{...responsiveText(16, 24, null, 'black', 'noto', '#E862CB')}}>
                   「開けてみるまで分からない」
                 </span>
-                <span className="text-[#222] font-noto text-[16px] font-normal leading-[24px] whitespace-nowrap">
+                <span className="whitespace-nowrap" style={{...responsiveText(16, 24, null, 'normal', 'noto', '#222')}}>
                   楽しさ、
                 </span>
               </div>
               <div className='flex flex-row items-center justify-center'>
-                <span className="text-[#222] font-noto text-[16px] font-normal leading-[24px] whitespace-nowrap">で</span>
-                <span className="text-[#E862CB] font-noto text-[16px] font-black leading-[24px] whitespace-nowrap">
+                <span className="whitespace-nowrap" style={{...responsiveText(16, 24, null, 'normal', 'noto', '#222')}}>で</span>
+                <span className="whitespace-nowrap" style={{...responsiveText(16, 24, null, 'black', 'noto', '#E862CB')}}>
                   "見えない魅力"
                 </span>
-                <span className="text-[#222] font-noto text-[16px] font-normal leading-[24px] whitespace-nowrap">を仕掛けられます。</span>
+                <span className="whitespace-nowrap" style={{...responsiveText(16, 24, null, 'normal', 'noto', '#222')}}>を仕掛けられます。</span>
               </div>
               <div className='flex flex-row items-center justify-center'>
-                <span className="text-[#222] font-noto text-[16px] font-normal leading-[24px]">
+                <span style={{...responsiveText(16, 24, null, 'normal', 'noto', '#222')}}>
                   活用次第で
                 </span>
-                <span className="text-[#E862CB] font-noto text-[16px] font-black leading-[24px]">
+                <span style={{...responsiveText(16, 24, null, 'black', 'noto', '#E862CB')}}>
                   収益爆上げ！
                 </span>
               </div>
@@ -489,8 +491,8 @@ export default function Home() {
                 </div>                
               </div>
               {/*text frame*/}
-              <div className='w-full h-[172] rounded-[18px] bg-[#FFF] shadow-[0_4px_14px_0_rgba(0,0,0,0.15)] mt-[9]' style={{ height: vw(172), marginTop: vw(9) }}>
-                <div className='flex flex-col items-start gap-[17px] mx-[16px]' style={{ marginTop: `-${vw(9)}` }}>
+              <div className='w-full min-h-[172px] rounded-[18px] bg-[#FFF] shadow-[0_4px_14px_0_rgba(0,0,0,0.15)]' style={{ height: vw(172), marginTop: vw(9) }}>
+                <div className='flex flex-col items-start gap-[17px] mx-[16px]' style={{ marginTop: `${vw(-9)}` }}>
                   <span className="text-[#E862CB] font-['General_Sans'] italic font-bold" style={{ fontSize: vw(32), lineHeight: vw(18) }}>01</span>
                   <div className='flex flex-col items-start justify-center border-b border-[#FF2AA1]' style={{ paddingTop: vw(6), paddingBottom: vw(6), borderBottomWidth: vw(2) }}>
                     <span className="text-[#222] font-noto font-bold" style={{ fontSize: vw(16), lineHeight: vw(18) }}>
@@ -510,8 +512,8 @@ export default function Home() {
                 <img src={section3_2} className='w-full h-full object-cover shadow-[0_4px_4px_0_rgba(0,0,0,0.13)]' />
                 <img src={section3_2_half} className='absolute top-0 right-0 w-[51%] h-full rounded-r-[26px]' />
               </div>
-              <div className='w-full h-[172] rounded-[18px] bg-[#FFF] shadow-[0_4px_14px_0_rgba(0,0,0,0.15)] mt-[9]' style={{ height: vw(172), marginTop: vw(9) }}>
-                <div className='flex flex-col items-start gap-[17px] mx-[16px]' style={{ marginTop: `-${vw(9)}` }}>
+              <div className='w-full min-h-[172px] rounded-[18px] bg-[#FFF] shadow-[0_4px_14px_0_rgba(0,0,0,0.15)]' style={{ height: vw(172), marginTop: vw(9) }}>
+                <div className='flex flex-col items-start gap-[17px] mx-[16px]' style={{ marginTop: `${vw(-9)}` }}>
                   <span className="text-[#E862CB] font-['General_Sans'] italic font-bold" style={{ fontSize: vw(32), lineHeight: vw(18) }}>02</span>
                   <div className='flex flex-col items-start justify-center border-b border-[#FF2AA1]' style={{ paddingTop: vw(6), paddingBottom: vw(6), borderBottomWidth: vw(2) }}>
                     <span className="text-[#222] font-noto font-bold" style={{ fontSize: vw(16), lineHeight: vw(18) }}>
@@ -534,9 +536,9 @@ export default function Home() {
                   <span className="text-[#FFF] font-noto font-black leading-normal" style={{ fontSize: vw(16) }}>Set a password</span>
                 </div>
               </div>
-              <div className='w-full h-[188] rounded-[18px] bg-[#FFF] shadow-[0_4px_14px_0_rgba(0,0,0,0.15)] mt-[9]' style={{ height: vw(188), marginTop: vw(9) }}>
+              <div className='w-full min-h-[188] rounded-[18px] bg-[#FFF] shadow-[0_4px_14px_0_rgba(0,0,0,0.15)]' style={{ height: vw(188), marginTop: vw(9) }}>
                 <div className='flex flex-col items-start gap-[17px] mx-[16px]' style={{ marginTop: `-${vw(9)}` }}>
-                  <span className="text-[#E862CB] font-['General_Sans'] italic font-bold" style={{ fontSize: vw(32), lineHeight: vw(18) }}>03</span>
+                  <span className="text-[#E862CB] font-['General_Sans'] italic font-bold" style={{ fontSize: vw(32), lineHeight: vw(-9) }}>03</span>
                   <div className='flex flex-col items-start justify-center border-b border-[#FF2AA1]' style={{ paddingTop: vw(6), paddingBottom: vw(6), borderBottomWidth: vw(2) }}>
                     <span className="text-[#222] font-noto font-bold" style={{ fontSize: vw(16), lineHeight: vw(18) }}>
                       写真にパスワードを設定
@@ -553,8 +555,8 @@ export default function Home() {
               <div className='rounded-[18px] border-[1.8px] border-[#AB31D380] overflow-hidden w-full h-[calc(43.2vw)] relative'>
                 <img src={section3_4} className='w-full h-full object-cover shadow-[0_4px_4px_0_rgba(0,0,0,0.13)]' />
               </div>
-              <div className='w-full h-[172] rounded-[18px] bg-[#FFF] shadow-[0_4px_14px_0_rgba(0,0,0,0.15)] mt-[9]' style={{ height: vw(172), marginTop: vw(9) }}>
-                <div className='flex flex-col items-start gap-[17px] mx-[16px]' style={{ marginTop: `-${vw(9)}` }}>
+              <div className='w-full  min-h-[172px] rounded-[18px] bg-[#FFF] shadow-[0_4px_14px_0_rgba(0,0,0,0.15)]' style={{ height: vw(172), marginTop: vw(9) }}>
+                <div className='flex flex-col items-start gap-[17px] mx-[16px]' style={{ marginTop: `${vw(-9)}` }}>
                   <span className="text-[#E862CB] font-['General_Sans'] italic font-bold" style={{ fontSize: vw(32), lineHeight: vw(18) }}>04</span>
                   <div className='flex flex-col items-start justify-center border-b border-[#FF2AA1]' style={{ paddingTop: vw(6), paddingBottom: vw(6), borderBottomWidth: vw(2) }}>
                     <span className="text-[#222] font-noto font-bold" style={{ fontSize: vw(16), lineHeight: vw(18) }}>

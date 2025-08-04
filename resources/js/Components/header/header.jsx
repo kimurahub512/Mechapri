@@ -1,5 +1,6 @@
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
+import { responsiveMetric, responsivePosition, responsiveText } from '@/lib/utils';
 import logo from '@/assets/images/mechapuri_logo.png';
 import arrow from '@/assets/images/icon-arrow.svg';
 import cart from '@/assets/images/icon-cart.svg';
@@ -126,20 +127,20 @@ const Header = ({ authButton }) => {
         {auth?.user ? (
           <div className='flex items-center pt-[7px] pb-[6px] items-center justify-between w-full'>
             <a href='/' className='flex items-center'>
-              <img src={logo} alt='shop' className='w-[104px] h-[27px]' />
+              <img src={logo} alt='shop' style={{...responsiveMetric(104, 27)}} />
             </a>
             <div className='flex flex-row gap-[5px] items-center'>
-              <a href='/shop-management' className='flex flex-col items-center text-[#222] font-noto text-[10px] font-medium leading-[15px] px-[6px] py-[1.5px] gap-[6px] whitespace-nowrap'>
-                <img src={shop} alt='shop' className='w-[21px] h-[18px]' />
+              <a href='/shop-management' className='flex flex-col items-center text-[#222] font-noto text-[10px] font-medium leading-[15px] px-[6px] py-[1.5px] gap-[6px] whitespace-nowrap' style={{...responsiveText(10, 15, null, 'medium', 'noto', '#222')}}>
+                <img src={shop} alt='shop' style={{...responsiveMetric(21, 18)}} />
                 ショップ管理
               </a>
-              <a href='/notification' className='flex flex-col items-center text-[#222] font-noto text-[10px] font-medium leading-[15px] px-[6px] py-[1.5px] gap-[6px] whitespace-nowrap'>
-                <img src={bell} alt='shop' className='w-[21px] h-[18px]' />
+              <a href='/notification' className='flex flex-col items-center px-[6px] py-[1.5px] gap-[6px] whitespace-nowrap' style={{...responsiveText(10, 15, null, 'medium', 'noto', '#222')}}>
+                <img src={bell} alt='shop' style={{...responsiveMetric(21, 18)}} />
                 お知らせ
               </a>
               <div className='flex flex-col items-start justify-center px-[6px] py-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] rounded-[5px]'>
-                <a href='/upload' className='flex flex-col items-center text-[#FFF] font-noto text-[10px] font-medium leading-[19.5px] gap-[3px] whitespace-nowrap'>
-                  <img src={arrow} alt='shop' className='w-[19px] h-[19px]' />
+                <a href='/upload' className='flex flex-col items-center gap-[3px] whitespace-nowrap' style={{...responsiveText(10, 19.5, null, 'medium', 'noto', '#FFF')}}>
+                  <img src={arrow} alt='shop' style={{...responsiveMetric(19, 19)}} />
                   写真を出品
                 </a>
               </div>
@@ -148,13 +149,13 @@ const Header = ({ authButton }) => {
         ) : (
           <div className='flex items-center pt-[17px] pb-[19px] items-center justify-between w-full'>
             <a href='/' className='flex items-center'>
-              <img src={logo} alt='shop' className='w-[104px] h-[27px]' />
+              <img src={logo} alt='shop' style={{...responsiveMetric(104, 27)}}/>
             </a>
             <div className='flex flex-row gap-[5px] items-center'>
-              <a href='/login' className='flex items-center text-[#222] font-noto text-[10px] font-medium leading-[15px] border border-[#E9EEF1] rounded-[3px] px-[6px] py-[1.5px] whitespace-nowrap'>ログイン</a>
-              <a href='/register' className='flex items-center text-[#222] font-noto text-[10px] font-medium leading-[15px] border border-[#E9EEF1] rounded-[3px] px-[6px] py-[1.5px] whitespace-nowrap'>会員登録</a>
-              <a href='/notification' className='flex items-center text-[#222] font-noto text-[10px] font-medium leading-[15px] border border-[#E9EEF1] rounded-[3px] px-[6px] py-[1.5px] whitespace-nowrap'>お知らせ</a>
-              <a href='/' className='flex items-center text-[#FFF] font-noto text-[10px] font-medium leading-[19.5px] border border-[#E9EEF1] rounded-[5px] px-[6px] py-[1.5px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] whitespace-nowrap'>写真を出品</a>
+              <a href='/login' className='flex items-center px-[6px] py-[1.5px] border border-[#E9EEF1] rounded-[3px] whitespace-nowrap' style={{...responsiveText(10, 15, null, 'medium', 'noto', '#222')}}>ログイン</a>
+              <a href='/register' className='flex items-center px-[6px] py-[1.5px] border border-[#E9EEF1] rounded-[3px] whitespace-nowrap' style={{...responsiveText(10, 15, null, 'medium', 'noto', '#222')}}>会員登録</a>
+              <a href='/notification' className='flex items-center px-[6px] py-[1.5px] border border-[#E9EEF1] rounded-[3px] whitespace-nowrap' style={{...responsiveText(10, 15, null, 'medium', 'noto', '#222')}}>お知らせ</a>
+              <a href='/' className='flex items-center px-[6px] py-[1.5px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] rounded-[5px] whitespace-nowrap' style={{...responsiveText(10, 19.5, null, 'medium', 'noto', '#FFF')}}>写真を出品</a>
             </div>
           </div>)
         }

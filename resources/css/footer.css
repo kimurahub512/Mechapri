@@ -517,7 +517,7 @@ footer.mechapuri-footer .mechapuri-footer-copyright,
     bottom: auto !important;
     left: auto !important;
     width: 100% !important;
-    padding: 8px 16px 12px 16px !important;
+    padding: calc(100vw * (8/375)) calc(100vw * (16/375)) calc(100vw * (12/375)) calc(100vw * (16/375)) !important;
     flex-direction: column !important;
     align-items: center !important;
     border-bottom: 1px solid var(--color-grey-86, #DCDCDC) !important;
@@ -530,13 +530,13 @@ footer.mechapuri-footer .mechapuri-footer-copyright,
     flex-direction: row !important;
     align-items: flex-end !important;
     justify-content: center !important;
-    gap: 11px !important;
+    gap: calc(100vw * (11/375)) !important;
     width: 100% !important;
   }
   .mechapuri-footer-nav-item {
     flex: 1 1 0 !important;
     min-width: 0 !important;
-    max-width: 60px !important;
+    max-width: calc(100vw * (60/375)) !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -547,7 +547,7 @@ footer.mechapuri-footer .mechapuri-footer-copyright,
     flex-direction: row !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 2px !important;
+    gap: calc(100vw * (2/375)) !important;
     width: auto !important;
     margin: 0 auto !important;
     padding: 0 !important;
@@ -569,25 +569,25 @@ footer.mechapuri-footer .mechapuri-footer-copyright,
 
   footer.mechapuri-footer .mechapuri-footer-nav-item:nth-child(2),
   .mechapuri-footer .mechapuri-footer-nav-item:nth-child(2) {
-    gap: 0.625rem !important; /* 10px */
+    gap: calc(100vw * (10/375)) !important; /* 10px */
   }
 
   /* Fifth item has 5px gap */
   footer.mechapuri-footer .mechapuri-footer-nav-item:nth-child(5),
   .mechapuri-footer .mechapuri-footer-nav-item:nth-child(5) {
-    gap: 0.3125rem !important; /* 5px */
+    gap: calc(100vw * (5/375)) !important; /* 5px */
   }
 
   /* Default gap for nav SVGs (e.g., 4px for most) */
   footer.mechapuri-footer .mechapuri-footer-nav-svg,
   .mechapuri-footer .mechapuri-footer-nav-svg {
-    margin-bottom: 4px !important;
+    margin-bottom: calc(100vw * (4/375)) !important;
   }
 
   /* Heart icon: reduce gap to 10px total */
   footer.mechapuri-footer .mechapuri-footer-nav-svg.heart,
   .mechapuri-footer .mechapuri-footer-nav-svg.heart {
-    margin-bottom: -6px !important;
+    margin-bottom: calc(100vw * (-6/375)) !important;
   }
 
   /* man_mobile icon: reduce gap to 5px total */
@@ -599,8 +599,8 @@ footer.mechapuri-footer .mechapuri-footer-copyright,
   /* Nav SVG icons */
   footer.mechapuri-footer .mechapuri-footer-nav-svg,
   .mechapuri-footer .mechapuri-footer-nav-svg {
-    width: 1.25rem !important; /* 20px */
-    height: 1.25rem !important; /* 20px */
+    width: calc(100vw * (20/375)) !important; /* 20px */
+    height: calc(100vw * (20/375)) !important; /* 20px */
     flex-shrink: 0 !important;
   }
 
@@ -608,17 +608,17 @@ footer.mechapuri-footer .mechapuri-footer-copyright,
   footer.mechapuri-footer .mechapuri-footer-nav-text,
   .mechapuri-footer .mechapuri-footer-nav-text {
     display: flex !important;
-    width: 3.75rem !important; /* 60px */
-    height: 1.625rem !important; /* 26px */
+    width: calc(100vw * (60/375)) !important; /* 60px */
+    height: calc(100vw * (26/375)) !important; /* 26px */
     flex-direction: column !important;
     justify-content: center !important;
     color: var(--mbneppuri-com-dark-21, var(--color-grey-21, #363636)) !important;
     text-align: center !important;
     font-family: var(--font-family-Font-1, "Noto Sans JP") !important;
-    font-size: var(--font-size-10, 10px) !important;
+    font-size: calc(100vw * (10/375)) !important;
     font-style: normal !important;
     font-weight: var(--font-weight-500, 500) !important;
-    line-height: 0.8125rem !important; /* 13px - 130% */
+    line-height: calc(100vw * (13/375)) !important; /* 13px - 130% */
   }
 
   /* Cart item with badge */
@@ -647,17 +647,17 @@ footer.mechapuri-footer .mechapuri-footer-copyright,
   footer.mechapuri-footer .mechapuri-footer-cart-badge,
   .mechapuri-footer .mechapuri-footer-cart-badge {
     position: absolute !important;
-    top: -0.25rem !important; /* Position above the text */
-    right: -0.5rem !important; /* Position to the right of the text */
+    top: calc(100vw * (-4/375)) !important; /* Position above the text */
+    right: calc(100vw * (-8/375)) !important; /* Position to the right of the text */
     display: flex !important;
-    padding: 0.125rem 0.25rem 0.25rem 0.25rem !important; /* 2px 4px 4px 4px */
+    padding: calc(100vw * (2/375)) calc(100vw * (4/375)) calc(100vw * (4/375)) calc(100vw * (4/375)) !important; /* 2px 4px 4px 4px */
     justify-content: center !important;
     align-items: center !important;
     aspect-ratio: 1/1 !important;
-    border-radius: 0.1875rem !important; /* 3px */
+    border-radius: calc(100vw * (3/375)) !important; /* 3px */
     background: var(--mp_pinkred, #FF2AA1) !important;
-    min-width: 1rem !important; /* Ensure minimum size */
-    min-height: 1rem !important;
+    min-width: calc(100vw * (16/375)) !important; /* Ensure minimum size */
+    min-height: calc(100vw * (16/375)) !important;
   }
 
   /* Cart badge number */
@@ -665,10 +665,10 @@ footer.mechapuri-footer .mechapuri-footer-copyright,
   .mechapuri-footer .mechapuri-footer-cart-number {
     color: var(--color-white-solid, #FFF) !important;
     font-family: var(--font-family-Font-1, "Noto Sans JP") !important;
-    font-size: var(--font-size-13, 13px) !important;
+    font-size: calc(100vw * (13/375)) !important;
     font-style: normal !important;
     font-weight: var(--font-weight-500, 500) !important;
-    line-height: var(--line-height-10, 10px) !important; /* 76.923% */
+    line-height: calc(100vw * (10/375)) !important; /* 76.923% */
   }
 } 
 
@@ -703,7 +703,7 @@ footer.mechapuri-footer .mechapuri-footer-copyright,
 
 @media screen and (max-width: 768px) {
   .mechapuri-footer-cart-row {
-    gap: 2px !important;
+    gap: calc(100vw * (2/375)) !important;
   }
   .mechapuri-footer-cart-row .mechapuri-footer-nav-text,
   .mechapuri-footer-cart-row .mechapuri-footer-cart-badge {
@@ -718,16 +718,16 @@ footer.mechapuri-footer .mechapuri-footer-copyright,
 @media screen and (max-width: 768px) {
   .mechapuri-footer-cart-row {
     width: 100% !important;
-    max-width: 60px !important;
+    max-width: calc(100vw * (60/375)) !important;
     justify-content: center !important;
     align-items: center !important;
-    gap: 2px !important;
+    gap: calc(100vw * (2/375)) !important;
     margin: 0 auto !important;
   }
   .mechapuri-footer-nav-item {
-    width: 60px !important;
+    width: calc(100vw * (60/375)) !important;
     min-width: 0 !important;
-    max-width: 60px !important;
+    max-width: calc(100vw * (60/375)) !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
