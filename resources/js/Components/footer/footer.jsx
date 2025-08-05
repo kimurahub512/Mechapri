@@ -8,10 +8,60 @@ import heart from '@/assets/images/heart.svg';
 import clock from '@/assets/images/clock.svg';
 import man_mobile from '@/assets/images/man2.svg';
 import cart from '@/assets/images/icon-cart.svg';
-import { vw, responsiveText, responsiveMetric, responsivePosition, responsiveTextD, responsiveMetricD, vwd, responsivePositionD } from '@/lib/utils';
-
+import { vw, vwd, responsiveText, responsiveTextD, responsiveMetric, responsiveMetricD, responsivePosition, responsivePositionD } from '@/lib/utils';
 
 import '@/../../resources/css/footer.css';
+
+// Reusable modal component
+const showDocumentModal = (title, documentUrl) => {
+  const modal = document.createElement('div');
+  modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+  modal.style.position = 'fixed';
+  modal.style.top = '0';
+  modal.style.left = '0';
+  modal.style.right = '0';
+  modal.style.bottom = '0';
+  modal.style.display = 'flex';
+  modal.style.alignItems = 'center';
+  modal.style.justifyContent = 'center';
+  modal.style.zIndex = '9999';
+  
+  modal.innerHTML = `
+    <div class="bg-white rounded-lg w-full h-full max-w-6xl max-h-[90vh] flex flex-col overflow-hidden">
+      <div class="flex justify-between items-center p-4 border-b">
+        <h2 class="text-lg font-bold">${title}</h2>
+        <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700 text-xl">&times;</button>
+      </div>
+      <div class="flex-1 overflow-hidden">
+        <iframe 
+          src="${documentUrl}" 
+          class="w-full h-full border-0"
+          title="${title}"
+        ></iframe>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  
+  // Focus management
+  const closeButton = modal.querySelector('button');
+  closeButton.focus();
+  
+  // Close on escape key
+  const handleEscape = (e) => {
+    if (e.key === 'Escape') modal.remove();
+  };
+  document.addEventListener('keydown', handleEscape);
+  
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.remove();
+  });
+  
+  // Cleanup event listener when modal is removed
+  modal.addEventListener('remove', () => {
+    document.removeEventListener('keydown', handleEscape);
+  });
+};
 
 const Footer = () => {
   return (
@@ -71,63 +121,56 @@ const Footer = () => {
           {/* List Frame */}
           <div className="flex flex-row w-full" style={{...responsivePositionD(268, 0, null), gap: vwd(25), paddingTop: vwd(10), paddingBottom: vwd(31)}}>
             {/* First item */}
-            <div className="flex flex-row items-center gap-[8px]">
-              <img
-                src={copy}
-                alt="Copy"
-                className='invert'
-                style={{...responsiveMetricD(10, 10)}}
-              />
-              <div className='whitespace-nowrap' style={{...responsiveTextD(12, 18, null, 'medium', 'noto', '#FFF')}}>
-                運営企業
+              <div className="flex flex-row items-center gap-[8px]">
+                <img
+                  src={copy}
+                  alt="Copy"
+                  className='invert'
+                  style={{...responsiveMetricD(10, 10)}}
+                />
+                <div className='whitespace-nowrap' style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}>
+                  運営企業
+                </div>
               </div>
-            </div>
-            {/* Second item */}
-            <div className="flex flex-row items-center gap-[2px]">
-              <img
-                src={copy}
-                alt="Copy"
-                className='invert'
-                style={{...responsiveMetricD(10, 10)}}
-              />
-              <a 
-                href='https://docs.google.com/document/d/1NyyD2l-rxopttri62aqZ1Ux83WfLozT03O1Ysp4SV0E/edit?usp=sharing' 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className='whitespace-nowrap hover:opacity-80 transition-opacity' 
-                style={{...responsiveTextD(12, 18, null, 'medium', 'noto', '#FFF')}}
+              {/* Second item */}
+              <div className="flex flex-row items-center gap-[2px]">
+                <img
+                  src={copy}
+                  alt="Copy"
+                  className='invert'
+                  style={{...responsiveMetricD(10, 10)}}
+                />
+                <button 
+                  onClick={() => showDocumentModal('特定商取引法に基づく表示', 'https://docs.google.com/document/d/1NyyD2l-rxopttri62aqZ1Ux83WfLozT03O1Ysp4SV0E/preview')}
+                  className='whitespace-nowrap hover:opacity-80 transition-opacity cursor-pointer' 
+                  style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}
+                >
+                  特定商取引法に基づく表示
+                </button>
+              </div>
+              {/* Third item */}
+              <button 
+                onClick={() => showDocumentModal('プライバシーポリシー', 'https://docs.google.com/document/d/16azwWycB-utKgf7qeKc9ONklHXu5gxn2qlqoGS2nDsU/preview')}
+                className='whitespace-nowrap hover:opacity-80 transition-opacity cursor-pointer' 
+                style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}
               >
-                特定商取引法に基づく表示
-              </a>
-            </div>
-            {/* Third item */}
-            <a 
-              href='https://docs.google.com/document/d/16azwWycB-utKgf7qeKc9ONklHXu5gxn2qlqoGS2nDsU/edit?usp=sharing' 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className='whitespace-nowrap hover:opacity-80 transition-opacity' 
-              style={{...responsiveTextD(12, 18, null, 'medium', 'noto', '#FFF')}}
-            >
-              プライバシーポリシー
-            </a>
-            {/* Fourth item */}
-            <a 
-              href="https://docs.google.com/document/d/11uB9cboiC-aYAgrsF_i4Qu6W4HGMfLaAahlS5_m0hco/edit?usp=sharing" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className='whitespace-nowrap hover:opacity-80 transition-opacity' 
-              style={{...responsiveTextD(12, 18, null, 'medium', 'noto', '#FFF')}}
-            >
-              利用規約
-            </a>
+                プライバシーポリシー
+              </button>
+              {/* Fourth item */}
+              <button 
+                onClick={() => showDocumentModal('利用規約', 'https://docs.google.com/document/d/11uB9cboiC-aYAgrsF_i4Qu6W4HGMfLaAahlS5_m0hco/preview')}
+                className='whitespace-nowrap hover:opacity-80 transition-opacity cursor-pointer' 
+                style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}
+              >
+                利用規約
+              </button>
             {/* Fifth item */}
-            <div className='whitespace-nowrap' style={{...responsiveTextD(12, 18, null, 'medium', 'noto', '#FFF')}}>
+            <div className='whitespace-nowrap' style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}>
               ガイドライン
             </div>
-            {/* Spacer */}
-            <div style={{...responsiveMetricD(517)}} />
+            <div style={{...responsiveMetricD(480)}}></div>
             {/* Copyright */}
-            <div className='whitespace-nowrap' style={{...responsiveTextD(12, 18, null, 'medium', 'noto', '#FFF')}}>
+            <div className='whitespace-nowrap' style={{...responsiveTextD(10, 16, null, 'normal', 'noto', '#FFF')}}>
               © 2025 Companey Inc.
             </div>
           </div>
@@ -168,7 +211,7 @@ const Footer = () => {
                 ネットワークプリントの使い方
               </div>
               <div className='whitespace-nowrap' style={{...responsiveText(13, 20, null, 'medium', 'noto', '#FFF')}}>
-                X連携の権限について
+                 X連携の権限について
               </div>
               <div className="flex flex-row items-center gap-[2px]">
                 <img
@@ -208,38 +251,32 @@ const Footer = () => {
                   className='invert'
                   style={{...responsiveMetric(10, 10)}}
                 />
-                <a 
-                  href='https://docs.google.com/document/d/1NyyD2l-rxopttri62aqZ1Ux83WfLozT03O1Ysp4SV0E/edit?usp=sharing' 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className='whitespace-nowrap hover:opacity-80 transition-opacity' 
+                <button 
+                  onClick={() => showDocumentModal('特定商取引法に基づく表示', 'https://docs.google.com/document/d/1NyyD2l-rxopttri62aqZ1Ux83WfLozT03O1Ysp4SV0E/preview')}
+                  className='whitespace-nowrap hover:opacity-80 transition-opacity cursor-pointer' 
                   style={{...responsiveText(12, 18, null, 'normal', 'noto', '#FFF')}}
                 >
                   特定商取引法に基づく表示
-                </a>
+                </button>
               </div>
             </div>
             <div className="flex flex-row" style={{gap: vw(20)}}>
               {/* Third item */}
-              <a 
-                href='https://docs.google.com/document/d/16azwWycB-utKgf7qeKc9ONklHXu5gxn2qlqoGS2nDsU/edit?usp=sharing' 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className='whitespace-nowrap hover:opacity-80 transition-opacity' 
+              <button 
+                onClick={() => showDocumentModal('プライバシーポリシー', 'https://docs.google.com/document/d/16azwWycB-utKgf7qeKc9ONklHXu5gxn2qlqoGS2nDsU/preview')}
+                className='whitespace-nowrap hover:opacity-80 transition-opacity cursor-pointer' 
                 style={{...responsiveText(12, 18, null, 'normal', 'noto', '#FFF')}}
               >
                 プライバシーポリシー
-              </a>
+              </button>
               {/* Fourth item */}
-              <a 
-                href="https://docs.google.com/document/d/11uB9cboiC-aYAgrsF_i4Qu6W4HGMfLaAahlS5_m0hco/edit?usp=sharing" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className='whitespace-nowrap hover:opacity-80 transition-opacity' 
+              <button 
+                onClick={() => showDocumentModal('利用規約', 'https://docs.google.com/document/d/11uB9cboiC-aYAgrsF_i4Qu6W4HGMfLaAahlS5_m0hco/preview')}
+                className='whitespace-nowrap hover:opacity-80 transition-opacity cursor-pointer' 
                 style={{...responsiveText(12, 18, null, 'normal', 'noto', '#FFF')}}
               >
                 利用規約
-              </a>
+              </button>
             </div>
             {/* Fifth item */}
             <div className='whitespace-nowrap' style={{...responsiveText(12, 18, null, 'normal', 'noto', '#FFF')}}>
@@ -302,7 +339,7 @@ const Footer = () => {
         </div>
 
         {/* Account */}
-        <div className='flex flex-col items-center gap-[10px]'>
+        <div className='flex flex-col items-center gap-[10px]' style={{...responsiveMetric(60, null)}}>
           <img
             src={man_mobile}
             alt="Account"
@@ -311,7 +348,7 @@ const Footer = () => {
           <a href='/accountsetting' style={{ ...responsiveText(10, 13, null, 'medium', 'noto', '#363636') }}>アカウント</a>
         </div>
       </div>
-    </footer >
+    </footer>
   );
 };
 
