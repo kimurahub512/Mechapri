@@ -448,7 +448,7 @@ export default function Beginner() {
             </div>
           </div>
         </div>
-        <div className="beginner-mobile-cta-section lg:hidden" >
+        <div className="beginner-mobile-cta-section md:hidden" >
           <div className="beginner-mobile-cta-title">今すぐめちゃプリを体験！</div>
           <button className="beginner-mobile-cta-btn">出品をはじめる</button>
         </div>

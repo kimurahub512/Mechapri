@@ -52,9 +52,9 @@ export const responsiveText = (fontSize, lineHeight, letterSpacing = null, fontW
   
   // Map font family names to actual CSS values
   const fontFamilyMap = {
-    'noto': 'Noto Sans JP, sans-serif',
-    'mplus': 'M PLUS 1p, sans-serif',
-    'general': 'General Sans, sans-serif'
+    'noto': '"Noto Sans JP", sans-serif',
+    'mplus': '"M PLUS 1p", sans-serif', 
+    'general': '"General Sans", sans-serif'
   };
   
   if (fontFamily && fontFamilyMap[fontFamily]) {
@@ -95,9 +95,9 @@ export const responsiveTextD = (fontSize, lineHeight, letterSpacing = null, font
   
   // Map font family names to actual CSS values
   const fontFamilyMap = {
-    'noto': 'Noto Sans JP, sans-serif',
-    'mplus': 'M PLUS 1p, sans-serif',
-    'general': 'General Sans, sans-serif'
+    'noto': '"Noto Sans JP", sans-serif',
+    'mplus': '"M PLUS 1p", sans-serif',
+    'general': '"General Sans", sans-serif'
   };
   
   if (fontFamily && fontFamilyMap[fontFamily]) {

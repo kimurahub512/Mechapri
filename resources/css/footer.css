@@ -16,7 +16,6 @@ footer.mechapuri-footer,
   align-items: center !important;
   position: relative !important;
   z-index: 9999 !important;
-  margin-top: 5rem !important; /* 80px below the last button */
 }
 
 footer.mechapuri-footer .mechapuri-footer-main-container,
