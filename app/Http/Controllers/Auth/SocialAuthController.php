@@ -87,7 +87,7 @@ class SocialAuthController extends Controller
                 // Update existing user with LINE ID
                 $user->update([
                     'line_id' => $lineUser->id,
-                    'source' => 'link', // Using 'link' for LINE
+                    'source' => 'line', // Using 'line' for LINE
                     'email' => $email, // Update email if it was generated
                 ]);
             } else {
@@ -97,7 +97,7 @@ class SocialAuthController extends Controller
                     'email' => $email,
                     'line_id' => $lineUser->id,
                     'name' => $lineUser->name,
-                    'source' => 'link', // Using 'link' for LINE
+                    'source' => 'line', // Using 'line' for LINE
                     'email_verified_at' => now(), // LINE users are pre-verified
                     'password' => bcrypt(Str::random(32)), // Generate random password for OAuth users
                 ]);
