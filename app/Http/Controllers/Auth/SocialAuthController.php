@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
@@ -17,24 +18,48 @@ class SocialAuthController extends Controller
 
     public function handleGoogleCallback()
     {
+        \Log::info('Google callback reached');
         try {
             $googleUser = Socialite::driver('google')->user();
             
-            $user = User::updateOrCreate(
-                ['email' => $googleUser->email],
-                [
+            \Log::info('Google OAuth callback', [
+                'email' => $googleUser->email,
+                'id' => $googleUser->id,
+                'name' => $googleUser->name
+            ]);
+            
+            // Check if user exists by email
+            $user = User::where('email', $googleUser->email)->first();
+            
+            if ($user) {
+                \Log::info('Updating existing user', ['user_id' => $user->id]);
+                // Update existing user with Google ID
+                $user->update([
+                    'google_id' => $googleUser->id,
+                    'source' => 'google',
+                ]);
+            } else {
+                \Log::info('Creating new user');
+                // Create new user with Google OAuth data
+                $user = User::create([
                     'email' => $googleUser->email,
                     'google_id' => $googleUser->id,
                     'name' => $googleUser->name,
                     'source' => 'google',
                     'email_verified_at' => now(), // Google users are pre-verified
-                ]
-            );
+                    'password' => bcrypt(Str::random(32)), // Generate random password for OAuth users
+                ]);
+                \Log::info('New user created', ['user_id' => $user->id]);
+            }
 
             Auth::login($user);
+            \Log::info('User logged in successfully', ['user_id' => $user->id]);
             return redirect()->intended('/homelogin');
         } catch (\Exception $e) {
-            return redirect()->route('register')->with('error', 'Google authentication failed');
+            \Log::error('Google OAuth error: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString()
+            ]);
+            return redirect()->route('register')->with('error', 'Google authentication failed: ' . $e->getMessage());
         }
     }
 
