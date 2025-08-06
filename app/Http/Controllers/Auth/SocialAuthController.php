@@ -14,10 +14,6 @@ class SocialAuthController extends Controller
 {
     public function redirectToGoogle()
     {
-        Log::info('Google OAuth redirect', [
-            'client_id' => config('services.google.client_id'),
-            'redirect_uri' => config('services.google.redirect'),
-        ]);
         return Socialite::driver('google')->redirect();
     }
 
@@ -25,25 +21,17 @@ class SocialAuthController extends Controller
     {
         try {
             $googleUser = Socialite::driver('google')->user();
-            
-            Log::info('Google OAuth callback', [
-                'email' => $googleUser->email,
-                'id' => $googleUser->id,
-                'name' => $googleUser->name
-            ]);
-            
+             
             // Check if user exists by email
             $user = User::where('email', $googleUser->email)->first();
             
             if ($user) {
-                Log::info('Updating existing user', ['user_id' => $user->id]);
                 // Update existing user with Google ID
                 $user->update([
                     'google_id' => $googleUser->id,
                     'source' => 'google',
                 ]);
             } else {
-                Log::info('Creating new user');
                 // Create new user with Google OAuth data
                 $user = User::create([
                     'email' => $googleUser->email,
@@ -53,11 +41,9 @@ class SocialAuthController extends Controller
                     'email_verified_at' => now(), // Google users are pre-verified
                     'password' => bcrypt(Str::random(32)), // Generate random password for OAuth users
                 ]);
-                Log::info('New user created', ['user_id' => $user->id]);
             }
 
-            Auth::login($user);
-            Log::info('User logged in successfully', ['user_id' => $user->id]);
+            Auth::login($user); 
             return redirect()->intended('/homelogin');
         } catch (\Exception $e) {
             Log::error('Google OAuth error: ' . $e->getMessage(), [
@@ -77,18 +63,44 @@ class SocialAuthController extends Controller
         try {
             $lineUser = Socialite::driver('line')->user();
             
-            $user = User::updateOrCreate(
-                ['email' => $lineUser->email],
-                [
+            Log::info('LINE OAuth callback', [
+                'email' => $lineUser->email,
+                'id' => $lineUser->id,
+                'name' => $lineUser->name
+            ]);
+            
+            // Check if user exists by email
+            $user = User::where('email', $lineUser->email)->first();
+            
+            if ($user) {
+                Log::info('Updating existing user', ['user_id' => $user->id]);
+                // Update existing user with LINE ID
+                $user->update([
+                    'line_id' => $lineUser->id,
+                    'source' => 'link', // Using 'link' for LINE
+                ]);
+            } else {
+                Log::info('Creating new user');
+                // Create new user with LINE OAuth data
+                $user = User::create([
                     'email' => $lineUser->email,
                     'line_id' => $lineUser->id,
-                ]
-            );
+                    'name' => $lineUser->name,
+                    'source' => 'link', // Using 'link' for LINE
+                    'email_verified_at' => now(), // LINE users are pre-verified
+                    'password' => bcrypt(Str::random(32)), // Generate random password for OAuth users
+                ]);
+                Log::info('New user created', ['user_id' => $user->id]);
+            }
 
             Auth::login($user);
-            return redirect()->intended('/dashboard');
+            Log::info('User logged in successfully', ['user_id' => $user->id]);
+            return redirect()->intended('/homelogin');
         } catch (\Exception $e) {
-            return redirect()->route('login')->with('error', 'LINE authentication failed');
+            Log::error('LINE OAuth error: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString()
+            ]);
+            return redirect()->route('register')->with('error', 'LINE authentication failed: ' . $e->getMessage());
         }
     }
 } 
