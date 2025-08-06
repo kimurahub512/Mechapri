@@ -14,6 +14,10 @@ class SocialAuthController extends Controller
 {
     public function redirectToGoogle()
     {
+        Log::info('Google OAuth redirect', [
+            'client_id' => config('services.google.client_id'),
+            'redirect_uri' => config('services.google.redirect'),
+        ]);
         return Socialite::driver('google')->redirect();
     }
 
