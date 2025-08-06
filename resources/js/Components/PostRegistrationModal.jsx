@@ -14,7 +14,16 @@ import x from '@/assets/images/x_black.svg';
 import instagram from '@/assets/images/instagram_black.svg';
 import close from '@/assets/images/close_gray.svg';
 
-const PostRegistrationModal = () => {
+const PostRegistrationModal = ({ onClose }) => {
+
+    const handleCloseClick = () => {
+        console.log('PostRegistrationModal close button clicked');
+        if (onClose) {
+            onClose();
+        } else {
+            console.error('onClose prop is not provided');
+        }
+    };
 
     return (
         <>
@@ -24,7 +33,12 @@ const PostRegistrationModal = () => {
                 <div className="flex h-[98px] p-[20px_0_1px_0] flex-col items-center flex-shrink-0 border-b border-[#D1D1D1] bg-white rounded-t-[40px]">
                     <h1 className="text-[#363636] text-center font-noto text-[36px] font-bold leading-[54px]">商品登録完了</h1>
                 </div>
-                <img src={close} alt="close" className="absolute top-[34px] right-[32px] w-[40px] h-[40px]" />
+                <button 
+                    onClick={handleCloseClick}
+                    className="absolute top-[34px] right-[32px] w-[40px] h-[40px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-gray-100 hover:bg-gray-200 rounded-full z-50"
+                >
+                    <img src={close} alt="close" className="w-[40px] h-[40px]" />
+                </button>
 
                 <div className="flex pt-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[226px] mt-[32px] relative">
                     {/* <div className="flex items-center gap-[16px]"> */}
@@ -101,7 +115,12 @@ const PostRegistrationModal = () => {
                     <h1 className="text-[#363636] text-center font-noto text-[24px] font-bold leading-[24px]">商品登録完了</h1>
                 </div>
 
-                <img src={close} alt="close" className="absolute top-[16px] right-[12px] w-[32px] h-[32px]" />
+                <button 
+                    onClick={handleCloseClick}
+                    className="absolute top-[16px] right-[12px] w-[22px] h-[22px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-gray-100 hover:bg-gray-200 rounded-full z-50"
+                >
+                    <img src={close} alt="close" className="w-[22px] h-[22px]" />
+                </button>
 
                 <div className="flex flex-row pt-[16px] pb-[40px] pl-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[14px] mt-[16px] relative">
                     {/* photo1 */}

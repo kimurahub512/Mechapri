@@ -5,8 +5,8 @@ import ShopSidebar from '@/Components/ShopSidebar';
 import ShopMobileTopBlock from '@/Components/ShopMobileTopBlocks';
 import TransferAccountConfirmModal from '@/Components/TransferAccountConfirmModal';
 import '@/../../resources/css/shopmanagement.css';
-
 import radio from '@/assets/images/beginner_radio.svg';
+import {vw, vwd, responsiveText, responsivePosition, responsiveMetric, responsiveTextD, responsivePositionD, responsiveMetricD} from '@/lib/utils';
 
 
 
@@ -24,7 +24,7 @@ const SetTransferAccount = () => {
                 <ShopMobileTopBlock />
                 {/* Main Section */}
                 {/* MOBILE ONLY */}
-                <div className="block md:hidden px-[16px] mt-[160px] flex flex-col items-start gap-4">
+                <div className="block md:hidden px-[16px] mt-[62px] flex flex-col items-start gap-4">
 
                     {/* Title */}
                     <div className="flex flex-row items-center justify-between w-full">
@@ -148,10 +148,10 @@ const SetTransferAccount = () => {
             {/* Modal Overlay */}
             {showModal && (
                 <div 
-                    className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-[1000] pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto"
+                    className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start z-[1000] pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto"
                     onClick={() => setShowModal(false)}
                 >
-                    <div onClick={(e) => e.stopPropagation()} className="min-h-screen w-full flex justify-center px-[16px]">
+                    <div onClick={(e) => e.stopPropagation()} className="flex justify-center px-[16px]" style={{width: vw(375)}}>
                         <TransferAccountConfirmModal isOpen={showModal} onClose={() => setShowModal(false)} />
                     </div>
                 </div>

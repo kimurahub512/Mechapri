@@ -72,7 +72,7 @@ const HowToPrint = () => {
                 </div>
             </main>
             {/* Mobile Main Section */}
-            <main className="flex flex-col items-center py-[32px] px-[16px] w-full">
+            <main className="md:hidden flex flex-col items-center py-[32px] px-[16px] w-full">
                 <div className="flex flex-col items-center pb-[16px] gap-[16px] w-full mx-[16px]">
                     <div className="relative flex h-[64px] w-full rounded-[7px]">
                         <img src={hero} alt="hero" className="w-full h-full object-cover object-[50%_32%] rounded-[7px]" />

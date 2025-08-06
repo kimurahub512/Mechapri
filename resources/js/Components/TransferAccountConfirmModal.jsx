@@ -71,7 +71,7 @@ const TransferAccountConfirmModal = ({ isOpen, onClose }) => {
                 <div className="flex p-[20px_0_20px_0] flex-col items-center flex-shrink-0 border-b border-[#D1D1D1] bg-white rounded-t-[40px] w-full">
                     <h1 className="text-[#363636] text-center font-noto text-[24px] font-bold leading-[24px]">登録内容の確認</h1>
                 </div>
-                <img src={close} alt="close" className="absolute top-[16px] right-[12px] w-[32px] h-[32px] cursor-pointer" onClick={onClose} />
+                <img src={close} alt="close" className="absolute top-[16px] right-[12px] w-[22px] h-[22px] cursor-pointer" onClick={onClose} />
 
                 <span className="text-center text-[#363636] font-noto text-[18px] font-bold leading-[27px] mt-[16px]">こちらの振込先で登録して<br/>よろしいですか？</span>
                 <div className="flex flex-col items-start gap-[4px] w-[271px] mt-[24px]">

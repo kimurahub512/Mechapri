@@ -9,17 +9,49 @@ import shop3 from '@/assets/images/productdetails/ministop.svg';
 import eleven from '@/assets/images/productdetails/eleven.png';
 import question_circle from '@/assets/images/question_circle.svg';
 import complex_white from '@/assets/images/complex_white.svg';
+import close from '@/assets/images/close_gray.svg';
 
-const QrCodeModal = () => {
+const QrCodeModal = ({ onClose }) => {
+
+    // Handle escape key to close
+    React.useEffect(() => {
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') {
+                console.log('Escape key pressed');
+                onClose();
+            }
+        };
+
+        document.addEventListener('keydown', handleEscape);
+
+        return () => {
+            document.removeEventListener('keydown', handleEscape);
+        };
+    }, [onClose]);
+
+    const handleCloseClick = () => {
+        console.log('Close button clicked');
+        if (onClose) {
+            onClose();
+        } else {
+            console.error('onClose prop is not provided');
+        }
+    };
 
     return (
-        <>
+        <div className="bg-white rounded-[40px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]">
             {/* Desktop version */}
-            <section className="hidden md:flex flex-col w-[960px] h-[820px] flex-shrink-0 rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]">
+            <section className="hidden md:flex flex-col w-[960px] h-[820px] flex-shrink-0 rounded-[40px] bg-white relative">
                 {/* Header Section */}
                 <div className="flex w-[960px] h-[98px] p-[20px_0_1px_0] flex-col items-center flex-shrink-0 border-b border-[#D1D1D1] bg-white rounded-t-[40px]">
                     <h1 className="text-[#363636] text-center font-noto text-[36px] font-bold leading-[54px]">QRコード発行完了</h1>
                 </div>
+                <button 
+                    onClick={handleCloseClick}
+                    className="absolute top-[34px] right-[32px] w-[40px] h-[40px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-gray-100 hover:bg-gray-200 rounded-full z-50"
+                >
+                    <img src={close} alt="close" className="w-[40px] h-[40px]" />
+                </button>
 
                 <div className="flex pt-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[226px] mt-[32px] relative">
                     {/* <div className="flex items-center gap-[16px]"> */}
@@ -87,15 +119,21 @@ const QrCodeModal = () => {
                 <div className="flex flex-col items-center w-[386px] h-[20px] mt-[23px] mx-[287px]">
                     <div className="flex items-center gap-[8px]">
                         <img src={question_circle} alt="question_circle" className="w-[20px] h-[20px]" />
-                        <span className="text-[#767676] font-noto text-[14px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</span>
+                        <a href='/howtoprint' className="text-[#767676] font-noto text-[14px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</a>
                     </div>
                 </div>
             </section>
             {/* mobile version */}
-            <section className="flex md:hidden flex-col w-full flex-shrink-0 rounded-[16px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] pb-[40px]">
+            <section className="flex md:hidden flex-col w-full flex-shrink-0 rounded-[16px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] pb-[40px] relative">
                 <div className="flex w-full p-[20px_0_20px_0] flex-col items-center flex-shrink-0 border-b border-[#D1D1D1] bg-white rounded-t-[40px]">
                     <h1 className="text-[#363636] text-center font-noto text-[24px] font-bold leading-[24px]">QRコード発行完了</h1>
                 </div>
+                <button 
+                    onClick={handleCloseClick}
+                    className="absolute top-[22px] right-[16px] w-[20px] h-[20px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-gray-100 hover:bg-gray-200 rounded-full z-50"
+                >
+                    <img src={close} alt="close" className="w-[20px] h-[20px]" />
+                </button>
                 <div className="flex flex-row pt-[16px] pb-[40px] pl-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[14px] mt-[16px] relative">
                     {/* photo1 */}
                     <div className="flex w-[64px] h-[64px] p-[1.26px_11.339px_0.756px_11.339px] justify-center items-center rounded-[2.52px] bg-[#F6F6F6]">
@@ -166,12 +204,12 @@ const QrCodeModal = () => {
                     <div className="flex flex-col items-center w-full">
                         <div className="flex items-center gap-[6px]">
                             <img src={question_circle} alt="question_circle" className="w-[16px] h-[16px]" />
-                            <span className="text-[#767676] font-noto text-[12px] font-normal leading-[16px] underline cursor-pointer">プリントの方法が分からない時は</span>
+                            <a href='/howtoprint' className="text-[#767676] font-noto text-[12px] font-normal leading-[16px] underline cursor-pointer">プリントの方法が分からない時は</a>
                         </div>
                     </div>
                 </div>
             </section>
-        </>
+        </div>
     );
 };
 

@@ -28,7 +28,16 @@ const PurchaseHistory = () => {
     };
 
     const handleCloseModal = () => {
+        console.log('handleCloseModal called');
         setShowQrModal(false);
+    };
+
+    const handleBackdropClick = (e) => {
+        console.log('Backdrop clicked');
+        if (e.target === e.currentTarget) {
+            console.log('Backdrop click confirmed');
+            handleCloseModal();
+        }
     };
 
     return (
@@ -145,11 +154,11 @@ const PurchaseHistory = () => {
             {/* QR Code Modal Overlay */}
             {showQrModal && (
                 <div 
-                    className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-50 pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto"
-                    onClick={handleCloseModal}
+                    className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-50 pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto "
+                    onClick={handleBackdropClick}
                 >
-                    <div onClick={(e) => e.stopPropagation()} className="min-h-screen w-full flex justify-center px-[16px]">
-                        <QrCodeModal />
+                    <div onClick={(e) => e.stopPropagation()} className="flex justify-center px-[16px] mr-[16px]">
+                        <QrCodeModal onClose={handleCloseModal} />
                     </div>
                 </div>
             )}

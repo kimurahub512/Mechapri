@@ -23,6 +23,12 @@ import PostRegistrationModal from '@/Components/PostRegistrationModal';
 const RegisterProduct = () => {
     const [showModal, setShowModal] = useState(false);
 
+    const handleShowModal = () => {
+        setShowModal(true);
+        // Scroll to top of the page when modal opens
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return (
         <>
             <Header />
@@ -365,7 +371,7 @@ const RegisterProduct = () => {
                             <button
                                 className="flex flex-col justify-center items-center w-[802px] px-[36px] py-[15px] rounded-[8px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] shadow-[0_4px_8px_0_rgba(255,42,161,0.20)]"
                                 type="button"
-                                onClick={() => setShowModal(true)}
+                                onClick={handleShowModal}
                             >
                                 <span className="text-white text-center font-bold text-[18px] leading-[14px] font-noto">登録する</span>
                             </button>
@@ -379,11 +385,11 @@ const RegisterProduct = () => {
                 {/* Show modal on all screen sizes */}
                 {showModal && (
                     <div
-                        className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-[1000] pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto border-[1px] border-red-500 mr-[16px] md:mr-[0px]"
+                        className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-[1000] pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto mr-[16px] md:mr-[0px]"
                         onClick={() => setShowModal(false)}
                     >
-                        <div onClick={(e) => e.stopPropagation()} className="min-h-screen w-full flex justify-center px-[16px]">
-                            <PostRegistrationModal />
+                        <div onClick={(e) => e.stopPropagation()} className="flex justify-center px-[16px]">
+                            <PostRegistrationModal onClose={() => setShowModal(false)} />
                         </div>
                     </div>
                 )}
@@ -727,7 +733,7 @@ const RegisterProduct = () => {
                                     <button
                                         className="flex flex-col justify-center items-center w-[311px] px-[36px] py-[15px] rounded-[8px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] shadow-[0_4px_8px_0_rgba(255,42,161,0.20)]"
                                         type="button"
-                                        onClick={() => setShowModal(true)}
+                                        onClick={handleShowModal}
                                     >
                                         <span className="text-white text-center font-bold text-[18px] leading-[14px] font-noto">登録する</span>
                                     </button>
