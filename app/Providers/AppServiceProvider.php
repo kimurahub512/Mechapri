@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
+use Laravel\Socialite\Facades\Socialite;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +27,17 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
         
+        // Register LINE Socialite driver
+        $socialite = $this->app->make('Laravel\Socialite\Contracts\Factory');
+        $socialite->extend(
+            'line',
+            function ($app) use ($socialite) {
+                $config = $app['config']['services.line'];
+                return $socialite->buildProvider(
+                    \SocialiteProviders\Line\Provider::class,
+                    $config
+                );
+            }
+        );
     }
 }

@@ -69,8 +69,18 @@ class SocialAuthController extends Controller
                 'name' => $lineUser->name
             ]);
             
-            // Check if user exists by email
-            $user = User::where('email', $lineUser->email)->first();
+            // Handle case where LINE user might not have email
+            $email = $lineUser->email;
+            if (!$email) {
+                // Generate a unique email based on LINE ID
+                $email = 'line_' . $lineUser->id . '@line.local';
+            }
+            
+            // Check if user exists by LINE ID first, then by email
+            $user = User::where('line_id', $lineUser->id)->first();
+            if (!$user && $email) {
+                $user = User::where('email', $email)->first();
+            }
             
             if ($user) {
                 Log::info('Updating existing user', ['user_id' => $user->id]);
@@ -78,12 +88,13 @@ class SocialAuthController extends Controller
                 $user->update([
                     'line_id' => $lineUser->id,
                     'source' => 'link', // Using 'link' for LINE
+                    'email' => $email, // Update email if it was generated
                 ]);
             } else {
                 Log::info('Creating new user');
                 // Create new user with LINE OAuth data
                 $user = User::create([
-                    'email' => $lineUser->email,
+                    'email' => $email,
                     'line_id' => $lineUser->id,
                     'name' => $lineUser->name,
                     'source' => 'link', // Using 'link' for LINE
