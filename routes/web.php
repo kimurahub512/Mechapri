@@ -23,8 +23,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'login']);
 
     // Social Authentication Routes
-    Route::get('/auth/google', [SocialAuthController::class, 'redirectToGoogle'])->name('auth.google');
-    Route::get('/auth/google/callback', [SocialAuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+    Route::get('/login/google', [SocialAuthController::class, 'redirectToGoogle'])->name('auth.google');
+    Route::get('/login/google/callback', [SocialAuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
     Route::get('/auth/line', [SocialAuthController::class, 'redirectToLine'])->name('auth.line');
     Route::get('/auth/line/callback', [SocialAuthController::class, 'handleLineCallback'])->name('auth.line.callback');
 });

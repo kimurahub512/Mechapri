@@ -161,7 +161,11 @@ export default function Register() {
                                 </svg>
                                 LINEでログイン
                             </button>
-                            <button className="registration-social-btn google" type="button">
+                            <button 
+                                className="registration-social-btn google" 
+                                type="button"
+                                onClick={() => window.location.href = route('auth.google')}
+                            >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 21" fill="none">
                                     <mask id="mask0_2_57217" maskUnits="userSpaceOnUse" x="-1" y="0" width="21" height="21">
                                         <path d="M19.9951 0.469727H-0.00488281V20.4697H19.9951V0.469727Z" fill="white"/>

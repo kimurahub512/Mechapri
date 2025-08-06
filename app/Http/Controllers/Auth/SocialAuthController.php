@@ -25,13 +25,16 @@ class SocialAuthController extends Controller
                 [
                     'email' => $googleUser->email,
                     'google_id' => $googleUser->id,
+                    'name' => $googleUser->name,
+                    'source' => 'google',
+                    'email_verified_at' => now(), // Google users are pre-verified
                 ]
             );
 
             Auth::login($user);
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/homelogin');
         } catch (\Exception $e) {
-            return redirect()->route('login')->with('error', 'Google authentication failed');
+            return redirect()->route('register')->with('error', 'Google authentication failed');
         }
     }
 
