@@ -13,6 +13,7 @@ import x from '@/assets/images/x_logo.svg';
 import favoriteshop from '@/assets/images/favoriteshop.svg';
 import heart from '@/assets/images/heart.svg';
 import arrow_right from '@/assets/images/arrow_right.svg';
+import {vwd, vw, responsiveTextD, responsiveMetricD, responsiveText, responsiveMetric, responsivePosition, responsivePositionD} from '@/lib/utils';
 
 // Add this above the return statement in the shoptop component
 const products = [
@@ -78,48 +79,47 @@ const shoptop = () => {
         <div className="bg-white">
             <Header />
             {/* Section 1 (Mobile) */}
-            <section className="flex flex-col items-start py-[32px] px-[16px] w-full bg-white md:hidden 
-">
+            <section className="flex flex-col items-start w-full bg-white md:hidden" style={{ paddingTop: vw(32), paddingBottom: vw(32), paddingLeft: vw(16), paddingRight: vw(16) }}>
                 {/* Frame 11 */}
-                <div className="flex flex-col items-start pb-[32px] gap-[24px] self-stretch">
+                <div className="flex flex-col items-start self-stretch" style={{ paddingBottom: vw(32), gap: vw(24) }}>
                     {/* 111 */}
-                    <div className="flex flex-col items-start gap-[12px] self-stretch">
+                    <div className="flex flex-col items-start self-stretch" style={{ gap: vw(12) }}>
                         {/* 1111 */}
-                        <div className="flex pr-[103px] items-start self-stretch">
+                        <div className="flex items-start self-stretch" style={{ paddingRight: vw(103) }}>
                             {/* 11111 */}
-                            <div className="flex w-[82px] min-w-[64px] min-h-[48px] pr-[16px] flex-col items-start">
+                            <div className="flex flex-col items-start" style={{ width: vw(82), minWidth: vw(64), minHeight: vw(48), paddingRight: vw(16) }}>
                                 {/* 111111: Girl SVG */}
-                                <div className="flex w-[64px] h-[64px] justify-center items-center">
-                                    <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
+                                <div className="flex justify-center items-center" style={{ width: vw(64), height: vw(64) }}>
+                                    <img src={girl} alt="girl" className="rounded-full object-cover" style={{ width: vw(64), height: vw(64) }} />
                                 </div>
                             </div>
                             {/* 11112 */}
-                            <div className="flex w-[158px] pr-[62px] flex-col justify-center items-start gap-[4px]">
-                                <span className="text-[#000] font-noto text-[18px] font-bold leading-[18px]">anchiy1005</span>
+                            <div className="flex flex-col justify-center items-start" style={{ width: vw(158), paddingRight: vw(62), gap: vw(4) }}>
+                                <span style={{ ...responsiveText(18, 18, null, 'bold', 'noto', '#000') }}>anchiy1005</span>
                                 {/* 111121 */}
-                                <div className="flex flex-col items-start gap-[4px]">
-                                    <span className="text-[#000] font-noto text-[13px] font-normal leading-[21px] whitespace-nowrap">お気に入り登録者 1000人</span>
-                                    <span className="text-[#000] font-noto text-[13px] font-normal leading-[21px]">アイテム数 50</span>
+                                <div className="flex flex-col items-start" style={{ gap: vw(4) }}>
+                                    <span className='whitespace-nowrap' style={{ ...responsiveText(13, 21, null, 'normal', 'noto', '#000') }}>お気に入り登録者 1000人</span>
+                                    <span className='whitespace-nowrap' style={{ ...responsiveText(13, 21, null, 'normal', 'noto', '#000') }}>アイテム数 50</span>
                                 </div>
                                 {/* 111122 */}
-                                <div className="flex w-[108px] h-[44px] items-end gap-[4px]">
-                                    <img src={x} alt="x" className="flex w-[36px] h-[36px] p-[2.571px_1.286px_1.286px_2.571px] justify-center items-center aspect-square" />
-                                    <img src={instagram} alt="instagram" className="flex w-[36px] h-[36px] p-[2.571px_1.286px_1.286px_2.571px] justify-center items-center aspect-square" />
+                                <div className="flex items-end" style={{ width: vw(108), height: vw(44), gap: vw(4) }}>
+                                    <img src={x} alt="x" className="flex justify-center items-center aspect-square" style={{ width: vw(36), height: vw(36), padding: vw(2.571), paddingLeft: vw(1.286), paddingRight: vw(1.286), paddingBottom: vw(1.286) }} />
+                                    <img src={instagram} alt="instagram" className="flex justify-center items-center aspect-square" style={{ width: vw(36), height: vw(36), padding: vw(2.571), paddingLeft: vw(1.286), paddingRight: vw(1.286), paddingBottom: vw(1.286) }} />
                                 </div>
                             </div>
                         </div>
                         {/* 1112 */}
-                        <div className="flex justify-end items-center gap-[8px] self-stretch">
-                            <span className="text-[#000] font-noto text-[16px] font-normal leading-[32px]">1000人が登録</span>
+                        <div className="flex justify-end items-center self-stretch" style={{ gap: vw(8) }}>
+                            <span style={{ ...responsiveText(16, 16, null, 'normal', 'noto', '#000') }}>1000人が登録</span>
                             {/* 11121: Follow button */}
-                            <button className="flex items-center gap-[8px] px-[16px] py-[7px] rounded-[40px] border border-[#FF2AA1] bg-white">
-                                <img src={favoriteshop} alt="favoriteshop" className="w-[20px] h-[20px] aspect-square opacity-100" />
-                                <span className="text-[#FF2AA1] text-center font-noto text-[14px] font-medium leading-[21px]">ショップをフォロー</span>
+                            <button className="flex items-center rounded-[40px] border border-[#FF2AA1] bg-white" style={{ gap: vw(8), paddingLeft: vw(16), paddingRight: vw(16), paddingTop: vw(7), paddingBottom: vw(7) }}>
+                                <img src={favoriteshop} alt="favoriteshop" className="aspect-square opacity-100" style={{ width: vw(20), height: vw(20) }} />
+                                <span style={{ ...responsiveText(14, 14, null, 'medium', 'noto', '#FF2AA1') }}>ショップをフォロー</span>
                             </button>
                         </div>
                         {/* 112: Description */}
-                        <div className="flex flex-col items-start max-w-[1248px] self-stretch">
-                            <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">
+                        <div className="flex flex-col items-start self-stretch" style={{ maxWidth: vw(1248) }}>
+                            <span style={{ ...responsiveText(14, 21, null, 'normal', 'noto', '#000') }}>
                                 こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。
                                 最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
                             </span>
@@ -127,11 +127,11 @@ const shoptop = () => {
                     </div>
                 </div>
                 {/* Frame 12 */}
-                <div className="flex flex-col items-start gap-[8px] w-full">
+                <div className="flex flex-col items-start w-full" style={{ gap: vw(8) }}>
                     {/* 211: 最新の出品 + arrow */}
-                    <div className="flex py-[12px] pb-[6px] items-center gap-[12px] w-full">
-                        <span className="text-[#363636] font-noto font-bold text-[16px] leading-[20px]">最新の出品</span>
-                        <img src={arrow_right} alt="arrow right" className="w-[20px] h-[20px]" />
+                    <div className="flex items-center w-full" style={{ paddingTop: vw(12), paddingBottom: vw(6), gap: vw(12) }}>
+                        <span style={{ ...responsiveText(16, 16, null, 'bold', 'noto', '#363636') }}>最新の出品</span>
+                        <img src={arrow_right} alt="arrow right" style={{ width: vw(20), height: vw(20) }} />
                     </div>
                     {/* 212: Product List */}
                     <ProductCarousel 
@@ -140,11 +140,11 @@ const shoptop = () => {
                     />
                 </div>
                 {/* Frame 22 */}
-                <div className="flex flex-col items-start gap-[8px] w-full">
+                <div className="flex flex-col items-start w-full" style={{ gap: vw(8) }}>
                     {/* 211: 新しいリスト + arrow */}
-                    <div className="flex py-[12px] pb-[6px] items-center gap-[12px] w-full">
-                        <span className="text-[#363636] font-noto font-bold text-[16px] leading-[20px]">新しいリスト</span>
-                        <img src={arrow_right} alt="arrow right" className="w-[20px] h-[20px]" />
+                    <div className="flex items-center w-full" style={{ paddingTop: vw(12), paddingBottom: vw(6), gap: vw(12) }}>
+                        <span style={{ ...responsiveText(16, 16, null, 'bold', 'noto', '#363636') }}>新しいリスト</span>
+                        <img src={arrow_right} alt="arrow right" style={{ width: vw(20), height: vw(20) }} />
                     </div>
                     {/* 212: Product List */}
                     <ProductCarousel 
@@ -154,33 +154,33 @@ const shoptop = () => {
                 </div>
             </section>
             {/* Section 1 (Desktop) */}
-            <section className="hidden md:flex flex-col justify-center items-center py-[32px] mt-[32px] bg-white">
+            <section className="hidden md:flex flex-col justify-center items-center bg-white" style={{ paddingTop: vwd(32), paddingBottom: vwd(32), marginTop: vwd(32) }}>
                 {/* Frame 11 */}
-                <div className="relative h-[254px] max-w-[1200px] w-full">
+                <div className="relative w-full" style={{ height: vwd(254), maxWidth: vwd(1200) }}>
                     {/* 111: Girl SVG */}
-                    <div className="absolute top-0 left-[16px] flex w-[162px] h-[162px] justify-center items-center rounded-full bg-cover bg-center" style={{ backgroundImage: `url(${girl})` }} />
+                    <div className="absolute top-0 left-0 flex justify-center items-center rounded-full bg-cover bg-center" style={{ width: vwd(162), height: vwd(162), left: vwd(16), backgroundImage: `url(${girl})` }} />
                     {/* 112: anchiy1005 */}
-                    <span className="absolute top-[34px] left-[191px] text-[#000] font-noto text-[24px] font-medium leading-[32px]">anchiy1005</span>
+                    <span className="absolute text-[#000] font-noto font-medium" style={{ ...responsiveTextD(24, 24, null, 'medium', 'noto', '#000'), top: vwd(34), left: vwd(191) }}>anchiy1005</span>
                     {/* 113: お気に入り登録者 1000人 アイテム数 50 */}
-                    <span className="absolute top-[66px] left-[191px] text-[#000] font-noto text-[16px] font-normal leading-[32px]">お気に入り登録者 1000人 アイテム数 50</span>
+                    <span className="absolute text-[#000] font-noto font-normal" style={{ ...responsiveTextD(16, 16, null, 'normal', 'noto', '#000'), top: vwd(66), left: vwd(191) }}>お気に入り登録者 1000人 アイテム数 50</span>
                     {/* 114: SNS */}
-                    <div className="absolute top-[100px] left-[191px] flex w-[108px] max-w-[1248px] pt-[10px] items-start gap-[4px]">
-                        <img src={x} alt="x" className="flex w-[52px] h-[52px] p-[3.714px_1.857px_1.857px_3.714px] justify-center items-center aspect-square opacity-100" />
-                        <img src={instagram} alt="instagram" className="flex w-[52px] h-[52px] p-[3.714px_1.857px_1.857px_3.714px] justify-center items-center aspect-square opacity-100" />
+                    <div className="absolute flex items-start" style={{ width: vwd(108), maxWidth: vwd(1248), top: vwd(100), left: vwd(191), gap: vwd(4), paddingTop: vwd(10) }}>
+                        <img src={x} alt="x" className="flex justify-center items-center aspect-square opacity-100" style={{ width: vwd(52), height: vwd(52), padding: vwd(3.714), paddingLeft: vwd(1.857), paddingRight: vwd(1.857), paddingBottom: vwd(1.857) }} />
+                        <img src={instagram} alt="instagram" className="flex justify-center items-center aspect-square opacity-100" style={{ width: vwd(52), height: vwd(52), padding: vwd(3.714), paddingLeft: vwd(1.857), paddingRight: vwd(1.857), paddingBottom: vwd(1.857) }} />
                     </div>
                     {/* 115: 1000人が登録 + 1151 */}
-                    <div className="absolute top-[106px] right-[16px] inline-flex items-center gap-[8px]">
-                        <span className="text-[#000] font-noto text-[16px] font-normal leading-[32px]">1000人が登録</span>
+                    <div className="absolute inline-flex items-center" style={{ top: vwd(106), right: vwd(16), gap: vwd(8) }}>
+                        <span className="text-[#000] font-noto font-normal" style={{ ...responsiveTextD(16, 16, null, 'normal', 'noto', '#000') }}>1000人が登録</span>
                         {/* 1151: Follow button */}
-                        <button className="flex items-center gap-[8px] px-[16px] py-[7px] rounded-[40px] border border-[#FF2AA1] bg-white">
-                            <img src={favoriteshop} alt="favoriteshop" className="w-[20px] h-[20px] aspect-square opacity-100" />
-                            <span className="text-[#FF2AA1] text-center font-noto text-[14px] font-medium leading-[21px]">ショップをフォロー</span>
+                        <button className="flex items-center rounded-[40px] border border-[#FF2AA1] bg-white" style={{ gap: vwd(8), paddingLeft: vwd(16), paddingRight: vwd(16), paddingTop: vwd(7), paddingBottom: vwd(7) }}>
+                            <img src={favoriteshop} alt="favoriteshop" className="aspect-square opacity-100" style={{ width: vwd(20), height: vwd(20) }} />
+                            <span style={{ ...responsiveTextD(14, 14, null, 'medium', 'noto', '#FF2AA1') }}>ショップをフォロー</span>
                         </button>
                     </div>
                     {/* 116: Description */}
-                    <div className="absolute top-[194px] left-[16px] flex flex-col items-start max-w-[1248px] self-stretch">
-                        <div className="flex flex-col items-start max-w-[1248px] self-stretch">
-                            <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
+                    <div className="absolute flex flex-col items-start self-stretch" style={{ top: vwd(194), left: vwd(16), maxWidth: vwd(1248) }}>
+                        <div className="flex flex-col items-start self-stretch" style={{ maxWidth: vwd(1248) }}>
+                            <span className="text-[#000] font-noto font-normal" style={{ ...responsiveTextD(16, 27, null, 'normal', 'noto', '#000') }}>
                                 こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。<br />
                                 最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
                             </span>
@@ -189,12 +189,12 @@ const shoptop = () => {
                 </div>
             </section>
             {/* Section 2 (Desktop) */}
-            <section className="hidden md:flex flex-col items-start py-[80px] px-[120px] w-full bg-white">
-                <div className="flex flex-col items-start gap-[8px] self-stretch">
+            <section className="hidden md:flex flex-col items-start w-full bg-white" style={{ paddingTop: vwd(80), paddingBottom: vwd(80), paddingLeft: vwd(120), paddingRight: vwd(120) }}>
+                <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                     {/* 211: 最新の出品 + arrow */}
-                    <div className="flex w-[277px] py-[25px] pr-0 pb-[6px] pl-0 items-center gap-[12px]">
-                        <span className="text-[#000] font-noto text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">最新の出品</span>
-                        <img src={arrow_right} alt="arrow right" className="w-[24px] h-[24px]" />
+                    <div className="flex items-center" style={{ width: vwd(277), paddingTop: vwd(25), paddingRight: 0, paddingBottom: vwd(6), paddingLeft: 0, gap: vwd(12) }}>
+                        <span className="text-[#000] font-noto font-bold" style={{ ...responsiveTextD(24, 24, null, 'bold', 'noto', '#000'), letterSpacing: vwd(1.05) }}>最新の出品</span>
+                        <img src={arrow_right} alt="arrow right" style={{ width: vwd(24), height: vwd(24) }} />
                     </div>
                     {/* 212: Product List */}
                     <ProductCarousel 
@@ -202,11 +202,11 @@ const shoptop = () => {
                         isMobile={false} 
                     />
                 </div>
-                <div className="flex flex-col items-start gap-[8px] self-stretch">
+                <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                     {/* 211: 新しいリスト + arrow */}
-                    <div className="flex w-[277px] py-[25px] pr-0 pb-[6px] pl-0 items-center gap-[12px]">
-                        <span className="text-[#000] font-noto text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">新しいリスト</span>
-                        <img src={arrow_right} alt="arrow right" className="w-[24px] h-[24px]" />
+                    <div className="flex items-center" style={{ width: vwd(277), paddingTop: vwd(25), paddingRight: 0, paddingBottom: vwd(6), paddingLeft: 0, gap: vwd(12) }}>
+                        <span className="text-[#000] font-noto font-bold" style={{ ...responsiveTextD(24, 24, null, 'bold', 'noto', '#000'), letterSpacing: vwd(1.05) }}>新しいリスト</span>
+                        <img src={arrow_right} alt="arrow right" style={{ width: vwd(24), height: vwd(24) }} />
                     </div>
                     {/* 212: Product List */}
                     <ProductCarousel 

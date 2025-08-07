@@ -7,6 +7,7 @@ import cart2 from '@/assets/images/cart2.svg';
 import p_circle from '@/assets/images/p_circle.svg';
 import clock from '@/assets/images/clock.svg';
 import file_add from '@/assets/images/file_add.svg';
+import {vwd, vw, responsiveTextD, responsiveMetricD, responsiveText, responsiveMetric, responsivePosition, responsivePositionD} from '@/lib/utils';
 
 const ShopSidebar = () => {
   const isShopManagement = window.location.pathname === '/shop-management';
@@ -16,7 +17,7 @@ const ShopSidebar = () => {
   const isSalesHistory = window.location.pathname === '/myshop/saleshistory';
   const isCategory = window.location.pathname === '/myshop/category';
   return (
-    <aside className="shopmanagement-sidebar-outer">
+    <aside className="shopmanagement-sidebar-outer border border-red-500">
       <div className="shopmanagement-sidebar-content">
         <img
           className="sm-hero"

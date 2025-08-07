@@ -421,7 +421,7 @@ const AccountSetting = () => {
                 </div>
               </div>
               {/* 1212 */}
-              <div className="flex flex-col gap-[4px] border border-red-500" style={{ ...responsiveMetricD(802) }}>
+              <div className="flex flex-col gap-[4px]" style={{ ...responsiveMetricD(802) }}>
                 {/* 12121 */}
                 <div className="flex items-center gap-[12px] p-[25px_0_6px_0] self-stretch">
                   <span style={{ ...responsiveTextD(21, 27, null, 'bold', 'noto', '#363636') }}>メールアドレス</span>

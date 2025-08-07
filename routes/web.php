@@ -39,9 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/shop-management', function(){
         return Inertia::render('MyShopManagement/ShopManagement');
     });
-    Route::get('/myshop/edit', function(){
-        return Inertia::render('MyShopManagement/MyShopEdit');
-    });
+    Route::get('/myshop/edit', [App\Http\Controllers\ShopController::class, 'edit'])->name('shop.edit');
+    Route::post('/myshop/update', [App\Http\Controllers\ShopController::class, 'update'])->name('shop.update');
     Route::get('/myshop/contents', function(){
         return Inertia::render('MyShopManagement/MyContents');
     });
