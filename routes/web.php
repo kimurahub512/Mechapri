@@ -166,6 +166,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    // Account Settings API Routes
+    Route::get('/api/account-settings', [ProfileController::class, 'getAccountSettings'])->name('account.settings.get');
+    Route::post('/api/account-settings', [ProfileController::class, 'updateAccountSettings'])->name('account.settings.update');
+
+    // Email verification routes
+    Route::post('/api/check-email', [ProfileController::class, 'checkEmail'])->name('email.check');
+    Route::post('/api/update-email', [ProfileController::class, 'updateEmail'])->name('email.update');
+    Route::post('/api/send-verification-code', [ProfileController::class, 'sendVerificationCode'])->name('email.send-code');
+    Route::post('/api/verify-email-code', [ProfileController::class, 'verifyEmailCode'])->name('email.verify-code');
     Route::post('/upload-image', [\App\Http\Controllers\ImageUploadController::class, 'upload'])->name('image.upload');
     Route::get('/idol/upload', function () {
         return Inertia::render('Idol/ImageUpload');

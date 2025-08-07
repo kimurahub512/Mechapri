@@ -7,6 +7,7 @@ import ShopMobileTopBlock from '@/Components/ShopMobileTopBlocks';
 import '@/../../resources/css/shopmanagement.css';
 import photo1 from '@/assets/images/shopedit/photo1.png';
 import circle_plus from '@/assets/images/shopedit/circle_plus.svg';
+import {vwd, vw, responsiveTextD, responsiveMetricD, responsiveText, responsiveMetric, responsivePosition, responsivePositionD} from '@/lib/utils';
 
 const MyShopEdit = () => {
  
@@ -23,7 +24,7 @@ const MyShopEdit = () => {
             {/* Main Section Frame */}
             <main className="inline-flex flex-col items-start gap-4 mx-4 w-[calc(100vw-32px)] mt-[142px] md:flex md:gap-[22px] md:py-[40px] md:mx-[79px] md:items-start md:self-stretch md:border-none md:bg-transparent md:mt-0 md:w-auto">
                 {/* First element: text ショップ情報編集 */}
-                <h1 className="text-[#363636] text-left font-['Noto_Sans_JP'] text-[24px] font-bold leading-[24px] w-full md:text-left md:text-[36px] md:leading-[54px]">
+                <h1 className="text-[#363636] text-left font-['Noto_Sans_JP'] text-[24px] md:text-[36px] font-bold leading-[24px] w-full md:text-left md:leading-[54px]">
                     ショップ情報編集
                 </h1>
                 
