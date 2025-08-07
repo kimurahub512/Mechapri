@@ -45,7 +45,7 @@ class ShopController extends Controller
             $extension = $image->getClientOriginalExtension();
             $imageName = $user->id . '.' . $extension;
             $imagePath = $image->storeAs('public/user_images', $imageName);
-            $validated['image'] = 'storage/user_images/' . $imageName;
+            $validated['image'] = '/storage/user_images/' . $imageName;
         }
         
         $user->update($validated);
