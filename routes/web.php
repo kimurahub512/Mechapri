@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductBatchController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -179,6 +180,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/idol/upload', function () {
         return Inertia::render('Idol/ImageUpload');
     })->middleware('auth');
+
+    // Product Batch API Routes
+    Route::prefix('api/product-batches')->group(function () {
+        Route::post('/', [ProductBatchController::class, 'store'])->name('product-batches.store');
+        Route::get('/', [ProductBatchController::class, 'index'])->name('product-batches.index');
+        Route::get('/{productBatch}', [ProductBatchController::class, 'show'])->name('product-batches.show');
+        Route::put('/{productBatch}', [ProductBatchController::class, 'update'])->name('product-batches.update');
+        Route::delete('/{productBatch}', [ProductBatchController::class, 'destroy'])->name('product-batches.destroy');
+    });
+
+    // Test route for debugging
+    Route::get('/api/test-auth', function () {
+        return response()->json([
+            'authenticated' => auth()->check(),
+            'user_id' => auth()->id(),
+            'user' => auth()->user() ? auth()->user()->only(['id', 'name', 'email']) : null,
+        ]);
+    })->name('test.auth');
 });
 
 require __DIR__.'/auth.php';

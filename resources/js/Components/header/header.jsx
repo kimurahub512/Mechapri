@@ -78,7 +78,7 @@ const Header = ({ authButton }) => {
                 <a href='/accountsetting' className='align-middle text-whitewash bg-transparent flex items-center whitespace-nowrap' style={{...responsiveTextD(15, 22, null, 'normal', 'noto', '#222'), paddingLeft: vwd(7), paddingRight: vwd(7), paddingTop: vwd(5), paddingBottom: vwd(5)}}>
                   {auth?.user?.image ? (
                     <img
-                      src={auth.user.image.startsWith('http') ? auth.user.image : `/storage/${auth.user.image}`}
+                      src={auth.user.image.startsWith('http') ? auth.user.image : `${auth.user.image}`}
                       alt='user'
                       className='rounded-full object-cover mr-2'
                       style={{...responsiveMetricD(24, 24)}}

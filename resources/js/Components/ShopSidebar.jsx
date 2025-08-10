@@ -7,7 +7,7 @@ import cart2 from '@/assets/images/cart2.svg';
 import p_circle from '@/assets/images/p_circle.svg';
 import clock from '@/assets/images/clock.svg';
 import file_add from '@/assets/images/file_add.svg';
-import {vwd, vw, responsiveTextD, responsiveMetricD, responsiveText, responsiveMetric, responsivePosition, responsivePositionD} from '@/lib/utils';
+import { vwd, responsiveTextD, responsiveMetricD, responsivePositionD } from '@/lib/utils';
 
 const ShopSidebar = () => {
   const isShopManagement = window.location.pathname === '/shop-management';
@@ -17,51 +17,97 @@ const ShopSidebar = () => {
   const isSalesHistory = window.location.pathname === '/myshop/saleshistory';
   const isCategory = window.location.pathname === '/myshop/category';
   return (
-    <aside className="shopmanagement-sidebar-outer border border-red-500">
-      <div className="shopmanagement-sidebar-content">
-        <img
-          className="sm-hero"
-          src={sm_hero}
-          alt="Shop Hero"
-        />
-        <div className="sm-shop-title">anchiy1005’s SHOP</div>
-        <div className="sm-shop-view-btn">自分のショップを見る</div>
-        <div className="sm-shop-edit-frame">
-          <a href="/myshop/edit"
-            className={`sm-shop-edit-link${isMyShopEdit ? ' sm-shop-edit-link--active' : ''}`}
-          >
-            <img src={pen_paper} alt="Edit" className="sm-shop-edit-icon" />
-            <span className={`sm-shop-edit-text${isMyShopEdit ? ' sm-shop-edit-text--active' : ''}`}>ショップ情報編集</span>
-          </a>
+    <aside className="flex flex-col border-r border-[#E9E9E9]" style={{ width: vwd(300), paddingTop: vwd(80) }}>
+      <div className="flex flex-col rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)]" style={{ padding: vwd(32), width: vwd(232), marginLeft: vwd(68) }}>
+        <div className="flex flex-col items-center border-b-[0.999px] border-[#E9E9E9]" style={{ gap: vwd(16), paddingBottom: vwd(16) }}>
+          <img
+            style={{ ...responsiveMetricD(96, 96), borderRadius: vwd(76), objectFit: 'cover' }}
+            src={sm_hero}
+            alt="Shop Hero"
+          />
+          <div style={{ ...responsiveTextD(21, 24), fontWeight: 700, color: '#222', textAlign: 'center' }}>anchiy1005’s SHOP</div>
+          <div className="flex items-center justify-center w-full border-[1px] border-[#FF8D4E] text-center" style={{ ...responsiveTextD(12, 18, null, 'bold', 'noto', '#E358A6'), height: vwd(34), borderRadius: vwd(5) }}>自分のショップを見る</div>
+          <div className="w-full" style={{ gap: vwd(10) }}>
+            <a href="/myshop/edit"
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: vwd(10),
+                width: '100%',
+                paddingTop: vwd(4),
+                paddingBottom: vwd(4),
+                paddingLeft: vwd(12),
+                paddingRight: vwd(12),
+                borderRadius: vwd(8),
+                background: isMyShopEdit ? '#FFEFF8' : 'transparent'
+              }}
+            >
+              <img src={pen_paper} alt="Edit" style={{ ...responsiveMetricD(16, 16), filter: !isMyShopEdit ? 'brightness(0) saturate(100%) invert(0)' : '' }} />
+              <span style={{
+                fontWeight: 500,
+                fontSize: vwd(13),
+                lineHeight: vwd(19.5),
+                color: isMyShopEdit ? '#E358A6' : '#222',
+                whiteSpace: 'nowrap'
+              }}>ショップ情報編集</span>
+            </a>
+          </div>
         </div>
-        <div className="sm-shop-menu-container">
-          <a href="/shop-management" style={{ textDecoration: 'none' }}>
-            <div className={`sm-shop-menu-item${isShopManagement ? ' sm-shop-menu-item--active' : ''}`}
-              style={!isShopManagement ? { background: 'transparent' } : {}}>
-              <svg className="sm-shop-menu-icon" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.77279 15.0004H17.9395M2.93945 15.0004H5.43945M5.43945 15.0004V16.6671M5.43945 15.0004V13.3337M17.1061 10.0004H17.9395M2.93945 10.0004H13.7728M13.7728 10.0004V11.6671M13.7728 10.0004V8.33374M12.1061 5.00041H17.9395M2.93945 5.00041H8.77279M8.77279 5.00041V6.66707M8.77279 5.00041V3.33374" stroke="currentColor" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
+        <div className="flex flex-col" style={{paddingTop: vwd(24), paddingBottom: vwd(24)}}>
+          <a href="/shop-management" >
+            <div style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: vwd(10),
+              width: '100%',
+              paddingTop: vwd(4),
+              paddingBottom: vwd(4),
+              paddingLeft: vwd(12),
+              paddingRight: vwd(12),
+              borderRadius: vwd(8),
+              background: isShopManagement ? '#FFEFF8' : 'transparent'
+            }}>
+              <svg viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{
+                color: isShopManagement ? '#E358A6' : '#222',
+                ...responsiveMetricD(16, 16)
+              }}>
+                <path d="M8.77279 15.0004H17.9395M2.93945 15.0004H5.43945M5.43945 15.0004V16.6671M5.43945 15.0004V13.3337M17.1061 10.0004H17.9395M2.93945 10.0004H13.7728M13.7728 10.0004V11.6671M13.7728 10.0004V8.33374M12.1061 5.00041H17.9395M2.93945 5.00041H8.77279M8.77279 5.00041V6.66707M8.77279 5.00041V3.33374" stroke="currentColor" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <span className="sm-shop-menu-text" style={!isShopManagement ? { color: '#222' } : {}}>ショップ管理トップ</span>
+              <span style={{
+                fontWeight: 500,
+                fontSize: vwd(13),
+                lineHeight: vwd(19.5),
+                color: isShopManagement ? '#E358A6' : '#222',
+                whiteSpace: 'nowrap'
+              }}>ショップ管理トップ</span>
             </div>
           </a>
           <a href="/myshop/contents" style={{ textDecoration: 'none' }}>
-            <div className={`sm-shop-menu-item${isMyContents ? ' sm-shop-menu-item--active' : ''}`}
-              style={isMyContents ? {
-                display: 'flex',
-                width: '168px',
-                padding: '12px',
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderRadius: '8px',
-                background: '#FF2AA1'
-              } : { background: 'transparent' }}>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: vwd(10),
+              width: '100%',
+              paddingTop: vwd(4),
+              paddingBottom: vwd(4),
+              paddingLeft: vwd(12),
+              paddingRight: vwd(12),
+              borderRadius: vwd(8),
+              background: isMyContents ? '#FF2AA1' : 'transparent'
+            }}>
               <svg
-                className="sm-shop-menu-icon"
                 width="16"
                 height="17"
                 viewBox="0 0 16 17"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                style={{
+                  ...responsiveMetricD(16, 16),
+                  filter: isMyContents ? 'brightness(0) invert(1)' : ''
+                }}
               >
                 <mask id="mask0" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="17">
                   <g clipPath="url(#clip0)">
@@ -101,37 +147,67 @@ const ShopSidebar = () => {
                   </clipPath>
                 </defs>
               </svg>
-              <span className="sm-shop-menu-text" style={isMyContents ? { color: '#fff' } : { color: '#222' }}>商品管理</span>
+              <span style={{
+                fontWeight: 500,
+                fontSize: vwd(13),
+                lineHeight: vwd(19.5),
+                color: isMyContents ? '#fff' : '#222',
+                whiteSpace: 'nowrap'
+              }}>商品管理</span>
             </div>
           </a>
-                    <a href="/myshop/category" style={{ textDecoration: 'none' }}>
-            <div className={`sm-shop-menu-item${isCategory ? ' sm-shop-menu-item--active' : ''}`}
-              style={isCategory ? {
-                display: 'flex',
-                width: '168px',
-                padding: '12px',
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderRadius: '8px',
-                background: '#FF2AA1'
-              } : { background: 'transparent' }}>
-              <img src={cart2} alt="Category" className="sm-shop-menu-icon" style={isCategory ? { filter: 'brightness(0) invert(1)' } : {}} />
-              <span className="sm-shop-menu-text" style={isCategory ? { color: '#fff' } : { color: '#222' }}>商品カテゴリ</span>
+          <a href="/myshop/category" style={{ textDecoration: 'none' }}>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: vwd(10),
+              width: '100%',
+              paddingTop: vwd(4),
+              paddingBottom: vwd(4),
+              paddingLeft: vwd(12),
+              paddingRight: vwd(12),
+              borderRadius: vwd(8),
+              background: isCategory ? '#FF2AA1' : 'transparent'
+            }}>
+              <img src={cart2} alt="Category" style={{
+                ...responsiveMetricD(16, 16),
+                filter: isCategory ? 'brightness(0) invert(1)' : ''
+              }} />
+              <span style={{
+                fontWeight: 500,
+                fontSize: vwd(13),
+                lineHeight: vwd(19.5),
+                color: isCategory ? '#fff' : '#222',
+                whiteSpace: 'nowrap'
+              }}>商品カテゴリ</span>
             </div>
           </a>
           <a href="/myshop/transaction" style={{ textDecoration: 'none' }}>
-            <div className={`sm-shop-menu-item${isTransaction ? ' sm-shop-menu-item--active' : ''}`}
-              style={isTransaction ? {
-                display: 'flex',
-                width: '168px',
-                padding: '12px',
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderRadius: '8px',
-                background: '#FF2AA1'
-              } : { background: 'transparent' }}>
-              <img src={p_circle} alt="Payout" className="sm-shop-menu-icon" style={isTransaction ? { filter: 'brightness(0) invert(1)' } : {}} />
-              <span className="sm-shop-menu-text" style={isTransaction ? { color: '#fff' } : { color: '#222' }}>出金・売上</span>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: vwd(10),
+              width: '100%',
+              paddingTop: vwd(4),
+              paddingBottom: vwd(4),
+              paddingLeft: vwd(12),
+              paddingRight: vwd(12),
+              borderRadius: vwd(8),
+              background: isTransaction ? '#FF2AA1' : 'transparent'
+            }}>
+              <img src={p_circle} alt="Payout" style={{
+                ...responsiveMetricD(16, 16),
+                filter: isTransaction ? 'brightness(0) invert(1)' : ''
+              }} />
+              <span style={{
+                fontWeight: 500,
+                fontSize: vwd(13),
+                lineHeight: vwd(19.5),
+                color: isTransaction ? '#fff' : '#222',
+                whiteSpace: 'nowrap'
+              }}>出金・売上</span>
             </div>
           </a>
           <a href="/myshop/saleshistory" style={{ textDecoration: 'none' }}>
