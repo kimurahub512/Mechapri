@@ -145,11 +145,73 @@ class ProductBatchController extends Controller
             ], 403);
         }
 
-        // TODO: Implement update logic with validation
+        // Debug: Log the incoming request data
+        \Log::info('Update request data:', $request->all());
+        
+        // Validate the request
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+            'image_cnt' => 'required|integer|min:1|max:10',
+            'sales_deadline' => 'nullable|date|after:today',
+            'sales_limit' => 'nullable|integer|min:1',
+            'price' => 'required|numeric|min:0|max:999999.99',
+            'display_mode' => 'required|in:normal,gacha,blur,password,cushion',
+            'add_category' => 'required|in:0,1',
+            'sn_print' => 'required|in:0,1',
+            'sn_format' => 'required_if:sn_print,1|in:number,random',
+            'is_public' => 'required|in:0,1',
+            'password' => 'required_if:display_mode,password|nullable|string|min:6|max:50',
+            'files' => 'nullable|array|max:10',
+            'files.*' => 'file|mimes:jpg,jpeg,png,pdf|max:25600',
+            'existing_files' => 'nullable|array',
+            'existing_files.*' => 'integer|exists:product_batch_files,id',
+        ]);
+        
+        // Calculate total image count (existing + new files)
+        $existingFileCount = count($request->input('existing_files', []));
+        $newFileCount = $request->hasFile('files') ? count($request->file('files')) : 0;
+        $totalImageCount = $existingFileCount + $newFileCount;
+        
+        // Update the product batch
+        $productBatch->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'image_cnt' => $totalImageCount,
+            'sales_deadline' => $request->sales_deadline,
+            'sales_limit' => $request->sales_limit,
+            'price' => $request->price,
+            'display_mode' => $request->display_mode,
+            'add_category' => $request->add_category == '1',
+            'sn_print' => $request->sn_print == '1',
+            'sn_format' => $request->sn_format,
+            'is_public' => $request->is_public == '1',
+            'password' => $request->password,
+        ]);
+        
+        // Handle file management
+        $fileService = app(\App\Services\ProductBatchFileService::class);
+        
+        // Get existing file IDs that should be kept
+        $existingFileIds = $request->input('existing_files', []);
+        
+        // Delete files that are no longer in the list
+        $currentFileIds = $productBatch->files->pluck('id')->toArray();
+        $filesToDelete = array_diff($currentFileIds, $existingFileIds);
+        
+        foreach ($filesToDelete as $fileId) {
+            $fileService->deleteFile($fileId);
+        }
+        
+        // Handle new file uploads if any are provided
+        if ($request->hasFile('files')) {
+            $fileService->uploadFiles($request->file('files'), $productBatch->id);
+        }
+        
         return response()->json([
-            'success' => false,
-            'message' => '更新機能は現在開発中です。'
-        ], 501);
+            'success' => true,
+            'message' => '商品が更新されました。'
+        ]);
     }
 
     /**

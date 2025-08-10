@@ -25,9 +25,22 @@ import { vw, vwd, responsiveText, responsivePosition, responsiveMetric, responsi
 
 
 const RegisterProduct = () => {
-    const { auth } = usePage().props;
+    const { auth, editMode, productBatch } = usePage().props;
     const [showModal, setShowModal] = useState(false);
-    const [uploadedPhotos, setUploadedPhotos] = useState([]);
+    const [uploadedPhotos, setUploadedPhotos] = useState(() => {
+        if (editMode && productBatch && productBatch.files) {
+            return productBatch.files.map((file, index) => ({
+                id: `existing-${file.id}`,
+                file: null, // We don't have the actual file object for existing files
+                url: file.url,
+                name: file.filename,
+                size: 0, // We don't have the actual file size
+                isExisting: true,
+                fileId: file.id
+            }));
+        }
+        return [];
+    });
     const [totalSize, setTotalSize] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
@@ -35,21 +48,21 @@ const RegisterProduct = () => {
     const fileInputRef = useRef(null);
     
     // Form state
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState(0);
-    const [salesLimit, setSalesLimit] = useState('');
-    const [salesDeadline, setSalesDeadline] = useState('');
-    const [password, setPassword] = useState('');
+    const [title, setTitle] = useState(editMode && productBatch ? productBatch.title : '');
+    const [description, setDescription] = useState(editMode && productBatch ? productBatch.description : '');
+    const [price, setPrice] = useState(editMode && productBatch ? parseFloat(productBatch.price) : 0);
+    const [salesLimit, setSalesLimit] = useState(editMode && productBatch ? (productBatch.sales_limit ? productBatch.sales_limit.toString() : '') : '');
+    const [salesDeadline, setSalesDeadline] = useState(editMode && productBatch ? (productBatch.sales_deadline ? productBatch.sales_deadline : '') : '');
+    const [password, setPassword] = useState(editMode && productBatch ? (productBatch.password || '') : '');
     
     // Radio button states
-    const [isPaid, setIsPaid] = useState(true); // true for 有料, false for 無料
-    const [isUnlimited, setIsUnlimited] = useState(true); // true for 無制限, false for 販売数を指定
-    const [displayMode, setDisplayMode] = useState('normal'); // 'normal', 'gacha', 'blur', 'password', 'cushion'
-    const [addToCategory, setAddToCategory] = useState(false); // true for 商品カテゴリに追加, false for 追加しない
-    const [printSerial, setPrintSerial] = useState(true); // true for 印字する, false for 印字しない
-    const [serialFormat, setSerialFormat] = useState('number'); // 'number' for 発行枚数を表示, 'random' for 乱数6文字で表示
-    const [isPublic, setIsPublic] = useState(true); // true for 公開, false for 非公開
+    const [isPaid, setIsPaid] = useState(editMode && productBatch ? productBatch.price > 0 : true); // true for 有料, false for 無料
+    const [isUnlimited, setIsUnlimited] = useState(editMode && productBatch ? !productBatch.sales_limit : true); // true for 無制限, false for 販売数を指定
+    const [displayMode, setDisplayMode] = useState(editMode && productBatch ? productBatch.display_mode : 'normal'); // 'normal', 'gacha', 'blur', 'password', 'cushion'
+    const [addToCategory, setAddToCategory] = useState(editMode && productBatch ? productBatch.add_category : false); // true for 商品カテゴリに追加, false for 追加しない
+    const [printSerial, setPrintSerial] = useState(editMode && productBatch ? productBatch.sn_print : true); // true for 印字する, false for 印字しない
+    const [serialFormat, setSerialFormat] = useState(editMode && productBatch ? productBatch.sn_format : 'number'); // 'number' for 発行枚数を表示, 'random' for 乱数6文字で表示
+    const [isPublic, setIsPublic] = useState(editMode && productBatch ? productBatch.is_public : true); // true for 公開, false for 非公開
 
     const handleShowModal = () => {
         setShowModal(true);
@@ -159,8 +172,8 @@ const RegisterProduct = () => {
             // Add form fields
             formData.append('title', title);
             formData.append('description', description);
-            formData.append('image_cnt', uploadedPhotos.length);
-            formData.append('price', isPaid ? price : 0);
+            formData.append('image_cnt', uploadedPhotos.length.toString());
+            formData.append('price', isPaid ? price.toString() : '0');
             formData.append('display_mode', displayMode);
             formData.append('add_category', addToCategory ? '1' : '0');
             formData.append('sn_print', printSerial ? '1' : '0');
@@ -180,20 +193,41 @@ const RegisterProduct = () => {
                 formData.append('password', password);
             }
 
-            // Add files
-            uploadedPhotos.forEach((photo, index) => {
+            // Add files - only new files, not existing ones
+            const newFiles = uploadedPhotos.filter(photo => !photo.isExisting);
+            newFiles.forEach((photo, index) => {
                 formData.append(`files[${index}]`, photo.file);
+            });
+            
+            // Add existing file IDs to keep
+            const existingFiles = uploadedPhotos.filter(photo => photo.isExisting);
+            existingFiles.forEach((photo, index) => {
+                formData.append(`existing_files[${index}]`, photo.fileId);
             });
 
             // Debug: Log the form data
             console.log('Form data being sent:');
+            console.log('Edit mode:', editMode);
+            console.log('Current state values:');
+            console.log('title:', title, 'type:', typeof title);
+            console.log('description:', description, 'type:', typeof description);
+            console.log('price:', price, 'type:', typeof price);
+            console.log('display_mode:', displayMode, 'type:', typeof displayMode);
+            console.log('add_category:', addToCategory, 'type:', typeof addToCategory);
+            console.log('sn_print:', printSerial, 'type:', typeof printSerial);
+            console.log('is_public:', isPublic, 'type:', typeof isPublic);
+            console.log('uploadedPhotos.length:', uploadedPhotos.length, 'type:', typeof uploadedPhotos.length);
+            
             for (let [key, value] of formData.entries()) {
-                console.log(`${key}: ${value}`);
+                console.log(`${key}: ${value} (type: ${typeof value})`);
             }
 
             // Submit to backend
-            const response = await fetch('/api/product-batches', {
-                method: 'POST',
+            const url = editMode ? `/api/product-batches/${productBatch.id}` : '/api/product-batches';
+            const method = editMode ? 'PUT' : 'POST';
+            
+            const response = await fetch(url, {
+                method: method,
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                     'Accept': 'application/json',
@@ -218,36 +252,41 @@ const RegisterProduct = () => {
             console.log('API Response:', result);
 
             if (result.success) {
-                // Store the product data for the modal
-                const productData = result.data;
-                console.log('Product data for modal:', productData);
-                setProductData(productData);
-                
-                // Show success modal
-                setShowModal(true);
-                // Reset form
-                setTitle('');
-                setDescription('');
-                setPrice(0);
-                setSalesLimit('');
-                setSalesDeadline('');
-                setPassword('');
-                setUploadedPhotos([]);
-                setTotalSize(0);
-                setIsPaid(true);
-                setIsUnlimited(true);
-                setDisplayMode('normal');
-                setAddToCategory(false);
-                setPrintSerial(true);
-                setSerialFormat('number');
-                setIsPublic(true);
+                if (editMode) {
+                    // Redirect back to contents page after successful edit
+                    router.visit('/myshop/contents');
+                } else {
+                    // Store the product data for the modal (only for new products)
+                    const productData = result.data;
+                    console.log('Product data for modal:', productData);
+                    setProductData(productData);
+                    
+                    // Show success modal
+                    setShowModal(true);
+                    // Reset form
+                    setTitle('');
+                    setDescription('');
+                    setPrice(0);
+                    setSalesLimit('');
+                    setSalesDeadline('');
+                    setPassword('');
+                    setUploadedPhotos([]);
+                    setTotalSize(0);
+                    setIsPaid(true);
+                    setIsUnlimited(true);
+                    setDisplayMode('normal');
+                    setAddToCategory(false);
+                    setPrintSerial(true);
+                    setSerialFormat('number');
+                    setIsPublic(true);
+                }
             } else {
                 // Handle validation errors
                 if (response.status === 422 && result.errors) {
                     const errorMessages = Object.values(result.errors).flat();
                     setError(errorMessages.join(', '));
                 } else {
-                    setError(result.message || '商品の登録に失敗しました。');
+                    setError(result.message || (editMode ? '商品の更新に失敗しました。' : '商品の登録に失敗しました。'));
                 }
                 // Scroll to top to show error message with a slight delay to ensure state is updated
                 setTimeout(() => {
@@ -328,7 +367,10 @@ const RegisterProduct = () => {
             const photoToRemove = prev.find(photo => photo.id === photoId);
             if (photoToRemove) {
                 setTotalSize(prevSize => prevSize - photoToRemove.size);
-                URL.revokeObjectURL(photoToRemove.preview);
+                // Only revoke URL if it's a new file (not existing)
+                if (photoToRemove.preview && !photoToRemove.isExisting) {
+                    URL.revokeObjectURL(photoToRemove.preview);
+                }
             }
             return prev.filter(photo => photo.id !== photoId);
         });
@@ -346,7 +388,7 @@ const RegisterProduct = () => {
                 {/* Desktop Main Section */}
                 <main className="hidden md:flex flex-col min-w-[640px] max-w-[880px] items-start" style={{ ...responsiveMetricD(880), gap: vwd(22), padding: vwd(40), paddingLeft: vwd(15), paddingRight: vwd(15), marginLeft: vwd(130)}}>
                     {/* Title */}
-                    <h1 className="text-left" style={{ ...responsiveTextD(36, 54, null, 'bold', 'noto', '#363636') }}>商品登録</h1>
+                    <h1 className="text-left" style={{ ...responsiveTextD(36, 54, null, 'bold', 'noto', '#363636') }}>{editMode ? '商品編集' : '商品登録'}</h1>
                     {/* Error Message */}
                     {error && (
                         <div className="error-message w-full bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
@@ -397,7 +439,7 @@ const RegisterProduct = () => {
                                         {uploadedPhotos.map((photo, index) => (
                                             <div key={photo.id} className="relative group">
                                                 <img 
-                                                    src={photo.preview} 
+                                                    src={photo.isExisting ? photo.url : photo.preview} 
                                                     alt={`Photo ${index + 1}`}
                                                     className="object-cover rounded-lg"
                                                     style={{ ...responsiveMetricD(128, 128) }}
@@ -409,7 +451,7 @@ const RegisterProduct = () => {
                                                 >
                                                     ×
                                                 </button>
-                                            </div>
+                            </div>
                                         ))}
                                         {/* Add more button - show if less than 10 photos */}
                                         {uploadedPhotos.length < 10 && (
@@ -421,7 +463,7 @@ const RegisterProduct = () => {
                                                 <div className="text-center">
                                                     <div className="text-gray-400 mb-2" style={{ ...responsiveTextD(24, 24) }}>+</div>
                                                     <div className="text-gray-500" style={{ ...responsiveTextD(14, 14) }}>追加</div>
-                                                </div>
+                        </div>
                                             </div>
                                         )}
                                     </div>
@@ -658,15 +700,15 @@ const RegisterProduct = () => {
                                             <span style={{ ...responsiveTextD(13, 19.5, null, 'medium', 'noto', '#87969F') }}>写真は非公開。パスワードを知っている人だけに公開します。</span>
                                         </div>
                                         {displayMode === 'password' && (
-                                            <input
-                                                type="text"
+                                        <input
+                                            type="text"
                                                 className="flex h-[45.99px] w-full rounded-[5.71px] bg-white border border-[#E9E9E9] focus:outline-none"
-                                                placeholder="半角英数16文字まで"
+                                            placeholder="半角英数16文字まで"
                                                 value={password}
                                                 onChange={(e) => setPassword(e.target.value)}
                                                 maxLength={16}
                                                 style={{ ...responsiveMetricD(258, 45.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto', '#ACACAC'), marginTop: vwd(2) }}
-                                            />
+                                        />
                                         )}
                                     </div>
                                     {/* 1234222: ワンクッション with overlay */}
@@ -755,9 +797,9 @@ const RegisterProduct = () => {
                                     {/* 1234422, 1234423, 1234424: Indented - Only show when printSerial is true */}
                                     {printSerial && (
                                         <div className="flex flex-col items-start self-stretch" style={{paddingLeft: vwd(30), gap: vwd(8)}}>
-                                            {/* 1234422 */}
+                                        {/* 1234422 */}
                                             <span style={{ ...responsiveTextD(13, 19.5, null, 'medium', 'noto', '#87969F') }}>プリントする時にシリアル番号を印字することができます</span>
-                                            {/* 1234423 */}
+                                        {/* 1234423 */}
                                             <div className="flex items-center cursor-pointer" style={{gap: vwd(15), ...responsiveMetricD(772, 24)}} onClick={() => setSerialFormat('number')}>
                                                 {serialFormat === 'number' ? (
                                                     <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
@@ -766,8 +808,8 @@ const RegisterProduct = () => {
                                                 )}
                                                 <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>発行枚数を表示</span>
                                                 <span style={{ ...responsiveTextD(17, 24, null, 'normal', 'noto', '#ACACAC') }}>例：000001,000002</span>
-                                            </div>
-                                            {/* 1234424 */}
+                                        </div>
+                                        {/* 1234424 */}
                                             <div className="flex items-center cursor-pointer" style={{gap: vwd(15), ...responsiveMetricD(772, 24)}} onClick={() => setSerialFormat('random')}>
                                                 {serialFormat === 'random' ? (
                                                     <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
@@ -776,8 +818,8 @@ const RegisterProduct = () => {
                                                 )}
                                                 <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>乱数6文字で表示</span>
                                                 <span style={{ ...responsiveTextD(17, 24, null, 'normal', 'noto', '#ACACAC') }}>例：736593,918482</span>
-                                            </div>
                                         </div>
+                                    </div>
                                     )}
                                 </div>
                                 {/* Frame 123443 */}
@@ -840,13 +882,13 @@ const RegisterProduct = () => {
                                 onClick={handleSubmit}
                                 disabled={isSubmitting}
                             >
-                                <span style={{ ...responsiveTextD(18, 14, null, 'bold', 'noto', '#FFFFFF') }}>
-                                    {isSubmitting ? '登録中...' : '登録する'}
-                                </span>
+                                                                  <span style={{ ...responsiveTextD(18, 14, null, 'bold', 'noto', '#FFFFFF') }}>
+                                      {isSubmitting ? (editMode ? '保存中...' : '登録中...') : (editMode ? '保存' : '登録する')}
+                                  </span>
                             </button>
                             {/* 12352: Note */}
                             <span style={{ ...responsiveTextD(12, 18, null, 'normal', 'noto', '#87969F') }}>
-                                ※ 登録後は商品ファイルの変更はできません。
+                                ※ {editMode ? '保存後' : '登録後'}は商品ファイルの変更はできません。
                             </span>
                         </div>
                     </section>
@@ -867,7 +909,7 @@ const RegisterProduct = () => {
                 {/* Mobile Main Section */}
                 <main className="flex md:hidden flex-col items-start w-full" style={{ gap: vw(16), marginTop: vw(32), paddingLeft: vw(16), paddingRight: vw(16) }}>
                     {/* Title */}
-                    <h1 className="w-full text-left" style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>商品登録</h1>
+                    <h1 className="w-full text-left" style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>{editMode ? '商品編集' : '商品登録'}</h1>
                     {/* Error Message */}
                     {error && (
                         <div className="error-message w-full bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
@@ -889,24 +931,24 @@ const RegisterProduct = () => {
                         >
                             {uploadedPhotos.length === 0 ? (
                                 /* Upload Area - Show when no photos uploaded */
-                                <div className="flex flex-col justify-center items-center w-full">
-                                    {/* mountain svg */}
+                            <div className="flex flex-col justify-center items-center w-full">
+                                {/* mountain svg */}
                                     <div className="flex flex-col items-start" style={{ ...responsiveMetric(56, 36), maxWidth: vw(792), paddingBottom: vw(6) }}>
                                         <img src={mountain_down} alt="upload" style={{ ...responsiveMetric(56, 36) }} />
-                                    </div>
-                                    {/* 1121 */}
+                                </div>
+                                {/* 1121 */}
                                     <div className="flex flex-col items-start self-stretch" style={{ gap: vw(4) }}>
                                         <span className="w-full text-center" style={{ ...responsiveText(16, 12, null, 'bold', 'noto', '#ACACAC') }}>ファイルを選択</span>
                                         <span className="w-full text-center" style={{ ...responsiveText(12, 12, null, 'medium', 'noto', '#ACACAC') }}>サイズ:6000px*6000px以内</span>
-                                        {/* 11211 */}
+                                    {/* 11211 */}
                                         <div className="flex flex-row items-center w-full" style={{ gap: vw(4), paddingTop: vw(4) }}>
                                             <span className="whitespace-nowrap" style={{ ...responsiveText(12, 12, null, 'medium', 'noto', '#ACACAC') }}>対応フォーマット:</span>
                                             <span className="flex items-center justify-center rounded-[4px] bg-white text-center" style={{ ...responsiveMetric(26, 16), paddingLeft: vw(2), paddingRight: vw(2), ...responsiveText(9, 10, null, 'normal', 'noto', '#87969F') }}>JPG</span>
                                             <span className="flex items-center justify-center rounded-[4px] bg-white text-center" style={{ ...responsiveMetric(26, 16), paddingLeft: vw(2), paddingRight: vw(2), ...responsiveText(9, 10, null, 'normal', 'noto', '#87969F') }}>PNG</span>
                                             <span className="flex items-center justify-center rounded-[4px] bg-white text-center" style={{ ...responsiveMetric(26, 16), paddingLeft: vw(2), paddingRight: vw(2), ...responsiveText(9, 10, null, 'normal', 'noto', '#87969F') }}>PDF</span>
-                                        </div>
                                     </div>
                                 </div>
+                            </div>
                             ) : (
                                 /* Photo Grid - Show when photos are uploaded */
                                 <div className="w-full">
@@ -1167,15 +1209,15 @@ const RegisterProduct = () => {
                                                     <span style={{ ...responsiveText(12, 19.5, null, 'normal', 'noto', '#87969F') }}>写真は非公開。パスワードを知っている人だけに公開します。</span>
                                                 </div>
                                                 {displayMode === 'password' && (
-                                                    <input
-                                                        type="text"
+                                                <input
+                                                    type="text"
                                                         className="flex w-full bg-white border border-[#E9E9E9] focus:outline-none"
-                                                        placeholder="半角英数16文字まで"
+                                                    placeholder="半角英数16文字まで"
                                                         value={password}
                                                         onChange={(e) => setPassword(e.target.value)}
                                                         maxLength={16}
                                                         style={{ ...responsiveMetric('full', 45.99), borderRadius: vw(5.71), ...responsiveText(13, 14, null, 'normal', 'noto', '#363636'), marginTop: vw(8) }}
-                                                    />
+                                                />
                                                 )}
                                             </div>
                                         </div>
@@ -1273,9 +1315,9 @@ const RegisterProduct = () => {
                                             {/* 1234422, 1234423, 1234424: Indented - Only show when printSerial is true */}
                                             {printSerial && (
                                                 <div className="flex flex-col items-start self-stretch" style={{ paddingLeft: vw(30), gap: vw(8) }}>
-                                                    {/* 1234422 */}
+                                                {/* 1234422 */}
                                                     <span style={{ ...responsiveText(13, 19.5, null, 'medium', 'noto', '#87969F') }}>プリントする時にシリアル番号を印字することができます</span>
-                                                    {/* 1234423 */}
+                                                {/* 1234423 */}
                                                     <div className="flex items-center cursor-pointer" style={{ gap: vw(15), width: '100%' }} onClick={() => setSerialFormat('number')}>
                                                         {serialFormat === 'number' ? (
                                                             <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20) }} />
@@ -1284,8 +1326,8 @@ const RegisterProduct = () => {
                                                         )}
                                                         <span style={{ ...responsiveText(14, 24, null, 'normal', 'noto', '#363636') }}>発行枚数を表示</span>
                                                         <span style={{ ...responsiveText(12, 18, null, 'normal', 'noto', '#ACACAC') }}>例：000001,000002</span>
-                                                    </div>
-                                                    {/* 1234424 */}
+                                                </div>
+                                                {/* 1234424 */}
                                                     <div className="flex items-center cursor-pointer" style={{ gap: vw(15), width: '100%' }} onClick={() => setSerialFormat('random')}>
                                                         {serialFormat === 'random' ? (
                                                             <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20) }} />
@@ -1294,8 +1336,8 @@ const RegisterProduct = () => {
                                                         )}
                                                         <span style={{ ...responsiveText(14, 24, null, 'normal', 'noto', '#363636') }}>乱数6文字で表示</span>
                                                         <span style={{ ...responsiveText(12, 18, null, 'normal', 'noto', '#ACACAC') }}>例：736593,918482</span>
-                                                    </div>
                                                 </div>
+                                            </div>
                                             )}
                                         </div>
                                         {/* Frame 123443 */}
@@ -1358,13 +1400,13 @@ const RegisterProduct = () => {
                                         disabled={isSubmitting}
                                         style={{ ...responsiveMetric(311, 'auto'), paddingLeft: vw(36), paddingRight: vw(36), paddingTop: vw(15), paddingBottom: vw(15), borderRadius: vw(8) }}
                                     >
-                                        <span style={{ ...responsiveText(18, 14, null, 'bold', 'noto', '#FFFFFF') }}>
-                                            {isSubmitting ? '登録中...' : '登録する'}
-                                        </span>
+                                                                                  <span style={{ ...responsiveText(18, 14, null, 'bold', 'noto', '#FFFFFF') }}>
+                                              {isSubmitting ? (editMode ? '保存中...' : '登録中...') : (editMode ? '保存' : '登録する')}
+                                          </span>
                                     </button>
                                     {/* 12352: Note */}
                                     <span className="self-stretch text-center" style={{ ...responsiveText(12, 18, null, 'normal', 'noto', '#87969F') }}>
-                                        ※ 登録後は商品ファイルの変更はできません。
+                                        ※ {editMode ? '保存後' : '登録後'}は商品ファイルの変更はできません。
                                     </span>
                                 </div>
                             </div>

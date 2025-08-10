@@ -42,9 +42,9 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/myshop/edit', [App\Http\Controllers\ShopController::class, 'edit'])->name('shop.edit');
     Route::post('/myshop/update', [App\Http\Controllers\ShopController::class, 'update'])->name('shop.update');
-    Route::get('/myshop/contents', function(){
-        return Inertia::render('MyShopManagement/MyContents');
-    });
+    Route::get('/myshop/contents', [App\Http\Controllers\MyContentsController::class, 'index']);
+    Route::delete('/myshop/contents/{id}', [App\Http\Controllers\MyContentsController::class, 'destroy']);
+    Route::patch('/myshop/contents/{id}/toggle-public', [App\Http\Controllers\MyContentsController::class, 'togglePublic']);
     Route::get('/myshop/transaction', function(){
         return Inertia::render('MyShopManagement/Transaction');
     });
@@ -53,7 +53,8 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/myshop/registerproduct', function(){
         return Inertia::render('MyShopManagement/RegisterProduct');
-    });    
+    });
+    Route::get('/myshop/registerproduct/{id}/edit', [App\Http\Controllers\MyContentsController::class, 'edit']);    
     Route::get('/myshop/category', function(){
         return Inertia::render('MyShopManagement/Category');
     });

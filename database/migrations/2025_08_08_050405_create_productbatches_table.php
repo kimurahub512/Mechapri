@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('productbatches', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('created_id')->constrained('users')->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
             $table->integer('image_cnt')->default(0);

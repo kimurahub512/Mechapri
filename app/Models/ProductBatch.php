@@ -20,6 +20,7 @@ class ProductBatch extends Model
      */
     protected $fillable = [
         'user_id',
+        'created_id',
         'title',
         'description',
         'image_cnt',

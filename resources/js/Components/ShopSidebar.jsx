@@ -5,7 +5,7 @@ import shop from '@/assets/images/Slider_03.svg';
 import select_multiple from '@/assets/images/select_multiple.svg';
 import cart2 from '@/assets/images/cart2.svg';
 import p_circle from '@/assets/images/p_circle.svg';
-import clock from '@/assets/images/clock.svg';
+import clock_pink from '@/assets/images/clock_pink.svg';
 import file_add from '@/assets/images/file_add.svg';
 import { vwd, responsiveTextD, responsiveMetricD, responsivePositionD } from '@/lib/utils';
 
@@ -14,7 +14,7 @@ const ShopSidebar = () => {
   const isMyShopEdit = window.location.pathname === '/myshop/edit';
   const isMyContents = window.location.pathname === '/myshop/contents';
   const isTransaction = window.location.pathname === '/myshop/transaction';
-  const isSalesHistory = window.location.pathname === '/myshop/saleshistory';
+  const isSalesHistory = window.location.pathname === '/myshop/salpeshistory';
   const isCategory = window.location.pathname === '/myshop/category';
   return (
     <aside className="flex flex-col border-r border-[#E9E9E9]" style={{ width: vwd(300), paddingTop: vwd(80) }}>
@@ -35,8 +35,8 @@ const ShopSidebar = () => {
                 alignItems: 'center',
                 gap: vwd(10),
                 width: '100%',
-                paddingTop: vwd(4),
-                paddingBottom: vwd(4),
+                paddingTop: vwd(12),
+                paddingBottom: vwd(12),
                 paddingLeft: vwd(12),
                 paddingRight: vwd(12),
                 borderRadius: vwd(8),
@@ -55,22 +55,22 @@ const ShopSidebar = () => {
           </div>
         </div>
         <div className="flex flex-col" style={{paddingTop: vwd(24), paddingBottom: vwd(24)}}>
-          <a href="/shop-management" >
+        <a href="/shop-management" >
             <div style={{
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
               gap: vwd(10),
               width: '100%',
-              paddingTop: vwd(4),
-              paddingBottom: vwd(4),
+              paddingTop: vwd(12),
+              paddingBottom: vwd(12),
               paddingLeft: vwd(12),
               paddingRight: vwd(12),
               borderRadius: vwd(8),
-              background: isShopManagement ? '#FFEFF8' : 'transparent'
+              background: isShopManagement ? '#FF2AA1' : 'transparent'
             }}>
               <svg viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{
-                color: isShopManagement ? '#E358A6' : '#222',
+                color: isShopManagement ? '#FFF' : '#E358A6',
                 ...responsiveMetricD(16, 16)
               }}>
                 <path d="M8.77279 15.0004H17.9395M2.93945 15.0004H5.43945M5.43945 15.0004V16.6671M5.43945 15.0004V13.3337M17.1061 10.0004H17.9395M2.93945 10.0004H13.7728M13.7728 10.0004V11.6671M13.7728 10.0004V8.33374M12.1061 5.00041H17.9395M2.93945 5.00041H8.77279M8.77279 5.00041V6.66707M8.77279 5.00041V3.33374" stroke="currentColor" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round" />
@@ -79,7 +79,7 @@ const ShopSidebar = () => {
                 fontWeight: 500,
                 fontSize: vwd(13),
                 lineHeight: vwd(19.5),
-                color: isShopManagement ? '#E358A6' : '#222',
+                color: isShopManagement ? '#FFF' : '#222',
                 whiteSpace: 'nowrap'
               }}>ショップ管理トップ</span>
             </div>
@@ -163,14 +163,14 @@ const ShopSidebar = () => {
               alignItems: 'center',
               gap: vwd(10),
               width: '100%',
-              paddingTop: vwd(4),
-              paddingBottom: vwd(4),
+              paddingTop: vwd(12),
+              paddingBottom: vwd(12),
               paddingLeft: vwd(12),
               paddingRight: vwd(12),
               borderRadius: vwd(8),
               background: isCategory ? '#FF2AA1' : 'transparent'
             }}>
-              <img src={cart2} alt="Category" style={{
+              <img src={cart2} alt="Category" style={{ 
                 ...responsiveMetricD(16, 16),
                 filter: isCategory ? 'brightness(0) invert(1)' : ''
               }} />
@@ -190,14 +190,14 @@ const ShopSidebar = () => {
               alignItems: 'center',
               gap: vwd(10),
               width: '100%',
-              paddingTop: vwd(4),
-              paddingBottom: vwd(4),
+              paddingTop: vwd(12),
+              paddingBottom: vwd(12),
               paddingLeft: vwd(12),
               paddingRight: vwd(12),
               borderRadius: vwd(8),
               background: isTransaction ? '#FF2AA1' : 'transparent'
             }}>
-              <img src={p_circle} alt="Payout" style={{
+              <img src={p_circle} alt="Payout" style={{ 
                 ...responsiveMetricD(16, 16),
                 filter: isTransaction ? 'brightness(0) invert(1)' : ''
               }} />
@@ -211,18 +211,30 @@ const ShopSidebar = () => {
             </div>
           </a>
           <a href="/myshop/saleshistory" style={{ textDecoration: 'none' }}>
-            <div className={`sm-shop-menu-item${isSalesHistory ? ' sm-shop-menu-item--active' : ''}`}
-              style={isSalesHistory ? {
-                display: 'flex',
-                width: '168px',
-                padding: '12px',
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderRadius: '8px',
-                background: '#FF2AA1'
-              } : { background: 'transparent' }}>
-              <img src={clock} alt="History" className="sm-shop-menu-icon" style={isSalesHistory ? { filter: 'brightness(0) invert(1)' } : {}} />
-              <span className="sm-shop-menu-text" style={isSalesHistory ? { color: '#fff' } : { color: '#222' }}>販売履歴</span>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: vwd(10),
+              width: '100%',
+              paddingTop: vwd(12),
+              paddingBottom: vwd(12),
+              paddingLeft: vwd(12),
+              paddingRight: vwd(12),
+              borderRadius: vwd(8),
+              background: isSalesHistory ? '#FF2AA1' : 'transparent'
+            }}>
+              <img src={clock_pink} alt="History" style={{ 
+                ...responsiveMetricD(16, 16),
+                filter: isSalesHistory ? 'brightness(0) invert(1)' : ''
+              }} />
+              <span style={{
+                fontWeight: 500,
+                fontSize: vwd(13),
+                lineHeight: vwd(19.5),
+                color: isSalesHistory ? '#fff' : '#222',
+                whiteSpace: 'nowrap'
+              }}>販売履歴</span>
             </div>
           </a>
           <a href="/myshop/registerproduct" style={{ textDecoration: 'none' }}>
