@@ -80,10 +80,8 @@ class MyContentsController extends Controller
         // Delete the product batch (this will cascade delete files due to foreign key constraints)
         $productBatch->delete();
         
-        return response()->json([
-            'success' => true,
-            'message' => '商品が削除されました。'
-        ]);
+        // Redirect back to the contents page with a success message
+        return redirect()->route('myshop.contents')->with('success', '商品が削除されました。');
     }
 
     /**
@@ -95,7 +93,7 @@ class MyContentsController extends Controller
         $productBatch = $user->productBatches()
             ->with(['files' => function($query) {
                 $query->orderBy('sort_order');
-            }])
+            }, 'categories'])
             ->findOrFail($id);
         
         $formattedBatch = [
@@ -113,6 +111,12 @@ class MyContentsController extends Controller
             'sn_print' => $productBatch->sn_print,
             'sn_format' => $productBatch->sn_format,
             'password' => $productBatch->password,
+            'categories' => $productBatch->categories->map(function($category) {
+                return [
+                    'id' => $category->id,
+                    'title' => $category->title,
+                ];
+            }),
             'created_at' => $productBatch->created_at->format('Y-m-d H:i:s'),
             'files' => $productBatch->files->map(function($file) {
                 return [

@@ -78,4 +78,12 @@ class User extends Authenticatable //implements MustVerifyEmail
     {
         return $this->hasMany(ProductBatch::class);
     }
+
+    /**
+     * Get the categories for the user.
+     */
+    public function categories(): HasMany
+    {
+        return $this->hasMany(UserCategory::class);
+    }
 }

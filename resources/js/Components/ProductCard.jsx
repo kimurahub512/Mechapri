@@ -37,7 +37,7 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                         <div className="flex justify-between items-center self-stretch w-full ">
                             {/* 212111321: 無料 */}
                             <div className="flex w-[52.216px] flex-col items-start">
-                                <span className="text-[#363636] font-noto text-[10.511px] font-bold leading-[10.511px]">{product.price}</span>
+                                <span className="text-[#363636] font-noto text-[10.511px] font-bold leading-[10.511px] whitespace-nowrap">{product.price}</span>
                             </div>
                             {/* 212111322: Like and Count */}
                             <div className="flex w-[50.838px] h-[10.511px] pb-[0.584px] justify-end items-center gap-[3.504px]">
@@ -104,7 +104,7 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                         <div className="flex justify-between items-center self-stretch w-full ">
                             {/* 212111321: 無料 */}
                             <div className="flex w-[89.42px] flex-col items-start">
-                                <span className="text-[#363636] font-noto text-[18px] font-bold leading-[18px]">{product.price}</span>
+                                <span className="text-[#363636] font-noto text-[18px] font-bold leading-[18px] whitespace-nowrap">{product.price}</span>
                             </div>
                             {/* 212111322: Like and Count */}
                             <div className="flex w-[87.06px] h-[18px] pb-[1px] justify-end items-center gap-[6px]">

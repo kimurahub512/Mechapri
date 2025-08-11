@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductBatchRequest;
+
 use App\Models\ProductBatch;
 use App\Services\ProductBatchService;
 use Illuminate\Http\JsonResponse;
@@ -26,14 +27,14 @@ class ProductBatchController extends Controller
     {
         try {
             // Debug: Log the request
-            Log::info('Product batch store request received', [
-                'user_id' => auth()->id(),
-                'user_authenticated' => auth()->check(),
-                'request_method' => $request->method(),
-                'content_type' => $request->header('Content-Type'),
-                'has_files' => $request->hasFile('files'),
-                'file_count' => count($request->file('files', [])),
-            ]);
+            // Log::info('Product batch store request received', [
+            //     'user_id' => auth()->id(),
+            //     'user_authenticated' => auth()->check(),
+            //     'request_method' => $request->method(),
+            //     'content_type' => $request->header('Content-Type'),
+            //     'has_files' => $request->hasFile('files'),
+            //     'file_count' => count($request->file('files', [])),
+            // ]);
 
             // Get files from request
             $files = $request->file('files', []);
@@ -137,8 +138,21 @@ class ProductBatchController extends Controller
      */
     public function update(Request $request, ProductBatch $productBatch): JsonResponse
     {
+        // Debug: Log that we reached the controller
+        // Log::info('ProductBatchController::update method called', [
+        //     'product_batch_id' => $productBatch->id,
+        //     'user_id' => auth()->id(),
+        //     'request_method' => $request->method(),
+        //     'request_url' => $request->url(),
+        // ]);
+
         // Check if user owns this product batch
         if (!$this->productBatchService->canUserEditProductBatch($productBatch, auth()->user())) {
+            // Log::warning('User does not have permission to edit product batch', [
+            //     'product_batch_id' => $productBatch->id,
+            //     'user_id' => auth()->id(),
+            //     'product_batch_user_id' => $productBatch->user_id,
+            // ]);
             return response()->json([
                 'success' => false,
                 'message' => 'この商品を編集する権限がありません。'
@@ -146,27 +160,39 @@ class ProductBatchController extends Controller
         }
 
         // Debug: Log the incoming request data
-        \Log::info('Update request data:', $request->all());
+        // Log::info('Update request data:', $request->all());
         
-        // Validate the request
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string|max:1000',
-            'image_cnt' => 'required|integer|min:1|max:10',
-            'sales_deadline' => 'nullable|date|after:today',
-            'sales_limit' => 'nullable|integer|min:1',
-            'price' => 'required|numeric|min:0|max:999999.99',
-            'display_mode' => 'required|in:normal,gacha,blur,password,cushion',
-            'add_category' => 'required|in:0,1',
-            'sn_print' => 'required|in:0,1',
-            'sn_format' => 'required_if:sn_print,1|in:number,random',
-            'is_public' => 'required|in:0,1',
-            'password' => 'required_if:display_mode,password|nullable|string|min:6|max:50',
-            'files' => 'nullable|array|max:10',
-            'files.*' => 'file|mimes:jpg,jpeg,png,pdf|max:25600',
-            'existing_files' => 'nullable|array',
-            'existing_files.*' => 'integer|exists:product_batch_files,id',
-        ]);
+        try {
+            // Validate the request
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string|max:1000',
+                'image_cnt' => 'required|integer|min:1|max:10',
+                'sales_deadline' => 'nullable|date|after:today',
+                'sales_limit' => 'nullable|integer|min:1',
+                'price' => 'required|numeric|min:0|max:999999.99',
+                'display_mode' => 'required|in:normal,gacha,blur,password,cushion',
+                'add_category' => 'required|in:0,1',
+                'sn_print' => 'required|in:0,1',
+                'sn_format' => 'required_if:sn_print,1|in:number,random',
+                'is_public' => 'required|in:0,1',
+                'password' => 'required_if:display_mode,password|nullable|string|min:6|max:50',
+                'files' => 'nullable|array|max:10',
+                'files.*' => 'file|mimes:jpg,jpeg,png,pdf|max:25600',
+                'existing_files' => 'nullable|array',
+                'existing_files.*' => 'integer|exists:product_batch_files,id',
+                'category_ids' => 'nullable|array',
+                'category_ids.*' => 'integer|exists:user_categories,id',
+            ]);
+            
+            // Log::info('Validation passed', $validated);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('Validation failed', [
+                'errors' => $e->errors(),
+                'request_data' => $request->all(),
+            ]);
+            throw $e;
+        }
         
         // Calculate total image count (existing + new files)
         $existingFileCount = count($request->input('existing_files', []));
@@ -206,6 +232,14 @@ class ProductBatchController extends Controller
         // Handle new file uploads if any are provided
         if ($request->hasFile('files')) {
             $fileService->uploadFiles($request->file('files'), $productBatch->id);
+        }
+        
+        // Handle category updates
+        if ($request->add_category == '1' && !empty($request->category_ids)) {
+            $productBatch->categories()->sync($request->category_ids);
+        } else {
+            // If add_category is false or no categories selected, detach all
+            $productBatch->categories()->detach();
         }
         
         return response()->json([

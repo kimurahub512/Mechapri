@@ -42,9 +42,18 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/myshop/edit', [App\Http\Controllers\ShopController::class, 'edit'])->name('shop.edit');
     Route::post('/myshop/update', [App\Http\Controllers\ShopController::class, 'update'])->name('shop.update');
-    Route::get('/myshop/contents', [App\Http\Controllers\MyContentsController::class, 'index']);
-    Route::delete('/myshop/contents/{id}', [App\Http\Controllers\MyContentsController::class, 'destroy']);
-    Route::patch('/myshop/contents/{id}/toggle-public', [App\Http\Controllers\MyContentsController::class, 'togglePublic']);
+    Route::get('/myshop/contents', [App\Http\Controllers\MyContentsController::class, 'index'])->name('myshop.contents');
+Route::delete('/myshop/contents/{id}', [App\Http\Controllers\MyContentsController::class, 'destroy']);
+Route::patch('/myshop/contents/{id}/toggle-public', [App\Http\Controllers\MyContentsController::class, 'togglePublic']);
+
+// Category routes
+Route::get('/myshop/category', [App\Http\Controllers\CategoryController::class, 'index'])->name('myshop.category');
+Route::get('/myshop/category/create', [App\Http\Controllers\CategoryController::class, 'create'])->name('myshop.category.create');
+Route::get('/myshop/category/{category}/edit', [App\Http\Controllers\CategoryController::class, 'edit'])->name('myshop.category.edit');
+Route::post('/myshop/category', [App\Http\Controllers\CategoryController::class, 'store'])->name('myshop.category.store');
+Route::put('/myshop/category/{category}', [App\Http\Controllers\CategoryController::class, 'update'])->name('myshop.category.update');
+Route::delete('/myshop/category/{category}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('myshop.category.destroy');
+Route::patch('/myshop/category/{category}/toggle-public', [App\Http\Controllers\CategoryController::class, 'togglePublic'])->name('myshop.category.toggle-public');
     Route::get('/myshop/transaction', function(){
         return Inertia::render('MyShopManagement/Transaction');
     });
@@ -52,12 +61,15 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('MyShopManagement/SalesHistory');
     });
     Route::get('/myshop/registerproduct', function(){
-        return Inertia::render('MyShopManagement/RegisterProduct');
+        $user = auth()->user();
+        $categories = $user->categories()->orderBy('created_at', 'desc')->get();
+        
+        return Inertia::render('MyShopManagement/RegisterProduct', [
+            'categories' => $categories,
+        ]);
     });
     Route::get('/myshop/registerproduct/{id}/edit', [App\Http\Controllers\MyContentsController::class, 'edit']);    
-    Route::get('/myshop/category', function(){
-        return Inertia::render('MyShopManagement/Category');
-    });
+
     Route::get('/myshop/categoryedit', function(){  
         return Inertia::render('MyShopManagement/CategoryEdit');
     });
@@ -93,8 +105,47 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('ShopTop');
     });
     Route::get('/shop-newproducts', function(){
-        return Inertia::render('ShopNewProducts');
+        // Get all public product batches with files, ordered by creation date (newest first)
+        $productBatches = \App\Models\ProductBatch::with(['files' => function($query) {
+                $query->orderBy('sort_order');
+            }])
+            ->where('is_public', true)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function($batch) {
+                return [
+                    'id' => $batch->id,
+                    'title' => $batch->title,
+                    'description' => $batch->description,
+                    'price' => $batch->price,
+                    'image_cnt' => $batch->image_cnt,
+                    'display_mode' => $batch->display_mode,
+                    'sales_deadline' => $batch->sales_deadline ? $batch->sales_deadline->format('Y-m-d') : null,
+                    'sales_limit' => $batch->sales_limit,
+                    'created_at' => $batch->created_at->format('Y-m-d H:i:s'),
+                    'user' => [
+                        'id' => $batch->user->id,
+                        'name' => $batch->user->name,
+                        'image' => $batch->user->image,
+                        'shop_title' => $batch->user->shop_title,
+                    ],
+                    'files' => $batch->files->map(function($file) {
+                        return [
+                            'id' => $file->id,
+                            'filename' => $file->filename,
+                            'url' => $file->url,
+                            'file_type' => $file->file_type,
+                            'sort_order' => $file->sort_order,
+                        ];
+                    }),
+                ];
+            });
+
+        return Inertia::render('ShopNewProducts', [
+            'productBatches' => $productBatches,
+        ]);
     });
+    
     Route::get('/shoplow', function(){
         return Inertia::render('ShopLow');
     });
@@ -187,7 +238,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/', [ProductBatchController::class, 'store'])->name('product-batches.store');
         Route::get('/', [ProductBatchController::class, 'index'])->name('product-batches.index');
         Route::get('/{productBatch}', [ProductBatchController::class, 'show'])->name('product-batches.show');
-        Route::put('/{productBatch}', [ProductBatchController::class, 'update'])->name('product-batches.update');
+        Route::match(['PUT', 'PATCH'], '/{productBatch}', [ProductBatchController::class, 'update'])->name('product-batches.update');
         Route::delete('/{productBatch}', [ProductBatchController::class, 'destroy'])->name('product-batches.destroy');
     });
 

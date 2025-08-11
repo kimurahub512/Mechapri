@@ -50,12 +50,12 @@ const Header = ({ authButton }) => {
                     お知らせ
                   </a>
                 <li className='inline-block'>
-                  <div className='flex flex-row items-center rounded bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] justify-center' style={{...responsiveMetricD(120, 32), paddingLeft: vwd(12), paddingRight: vwd(12)}}>
+                  <a href='/myshop/registerproduct' className='flex flex-row items-center rounded bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] justify-center' style={{...responsiveMetricD(120, 32), paddingLeft: vwd(12), paddingRight: vwd(12)}}>
                     <img src={arrow} alt="add" className='mr-2.5' style={{...responsiveMetricD(16, 16)}}/>
                     <span className='text-center block w-full' style={{...responsiveTextD(13, 19.5, null, 'black', 'noto', '#FFF')}}>
                       写真を出品
                     </span>
-                  </div>
+                  </a>
                 </li>
             </div> 
             <ul className='flex flex-row w-full justify-end' style={{gap: vwd(26)}}>

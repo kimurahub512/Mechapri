@@ -25,7 +25,7 @@ import { vw, vwd, responsiveText, responsivePosition, responsiveMetric, responsi
 
 
 const RegisterProduct = () => {
-    const { auth, editMode, productBatch } = usePage().props;
+    const { auth, editMode, productBatch, categories } = usePage().props;
     const [showModal, setShowModal] = useState(false);
     const [uploadedPhotos, setUploadedPhotos] = useState(() => {
         if (editMode && productBatch && productBatch.files) {
@@ -60,6 +60,7 @@ const RegisterProduct = () => {
     const [isUnlimited, setIsUnlimited] = useState(editMode && productBatch ? !productBatch.sales_limit : true); // true for 無制限, false for 販売数を指定
     const [displayMode, setDisplayMode] = useState(editMode && productBatch ? productBatch.display_mode : 'normal'); // 'normal', 'gacha', 'blur', 'password', 'cushion'
     const [addToCategory, setAddToCategory] = useState(editMode && productBatch ? productBatch.add_category : false); // true for 商品カテゴリに追加, false for 追加しない
+    const [selectedCategories, setSelectedCategories] = useState(editMode && productBatch && productBatch.categories ? productBatch.categories.map(c => c.id) : []); // Array of selected category IDs
     const [printSerial, setPrintSerial] = useState(editMode && productBatch ? productBatch.sn_print : true); // true for 印字する, false for 印字しない
     const [serialFormat, setSerialFormat] = useState(editMode && productBatch ? productBatch.sn_format : 'number'); // 'number' for 発行枚数を表示, 'random' for 乱数6文字で表示
     const [isPublic, setIsPublic] = useState(editMode && productBatch ? productBatch.is_public : true); // true for 公開, false for 非公開
@@ -176,6 +177,9 @@ const RegisterProduct = () => {
             formData.append('price', isPaid ? price.toString() : '0');
             formData.append('display_mode', displayMode);
             formData.append('add_category', addToCategory ? '1' : '0');
+            if (addToCategory && selectedCategories.length > 0) {
+                formData.append('category_ids', JSON.stringify(selectedCategories));
+            }
             formData.append('sn_print', printSerial ? '1' : '0');
             formData.append('sn_format', serialFormat);
             formData.append('is_public', isPublic ? '1' : '0');
@@ -208,9 +212,10 @@ const RegisterProduct = () => {
             // Debug: Log the form data
             console.log('Form data being sent:');
             console.log('Edit mode:', editMode);
+            console.log('Product batch ID:', productBatch?.id);
             console.log('Current state values:');
-            console.log('title:', title, 'type:', typeof title);
-            console.log('description:', description, 'type:', typeof description);
+            console.log('title:', title, 'type:', typeof title, 'length:', title?.length);
+            console.log('description:', description, 'type:', typeof description, 'length:', description?.length);
             console.log('price:', price, 'type:', typeof price);
             console.log('display_mode:', displayMode, 'type:', typeof displayMode);
             console.log('add_category:', addToCategory, 'type:', typeof addToCategory);
@@ -218,22 +223,69 @@ const RegisterProduct = () => {
             console.log('is_public:', isPublic, 'type:', typeof isPublic);
             console.log('uploadedPhotos.length:', uploadedPhotos.length, 'type:', typeof uploadedPhotos.length);
             
-            for (let [key, value] of formData.entries()) {
-                console.log(`${key}: ${value} (type: ${typeof value})`);
+            if (editMode) {
+                console.log('FormData entries:');
+                for (let [key, value] of formData.entries()) {
+                    console.log(`${key}: ${value} (type: ${typeof value})`);
+                }
+            } else {
+                console.log('FormData entries:');
+                for (let [key, value] of formData.entries()) {
+                    console.log(`${key}: ${value} (type: ${typeof value})`);
+                }
             }
 
             // Submit to backend
             const url = editMode ? `/api/product-batches/${productBatch.id}` : '/api/product-batches';
             const method = editMode ? 'PUT' : 'POST';
             
+            let requestBody;
+            let headers = {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json',
+            };
+            
+            if (editMode) {
+                // For edit mode, send as JSON (without files for now)
+                const jsonData = {
+                    title: title,
+                    description: description,
+                    image_cnt: uploadedPhotos.length,
+                    price: isPaid ? price : 0,
+                    display_mode: displayMode,
+                    add_category: addToCategory ? '1' : '0',
+                    category_ids: addToCategory && selectedCategories.length > 0 ? selectedCategories : [],
+                    sn_print: printSerial ? '1' : '0',
+                    sn_format: serialFormat,
+                    is_public: isPublic ? '1' : '0',
+                    existing_files: uploadedPhotos.filter(photo => photo.isExisting).map(photo => photo.fileId),
+                };
+                
+                // Add optional fields
+                if (salesDeadline) {
+                    jsonData.sales_deadline = salesDeadline;
+                }
+                if (!isUnlimited && salesLimit) {
+                    jsonData.sales_limit = salesLimit;
+                }
+                if (password) {
+                    jsonData.password = password;
+                }
+                
+                console.log('JSON data being sent:', jsonData);
+                
+                requestBody = JSON.stringify(jsonData);
+                headers['Content-Type'] = 'application/json';
+            } else {
+                // For create mode, use FormData (with files)
+                requestBody = formData;
+            }
+            
             const response = await fetch(url, {
                 method: method,
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Accept': 'application/json',
-                },
+                headers: headers,
                 credentials: 'same-origin',
-                body: formData
+                body: requestBody
             });
 
             // Check if response is JSON
@@ -374,6 +426,20 @@ const RegisterProduct = () => {
             }
             return prev.filter(photo => photo.id !== photoId);
         });
+    };
+
+    const toggleCategory = (categoryId) => {
+        setSelectedCategories(prev => {
+            if (prev.includes(categoryId)) {
+                return prev.filter(id => id !== categoryId);
+            } else {
+                return [...prev, categoryId];
+            }
+        });
+    };
+
+    const isCategorySelected = (categoryId) => {
+        return selectedCategories.includes(categoryId);
     };
 
     return (
@@ -762,16 +828,23 @@ const RegisterProduct = () => {
                                     <span style={{ ...responsiveTextD(13, 19.5, null, 'medium', 'noto', '#87969F') }}>複数選択可能</span>
                                 </div>
                                 {/* Frame 123434 */}
-                                <div className="flex justify-center items-start w-full" style={{gap: vwd(14)}}>
-                                    <div className="flex items-center justify-center" style={{...responsiveMetricD(258, 60), padding: vwd(2), borderRadius: vwd(8), border: '1px solid #FF2AA1', backgroundColor: '#FFFFFF'}}>
-                                        <span style={{ ...responsiveTextD(16, 21, null, 'normal', 'noto', '#FF2AA1') }}>新しいリスト1</span>
-                                    </div>
-                                    <div className="flex items-center justify-center" style={{...responsiveMetricD(258, 60), padding: vwd(2), borderRadius: vwd(8), border: '1px solid #E9E9E9', backgroundColor: '#FFFFFF'}}>
-                                        <span style={{ ...responsiveTextD(16, 21, null, 'normal', 'noto', '#363636') }}>新しいリスト2</span>
-                                    </div>
-                                    <div className="flex items-center justify-center" style={{...responsiveMetricD(258, 60), padding: vwd(2), borderRadius: vwd(8), border: '1px solid #E9E9E9', backgroundColor: '#FFFFFF'}}>
-                                        <span style={{ ...responsiveTextD(16, 21, null, 'normal', 'noto', '#363636') }}>新しいリスト3</span>
-                                    </div>
+                                <div className="flex justify-center items-start w-full flex-wrap" style={{gap: vwd(14)}}>
+                                    {categories && categories.length > 0 ? (
+                                        categories.map((category, index) => (
+                                            <div 
+                                                key={category.id} 
+                                                className={`flex items-center justify-center cursor-pointer transition-colors ${isCategorySelected(category.id) ? 'border-[#FF2AA1] bg-[#FFEFF8]' : 'border-[#E9E9E9] bg-white'}`}
+                                                style={{...responsiveMetricD(258, 60), padding: vwd(2), borderRadius: vwd(8), border: '1px solid'}}
+                                                onClick={() => toggleCategory(category.id)}
+                                            >
+                                                <span style={{ ...responsiveTextD(16, 21, null, 'normal', 'noto', isCategorySelected(category.id) ? '#FF2AA1' : '#363636') }}>{category.title}</span>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="flex items-center justify-center" style={{...responsiveMetricD(258, 60), padding: vwd(2), borderRadius: vwd(8), border: '1px solid #E9E9E9', backgroundColor: '#FFFFFF'}}>
+                                            <span style={{ ...responsiveTextD(16, 21, null, 'normal', 'noto', '#ACACAC') }}>カテゴリがありません</span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                             {/* Frame 12344 */}
@@ -1275,21 +1348,23 @@ const RegisterProduct = () => {
                                             </div>
                                         </div>
                                         {/* Frame 123434 */}
-                                        <div className="flex justify-center items-start" style={{ gap: vw(14) }}>
-                                            <div className="flex items-center justify-center border border-[#FF2AA1] bg-white" style={{ ...responsiveMetric(148, 48), paddingLeft: vw(2), paddingRight: vw(2), borderRadius: vw(8) }}>
-                                                <span className="text-center" style={{ ...responsiveText(16, 21, null, 'normal', 'noto', '#FF2AA1') }}>新しいリスト1</span>
-                                            </div>
-                                            <div className="flex items-center justify-center border border-[#E9E9E9] bg-white" style={{ ...responsiveMetric(148, 48), paddingLeft: vw(2), paddingRight: vw(2), borderRadius: vw(8) }}>
-                                                <span className="text-center" style={{ ...responsiveText(16, 21, null, 'normal', 'noto', '#363636') }}>新しいリスト2</span>
-                                            </div>
-                                        </div>
-                                        <div className="flex justify-center items-start" style={{ gap: vw(14) }}>
-                                            <div className="flex items-center justify-center border border-[#E9E9E9] bg-white" style={{ ...responsiveMetric(148, 48), paddingLeft: vw(2), paddingRight: vw(2), borderRadius: vw(8) }}>
-                                                <span className="text-center" style={{ ...responsiveText(16, 21, null, 'normal', 'noto', '#363636') }}>新しいリスト4</span>
-                                            </div>
-                                            <div className="flex items-center justify-center border border-[#E9E9E9] bg-white" style={{ ...responsiveMetric(148, 48), paddingLeft: vw(2), paddingRight: vw(2), borderRadius: vw(8) }}>
-                                                <span className="text-center" style={{ ...responsiveText(16, 21, null, 'normal', 'noto', '#363636') }}>新しいリスト4</span>
-                                            </div>
+                                        <div className="flex justify-center items-start flex-wrap" style={{ gap: vw(14) }}>
+                                            {categories && categories.length > 0 ? (
+                                                categories.map((category, index) => (
+                                                    <div 
+                                                        key={category.id} 
+                                                        className={`flex items-center justify-center cursor-pointer transition-colors ${isCategorySelected(category.id) ? 'border-[#FF2AA1] bg-[#FFEFF8]' : 'border-[#E9E9E9] bg-white'}`}
+                                                        style={{ ...responsiveMetric(148, 48), paddingLeft: vw(2), paddingRight: vw(2), borderRadius: vw(8), border: '1px solid' }}
+                                                        onClick={() => toggleCategory(category.id)}
+                                                    >
+                                                        <span className="text-center" style={{ ...responsiveText(16, 21, null, 'normal', 'noto', isCategorySelected(category.id) ? '#FF2AA1' : '#363636') }}>{category.title}</span>
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <div className="flex items-center justify-center border border-[#E9E9E9] bg-white" style={{ ...responsiveMetric(148, 48), paddingLeft: vw(2), paddingRight: vw(2), borderRadius: vw(8) }}>
+                                                    <span className="text-center" style={{ ...responsiveText(16, 21, null, 'normal', 'noto', '#ACACAC') }}>カテゴリがありません</span>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                     {/* Frame 12344 */}

@@ -30,6 +30,7 @@ class StoreProductBatchRequest extends FormRequest
             'price' => 'required|numeric|min:0|max:999999.99',
             'display_mode' => 'required|in:normal,gacha,blur,password,cushion',
             'add_category' => 'required|boolean',
+            'category_ids' => 'nullable|string', // JSON string of category IDs
             'sn_print' => 'required|boolean',
             'sn_format' => 'required_if:sn_print,true|in:number,random',
             'is_public' => 'required|boolean',

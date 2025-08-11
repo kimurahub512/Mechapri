@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProductBatch extends Model
@@ -20,7 +21,6 @@ class ProductBatch extends Model
      */
     protected $fillable = [
         'user_id',
-        'created_id',
         'title',
         'description',
         'image_cnt',
@@ -65,12 +65,22 @@ class ProductBatch extends Model
     }
 
     /**
+     * Get the categories that this product batch belongs to.
+     */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(UserCategory::class, 'category_product_batch', 'product_batch_id', 'user_category_id');
+    }
+
+    /**
      * Get the files for the product batch.
      */
     public function files(): HasMany
     {
         return $this->hasMany(ProductBatchFile::class)->orderBy('sort_order');
     }
+
+
 
     /**
      * Check if the product batch is free.

@@ -57,6 +57,14 @@ class ProductBatchService
                 $productBatch->update(['image_cnt' => $actualImageCount]);
             }
 
+            // Handle category assignment if add_category is true
+            if ($data['add_category'] && !empty($data['category_ids'])) {
+                $categoryIds = is_string($data['category_ids']) ? json_decode($data['category_ids'], true) : $data['category_ids'];
+                if (is_array($categoryIds)) {
+                    $productBatch->categories()->attach($categoryIds);
+                }
+            }
+
             // Log the creation
             Log::info('Product batch created', [
                 'user_id' => $user->id,
@@ -65,9 +73,10 @@ class ProductBatchService
                 'price' => $productBatch->price,
                 'is_public' => $productBatch->is_public,
                 'files_uploaded' => count($files),
+                'categories_assigned' => $data['add_category'] ? count($data['category_ids'] ?? []) : 0,
             ]);
 
-            return $productBatch->load('files');
+            return $productBatch->load(['files', 'categories']);
         });
     }
 

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { usePage, router } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import ProductCarousel from '@/Components/ProductCarousel';
@@ -15,165 +16,25 @@ import heart from '@/assets/images/heart.svg';
 import arrow_right from '@/assets/images/arrow_right.svg';
 import arrow_left from '@/assets/images/arrow_left.svg';
 
-// Add this above the return statement in the shoptop component
-const products = [
-    {
-        id: 1,
-        title: 'Gウェルネス💪疲れ知らず',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '3枚セット',
-        price: '無料',
-        like: 0,
-        badge1: '1日',
-        badge2: '以内',
-    },
-    {
-        id: 2,
-        title: 'リラックスセット',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '2枚セット',
-        price: '500円',
-        like: 12,
-        badge1: '2日',
-        badge2: '以内',
-    },
-    {
-        id: 3,
-        title: 'エナジードリンク',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '1枚セット',
-        price: '100円',
-        like: 5,
-        badge1: '3日',
-        badge2: '以内',
-    },
-    {
-        id: 4,
-        title: 'エナジードリンク',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '1枚セット',
-        price: '100円',
-        like: 5,
-        badge1: '3日',
-        badge2: '以内',
-    },
-    {
-        id: 5,
-        title: 'エナジードリンク',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '1枚セット',
-        price: '100円',
-        like: 5,
-        badge1: '3日',
-        badge2: '以内',
-    },
-    {
-        id: 6,
-        title: 'エナジードリンク',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '1枚セット',
-        price: '100円',
-        like: 5,
-        badge1: '3日',
-        badge2: '以内',
-    },
-    {
-        id: 7,
-        title: 'エナジードリンク',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '1枚セット',
-        price: '100円',
-        like: 5,
-        badge1: '3日',
-        badge2: '以内',
-    },
-    {
-        id: 8,
-        title: 'エナジードリンク',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '1枚セット',
-        price: '100円',
-        like: 5,
-        badge1: '3日',
-        badge2: '以内',
-    },
-    {
-        id: 9,
-        title: 'エナジードリンク',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '1枚セット',
-        price: '100円',
-        like: 5,
-        badge1: '3日',
-        badge2: '以内',
-    },
-    {
-        id: 10,
-        title: 'エナジードリンク',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '1枚セット',
-        price: '100円',
-        like: 5,
-        badge1: '3日',
-        badge2: '以内',
-    },
-    {
-        id: 11,
-        title: 'エナジードリンク',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '1枚セット',
-        price: '100円',
-        like: 5,
-        badge1: '3日',
-        badge2: '以内',
-    },
-    {
-        id: 12,
-        title: 'エナジードリンク',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '1枚セット',
-        price: '100円',
-        like: 5,
-        badge1: '3日',
-        badge2: '以内',
-    },
-    {
-        id: 13,
-        title: 'エナジードリンク',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '1枚セット',
-        price: '100円',
-        like: 5,
-        badge1: '3日',
-        badge2: '以内',
-    },
-    {
-        id: 14,
-        title: 'エナジードリンク',
-        image: photo1,
-        badges: [photo2, photo3, photo4],
-        badgeText: '1枚セット',
-        price: '100円',
-        like: 5,
-        badge1: '3日',
-        badge2: '以内',
-    },
-];
+
 
 const ShopNewProducts = () => {
+    const { productBatches } = usePage().props;
+
+    // Transform productBatches to match the expected format for ProductCarousel
+    const transformedProducts = productBatches ? productBatches.map(batch => ({
+        id: batch.id,
+        title: batch.title,
+        image: batch.files && batch.files.length > 0 ? batch.files[0].url : photo1,
+        badges: batch.files && batch.files.length > 1 ? batch.files.slice(1, 4).map(file => file.url) : [photo2, photo3, photo4],
+        badgeText: `${batch.image_cnt}枚セット`,
+        price: batch.price == 0 ? '無料' : `${batch.price}円`,
+        like: 0, // We can add likes later if needed
+        badge1: '1日',
+        badge2: '以内',
+        user: batch.user,
+    })) : [];
+
     return (
         <div className="bg-white">
             <Header />
@@ -193,7 +54,7 @@ const ShopNewProducts = () => {
                     </div>
                     {/* 212: Product List */}
                     <ProductCarousel
-                        products={products}
+                        products={transformedProducts}
                         isMobile={true}
                     />
                 </div>
@@ -202,23 +63,22 @@ const ShopNewProducts = () => {
             {/* Section 1 (Desktop) */}
             <section className="hidden md:flex flex-col justify-center items-start pt-[32px] pb-[80px] px-[120px] gap-[10px] bg-white ">
                 {/* Frame 11 */}
-                <div className="flex flex-row items-center gap-[4px] py-[4px] self-stretch">
+                <a href="/myshop/category" className="flex flex-row items-center gap-[4px] py-[4px] self-stretch">
                     <div className="flex flex-row items-center justify-center w-[20px] h-[15px] p-[1.25px_1px_0.625px_0.625px]">
                         <img src={arrow_left} alt="arrow left" className="w-[18.375px] h-[13.125px]" />
                     </div>
                     <span className="text-[#000] font-noto text-[16px] font-normal leading-[24px]">ショップに戻る</span>
-                </div>
+                </a>
                 <div className="flex flex-col items-start gap-[8px] self-stretch">
                     {/* 211: 最新の出品 + arrow */}
                     <div className="flex w-[277px] py-[25px] pr-0 pb-[6px] pl-0 items-center gap-[12px]">
                         <span className="text-[#000] font-noto text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">最新の出品</span>
-                        <img src={arrow_right} alt="arrow right" className="w-[24px] h-[24px]" />
                     </div>
                     {/* 212: Product List */}
                     <ProductCarousel
-                        products={products}
+                        products={transformedProducts}
                         isMobile={false}
-                        rowCnt={3}
+                        rowCnt={Math.ceil(transformedProducts.length / 4)}
                     />
                 </div>
             </section>
