@@ -173,7 +173,7 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
 
     Route::get('/homelogin', function(){
         return Inertia::render('HomeLogin');
-    });
+    })->name('homelogin');
 
     Route::get('/verify-email', function () {
         return Inertia::render('Auth/VerifyEmail');
@@ -189,19 +189,19 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
         }
 
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(route('dashboard'));
+            return redirect()->intended(route('homelogin'));
         }
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
 
-        return redirect()->intended(route('dashboard'));
+        return redirect()->intended(route('homelogin'));
     })->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
 
     Route::post('/email/verification-notification', function (Request $request) {
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(route('dashboard'));
+            return redirect()->intended(route('homelogin'));
         }
 
         $request->user()->sendEmailVerificationNotification();
