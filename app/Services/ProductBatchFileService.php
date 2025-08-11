@@ -6,7 +6,7 @@ use App\Models\ProductBatch;
 use App\Models\ProductBatchFile;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\FacadesLog;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 
