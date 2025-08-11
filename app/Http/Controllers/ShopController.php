@@ -48,10 +48,6 @@ class ShopController extends Controller
                 $oldImagePath = str_replace('/storage/', '', $user->image);
                 if (Storage::disk('public')->exists($oldImagePath)) {
                     Storage::disk('public')->delete($oldImagePath);
-                    Log::info('Old user image deleted', [
-                        'user_id' => $user->id,
-                        'old_image_path' => $oldImagePath
-                    ]);
                 }
             }
             

@@ -72,29 +72,22 @@ const RegisterProduct = () => {
     };
 
     const scrollToTop = () => {
-        console.log('Scrolling to top...');
-        console.log('Current scroll position:', window.scrollY);
-        
         // Try multiple approaches
         try {
             // Method 1: Scroll to top of page
             window.scrollTo(0, 0);
-            console.log('Method 1: Scrolled to top of page');
             
             // Method 2: Scroll the main container
             const mainElement = document.querySelector('main');
             if (mainElement) {
                 mainElement.scrollTop = 0;
-                console.log('Method 2: Scrolled main container');
             }
             
             // Method 3: Scroll to error element
             setTimeout(() => {
                 const errorElement = document.querySelector('.error-message');
-                console.log('Error element found:', errorElement);
                 if (errorElement) {
                     errorElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    console.log('Method 3: Scrolled to error element');
                 }
             }, 100);
             
@@ -123,7 +116,6 @@ const RegisterProduct = () => {
             }
 
             const authResult = await authTest.json();
-            console.log('Auth test result:', authResult);
 
             if (!authResult.authenticated) {
                 setError('認証エラーが発生しました。再度ログインしてください。');
@@ -209,32 +201,6 @@ const RegisterProduct = () => {
                 formData.append(`existing_files[${index}]`, photo.fileId);
             });
 
-            // Debug: Log the form data
-            console.log('Form data being sent:');
-            console.log('Edit mode:', editMode);
-            console.log('Product batch ID:', productBatch?.id);
-            console.log('Current state values:');
-            console.log('title:', title, 'type:', typeof title, 'length:', title?.length);
-            console.log('description:', description, 'type:', typeof description, 'length:', description?.length);
-            console.log('price:', price, 'type:', typeof price);
-            console.log('display_mode:', displayMode, 'type:', typeof displayMode);
-            console.log('add_category:', addToCategory, 'type:', typeof addToCategory);
-            console.log('sn_print:', printSerial, 'type:', typeof printSerial);
-            console.log('is_public:', isPublic, 'type:', typeof isPublic);
-            console.log('uploadedPhotos.length:', uploadedPhotos.length, 'type:', typeof uploadedPhotos.length);
-            
-            if (editMode) {
-                console.log('FormData entries:');
-                for (let [key, value] of formData.entries()) {
-                    console.log(`${key}: ${value} (type: ${typeof value})`);
-                }
-            } else {
-                console.log('FormData entries:');
-                for (let [key, value] of formData.entries()) {
-                    console.log(`${key}: ${value} (type: ${typeof value})`);
-                }
-            }
-
             // Submit to backend
             const url = editMode ? `/api/product-batches/${productBatch.id}` : '/api/product-batches';
             const method = editMode ? 'PUT' : 'POST';
@@ -272,8 +238,6 @@ const RegisterProduct = () => {
                     jsonData.password = password;
                 }
                 
-                console.log('JSON data being sent:', jsonData);
-                
                 requestBody = JSON.stringify(jsonData);
                 headers['Content-Type'] = 'application/json';
             } else {
@@ -290,8 +254,6 @@ const RegisterProduct = () => {
 
             // Check if response is JSON
             const contentType = response.headers.get('content-type');
-            console.log('Response status:', response.status);
-            console.log('Response content-type:', contentType);
             
             if (!contentType || !contentType.includes('application/json')) {
                 // Try to get the response text to see what we're actually getting
@@ -301,7 +263,6 @@ const RegisterProduct = () => {
             }
 
             const result = await response.json();
-            console.log('API Response:', result);
 
             if (result.success) {
                 if (editMode) {
@@ -310,7 +271,6 @@ const RegisterProduct = () => {
                 } else {
                     // Store the product data for the modal (only for new products)
                     const productData = result.data;
-                    console.log('Product data for modal:', productData);
                     setProductData(productData);
                     
                     // Show success modal
