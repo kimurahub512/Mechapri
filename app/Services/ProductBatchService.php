@@ -58,10 +58,12 @@ class ProductBatchService
             }
 
             // Handle category assignment if add_category is true
+            $categoriesAssigned = 0;
             if ($data['add_category'] && !empty($data['category_ids'])) {
                 $categoryIds = is_string($data['category_ids']) ? json_decode($data['category_ids'], true) : $data['category_ids'];
                 if (is_array($categoryIds)) {
                     $productBatch->categories()->attach($categoryIds);
+                    $categoriesAssigned = count($categoryIds);
                 }
             }
 
@@ -73,7 +75,7 @@ class ProductBatchService
                 'price' => $productBatch->price,
                 'is_public' => $productBatch->is_public,
                 'files_uploaded' => count($files),
-                'categories_assigned' => $data['add_category'] ? count($data['category_ids'] ?? []) : 0,
+                'categories_assigned' => $categoriesAssigned,
             ]);
 
             return $productBatch->load(['files', 'categories']);

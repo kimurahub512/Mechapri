@@ -14,6 +14,7 @@ class UserCategory extends Model
         'description',
         'is_public',
         'batch_cnt',
+        'sort_order',
     ];
 
     protected $casts = [

@@ -88,7 +88,7 @@ const Footer = () => {
             />
           </div>
           <div className="flex flex-col items-start" style={{...responsivePositionD(0, 813), gap: vwd(32)}}>
-            <div style={{...responsiveTextD(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>出品をはじめる</div>
+            <a href='/beginner' style={{...responsiveTextD(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>出品をはじめる</a>
             <div style={{...responsiveTextD(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>おすすめショップ</div>
             <div style={{...responsiveTextD(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>プライベート印刷</div>
           </div>
@@ -198,7 +198,7 @@ const Footer = () => {
             />
           </div>
           <div className="flex flex-col items-start" style={{...responsivePosition(96, 9), gap: vw(32)}}>
-            <div style={{...responsiveText(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>出品をはじめる</div>
+            <a href='/beginner' style={{...responsiveText(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>出品をはじめる</a>
             <div style={{...responsiveText(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>おすすめショップ</div>
             <div style={{...responsiveText(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>プライベート印刷</div>
           </div>

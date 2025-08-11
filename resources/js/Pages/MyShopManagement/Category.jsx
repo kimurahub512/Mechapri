@@ -5,6 +5,7 @@ import Footer from '@/Components/footer/footer';
 import ShopSidebar from '@/Components/ShopSidebar';
 import ShopMobileTopBlock from '@/Components/ShopMobileTopBlocks';
 import ConfirmationModal from '@/Components/ConfirmationModal';
+import CategoryReorderModal from '@/Components/CategoryReorderModal';
 import '@/../../resources/css/shopmanagement.css';
 import recyclebin from '@/assets/images/recyclebin.svg';
 import list from '@/assets/images/list_unordered.svg';
@@ -13,12 +14,27 @@ import file_add from '@/assets/images/file_add.svg';
 
 
 const Category = () => {
-    const { categories, totalBatches, auth } = usePage().props;
+    const { categories, totalBatches, auth, flash } = usePage().props;
+
+    // Success message state
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+    // Show success message if it exists in flash
+    useEffect(() => {
+        if (flash?.success) {
+            setShowSuccessMessage(true);
+            setTimeout(() => setShowSuccessMessage(false), 3000);
+        }
+    }, [flash?.success]);
 
     // Confirmation modal state
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [categoryToDelete, setCategoryToDelete] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
+
+    // Reorder modal state
+    const [showReorderModal, setShowReorderModal] = useState(false);
+    const [isReordering, setIsReordering] = useState(false);
 
     const handleDelete = (category) => {
         setCategoryToDelete(category);
@@ -46,9 +62,44 @@ const Category = () => {
         setShowDeleteModal(false);
         setCategoryToDelete(null);
     };
+
+    const handleReorder = () => {
+        setShowReorderModal(true);
+    };
+
+    const handleReorderSave = async (orderedCategories) => {
+        setIsReordering(true);
+        try {
+            const reorderData = orderedCategories.map((category, index) => ({
+                id: category.id,
+                sort_order: index
+            }));
+
+            await router.post('/myshop/category/reorder', { categories: reorderData });
+            setShowReorderModal(false);
+            // The page will refresh automatically due to the redirect
+        } catch (error) {
+            console.error('Reorder failed:', error);
+            alert('並び替えに失敗しました。');
+        } finally {
+            setIsReordering(false);
+        }
+    };
+
+    const cancelReorder = () => {
+        setShowReorderModal(false);
+    };
     return (
         <>
             <Header />
+            
+            {/* Success Message */}
+            {showSuccessMessage && (
+                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg font-['Noto_Sans_JP']">
+                    {flash?.success}
+                </div>
+            )}
+            
             <div className="shopmanagement-root flex flex-col w-full overflow-x-hidden md:flex-row">
                 {/* Sidebar Section */}
                 <div className="hidden md:block">
@@ -62,14 +113,17 @@ const Category = () => {
                     {/* Title */}
                     <div className="flex flex-row items-center justify-between w-full">
                         <h1 className="text-[#363636] font-['Noto_Sans_JP'] text-[24px] font-bold leading-[24px]">商品のカテゴリ</h1>
-                        <span className="text-[#363636] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px]">{totalBatches || 0}/200</span>
+                        <span className="text-[#363636] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px]">{categories.length || 0}/200</span>
                     </div>
                     {/* Frame 1 */}
                     <div className="flex flex-col gap-2 item-start  w-full">
                         <div className="flex flex-row gap-2 item-center">
-                            <div className="flex w-[120px] h-[34px] flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white my-[7px]">
+                            <button 
+                                onClick={handleReorder}
+                                className="flex w-[120px] h-[34px] flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white my-[7px] hover:bg-gray-50 transition-colors cursor-pointer"
+                            >
                                 <span className="text-center font-noto text-[12px] font-bold leading-[18px] bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent">カテゴリの並び替え</span>
-                            </div>
+                            </button>
                             <div className="flex w-[120px] h-[34px] flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white my-[7px]">
                                 <a href='/myshop/category/create' className="text-center font-noto text-[12px] font-bold leading-[18px] bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent">カテゴリを追加</a>
                             </div>
@@ -165,7 +219,7 @@ const Category = () => {
                                             </div>
                                             <div className="flex flex-row items-start justify-between self-stretch">
                                                 <div className="flex w-[120px] h-[35px] flex-col justify-center items-start rounded-[5px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]">
-                                                    <a href='/registerproduct' className="flex w-[120px] h-[35px] justify-center items-center gap-[10px] flex-shrink-0">
+                                                    <a href='/myshop/registerproduct' className="flex w-[120px] h-[35px] justify-center items-center gap-[10px] flex-shrink-0">
                                                         <div className="flex w-[16px] h-[16px] justify-center items-center flex-shrink-0">
                                                             <img src={file_add} alt="file_add" className="w-[16px] h-[16px]" />
                                                         </div>
@@ -206,14 +260,17 @@ const Category = () => {
                     {/* Title */}
                     <div className="flex flex-row items-center justify-between w-full">
                         <h1 className="text-[#363636] font-['Noto_Sans_JP'] text-[36px] font-bold leading-[54px]">商品のカテゴリ</h1>
-                        <span className="text-[#363636] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px]">{totalBatches || 0}/200</span>
+                        <span className="text-[#363636] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px]">{categories.length || 0}/200</span>
                     </div>
                     {/* Frame 1 */}
                     <div className="flex flex-col gap-4 item-start">
                         <div className="flex flex-row gap-6 item-center">
-                            <div className="flex w-[165px] h-[34px] flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white my-[7px]">
+                            <button 
+                                onClick={handleReorder}
+                                className="flex w-[165px] h-[34px] flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white my-[7px] hover:bg-gray-50 transition-colors cursor-pointer"
+                            >
                                 <span className="text-center font-noto text-[14px] font-bold leading-[22px] bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent">カテゴリの並び替え</span>
-                            </div>
+                            </button>
                             <div className="flex w-[165px] h-[34px] flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white my-[7px]">
                                 <a href='/myshop/category/create' className="text-center font-noto text-[14px] font-bold leading-[22px] bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent">カテゴリを追加</a>
                             </div>
@@ -318,7 +375,7 @@ const Category = () => {
                                             </div>
                                             <div className="flex flex-row items-start justify-between self-stretch">
                                                 <div className="flex w-[160px] h-[35px] flex-col justify-center items-start rounded-[5px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]">
-                                                    <a href='/registerproduct' className="flex w-[165px] h-[35px] justify-center items-center gap-[10px] flex-shrink-0">
+                                                    <a href='/myshop/registerproduct' className="flex w-[165px] h-[35px] justify-center items-center gap-[10px] flex-shrink-0">
                                                         <div className="flex w-[16px] h-[16px] justify-center items-center flex-shrink-0">
                                                             <img src={file_add} alt="file_add" className="w-[16px] h-[16px]" />
                                                         </div>
@@ -366,6 +423,15 @@ const Category = () => {
                 confirmButtonClass="bg-red-500 hover:bg-red-600"
                 isLoading={isDeleting}
                 loadingText="削除中..."
+            />
+
+            {/* Category Reorder Modal */}
+            <CategoryReorderModal
+                isOpen={showReorderModal}
+                onClose={cancelReorder}
+                onSave={handleReorderSave}
+                categories={categories}
+                isLoading={isReordering}
             />
 
             <Footer />

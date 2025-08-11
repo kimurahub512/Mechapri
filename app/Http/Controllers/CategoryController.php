@@ -23,9 +23,19 @@ class CategoryController extends Controller
         // Get user's categories with product batch count
         $categories = $user->categories()
             ->withCount('productBatches')
+            ->orderBy('sort_order', 'asc')
             ->orderBy('created_at', 'desc')
-            ->get()
-            ->map(function($category) {
+            ->get();
+
+        // Initialize sort_order for categories that don't have it set
+        $categories->each(function($category, $index) {
+            if ($category->sort_order === 0 && $index === 0) {
+                // This is likely an existing category without sort_order
+                $category->update(['sort_order' => $index + 1]);
+            }
+        });
+
+        $categories = $categories->map(function($category) {
                 return [
                     'id' => $category->id,
                     'title' => $category->title,
@@ -251,5 +261,28 @@ class CategoryController extends Controller
             'message' => $category->is_public ? 'カテゴリが公開されました。' : 'カテゴリが非公開になりました。',
             'is_public' => $category->is_public
         ]);
+    }
+
+    /**
+     * Reorder categories.
+     */
+    public function reorder(Request $request)
+    {
+        $validated = $request->validate([
+            'categories' => 'required|array',
+            'categories.*.id' => 'required|exists:user_categories,id',
+            'categories.*.sort_order' => 'required|integer|min:0',
+        ]);
+
+        $user = Auth::user();
+
+        foreach ($validated['categories'] as $categoryData) {
+            $category = $user->categories()->find($categoryData['id']);
+            if ($category) {
+                $category->update(['sort_order' => $categoryData['sort_order']]);
+            }
+        }
+
+        return redirect()->route('myshop.category')->with('success', 'カテゴリの順序が更新されました。');
     }
 }

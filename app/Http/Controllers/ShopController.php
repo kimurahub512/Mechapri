@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class ShopController extends Controller
 {
@@ -41,11 +43,24 @@ class ShopController extends Controller
         
         // Handle image upload
         if ($request->hasFile('image')) {
+            // Delete old image if it exists and is not null
+            if ($user->image && !empty($user->image)) {
+                $oldImagePath = str_replace('/storage/', '', $user->image);
+                if (Storage::disk('public')->exists($oldImagePath)) {
+                    Storage::disk('public')->delete($oldImagePath);
+                    Log::info('Old user image deleted', [
+                        'user_id' => $user->id,
+                        'old_image_path' => $oldImagePath
+                    ]);
+                }
+            }
+            
             $image = $request->file('image');
             $extension = $image->getClientOriginalExtension();
             $imageName = $user->id . '.' . $extension;
-            $imagePath = $image->storeAs('public/user_images', $imageName);
+            $imagePath = $image->storeAs('user_images', $imageName);
             $validated['image'] = '/storage/user_images/' . $imageName;
+            
         }
         
         $user->update($validated);
