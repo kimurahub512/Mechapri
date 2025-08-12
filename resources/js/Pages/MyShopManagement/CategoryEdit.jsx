@@ -352,9 +352,9 @@ const CategoryEdit = () => {
                                         padding: vwR(12.5, 12.5), borderRadius: vwR(5.71, 5.71), fontSize: vwR(14, 14)}}
                                     placeholder="カテゴリの説明文を入力してください" 
                                 />
-                            </div>
-                        </div>
-                        
+                                        </div>
+                                    </div>
+
                         {/* Public Settings */}
                         <div className="flex flex-col items-start w-full" style={{gap: vwR(20, 20)}}>
                             <div className="flex flex-row items-center w-full border-b border-[#E9E9E9]" style={{gap: vwR(12, 12), paddingTop: vwR(12, 25), paddingBottom: vwR(6, 6)}}>
@@ -376,7 +376,7 @@ const CategoryEdit = () => {
                                 <span style={{...responsiveTextR(13, 19.5, 'medium', 16, 24, 'medium', 'noto', '#87969F'), marginLeft: vwR(30, 0)}}>自分だけが商品ページを見ることができます</span>
                             </div>
                         </div>
-                        
+
                         {/* Products Section */}
                         <div className="flex flex-col items-start w-full" style={{gap: vwR(4, 4)}}>
                             <div className="flex flex-row items-center w-full" style={{gap: vwR(12, 12), paddingTop: vwR(12, 25), paddingBottom: vwR(6, 6)}}>
@@ -414,9 +414,9 @@ const CategoryEdit = () => {
                                                 ) : (
                                                     <div className="bg-[#E9E9E9] flex items-center justify-center" style={{...responsiveMetricR(58, 58, 200, 200), borderRadius: vwR(3, 8)}}>
                                                         <span className="text-[#ACACAC] text-xm">No Image</span>
-                                                    </div>
+                                        </div>
                                                 )}
-                                            </div>
+                                        </div>
                                             <span className="truncate w-full text-center px-1" style={{...responsiveTextR(6, 12, 'normal', 16, 24, 'normal', 'noto', '#363636')}}>
                                                 {product.title}
                                             </span>
@@ -429,7 +429,7 @@ const CategoryEdit = () => {
                                             </div>
                                         </div>
                                     ))}
-                                </div>
+                                </div>                                
                             </div>
                             
                             <div className="flex flex-row items-start w-full" style={{gap: vwR(16, 16)}}>

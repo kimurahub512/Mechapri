@@ -15,14 +15,15 @@ class ShopTopController extends Controller
         // For now, let's get the first user with products as the featured shop
         // In a real app, this would be based on shop ID from URL or other logic
         $featuredUser = User::with(['productBatches' => function($query) {
-                $query->where('is_public', true)
+                $query
+                // ->where('is_public', true)
                       ->with(['files' => function($fileQuery) {
                           $fileQuery->orderBy('sort_order');
                       }])
                       ->orderBy('created_at', 'desc');
             }])
             ->whereHas('productBatches', function($query) {
-                $query->where('is_public', true);
+                // $query->where('is_public', true);
             })
             ->first();
 
@@ -52,7 +53,7 @@ class ShopTopController extends Controller
 
             // Get latest products (最新の出品)
             $latestProducts = $featuredUser->productBatches()
-                ->where('is_public', true)
+                // ->where('is_public', true)
                 ->with(['files' => function($query) {
                     $query->orderBy('sort_order');
                 }])
@@ -66,14 +67,14 @@ class ShopTopController extends Controller
             // Get category-based new list products (新しいリスト)
             $categoryProducts = [];
             $categories = $featuredUser->categories()
-                ->where('is_public', true)
+                // ->where('is_public', true)
                 ->orderBy('sort_order', 'asc')
                 ->orderBy('created_at', 'desc')
                 ->get();
 
             foreach ($categories as $category) {
                 $categoryBatches = $category->productBatches()
-                    ->where('is_public', true)
+                    // ->where('is_public', true)
                     ->with(['files' => function($query) {
                         $query->orderBy('sort_order');
                     }])

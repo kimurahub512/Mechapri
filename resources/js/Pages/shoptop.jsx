@@ -90,10 +90,10 @@ const shoptop = () => {
                 {categoryProducts.length? (categoryProducts.map((categorySection, index) => (
                     <div key={categorySection.category.id} className="flex flex-col items-start w-full" style={{ gap: vw(8) }}>
                         {/* 211: Category Title + arrow */}
-                        <div className="flex items-center w-full" style={{ paddingTop: vw(12), paddingBottom: vw(6), gap: vw(12) }}>
+                        <a href={`/shop-newcategory/${categorySection.category.id}`} className="flex items-center w-full cursor-pointer hover:opacity-80 transition-opacity" style={{ paddingTop: vw(12), paddingBottom: vw(6), gap: vw(12) }}>
                             <span style={{ ...responsiveText(16, 16, null, 'bold', 'noto', '#363636') }}>{categorySection.category.title}</span>
                             <img src={arrow_right} alt="arrow right" style={{ width: vw(20), height: vw(20) }} />
-                        </div>
+                        </a>
                         {/* 212: Product List */}
                         <ProductCarousel 
                             products={categorySection.products || []} 
@@ -175,10 +175,10 @@ const shoptop = () => {
                 {categoryProducts?.length > 0 ? (categoryProducts.map((categorySection, index) => (
                     <div key={categorySection.category.id} className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                         {/* 211: Category Title + arrow */}
-                        <div className="flex items-center" style={{ width: vwd(277), paddingTop: vwd(25), paddingRight: 0, paddingBottom: vwd(6), paddingLeft: 0, gap: vwd(12) }}>
+                        <a href={`/shop-newcategory/${categorySection.category.id}`} className="flex items-center cursor-pointer hover:opacity-80 transition-opacity" style={{ width: vwd(277), paddingTop: vwd(25), paddingRight: 0, paddingBottom: vwd(6), paddingLeft: 0, gap: vwd(12) }}>
                             <span className="text-[#000] font-noto font-bold" style={{ ...responsiveTextD(24, 24, null, 'bold', 'noto', '#000'), letterSpacing: vwd(1.05) }}>{categorySection.category.title}</span>
                             <img src={arrow_right} alt="arrow right" style={{ width: vwd(24), height: vwd(24) }} />
-                        </div>
+                        </a>
                         {/* 212: Product List */}
                         <ProductCarousel 
                             products={categorySection.products || []} 
