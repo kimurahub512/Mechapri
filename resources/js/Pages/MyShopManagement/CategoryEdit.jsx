@@ -11,6 +11,7 @@ import radio from '@/assets/images/beginner_radio.svg';
 import add from '@/assets/images/add.svg';
 import close from '@/assets/images/close.svg';
 import lock from '@/assets/images/lock.svg';
+import {vwR,  responsiveTextR, responsiveMetricR, responsivePositionR} from '@/lib/utils';
 
 
 const CategoryEdit = () => {
@@ -37,6 +38,10 @@ const CategoryEdit = () => {
     
     // Error state
     const [error, setError] = useState(null);
+        
+    // Alternative: You can also use vwResponsive directly for one-off calculations
+    // const modalPadding = vwResponsive(16);
+    // const modalWidth = vwResponsive(400);
     
     // Update character counters when form values change
     useEffect(() => {
@@ -189,11 +194,13 @@ const CategoryEdit = () => {
         if (!showProductSelection) return null;
         
         return (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-                <div className="bg-white rounded-[16px] max-w-4xl w-full max-h-[80vh] overflow-y-auto">
-                    <div className="p-6">
-                        <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-[#363636] font-['Noto_Sans_JP'] text-[24px] font-bold">
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style={{padding: vwR(16, 64)}}>
+                <div className="bg-white rounded-[16px] w-full overflow-y-auto" style={{
+                    height: vwR(400, 700)
+                }}>
+                    <div className="p-6" style={{padding: vwR(16, 32)}}>
+                        <div className="flex justify-between items-center" style={{marginBottom: vwR(16, 32)}}>
+                            <h2 style={responsiveTextR(24, 24, 'bold', 32, 32, 'bold', 'noto', '#363636')}>
                                 商品を選択
                             </h2>
                             <button 
@@ -205,7 +212,7 @@ const CategoryEdit = () => {
                         </div>
                         
                         {productBatches && productBatches.length > 0 ? (
-                            <div className="grid grid-cols-3 gap-4 mb-6">
+                            <div className="grid grid-cols-3 mb-6" style={{gap: vwR(16, 32), marginBottom: vwR(16, 32)}}>
                                 {productBatches.map((product) => (
                                     <div 
                                         key={product.id}
@@ -216,26 +223,27 @@ const CategoryEdit = () => {
                                         }`}
                                         onClick={() => handleProductSelection(product)}
                                     >
-                                        <div className="flex flex-col items-center rounded-[16px] w-full h-[158px] md:h-[272px] bg-white relative">
-                                            <div className="flex w-full h-full p-2 flex-col items-center justify-center rounded-[9.141px] bg-[#F6F6F6]">
+                                        <div className="flex flex-col items-center rounded-[16px] w-full bg-white relative" >
+                                            <div className="flex w-full h-full px-2 flex-col items-center justify-center rounded-[9.141px] bg-[#F6F6F6]">
                                                 {product.files && product.files.length > 0 ? (
                                                     <img 
                                                         src={product.files[0].url} 
                                                         alt={product.title}
-                                                        className="w-full h-full max-w-[120px] max-h-[120px] md:max-w-[200px] md:max-h-[200px] object-cover rounded-[8px]"
+                                                        className="object-cover rounded-[8px]"
+                                                        style={{height: vwR(120, 190), width: vwR(120, 190)}} 
                                                     />
                                                 ) : (
-                                                    <div className="w-full h-full max-w-[120px] max-h-[120px] md:max-w-[200px] md:max-h-[200px] bg-[#E9E9E9] rounded-[8px] flex items-center justify-center">
-                                                        <span className="text-[#ACACAC] text-xs md:text-sm">No Image</span>
+                                                    <div className="bg-[#E9E9E9] rounded-[8px] flex items-center justify-center" style={{height: vwR(120, 200), width: vwR(120, 200)}}>
+                                                        <span className="text-[#ACACAC] text-xs md:text-sm">製品なし</span>
                                                     </div>
                                                 )}
                                             </div>
-                                            <span className="text-[#363636] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px] truncate w-full text-center px-2 mt-2">
+                                            <span className="text-center" style={responsiveTextR(12, 24, 'normal', 24, 32, 'normal', 'noto', '#363636')}>
                                                 {product.title}
                                             </span>
                                             
                                             {isProductSelected(product.id) && (
-                                                <div className="absolute top-2 right-2 w-6 h-6 bg-[#FF2AA1] rounded-full flex items-center justify-center">
+                                                <div className="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center" style={{...responsivePositionR(6, null, null, 6, 8, null, null, 8), ...responsiveMetricR(16, 16, 32, 32)}}>
                                                     <span className="text-white text-xs">✓</span>
                                                 </div>
                                             )}
@@ -244,25 +252,27 @@ const CategoryEdit = () => {
                                 ))}
                             </div>
                         ) : (
-                            <div className="text-center py-8 text-[#ACACAC]">
+                            <div className="text-center py-8 text-[#ACACAC]" style={{paddingTop: vwR(16, 32), paddingBottom: vwR(16, 32)}}>
                                 商品がありません
                             </div>
                         )}
                         
-                        <div className="flex justify-between items-center">
-                            <div className="text-[#363636] font-['Noto_Sans_JP'] text-sm">
+                        <div className="flex flex-col md:flex-row justify-between items-center" style={{gap: vwR(16, 32)}}>
+                            <div style={responsiveTextR(12, 24, 'normal', 18, 24, 'normal', 'noto', '#363636')}>
                                 選択済み: {selectedProducts.length}件
                             </div>
-                            <div className="flex gap-3">
+                            <div className="flex" style={{gap: vwR(16, 32)}}>
                                 <button 
                                     onClick={() => setShowProductSelection(false)}
-                                    className="px-6 py-2 border border-[#E9E9E9] rounded-[8px] text-[#363636] hover:bg-[#F6F6F6]"
+                                    className="border border-[#E9E9E9] rounded-[8px] text-[#363636] hover:bg-[#F6F6F6]"
+                                    style={{padding: vwR(16, 16)}}
                                 >
                                     キャンセル
                                 </button>
                                 <button 
                                     onClick={() => setShowProductSelection(false)}
-                                    className="px-6 py-2 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] text-white rounded-[8px] hover:opacity-90"
+                                    className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] text-white rounded-[8px] hover:opacity-90"
+                                    style={{padding: vwR(16, 16)}}
                                 >
                                     保存 ({selectedProducts.length})
                                 </button>
@@ -286,103 +296,110 @@ const CategoryEdit = () => {
                 
                 {/* Main Section */}
                 {/* MOBILE ONLY */}
-                <div className="block md:hidden px-[16px] mt-[160px] flex flex-col items-start gap-4">
+                <div className="flex flex-col items-start" style={{paddingRight: vwR(16, 15), paddingLeft: vwR(16, 15), paddingTop: vwR(16, 40), paddingBottom: vwR(16, 40), marginTop: vwR(32, 0), marginRight: vwR(0, 169), marginLeft: vwR(0, 109), gap: vwR(16, 22)}}>
                     <div className="flex flex-row items-center justify-between w-full">
-                        <h1 className="text-[#363636] font-['Noto_Sans_JP'] text-[24px] font-bold leading-[24px]">
+                        <h1 style={{...responsiveTextR(24, 24, 'bold', 36, 54, 'bold', 'noto', '#363636')}}>
                             {editMode ? '商品カテゴリ編集' : '商品カテゴリ作成'}
                         </h1>
                     </div>
                     
                     {/* Error Message */}
                     {error && (
-                        <div className="error-message w-full bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                        <div className="error-message w-full bg-red-50 border border-red-200 rounded-lg" style={{padding: vwR(16, 16), marginBottom: vwR(16, 16)}}>
                             <div className="flex items-center">
-                                <svg className="w-5 h-5 text-red-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <svg className="w-5 h-5 text-red-400 mr-2" fill="currentColor" viewBox="0 0 20 20" style={{...responsiveMetricR(20, 20, 20, 20), marginRight: vwR(8, 8)}}>
                                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                                 </svg>
-                                <span className="text-red-800 font-['Noto_Sans_JP']">{error}</span>
+                                <span className="text-red-800 font-'noto'">{error}</span>
                             </div>
                         </div>
                     )}
                     
-                    <div className="flex flex-col items-start px-[16px] py-[20px] gap-4 rounded-[16px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch">
+                    <div className="flex flex-col items-start bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch" style={{padding: vwR(16, 24), paddingTop: vwR(16, 32), paddingBottom: vwR(16, 32), gap: vwR(16, 16), borderRadius: vwR(16, 16)}}>
                         {/* Category Name */}
-                        <div className="flex flex-col items-start gap-[4px] w-full">
-                            <div className="flex flex-col items-start gap-[4px] w-full">
-                                <div className="flex flex-row items-start gap-[12px] pt-[12px] pb-[6px]">
-                                    <span className="text-[#363636] font-['Noto_Sans_JP'] text-[14px] font-bold leading-[14px]">カテゴリ名</span>
-                                    <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[14px] font-normal leading-[21px]">{titleCount}/200</span>
+                        <div className="flex flex-col items-start w-full" style={{gap: vwR(4, 7.2), paddingTop: vwR(0, 13.44)}}>
+                            <div className="flex flex-col items-start w-full" style={{gap: vwR(4, 4)}}>
+                                <div className="flex flex-row items-center" style={{gap: vwR(12, 12), paddingTop: vwR(12, 25), paddingBottom: vwR(6, 6)}}>
+                                    <span style={{...responsiveTextR(14, 14, 'bold', 21, 27, 'bold', 'noto', '#363636')}}>カテゴリ名</span>
+                                    <span style={{...responsiveTextR(14, 21, 'normal', 21, 27, 'normal', 'noto', '#ACACAC')}}>{titleCount}/200</span>
                                 </div>
                                 <input 
                                     type="text" 
                                     value={title}
                                     onChange={handleTitleChange}
-                                    className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" 
+                                    className="w-full border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:font-normal placeholder:leading-normal" 
+                                    style={{
+                                        height: vwR(46, 46),
+                                        padding: vwR(12, 12), borderRadius: vwR(5.71, 5.71), fontSize: vwR(14, 14)}}
                                     placeholder="カテゴリ名を入力してください" 
                                 />
                             </div>
                         </div>
 
                         {/* Category Description */}
-                        <div className="flex flex-col items-start gap-[4px] w-full">
-                            <div className="flex flex-col items-start gap-[4px] w-full">
-                                <div className="flex flex-row items-start gap-[12px] pt-[12px] pb-[6px]">
-                                    <span className="text-[#363636] font-['Noto_Sans_JP'] text-[14px] font-bold leading-[14px]">カテゴリ説明文</span>
-                                    <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[14px] font-normal leading-[21px]">{descriptionCount}/200</span>
+                        <div className="flex flex-col items-start w-full" style={{gap: vwR(4, 7.2), paddingTop: vwR(0, 13.44)}}>
+                            <div className="flex flex-col items-start w-full" style={{gap: vwR(4, 4)}}>
+                                <div className="flex flex-row items-center" style={{gap: vwR(12, 12), paddingTop: vwR(12, 25), paddingBottom: vwR(6, 6)}}>
+                                    <span style={{...responsiveTextR(14, 14, 'bold', 21, 27, 'bold', 'noto', '#363636')}}>カテゴリ説明文</span>
+                                    <span style={{...responsiveTextR(14, 21, 'normal', 21, 27, 'normal', 'noto', '#ACACAC')}}>{titleCount}/200</span>
                                 </div>
                                 <textarea 
                                     value={description}
                                     onChange={handleDescriptionChange}
-                                    className="w-full min-h-[128px] p-[12.5px_12px_12.5px_12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-[25px] resize-none" 
+                                    className="w-full border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:font-normal placeholder:leading-[25px] resize-none" 
+                                    style={{
+                                        height: vwR(128, 90),
+                                        padding: vwR(12.5, 12.5), borderRadius: vwR(5.71, 5.71), fontSize: vwR(14, 14)}}
                                     placeholder="カテゴリの説明文を入力してください" 
                                 />
                             </div>
                         </div>
                         
                         {/* Public Settings */}
-                        <div className="flex flex-col items-start gap-[20px] w-full">
-                            <div className="flex flex-row items-start gap-[12px] pt-[12px] pb-[6px] w-full border-b border-[#E9E9E9]">
-                                <span className="text-[#363636] font-['Noto_Sans_JP'] text-[14px] font-bold leading-[14px]">公開設定</span>
-                                <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[14px] font-normal leading-[21px]">いずれかを選択</span>
+                        <div className="flex flex-col items-start w-full" style={{gap: vwR(20, 20)}}>
+                            <div className="flex flex-row items-center w-full border-b border-[#E9E9E9]" style={{gap: vwR(12, 12), paddingTop: vwR(12, 25), paddingBottom: vwR(6, 6)}}>
+                                <span style={{...responsiveTextR(14, 14, 'bold', 21, 27, 'bold', 'noto', '#363636')}}>公開設定</span>
+                                <span style={{...responsiveTextR(14, 21, 'normal', 16, 24, 'normal', 'noto', '#ACACAC')}}>いずれかを選択</span>
                             </div>
-                            <div className="flex flex-col items-start gap-[8px] w-full">
-                                <div className="flex items-start cursor-pointer" onClick={() => setIsPublic(true)}>
-                                    <img src={radio} alt="radio" className={`w-[20px] h-[20px] mr-[10px] ${isPublic ? '' : 'opacity-50'}`} />
-                                    <span className="text-[#363636] font-normal text-[14px] leading-[24px] font-['Noto_Sans_JP']">公開</span>
+                            <div className="flex flex-col items-start w-full" style={{gap: vwR(8, 8)}}>
+                                <div className="flex items-center cursor-pointer" onClick={() => setIsPublic(true)}>
+                                    <img src={radio} alt="radio" className={`${isPublic ? '' : 'opacity-50'}`} style={{...responsiveMetricR(20, 20, 20, 20), marginRight: vwR(10, 10)}} />
+                                    <span style={{...responsiveTextR(14, 24, 'normal', 18, 24, 'normal', 'noto', '#363636')}}>公開</span>
                                 </div>
-                                <span className="text-[#87969F] font-['Noto_Sans_JP'] text-[13px] font-medium leading-[19.5px] ml-[30px]">誰でも商品ページを見ることができます</span>
+                                <span style={{...responsiveTextR(13, 19.5, 'medium', 16, 24, 'medium', 'noto', '#87969F'), marginLeft: vwR(30, 0)}}>誰でも商品ページを見ることができます</span>
                             </div>
-                            <div className="flex flex-col items-start gap-[8px] w-full">
-                                <div className="flex items-start flex-shrink-0 cursor-pointer" onClick={() => setIsPublic(false)}>
+                            <div className="flex flex-col items-start w-full" style={{gap: vwR(8, 8)}}>
+                                <div className="flex items-center cursor-pointer" onClick={() => setIsPublic(false)}>
                                     <span className={`flex w-[20px] h-[20px] flex-shrink-0 rounded-full border mr-[10px] ${isPublic ? 'border-[#D1D1D1] bg-[#F8F8F8]' : 'border-[#FF2AA1] bg-[#FF2AA1]'}`} />
-                                    <span className="text-[#363636] font-normal text-[14px] leading-[24px] font-['Noto_Sans_JP'] whitespace-nowrap">非公開</span>
+                                    <span style={{...responsiveTextR(14, 24, 'normal', 18, 24, 'normal', 'noto', '#363636')}}>非公開</span>
                                 </div>
-                                <span className="text-[#87969F] font-['Noto_Sans_JP'] text-[13px] font-medium leading-[19.5px] ml-[30px]">自分だけが商品ページを見ることができます</span>
+                                <span style={{...responsiveTextR(13, 19.5, 'medium', 16, 24, 'medium', 'noto', '#87969F'), marginLeft: vwR(30, 0)}}>自分だけが商品ページを見ることができます</span>
                             </div>
                         </div>
                         
                         {/* Products Section */}
-                        <div className="flex flex-col items-start gap-[4px] w-full">
-                            <div className="flex flex-row items-start gap-[12px] pt-[12px] pb-[6px] w-full">
-                                <span className="text-[#363636] font-['Noto_Sans_JP'] text-[14px] font-bold leading-[14px]">商品</span>
-                                <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[14px] font-normal leading-[21px]">いずれかを選択</span>
+                        <div className="flex flex-col items-start w-full" style={{gap: vwR(4, 4)}}>
+                            <div className="flex flex-row items-center w-full" style={{gap: vwR(12, 12), paddingTop: vwR(12, 25), paddingBottom: vwR(6, 6)}}>
+                                <span style={{...responsiveTextR(14, 14, 'bold', 21, 27, 'bold', 'noto', '#363636')}}>商品</span>
+                                <span style={{...responsiveTextR(14, 21, 'normal', 16, 24, 'normal', 'noto', '#ACACAC')}}>いずれかを選択</span>
                             </div>
                             
-                            <div className="flex items-start p-[7px_14px_8px_11px] w-full rounded-[2px] border-[2px] border-dashed border-[#ACACAC] bg-[#F1F3F4]">
-                                <div className="grid grid-cols-3 gap-[6.2px] w-full">
+                            <div className="flex items-start border-[2px] border-dashed border-[#ACACAC] bg-[#F1F3F4]" style={{padding: vwR(12, 30), paddingTop: vwR(7, 19), paddingBottom: vwR(8, 20), borderRadius: vwR(2, 2)}}>
+                                <div className="grid grid-cols-3 w-full" style={{gap: vwR(6.2, 16)}}>
                                     {/* Add card */}
                                     <div 
-                                        className="flex w-[91px] h-[105px] pb-[14px] flex-col items-center rounded-[6.2px] border-[0.388px] border-[#ACACAC] bg-[#F6F6F6] cursor-pointer hover:bg-[#E9E9E9] transition-colors"
+                                        className="flex flex-col items-center border-[0.388px] border-[#ACACAC] bg-[#F6F6F6] cursor-pointer hover:bg-[#E9E9E9] transition-colors"
+                                        style={{...responsiveMetricR(91, 105, 234, 272), paddingBottom: vwR(14, 38), borderRadius: vwR(6.2, 16)}}
                                         onClick={() => setShowProductSelection(true)}
                                     >
-                                        <div className="flex w-[91px] h-[91px] justify-center items-center aspect-square rounded-[6.2px]">
-                                            <div className="flex w-[64px] flex-col items-center justify-center gap-[3px]">
-                                                <div className="flex w-[19px] h-[19px] justify-center items-center">
-                                                    <img src={add} alt="add" className="w-[19px] h-[19px]" />
+                                        <div className="flex justify-center items-center aspect-square" style={{...responsiveMetricR(91, 91, 234, 234), borderRadius: vwR(6.2, 16)}}>
+                                            <div className="flex flex-col items-center justify-center " style={{...responsiveMetricR(64, 64, 165, 165), gap: vwR(3, 7.65)}}>
+                                                <div className="flex justify-center items-center" style={{...responsiveMetricR(19, 19, 48, 48)}}>
+                                                    <img src={add} alt="add" style={{...responsiveMetricR(19, 19, 48, 48)}} />
                                                 </div>
-                                                <div className="flex flex-col items-center gap-[1px] self-stretch">
-                                                    <span className="text-[#586B88] text-center font-noto text-[7px] font-bold leading-[9px]">カテゴリに</span>
-                                                    <span className="text-[#586B88] text-center font-noto text-[7px] font-bold leading-[9px]">商品を追加</span>
+                                                <div className="flex flex-col items-center gap-[1px] self-stretch" style={{gap: vwR(1, 2)}}>
+                                                    <span style={{...responsiveTextR(7, 9, 'bold', 18, 23, 'bold', 'noto', '#586B88')}}>カテゴリに</span>
+                                                    <span style={{...responsiveTextR(7, 9, 'bold', 18, 23, 'bold', 'noto', '#586B88')}}>商品を追加</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -390,211 +407,58 @@ const CategoryEdit = () => {
                                     
                                     {/* Selected products */}
                                     {selectedProducts.map((product) => (
-                                        <div key={product.id} className="flex flex-col items-center rounded-[6.2px] w-[91px] h-[105px] bg-white relative">
-                                            <div className="flex w-[91px] p-[2px_16px_2px_17px] flex-col items-center rounded-[3.54px] bg-[#F6F6F6]">
+                                        <div key={product.id} className="flex flex-col items-center bg-white relative" style={{...responsiveMetricR(91, 105, 234, 272), borderRadius: vwR(6.2, 16)}}>
+                                            <div className="flex flex-col items-center bg-[#F6F6F6]" style={{...responsiveMetricR(91, 91, 234, 234), padding: vwR(2, 8), paddingRight: vwR(16, 8), paddingLeft: vwR(17, 8), borderRadius: vwR(3.54, 9)}}>
                                                 {product.files && product.files.length > 0 ? (
-                                                    <img src={product.files[0].url} alt={product.title} className="w-[58px] h-[87px] object-cover rounded-[3px]" />
+                                                    <img src={product.files[0].url} alt={product.title} className="object-cover" style={{...responsiveMetricR(58, 87, 200, 200), borderRadius: vwR(3, 8)}} />
                                                 ) : (
-                                                    <div className="w-[58px] h-[58px] bg-[#E9E9E9] rounded-[3px] flex items-center justify-center">
-                                                        <span className="text-[#ACACAC] text-xs">No Image</span>
+                                                    <div className="bg-[#E9E9E9] flex items-center justify-center" style={{...responsiveMetricR(58, 58, 200, 200), borderRadius: vwR(3, 8)}}>
+                                                        <span className="text-[#ACACAC] text-xm">No Image</span>
                                                     </div>
                                                 )}
                                             </div>
-                                            <span className="text-[#363636] font-['Noto_Sans_JP'] text-[6px] font-normal leading-[12px] truncate w-full text-center px-1">
+                                            <span className="truncate w-full text-center px-1" style={{...responsiveTextR(6, 12, 'normal', 16, 24, 'normal', 'noto', '#363636')}}>
                                                 {product.title}
                                             </span>
                                             <div 
-                                                className="absolute top-[3px] right-[4px] cursor-pointer"
+                                                className="cursor-pointer"
+                                                style={{...responsivePositionR(3, null, null, 4, 8, null, null, 8)}}
                                                 onClick={() => removeProduct(product.id)}
                                             >
-                                                <img src={close} alt="close" className="w-[12px] h-[12px]" />
+                                                <img src={close} alt="close" style={{...responsiveMetricR(12, 12, 32, 32)}} />
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
                             
-                            <div className="flex flex-row items-start gap-[16px] w-full">
-                                <div className="flex flex-row items-center gap-[6px]">
-                                    <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[14px] font-normal leading-[21px]">選択済み商品</span>
-                                    <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[14px] font-normal leading-[21px]">{selectedProducts.length}件</span>
+                            <div className="flex flex-row items-start w-full" style={{gap: vwR(16, 16)}}>
+                                <div className="flex flex-row items-center" style={{gap: vwR(6, 6)}}>
+                                    <span style={{...responsiveTextR(14, 21, 'normal', 16, 24, 'normal', 'noto', '#ACACAC')}}>選択済み商品</span>
+                                    <span style={{...responsiveTextR(14, 21, 'normal', 16, 24, 'normal', 'noto', '#ACACAC')}}>{selectedProducts.length}件</span>
                                 </div>
                             </div>
                         </div>
                         
                         {/* Submit Button */}
-                        <div className="flex flex-col items-center gap-[10px] pt-[32px] w-full">
+                        <div className="flex flex-col items-center w-full" style={{gap: vwR(10, 10), paddingTop: vwR(32, 32)}}>
                             <button 
                                 onClick={handleSubmit}
                                 disabled={isSubmitting}
-                                className="flex w-full py-[15px] flex-col justify-center items-center rounded-[8px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="flex w-full flex-col justify-center items-center  bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] disabled:opacity-50 disabled:cursor-not-allowed"
+                                style={{borderRadius: vwR(8, 8), padding: vwR(14, 15)}}
                             >
-                                <span className="text-white text-center font-noto text-[18px] font-bold leading-[14px]">
+                                <span className="text-white text-center font-noto text-[18px] font-bold leading-[14px]" style={{...responsiveTextR(16, 18, 'bold', 18, 18, 'bold', 'noto', '#FFFFFF')}}>
                                     {isSubmitting ? (editMode ? '保存中...' : '登録中...') : (editMode ? '保存' : '登録する')}
                                 </span>
                             </button>
-                            <span className="text-[#87969F] font-['Noto_Sans_JP'] text-[12px] font-normal leading-[18px]">
+                            <span style={{...responsiveTextR(12, 18, 'normal', 16, 24, 'normal', 'noto', '#87969F')}}>
                                 ※ 登録後は商品ファイルの変更はできません。
                             </span>
                         </div>
                     </div>
                 </div>
                 
-                {/* DESKTOP VERSION */}
-                <main className="hidden md:flex flex-col items-left gap-[22px] max-w-[928px] py-[40px] px-[15px] w-full ml-[109px] mr-[169px]">
-                    {/* Title */}
-                    <div className="flex flex-row items-center justify-between w-full">
-                        <h1 className="text-[#363636] font-['Noto_Sans_JP'] text-[36px] font-bold leading-[54px]">
-                            {editMode ? '商品カテゴリ編集' : '商品カテゴリ作成'}
-                        </h1>
-                    </div>
-                    
-                    {/* Error Message */}
-                    {error && (
-                        <div className="error-message w-full bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
-                            <div className="flex items-center">
-                                <svg className="w-5 h-5 text-red-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                </svg>
-                                <span className="text-red-800 font-['Noto_Sans_JP']">{error}</span>
-                            </div>
-                        </div>
-                    )}
-                    
-                    <div className="flex flex-col items-start py-[32px] px-[24px] gap-4 rounded-[16px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch">
-                        {/* Category Name */}
-                        <div className="flex flex-col items-start pt-[13.44px] gap-[7.2px] w-full">
-                            <div className="flex flex-col items-start gap-[4px] w-full">
-                                <div className="flex flex-row items-start gap-[12px] pt-[25px] pb-[6px]">
-                                    <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[27px]">カテゴリ名</span>
-                                    <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px]">{titleCount}/200</span>
-                                </div>
-                                <input 
-                                    type="text" 
-                                    value={title}
-                                    onChange={handleTitleChange}
-                                    className="w-full h-[46px] p-[12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-normal" 
-                                    placeholder="カテゴリ名を入力してください" 
-                                />
-                            </div>
-                        </div>
-
-                        {/* Category Description */}
-                        <div className="flex flex-col items-start gap-[4px] w-full">
-                            <div className="flex flex-col items-start gap-[4px] w-full">
-                                <div className="flex flex-row items-start gap-[12px] pt-[25px] pb-[6px]">
-                                    <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[27px]">カテゴリ説明文</span>
-                                    <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px]">{descriptionCount}/200</span>
-                                </div>
-                                <textarea 
-                                    value={description}
-                                    onChange={handleDescriptionChange}
-                                    className="w-full min-h-[90px] p-[12.5px_12px_12.5px_12px] rounded-[5.71px] border-[#E9E9E9] bg-white shadow-[0px_0px_0px_1.143px_rgba(0,0,0,0.10) inset] placeholder-[#ACACAC] placeholder:font-noto placeholder:text-[14px] placeholder:font-normal placeholder:leading-[25px] resize-none" 
-                                    placeholder="カテゴリの説明文を入力してください" 
-                                />
-                            </div>
-                        </div>
-                        
-                        {/* Public Settings */}
-                        <div className="flex flex-col items-start gap-[20px] w-full">
-                            <div className="flex flex-row items-start gap-[12px] pt-[25px] pb-[6px] w-full border-b border-[#E9E9E9]">
-                                <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[27px]">公開設定</span>
-                                <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px]">いずれかを選択</span>
-                            </div>
-                            <div className="flex flex-col items-start gap-[8px] w-full">
-                                <div className="flex pb-[8px] items-start cursor-pointer" onClick={() => setIsPublic(true)}>
-                                    <img src={radio} alt="radio" className={`w-[20px] h-[20px] mr-[10px] ${isPublic ? '' : 'opacity-50'}`} />
-                                    <span className="text-[#363636] font-normal text-[18px] leading-[24px] font-['Noto_Sans_JP']">公開</span>
-                                </div>
-                                <span className="text-[#87969F] font-['Noto_Sans_JP'] text-[13px] font-medium leading-[19.5px]">誰でも商品ページを見ることができます</span>
-                            </div>
-                            <div className="flex flex-col items-start gap-[8px] w-full">
-                                <div className="flex items-start flex-shrink-0 cursor-pointer" onClick={() => setIsPublic(false)}>
-                                    <span className={`flex w-[20px] h-[20px] flex-shrink-0 rounded-full border mr-[10px] ${isPublic ? 'border-[#D1D1D1] bg-[#F8F8F8]' : 'border-[#FF2AA1] bg-[#FF2AA1]'}`} />
-                                    <span className="text-[#363636] font-normal text-[18px] leading-[24px] font-['Noto_Sans_JP'] whitespace-nowrap">非公開</span>
-                                </div>
-                                <span className="text-[#87969F] font-['Noto_Sans_JP'] text-[13px] font-medium leading-[19.5px]">自分だけが商品ページを見ることができます</span>
-                            </div>
-                        </div>
-                        
-                        {/* Products Section */}
-                        <div className="flex flex-col items-start gap-[10px] w-full">
-                            <div className="flex flex-row items-start gap-[12px] pt-[25px] pb-[6px] w-full">
-                                <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[27px]">商品</span>
-                                <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px]">いずれかを選択</span>
-                            </div>
-                            
-                            <div className="flex items-start p-[19.12px_38px_20.88px_30px] w-full rounded-[2px] border-[2px] border-dashed border-[#ACACAC] bg-[#F1F3F4]">
-                                <div className="grid grid-cols-3 gap-[16px] w-full">
-                                    {/* Add card */}
-                                    <div 
-                                        className="flex w-[234px] h-[272px] pb-[38px] flex-col items-center rounded-[16px] border border-[#ACACAC] bg-[#F6F6F6] cursor-pointer hover:bg-[#E9E9E9] transition-colors"
-                                        onClick={() => setShowProductSelection(true)}
-                                    >
-                                        <div className="flex w-[234px] h-[234px] justify-center items-center aspect-square rounded-[16px]">
-                                            <div className="flex w-[165.742px] flex-col items-center gap-[7.655px]">
-                                                <div className="flex w-[48px] h-[48px] justify-center items-center">
-                                                    <img src={add} alt="add" className="w-[48px] h-[48px]" />
-                                                </div>
-                                                <div className="flex flex-col items-center gap-[2px] self-stretch">
-                                                    <span className="text-[#586B88] text-center font-noto text-[18px] font-bold leading-[22.966px]">カテゴリに</span>
-                                                    <span className="text-[#586B88] text-center font-noto text-[18px] font-bold leading-[22.966px]">商品を追加</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    {/* Selected products */}
-                                    {selectedProducts.map((product) => (
-                                        <div key={product.id} className="flex flex-col items-center rounded-[16px] w-[234px] h-[272px] bg-white relative">
-                                            <div className="flex w-[234px] h-[234px] p-2 flex-col items-center justify-center rounded-[9.141px] bg-[#F6F6F6]">
-                                                {product.files && product.files.length > 0 ? (
-                                                    <img src={product.files[0].url} alt={product.title} className="w-full h-full max-w-[200px] max-h-[200px] object-cover rounded-[8px]" />
-                                                ) : (
-                                                    <div className="w-full h-full max-w-[200px] max-h-[200px] bg-[#E9E9E9] rounded-[8px] flex items-center justify-center">
-                                                        <span className="text-[#ACACAC] text-sm">No Image</span>
-                                                    </div>
-                                                )}
-                                            </div>
-                                            <span className="text-[#363636] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px] truncate w-full text-center px-2">
-                                                {product.description}
-                                            </span>
-                                            <div 
-                                                className="absolute top-2 right-2 cursor-pointer"
-                                                onClick={() => removeProduct(product.id)}
-                                            >
-                                                <img src={close} alt="close" className="w-[32px] h-[32px]" />
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                            
-                            <div className="flex flex-row items-start gap-[16px] w-full">
-                                <div className="flex flex-row items-center gap-[6px]">
-                                    <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px]">選択済み商品</span>
-                                    <span className="text-[#ACACAC] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px]">{selectedProducts.length}件</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        {/* Submit Button */}
-                        <div className="flex flex-col items-center gap-[10px] pt-[32px] w-full">
-                            <button 
-                                onClick={handleSubmit}
-                                disabled={isSubmitting}
-                                className="flex w-full py-[15px] flex-col justify-center items-center rounded-[8px] shadow-[0px_4px_8px_0px_rgba(255, 42, 161, 0.20)] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                <span className="text-white text-center font-noto text-[18px] font-bold leading-[14px]">
-                                    {isSubmitting ? (editMode ? '保存中...' : '登録中...') : (editMode ? '保存' : '登録する')}
-                                </span>
-                            </button>
-                            <span className="text-[#87969F] font-['Noto_Sans_JP'] text-[12px] font-normal leading-[18px]">
-                                ※ 登録後は商品ファイルの変更はできません。
-                            </span>
-                        </div>
-                    </div>
-                </main>
             </div>
             
             {/* Confirmation Modal */}

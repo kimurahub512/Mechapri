@@ -30,8 +30,8 @@ const ShopNewProducts = () => {
         badgeText: `${batch.image_cnt}枚セット`,
         price: batch.price == 0 ? '無料' : `${batch.price}円`,
         like: 0, // We can add likes later if needed
-        badge1: '1日',
-        badge2: '以内',
+        badge1: batch.badge1,
+        badge2: batch.badge2,
         user: batch.user,
     })) : [];
 
@@ -78,7 +78,6 @@ const ShopNewProducts = () => {
                     <ProductCarousel
                         products={transformedProducts}
                         isMobile={false}
-                        rowCnt={Math.ceil(transformedProducts.length / 4)}
                     />
                 </div>
             </section>

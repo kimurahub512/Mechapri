@@ -102,9 +102,7 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
         return Inertia::render('Cart');
     });
         
-    Route::get('/shoptop', function(){
-        return Inertia::render('ShopTop');
-    });
+    Route::get('/shoptop', [App\Http\Controllers\ShopTopController::class, 'index'])->name('shoptop');
     Route::get('/shop-newproducts', function(){
         // Get all public product batches with files, ordered by creation date (newest first)
         $productBatches = \App\Models\ProductBatch::with(['files' => function($query) {
@@ -114,6 +112,23 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
             ->orderBy('created_at', 'desc')
             ->get()
             ->map(function($batch) {
+                // Calculate time duration from registration
+                $createdAt = \Carbon\Carbon::parse($batch->created_at)->startOfDay();
+                $now = \Carbon\Carbon::now()->startOfDay();
+                $totalDays = $createdAt->diffInDays($now);
+
+                // Format the time duration
+                $badge1 = '';
+                $badge2 = '以内';
+
+                if ($totalDays >= 365) {
+                    $badge1 = (int)($totalDays / 365) . '年';
+                } elseif ($totalDays >= 30) {
+                    $badge1 = (int)($totalDays / 30) . 'ヶ月';
+                } else {
+                    $badge1 = $totalDays . '日';
+                }
+
                 return [
                     'id' => $batch->id,
                     'title' => $batch->title,
@@ -124,6 +139,8 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
                     'sales_deadline' => $batch->sales_deadline ? $batch->sales_deadline->format('Y-m-d') : null,
                     'sales_limit' => $batch->sales_limit,
                     'created_at' => $batch->created_at->format('Y-m-d H:i:s'),
+                    'badge1' => $badge1,
+                    'badge2' => $badge2,
                     'user' => [
                         'id' => $batch->user->id,
                         'name' => $batch->user->name,

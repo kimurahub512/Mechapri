@@ -1,8 +1,10 @@
 import React from 'react';
 import girl from '@/assets/images/favoriteshops/girl.svg';
+import { responsiveText, responsiveTextD } from '@/lib/utils';
 
 
 const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 1 }) => {
+    console.log(product);
     if (isMobile) {
         return (
             <div className="flex w-[160px] p-[5.839px] flex-col items-start rounded-[5.839px] bg-white shadow-[0_2.236px_21.022px_0_rgba(0,0,0,0.10)] relative flex-shrink-0">
@@ -12,8 +14,8 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                     <div className="flex h-[149.489px] max-w-[157.372px] px-[26.277px] py-[2.919px] flex-col justify-center items-center flex-shrink-0 self-stretch rounded-[5.839px] bg-[#F6F6F6]">
                         <img src={product.image} alt="product" className="w-[95.766px] h-[143.65px] flex-shrink-0 object-cover" />
                     </div>
-                    {/* 2121112: 1日 以内 badge */}
-                    <div className="flex w-[31.6px] p-[1.167px_4.884px_1.46px_2.919px] justify-center items-end gap-[-0.117px] absolute left-[2.201px] top-[2.336px] rounded-[8.759px] bg-[#FF2AA1]">
+                    {/* 2121112: Time duration badge */}
+                    <div className={`flex w-[31.6px] p-[1.167px_4.884px_1.46px_2.919px] justify-center items-end gap-[-0.117px] absolute left-[2.201px] top-[2.336px] rounded-[8.759px] ${product.badge1?.includes('ヶ月') ? 'bg-[#E862CB]' : 'bg-[#FF2AA1]'}`}>
                         <span className="flex w-[12.18px] h-[11.67px] justify-center items-center text-white font-noto text-[7.6px] font-bold leading-[11.5px] whitespace-nowrap">{product.badge1}</span>
                         <span className="flex w-[11.8px] h-[8.75px] justify-center items-center text-white font-noto text-[5.8px] font-bold leading-[8.75px] whitespace-nowrap">{product.badge2}</span>
                     </div>
@@ -67,10 +69,10 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
         <div className="flex w-[274px] p-[10px] flex-col items-start rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] flex-shrink-0">
             {/* 212111: Image and Badge */}
             <div className="flex flex-col items-start self-stretch relative">
-                    {/* 2121112: 1日 以内 badge */}
-                    <div className="flex py-[2px] px-[8.363px] pb-[2.5px] pl-[5px] justify-center items-end gap-[-0.2px] absolute left-[3.77px] top-[4px] rounded-[15px] bg-[#FF2AA1]">
-                        <span className="flex w-[20.87px] h-[20px] justify-center items-center text-white font-noto text-[13px] font-bold leading-[19.5px]">{product.badge1}</span>
-                        <span className="flex w-[20.2px] h-[15px] justify-center items-center text-white font-noto text-[10px] font-bold leading-[15px] whitespace-nowrap">{product.badge2}</span>
+                    {/* 2121112: Time duration badge */}
+                    <div className={`flex flex-row py-[2px] px-[8.363px] justify-center items-end gap-[2px] absolute left-[3.77px] top-[4px] rounded-[15px] ${product.badge1?.includes('ヶ月') ? 'bg-[#E862CB]' : 'bg-[#FF2AA1]'}`}>
+                        <span className="flex justify-center items-center text-white font-noto text-[13px] font-bold leading-[19.5px] whitespace-nowrap" style={{...responsiveTextD(13, 19.5, null, 'bold', 'noto', '#fff')}}>{product.badge1}</span>
+                        <span className="flex justify-center items-center text-white font-noto text-[10px] font-bold leading-[15px] whitespace-nowrap" style={{...responsiveTextD(10, 15, null, 'bold', 'noto', '#fff')}}>{product.badge2}</span>
                     </div>
                     {/* 2121111: Main Image */}
                     <div className="flex h-[256px] max-w-[269.5px] px-[45px] py-[5px] flex-col justify-center items-center flex-shrink-0 self-stretch rounded-[10px] bg-[#F6F6F6]">
