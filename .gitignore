@@ -28,3 +28,4 @@ yarn-error.log
 storage
 bootstrap
 public
+*.temp

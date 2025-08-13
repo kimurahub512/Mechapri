@@ -7,9 +7,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Inertia\Inertia;
 use App\Models\User;
+use App\Mail\VerificationCodeMail;
 
 class ProfileController extends Controller
 {
@@ -176,6 +178,16 @@ class ProfileController extends Controller
 
         try {
             $email = $request->email;
+            $user = auth()->user();
+            
+            // Rate limiting: Check if user has sent a code recently
+            $lastSentTime = session('last_verification_sent_' . $user->id);
+            if ($lastSentTime && (time() - $lastSentTime) < 60) { // 60 seconds cooldown
+                return response()->json([
+                    'message' => '別のコードをリクエストする前に60秒お待ちください',
+                    'error' => 'Rate limit exceeded'
+                ], 429);
+            }
             
             // Generate 6-digit code
             $code = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
@@ -183,16 +195,52 @@ class ProfileController extends Controller
             // Store code in session for verification (in production, use cache or database)
             session(['email_verification_code' => $code]);
             session(['email_verification_email' => $email]);
+            session(['last_verification_sent_' . $user->id => time()]);
             
-            // In production, send actual email here
-            // For now, we'll just return success
-            // Mail::to($email)->send(new VerificationCodeMail($code));
-            
-            return response()->json([
-                'message' => 'Verification code sent successfully',
-                'code' => $code // Remove this in production
-            ]);
+            // Send the verification email with timeout handling
+            try {
+                // Set a timeout for the mail operation
+                set_time_limit(30); // 30 seconds max
+                
+                // Clear any existing mail connections and reset the mailer
+                Mail::purge('smtp');
+                
+                // Create a fresh mailer instance to avoid connection issues
+                $mailer = Mail::mailer('smtp');
+                
+                // Send the email using the fresh mailer
+                $mailer->to($email)->send(new VerificationCodeMail($code));
+                
+                \Log::info('Verification code sent successfully to: ' . $email);
+                
+                return response()->json([
+                    'message' => 'Verification code sent successfully'
+                ]);
+            } catch (\Exception $mailException) {
+                // Log the specific mail error
+                \Log::error('Email sending failed: ' . $mailException->getMessage(), [
+                    'email' => $email,
+                    'user_id' => $user->id,
+                    'exception' => $mailException
+                ]);
+                
+                // For development/testing, you can return the code directly
+                if (app()->environment('local')) {
+                    return response()->json([
+                        'message' => 'Email sending failed, but here is your code for testing: ' . $code,
+                        'code' => $code,
+                        'error' => $mailException->getMessage()
+                    ], 500);
+                }
+                
+                return response()->json([
+                    'message' => 'Failed to send verification code. Please try again later.',
+                    'error' => 'Email service temporarily unavailable'
+                ], 500);
+            }
         } catch (\Exception $e) {
+            \Log::error('Verification code generation failed: ' . $e->getMessage());
+            
             return response()->json([
                 'message' => 'Failed to send verification code',
                 'error' => $e->getMessage()

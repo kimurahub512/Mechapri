@@ -30,7 +30,7 @@ const ShopManagement = () => {
           <div className="flex flex-col items-start w-full" style={{ gap: vw(25) }}>
             <h1 style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>さっそくはじめよう！</h1>
               {/* First card */}
-              <div className="relative bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]" style={{ ...responsiveMetric(343, 108), paddingleft: vw(16) }}>
+              <a href='/myshop/registerproduct' className="relative bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]" style={{ ...responsiveMetric(343, 108), paddingleft: vw(16) }}>
                 <div style={{ ...responsiveText(10, 16, null, 'normal', 'noto', '#272B2B'), ...responsivePosition(27, 16) }}>写真を商品登録</div>
                 <div className="flex items-center" style={{ gap: vw(8), ...responsivePosition(46, 16) }}>
                   <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{ ...responsiveText(19, 30, null, 'black', 'noto') }}>画像を出品しよう</span>
@@ -40,7 +40,7 @@ const ShopManagement = () => {
                   <img src={sm_photo1} alt="photo1" style={{ ...responsiveMetric(73, 133), ...responsivePosition(25, 15), width: vw(73), height: vw(133) }} />
                   <img src={sm_photo2} alt="photo2" style={{ ...responsiveMetric(73, 133), ...responsivePosition(11, 34), width: vw(73), height: vw(133) }} />
                 </div>
-              </div>
+              </a>
               {/* Second card */}
               <div 
                 className="relative bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] cursor-pointer hover:shadow-[0_4px_36px_0_rgba(0,0,0,0.15)] transition-shadow" 
@@ -54,7 +54,7 @@ const ShopManagement = () => {
                 </div>
                 <div className="absolute right-0 bottom-0 overflow-hidden" style={{ ...responsiveMetric(114, 108) }}>
                   <img src={sm_photo3} alt="shop info" style={{ ...responsiveMetric(117, 206), objectFit: 'cover', width: vw(117), height: vw(206) }} />
-                </div>
+              </div>
               </div>
             </div>
           {/* Second container2 */}
@@ -140,7 +140,7 @@ const ShopManagement = () => {
             <h1 style={{ ...responsiveTextD(36, 54, null, 'bold', 'noto', '#363636') }}>さっそくはじめよう！</h1>
             <div className="flex flex-row items-start justify-between w-full">
               {/* First card */}
-              <div className="relative bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]" style={{ ...responsiveMetricD(420, 130), paddingleft: vwd(16) }}>
+              <a href='/myshop/registerproduct' className="relative bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]" style={{ ...responsiveMetricD(420, 130), paddingleft: vwd(16) }}>
                 <div style={{ ...responsiveTextD(13, 19.5, null, 'medium', 'noto', '#272B2B'), ...responsivePositionD(27, 16) }}>写真を商品登録</div>
                 <div className="flex items-center" style={{ gap: vwd(8), ...responsivePositionD(46, 16) }}>
                   <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{ ...responsiveTextD(23, 36, null, 'bold', 'noto') }}>画像を出品しよう</span>
@@ -150,7 +150,7 @@ const ShopManagement = () => {
                   <img src={sm_photo1} alt="photo1" style={{ ...responsiveMetricD(91, 165), ...responsivePositionD(31, 18) }} />
                   <img src={sm_photo2} alt="photo2" style={{ ...responsiveMetricD(91, 165), ...responsivePositionD(14, 42) }} />
                 </div>
-              </div>
+              </a>
               {/* Second card */}
               <div 
                 className="relative bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] cursor-pointer hover:shadow-[0_4px_36px_0_rgba(0,0,0,0.15)] transition-shadow" 

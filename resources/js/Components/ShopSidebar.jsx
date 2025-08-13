@@ -17,7 +17,7 @@ const ShopSidebar = () => {
   const isSalesHistory = window.location.pathname === '/myshop/salpeshistory';
   const isCategory = window.location.pathname === '/myshop/category';
   return (
-    <aside className="flex flex-col border-r border-[#E9E9E9]" style={{ width: vwd(300), paddingTop: vwd(80) }}>
+    <aside className="hidden md:flex flex-col border-r border-[#E9E9E9]" style={{ width: vwd(300), paddingTop: vwd(80) }}>
       <div className="flex flex-col rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)]" style={{ padding: vwd(32), width: vwd(232), marginLeft: vwd(68) }}>
         <div className="flex flex-col items-center border-b-[0.999px] border-[#E9E9E9]" style={{ gap: vwd(16), paddingBottom: vwd(16) }}>
           <img
@@ -237,11 +237,9 @@ const ShopSidebar = () => {
               }}>販売履歴</span>
             </div>
           </a>
-          <a href="/myshop/registerproduct" style={{ textDecoration: 'none' }}>
-            <div className="sm-shop-menu-item sm-shop-menu-item--register">
-              <img src={file_add} alt="Add" className="sm-shop-menu-icon sm-shop-menu-icon--register" />
-              <span className="sm-shop-menu-text sm-shop-menu-text--register">写真を商品登録</span>
-            </div>
+          <a href="/myshop/registerproduct" className="flex flex-row items-center justify-center bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]" style={{...responsiveMetricD('full', 35), gap: vwd(10), borderRadius: vwd(8)}}>
+            <img src={file_add} alt="Add" style={{...responsiveMetricD(16, 16)}} />
+            <span style={{...responsiveTextD(13, 19.5, null, 'black', 'noto', '#fff')}}>写真を商品登録</span>
           </a>
         </div>
       </div>
