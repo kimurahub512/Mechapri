@@ -6,6 +6,11 @@ import ShopSidebar from '@/Components/ShopSidebar';
 import ShopMobileTopBlock from '@/Components/ShopMobileTopBlocks';
 import '@/../../resources/css/shopmanagement.css';
 import recyclebin from '@/assets/images/recyclebin.svg';
+import question from '@/assets/images/question_cloud.svg';
+import lock from '@/assets/images/lock.svg';
+import bubble from '@/assets/images/bubble.svg';
+import warning from '@/assets/images/warning.svg';
+import { vwd, vw, responsiveText, responsiveTextD, responsivePosition, responsiveMetric, responsiveMetricD, responsivePositionD } from '@/lib/utils';
 
 const MyContents = () => {
     const { productBatches, flash } = usePage().props;
@@ -114,12 +119,55 @@ const MyContents = () => {
                                   <div>
                                     {/* Debug: Log image info */}
                                     {console.log('Rendering image for batch:', batch.id, 'URL:', batch.files[0].url)}
-                                    <img 
-                                      src={batch.files[0].url} 
-                                      alt="photo" 
-                                      className="w-[41.323px] h-[61.984px] object-cover"
-                                      onError={(e) => console.error('Image failed to load:', batch.files[0].url, e)}
-                                    />
+                                    {batch.display_mode === 'normal' ? (
+                                      <img 
+                                        src={batch.files[0].url} 
+                                        alt="photo" 
+                                        className="object-cover"
+                                        style={{ ...responsiveMetric(41.323, 61.984), borderRadius: vw(2) }}
+                                        onError={(e) => console.error('Image failed to load:', batch.files[0].url, e)}
+                                      />
+                                    ) : batch.display_mode === 'gacha' ? (
+                                      <div className="relative overflow-hidden" style={{ ...responsiveMetric(41.323, 61.984), borderRadius: vw(2) }}>
+                                        <img 
+                                          src={batch.files[0].url} 
+                                          alt="ガチャ" 
+                                          className="object-cover filter blur-[4px]" 
+                                          style={{ ...responsiveMetric(41.323, 61.984), borderRadius: vw(2) }}
+                                        />
+                                        <div className="absolute top-0 left-0 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px]" style={{ ...responsiveMetric(41.323, 61.984), borderRadius: vw(2) }} />
+                                        <img src={bubble} alt="bubble" style={{ ...responsiveMetric(20, 20), ...responsivePosition(18, 12)}} />
+                                      </div>
+                                    ) : batch.display_mode === 'blur' ? (
+                                      <div className="relative overflow-hidden" style={{ ...responsiveMetric(41.323, 61.984), borderRadius: vw(2) }}>
+                                        <img 
+                                          src={batch.files[0].url} 
+                                          alt="ぼかしフィルター" 
+                                          className="object-cover filter blur-[4px]" 
+                                          style={{ ...responsiveMetric(41.323, 61.984), borderRadius: vw(2) }}
+                                        />
+                                        <div className="absolute top-0 left-0 bg-black opacity-50 filter blur-[4px]" style={{ ...responsiveMetric(41.323, 61.984), borderRadius: vw(2) }} />
+                                        <img src={question} alt="question" style={{ ...responsiveMetric(20, 20), ...responsivePosition(18, 12)}} />
+                                      </div>
+                                    ) : batch.display_mode === 'password' ? (
+                                      <div className="relative overflow-hidden" style={{ ...responsiveMetric(41.323, 61.984), borderRadius: vw(2) }}>
+                                        <div className="absolute top-0 left-0 bg-[#586B88]" style={{ ...responsiveMetric(41.323, 61.984), borderRadius: vw(2) }} />
+                                        <img src={lock} alt="lock" style={{ ...responsiveMetric(20, 20), ...responsivePosition(18, 12)}} />
+                                      </div>
+                                    ) : batch.display_mode === 'cushion' ? (
+                                      <div className="relative overflow-hidden" style={{ ...responsiveMetric(41.323, 61.984), borderRadius: vw(2) }}>
+                                        <div className="absolute top-0 left-0 bg-[#A0A5AC]" style={{ ...responsiveMetric(41.323, 61.984), borderRadius: vw(2) }} />
+                                        <img src={warning} alt="warning" style={{ ...responsiveMetric(20, 20), ...responsivePosition(18, 12)}} />
+                                      </div>
+                                    ) : (
+                                      <img 
+                                        src={batch.files[0].url} 
+                                        alt="photo" 
+                                        className="object-cover"
+                                        style={{ ...responsiveMetric(41.323, 61.984), borderRadius: vw(2) }}
+                                        onError={(e) => console.error('Image failed to load:', batch.files[0].url, e)}
+                                      />
+                                    )}
                                   </div>
                                 ) : (
                                   <div className="w-[41.323px] h-[61.984px] bg-gray-200 flex items-center justify-center">
@@ -219,12 +267,55 @@ const MyContents = () => {
                                               <div>
                                                 {/* Debug: Log image info */}
                                                 {console.log('Desktop - Rendering image for batch:', batch.id, 'URL:', batch.files[0].url)}
-                                                <img 
-                                                  src={batch.files[0].url} 
-                                                  alt="photo" 
-                                                  className="w-[72.315px] h-[108.472px] object-cover"
-                                                  onError={(e) => console.error('Desktop - Image failed to load:', batch.files[0].url, e)}
-                                                />
+                                                {batch.display_mode === 'normal' ? (
+                                                  <img 
+                                                    src={batch.files[0].url} 
+                                                    alt="photo" 
+                                                    className="object-cover"
+                                                    style={{ ...responsiveMetricD(72.315, 108.472), borderRadius: vwd(3) }}
+                                                    onError={(e) => console.error('Desktop - Image failed to load:', batch.files[0].url, e)}
+                                                  />
+                                                ) : batch.display_mode === 'gacha' ? (
+                                                  <div className="relative overflow-hidden" style={{ ...responsiveMetricD(72.315, 108.472), borderRadius: vwd(3) }}>
+                                                    <img 
+                                                      src={batch.files[0].url} 
+                                                      alt="ガチャ" 
+                                                      className="object-cover filter blur-[4px]" 
+                                                      style={{ ...responsiveMetricD(72.315, 108.472), borderRadius: vwd(3) }}
+                                                    />
+                                                    <div className="absolute top-0 left-0 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px]" style={{ ...responsiveMetricD(72.315, 108.472), borderRadius: vwd(3) }} />
+                                                    <img src={bubble} alt="bubble" style={{ ...responsiveMetricD(30, 30), ...responsivePositionD(36, 22)}} />
+                                                  </div>
+                                                ) : batch.display_mode === 'blur' ? (
+                                                  <div className="relative overflow-hidden" style={{ ...responsiveMetricD(72.315, 108.472), borderRadius: vwd(3) }}>
+                                                    <img 
+                                                      src={batch.files[0].url} 
+                                                      alt="ぼかしフィルター" 
+                                                      className="object-cover filter blur-[4px]" 
+                                                      style={{ ...responsiveMetricD(72.315, 108.472), borderRadius: vwd(3) }}
+                                                    />
+                                                    <div className="absolute top-0 left-0 bg-black opacity-50 filter blur-[4px]" style={{ ...responsiveMetricD(72.315, 108.472), borderRadius: vwd(3) }} />
+                                                    <img src={question} alt="question" style={{ ...responsiveMetricD(30, 30), ...responsivePositionD(36, 22)}} />
+                                                  </div>
+                                                ) : batch.display_mode === 'password' ? (
+                                                  <div className="relative overflow-hidden" style={{ ...responsiveMetricD(72.315, 108.472), borderRadius: vwd(3) }}>
+                                                    <div className="absolute top-0 left-0 bg-[#586B88]" style={{ ...responsiveMetricD(72.315, 108.472), borderRadius: vwd(3) }} />
+                                                    <img src={lock} alt="lock" style={{ ...responsiveMetricD(30, 30), ...responsivePositionD(36, 22)}} />
+                                                  </div>
+                                                ) : batch.display_mode === 'cushion' ? (
+                                                  <div className="relative overflow-hidden" style={{ ...responsiveMetricD(72.315, 108.472), borderRadius: vwd(3) }}>
+                                                    <div className="absolute top-0 left-0 bg-[#A0A5AC]" style={{ ...responsiveMetricD(72.315, 108.472), borderRadius: vwd(3) }} />
+                                                    <img src={warning} alt="warning" style={{ ...responsiveMetricD(30, 30), ...responsivePositionD(36, 22)}} />
+                                                  </div>
+                                                ) : (
+                                                  <img 
+                                                    src={batch.files[0].url} 
+                                                    alt="photo" 
+                                                    className="object-cover"
+                                                    style={{ ...responsiveMetricD(72.315, 108.472), borderRadius: vwd(3) }}
+                                                    onError={(e) => console.error('Desktop - Image failed to load:', batch.files[0].url, e)}
+                                                  />
+                                                )}
                                               </div>
                                             ) : (
                                               <div className="w-[72.315px] h-[108.472px] bg-gray-200 flex items-center justify-center">
