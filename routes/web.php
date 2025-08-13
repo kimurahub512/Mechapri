@@ -7,11 +7,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductBatchController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return inertia('Home');
@@ -44,18 +44,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/myshop/edit', [App\Http\Controllers\ShopController::class, 'edit'])->name('shop.edit');
     Route::post('/myshop/update', [App\Http\Controllers\ShopController::class, 'update'])->name('shop.update');
     Route::get('/myshop/contents', [App\Http\Controllers\MyContentsController::class, 'index'])->name('myshop.contents');
-    Route::delete('/myshop/contents/{id}', [App\Http\Controllers\MyContentsController::class, 'destroy']);
-    Route::patch('/myshop/contents/{id}/toggle-public', [App\Http\Controllers\MyContentsController::class, 'togglePublic']);
+Route::delete('/myshop/contents/{id}', [App\Http\Controllers\MyContentsController::class, 'destroy']);
+Route::patch('/myshop/contents/{id}/toggle-public', [App\Http\Controllers\MyContentsController::class, 'togglePublic']);
 
-    // Category routes
-    Route::get('/myshop/category', [App\Http\Controllers\CategoryController::class, 'index'])->name('myshop.category');
-    Route::get('/myshop/category/create', [App\Http\Controllers\CategoryController::class, 'create'])->name('myshop.category.create');
-    Route::get('/myshop/category/{category}/edit', [App\Http\Controllers\CategoryController::class, 'edit'])->name('myshop.category.edit');
-    Route::post('/myshop/category', [App\Http\Controllers\CategoryController::class, 'store'])->name('myshop.category.store');
-    Route::put('/myshop/category/{category}', [App\Http\Controllers\CategoryController::class, 'update'])->name('myshop.category.update');
-    Route::delete('/myshop/category/{category}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('myshop.category.destroy');
-    Route::patch('/myshop/category/{category}/toggle-public', [App\Http\Controllers\CategoryController::class, 'togglePublic'])->name('myshop.category.toggle-public');
-    Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController::class, 'reorder'])->name('myshop.category.reorder');
+// Category routes
+Route::get('/myshop/category', [App\Http\Controllers\CategoryController::class, 'index'])->name('myshop.category');
+Route::get('/myshop/category/create', [App\Http\Controllers\CategoryController::class, 'create'])->name('myshop.category.create');
+Route::get('/myshop/category/{category}/edit', [App\Http\Controllers\CategoryController::class, 'edit'])->name('myshop.category.edit');
+Route::post('/myshop/category', [App\Http\Controllers\CategoryController::class, 'store'])->name('myshop.category.store');
+Route::put('/myshop/category/{category}', [App\Http\Controllers\CategoryController::class, 'update'])->name('myshop.category.update');
+Route::delete('/myshop/category/{category}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('myshop.category.destroy');
+Route::patch('/myshop/category/{category}/toggle-public', [App\Http\Controllers\CategoryController::class, 'togglePublic'])->name('myshop.category.toggle-public');
+Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController::class, 'reorder'])->name('myshop.category.reorder');
     Route::get('/myshop/transaction', function(){
         return Inertia::render('MyShopManagement/Transaction');
     });
@@ -194,9 +194,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Test email route (remove in production)
     Route::get('/test-email', function() {
         try {
-            // Clear any existing mail configuration
-            Mail::purge('smtp');
-            
             Mail::raw('Test email from Laravel', function($message) {
                 $message->to('test@example.com')->subject('Test Email');
             });
@@ -219,106 +216,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return 'Email logged successfully! Check storage/logs/laravel.log';
         } catch (\Exception $e) {
             return 'Email failed: ' . $e->getMessage();
-        }
-    });
-    
-    // Test verification code email
-    Route::get('/test-verification-email', function() {
-        try {
-            $code = '123456';
-            $email = 'test@example.com';
-            
-            // Clear any existing mail configuration
-            Mail::purge('smtp');
-            
-            // Create a fresh mailer instance
-            $mailer = Mail::mailer('smtp');
-            
-            $mailer->to($email)->send(new \App\Mail\VerificationCodeMail($code));
-            
-            return 'Verification email sent successfully! Code: ' . $code;
-        } catch (\Exception $e) {
-            return 'Verification email failed: ' . $e->getMessage();
-        }
-    });
-    
-    // Test SMTP connection
-    Route::get('/test-smtp-connection', function() {
-        try {
-            $host = config('mail.mailers.smtp.host');
-            $port = config('mail.mailers.smtp.port');
-            $encryption = config('mail.mailers.smtp.encryption');
-            
-            return "Testing connection to: $host:$port ($encryption)<br>";
-            
-            // Test without SSL first
-            $connection = fsockopen($host, $port, $errno, $errstr, 10);
-            
-            if (!$connection) {
-                return "SMTP connection failed: $errstr ($errno)<br>";
-            }
-            
-            fclose($connection);
-            return "SMTP connection successful to $host:$port ($encryption)";
-        } catch (\Exception $e) {
-            return 'SMTP test failed: ' . $e->getMessage();
-        }
-    });
-    
-    // Test different SMTP hosts
-    Route::get('/test-smtp-hosts', function() {
-        $hosts = [
-            'smtp.mail.us-east-1.awsapps.com',
-            'email-smtp.us-east-1.amazonaws.com',
-            'smtp.gmail.com'
-        ];
-        
-        $results = [];
-        
-        foreach ($hosts as $host) {
-            $results[] = "Testing $host:465 (SSL)...";
-            
-            $connection = @fsockopen($host, 465, $errno, $errstr, 5);
-            
-            if ($connection) {
-                $results[] = "✓ Connection successful to $host:465";
-                fclose($connection);
-            } else {
-                $results[] = "✗ Connection failed to $host:465: $errstr ($errno)";
-            }
-            
-            $results[] = "Testing $host:587 (TLS)...";
-            
-            $connection = @fsockopen($host, 587, $errno, $errstr, 5);
-            
-            if ($connection) {
-                $results[] = "✓ Connection successful to $host:587";
-                fclose($connection);
-            } else {
-                $results[] = "✗ Connection failed to $host:587: $errstr ($errno)";
-            }
-        }
-        
-        return implode('<br>', $results);
-    });
-    
-    // Test WorkMail connection specifically
-    Route::get('/test-workmail', function() {
-        try {
-            // Clear any existing connections
-            Mail::purge('smtp');
-            
-            // Create a fresh mailer instance
-            $mailer = Mail::mailer('smtp');
-            
-            // Test with a simple message
-            $mailer->raw('Test WorkMail connection', function($message) {
-                $message->to('test@example.com')->subject('WorkMail Test');
-            });
-            
-            return 'WorkMail test successful!';
-        } catch (\Exception $e) {
-            return 'WorkMail test failed: ' . $e->getMessage();
         }
     });
     
@@ -359,6 +256,228 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'user' => auth()->user() ? auth()->user()->only(['id', 'name', 'email']) : null,
         ]);
     })->name('test.auth');
+});
+
+// Test AWS WorkMail connection
+Route::get('/test-workmail-connection', function () {
+    try {
+        $host = 'smtp.mail.us-east-1.awsapps.com';
+        $port = 465;
+        
+        echo "Testing connection to $host:$port...\n";
+        
+        // Test 1: Check if host is reachable
+        echo "Testing DNS resolution...\n";
+        $ip = gethostbyname($host);
+        if ($ip === $host) {
+            echo "DNS resolution failed for $host\n";
+            return response()->json(['error' => "DNS resolution failed for $host"]);
+        }
+        echo "DNS resolution successful: $host -> $ip\n";
+        
+        // Test 2: Try different connection methods
+        echo "Testing connection methods...\n";
+        
+        // Method 1: Basic socket with longer timeout
+        echo "Method 1: Basic socket connection...\n";
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+                'timeout' => 30
+            ]
+        ]);
+        
+        $socket = @stream_socket_client(
+            "ssl://$host:$port",
+            $errno,
+            $errstr,
+            30,
+            STREAM_CLIENT_CONNECT,
+            $context
+        );
+        
+        if (!$socket) {
+            echo "Method 1 failed: $errstr ($errno)\n";
+            
+            // Method 2: Try without SSL first
+            echo "Method 2: Trying without SSL...\n";
+            $socket = @fsockopen($host, $port, $errno, $errstr, 10);
+            if (!$socket) {
+                echo "Method 2 failed: $errstr ($errno)\n";
+                
+                // Method 3: Try different port (587 for TLS)
+                echo "Method 3: Trying port 587 with TLS...\n";
+                $socket = @fsockopen($host, 587, $errno, $errstr, 10);
+                if (!$socket) {
+                    echo "Method 3 failed: $errstr ($errno)\n";
+                    return response()->json(['error' => "All connection methods failed. Last error: $errstr ($errno)"]);
+                } else {
+                    echo "Method 3 successful (port 587)\n";
+                }
+            } else {
+                echo "Method 2 successful (no SSL)\n";
+            }
+        } else {
+            echo "Method 1 successful (SSL)\n";
+        }
+        
+        // Test SMTP handshake
+        $response = fgets($socket, 515);
+        echo "SMTP Response: " . trim($response) . "\n";
+        
+        // Send EHLO
+        fwrite($socket, "EHLO localhost\r\n");
+        $response = fgets($socket, 515);
+        echo "EHLO Response: " . trim($response) . "\n";
+        
+        fclose($socket);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Connection test completed successfully',
+            'details' => [
+                'host' => $host,
+                'port' => $port,
+                'ip' => $ip
+            ]
+        ]);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+    }
+});
+
+// Test actual email sending with connection reset
+Route::get('/test-workmail-send', function () {
+    try {
+        $email = 'test@example.com'; // Change this to a real email for testing
+        $code = '123456';
+        
+        echo "Sending test email to $email...\n";
+        
+        // Force new connection by clearing any existing connections
+        Mail::purge('smtp');
+        
+        // Send email
+        Mail::to($email)->send(new \App\Mail\VerificationCodeMail($code));
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Test email sent successfully'
+        ]);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+    }
+});
+
+// Test basic network connectivity
+Route::get('/test-ping', function () {
+    $host = 'smtp.mail.us-east-1.awsapps.com';
+    
+    echo "Testing basic connectivity to $host...\n";
+    
+    // Test 1: DNS resolution
+    $ip = gethostbyname($host);
+    echo "DNS Resolution: $host -> $ip\n";
+    
+    // Test 2: Ping (if available)
+    if (function_exists('exec')) {
+        $output = [];
+        $return_var = 0;
+        exec("ping -n 1 $host", $output, $return_var);
+        echo "Ping result: " . implode("\n", $output) . "\n";
+        echo "Ping return code: $return_var\n";
+    }
+    
+    // Test 3: Port scan
+    $ports = [465, 587, 25];
+    foreach ($ports as $port) {
+        $connection = @fsockopen($host, $port, $errno, $errstr, 5);
+        if ($connection) {
+            echo "Port $port: OPEN\n";
+            fclose($connection);
+        } else {
+            echo "Port $port: CLOSED ($errstr)\n";
+        }
+    }
+    
+    return response()->json([
+        'host' => $host,
+        'ip' => $ip,
+        'message' => 'Basic connectivity test completed'
+    ]);
+});
+
+// Test different mail configurations
+Route::get('/test-mail-configs', function () {
+    $email = 'test@example.com'; // Change this to a real email
+    $code = '123456';
+    
+    $configs = [
+        'config1' => [
+            'host' => 'smtp.mail.us-east-1.awsapps.com',
+            'port' => 465,
+            'encryption' => 'ssl',
+            'timeout' => 30
+        ],
+        'config2' => [
+            'host' => 'smtp.mail.us-east-1.awsapps.com',
+            'port' => 587,
+            'encryption' => 'tls',
+            'timeout' => 30
+        ],
+        'config3' => [
+            'host' => 'smtp.mail.us-east-1.awsapps.com',
+            'port' => 465,
+            'encryption' => 'ssl',
+            'timeout' => 60
+        ]
+    ];
+    
+    foreach ($configs as $name => $config) {
+        echo "Testing $name...\n";
+        echo "Host: {$config['host']}, Port: {$config['port']}, Encryption: {$config['encryption']}\n";
+        
+        try {
+            // Temporarily set mail config
+            config([
+                'mail.mailers.smtp.host' => $config['host'],
+                'mail.mailers.smtp.port' => $config['port'],
+                'mail.mailers.smtp.encryption' => $config['encryption'],
+                'mail.mailers.smtp.timeout' => $config['timeout']
+            ]);
+            
+            // Clear any existing connections
+            Mail::purge('smtp');
+            
+            // Try to send email
+            Mail::to($email)->send(new \App\Mail\VerificationCodeMail($code));
+            
+            echo "$name: SUCCESS\n";
+            return response()->json([
+                'success' => true,
+                'working_config' => $name,
+                'config' => $config
+            ]);
+            
+        } catch (\Exception $e) {
+            echo "$name: FAILED - " . $e->getMessage() . "\n";
+        }
+    }
+    
+    return response()->json([
+        'success' => false,
+        'message' => 'All configurations failed'
+    ]);
 });
 
 require __DIR__.'/auth.php';

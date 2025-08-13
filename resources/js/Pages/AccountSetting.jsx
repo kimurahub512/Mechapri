@@ -168,18 +168,10 @@ const AccountSetting = () => {
               message: '認証コードを送信しました。6桁のコードを入力してください。'
             });
           } else {
-            const errorData = await sendCodeResponse.json();
-            if (sendCodeResponse.status === 429) {
-              setResultMessage({
-                type: 'error',
-                message: errorData.message || '60秒間待ってから再度お試しください'
-              });
-            } else {
-              setResultMessage({
-                type: 'error',
-                message: errorData.message || '認証コードの送信に失敗しました'
-              });
-            }
+            setResultMessage({
+              type: 'error',
+              message: '認証コードの送信に失敗しました'
+            });
           }
         }
       } else {
@@ -501,16 +493,6 @@ const AccountSetting = () => {
                                 }
                               }
                             }}
-                            onPaste={(e) => {
-                              e.preventDefault();
-                              const pastedData = e.clipboardData.getData('text').replace(/\D/g, '');
-                              if (pastedData.length === 6) {
-                                setVerificationCode(pastedData);
-                                // Focus the last input after pasting
-                                const lastInput = e.target.parentNode.children[5];
-                                if (lastInput) lastInput.focus();
-                              }
-                            }}
                             onKeyDown={(e) => {
                               if (e.key === 'Backspace' && !verificationCode[index] && index > 0) {
                                 const newCode = verificationCode.split('');
@@ -704,16 +686,6 @@ const AccountSetting = () => {
                                 const nextInput = e.target.parentNode.children[index + 1];
                                 if (nextInput) nextInput.focus();
                               }
-                            }
-                          }}
-                          onPaste={(e) => {
-                            e.preventDefault();
-                            const pastedData = e.clipboardData.getData('text').replace(/\D/g, '');
-                            if (pastedData.length === 6) {
-                              setVerificationCode(pastedData);
-                              // Focus the last input after pasting
-                              const lastInput = e.target.parentNode.children[5];
-                              if (lastInput) lastInput.focus();
                             }
                           }}
                           onKeyDown={(e) => {

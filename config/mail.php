@@ -55,13 +55,6 @@ return [
                     'verify_peer_name' => false,
                 ],
             ],
-            'options' => [
-                'ssl' => [
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true,
-                ],
-            ],
         ],
 
         'ses' => [
