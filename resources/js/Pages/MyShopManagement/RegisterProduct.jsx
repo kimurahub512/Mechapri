@@ -9,9 +9,12 @@ import ShopMobileTopBlock from '@/Components/ShopMobileTopBlocks';
 import '@/../../resources/css/shopmanagement.css';
 import mountain_down from '@/assets/images/mountain_down.svg';
 import radio from '@/assets/images/beginner_radio.svg';
+import question from '@/assets/images/question.svg';
+import bubble from '@/assets/images/bubble.svg';
+import warning from '@/assets/images/warning.svg';
+import lock from '@/assets/images/lock.svg';
 import photo1 from '@/assets/images/saleshistory/photo1.png';
 import photo2 from '@/assets/images/saleshistory/photo2.png';
-import photo3 from '@/assets/images/saleshistory/photo3.png';
 import photo4 from '@/assets/images/saleshistory/photo4.png';
 import overlay from '@/assets/images/saleshistory/overlay.png';
 import photo1_m from '@/assets/images/saleshistory/photo1_m.png';
@@ -46,7 +49,7 @@ const RegisterProduct = () => {
     const [error, setError] = useState(null);
     const [productData, setProductData] = useState(null);
     const fileInputRef = useRef(null);
-    
+
     // Form state
     const [title, setTitle] = useState(editMode && productBatch ? productBatch.title : '');
     const [description, setDescription] = useState(editMode && productBatch ? productBatch.description : '');
@@ -54,7 +57,7 @@ const RegisterProduct = () => {
     const [salesLimit, setSalesLimit] = useState(editMode && productBatch ? (productBatch.sales_limit ? productBatch.sales_limit.toString() : '') : '');
     const [salesDeadline, setSalesDeadline] = useState(editMode && productBatch ? (productBatch.sales_deadline ? productBatch.sales_deadline : '') : '');
     const [password, setPassword] = useState(editMode && productBatch ? (productBatch.password || '') : '');
-    
+
     // Radio button states
     const [isPaid, setIsPaid] = useState(editMode && productBatch ? productBatch.price > 0 : true); // true for 有料, false for 無料
     const [isUnlimited, setIsUnlimited] = useState(editMode && productBatch ? !productBatch.sales_limit : true); // true for 無制限, false for 販売数を指定
@@ -76,13 +79,13 @@ const RegisterProduct = () => {
         try {
             // Method 1: Scroll to top of page
             window.scrollTo(0, 0);
-            
+
             // Method 2: Scroll the main container
             const mainElement = document.querySelector('main');
             if (mainElement) {
                 mainElement.scrollTop = 0;
             }
-            
+
             // Method 3: Scroll to error element
             setTimeout(() => {
                 const errorElement = document.querySelector('.error-message');
@@ -90,7 +93,7 @@ const RegisterProduct = () => {
                     errorElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             }, 100);
-            
+
         } catch (error) {
             console.error('Scroll error:', error);
         }
@@ -161,7 +164,7 @@ const RegisterProduct = () => {
 
             // Prepare form data
             const formData = new FormData();
-            
+
             // Add form fields
             formData.append('title', title);
             formData.append('description', description);
@@ -175,16 +178,16 @@ const RegisterProduct = () => {
             formData.append('sn_print', printSerial ? '1' : '0');
             formData.append('sn_format', serialFormat);
             formData.append('is_public', isPublic ? '1' : '0');
-            
+
             // Add optional fields
             if (salesDeadline) {
                 formData.append('sales_deadline', salesDeadline);
             }
-            
+
             if (!isUnlimited && salesLimit) {
                 formData.append('sales_limit', salesLimit);
             }
-            
+
             if (password) {
                 formData.append('password', password);
             }
@@ -194,7 +197,7 @@ const RegisterProduct = () => {
             newFiles.forEach((photo, index) => {
                 formData.append(`files[${index}]`, photo.file);
             });
-            
+
             // Add existing file IDs to keep
             const existingFiles = uploadedPhotos.filter(photo => photo.isExisting);
             existingFiles.forEach((photo, index) => {
@@ -204,13 +207,13 @@ const RegisterProduct = () => {
             // Submit to backend
             const url = editMode ? `/api/product-batches/${productBatch.id}` : '/api/product-batches';
             const method = editMode ? 'PUT' : 'POST';
-            
+
             let requestBody;
             let headers = {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 'Accept': 'application/json',
             };
-            
+
             if (editMode) {
                 // For edit mode, send as JSON (without files for now)
                 const jsonData = {
@@ -226,7 +229,7 @@ const RegisterProduct = () => {
                     is_public: isPublic ? '1' : '0',
                     existing_files: uploadedPhotos.filter(photo => photo.isExisting).map(photo => photo.fileId),
                 };
-                
+
                 // Add optional fields
                 if (salesDeadline) {
                     jsonData.sales_deadline = salesDeadline;
@@ -237,14 +240,14 @@ const RegisterProduct = () => {
                 if (password) {
                     jsonData.password = password;
                 }
-                
+
                 requestBody = JSON.stringify(jsonData);
                 headers['Content-Type'] = 'application/json';
             } else {
                 // For create mode, use FormData (with files)
                 requestBody = formData;
             }
-            
+
             const response = await fetch(url, {
                 method: method,
                 headers: headers,
@@ -254,7 +257,7 @@ const RegisterProduct = () => {
 
             // Check if response is JSON
             const contentType = response.headers.get('content-type');
-            
+
             if (!contentType || !contentType.includes('application/json')) {
                 // Try to get the response text to see what we're actually getting
                 const responseText = await response.text();
@@ -272,7 +275,7 @@ const RegisterProduct = () => {
                     // Store the product data for the modal (only for new products)
                     const productData = result.data;
                     setProductData(productData);
-                    
+
                     // Show success modal
                     setShowModal(true);
                     // Reset form
@@ -307,7 +310,7 @@ const RegisterProduct = () => {
             }
         } catch (error) {
             console.error('Submission error:', error);
-            
+
             // If it's a fetch error, try to get the response text
             if (error.message && error.message.includes('Expected JSON response')) {
                 setError('サーバーエラーが発生しました。しばらく時間をおいて再度お試しください。');
@@ -325,7 +328,7 @@ const RegisterProduct = () => {
 
     const handleFileUpload = (e) => {
         const files = Array.from(e.target.files);
-        
+
         // Check if adding these files would exceed the limit
         if (uploadedPhotos.length + files.length > 10) {
             alert('最大10枚までアップロードできます。');
@@ -337,22 +340,22 @@ const RegisterProduct = () => {
             const isValidType = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'].includes(file.type);
             const isValidSize = file.size <= 25 * 1024 * 1024; // 25MB limit
             const newTotalSize = totalSize + file.size;
-            
+
             if (!isValidType) {
                 alert(`${file.name}は対応していないファイル形式です。`);
                 return false;
             }
-            
+
             if (!isValidSize) {
                 alert(`${file.name}は25MBを超えています。`);
                 return false;
             }
-            
+
             if (newTotalSize > 25 * 1024 * 1024) {
                 alert('合計容量が25MBを超えます。');
                 return false;
             }
-            
+
             return true;
         });
 
@@ -412,7 +415,7 @@ const RegisterProduct = () => {
                 </div>
                 <ShopMobileTopBlock />
                 {/* Desktop Main Section */}
-                <main className="hidden md:flex flex-col min-w-[640px] max-w-[880px] items-start" style={{ ...responsiveMetricD(880), gap: vwd(22), padding: vwd(40), paddingLeft: vwd(15), paddingRight: vwd(15), marginLeft: vwd(130)}}>
+                <main className="hidden md:flex flex-col min-w-[640px] max-w-[880px] items-start" style={{ ...responsiveMetricD(880), gap: vwd(22), padding: vwd(40), paddingLeft: vwd(15), paddingRight: vwd(15), marginLeft: vwd(130) }}>
                     {/* Title */}
                     <h1 className="text-left" style={{ ...responsiveTextD(36, 54, null, 'bold', 'noto', '#363636') }}>{editMode ? '商品編集' : '商品登録'}</h1>
                     {/* Error Message */}
@@ -424,9 +427,9 @@ const RegisterProduct = () => {
                     {/* Frame 1 */}
                     <section className="flex flex-col w-full max-w-[880px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] items-start" style={{ gap: vwd(10), paddingTop: vwd(32), paddingBottom: vwd(49), paddingLeft: vwd(24), paddingRight: vwd(24), borderRadius: vwd(16) }}>
                         {/* Image Section (Frame 11) */}
-                        <div 
-                            className="flex justify-end items-center self-stretch rounded-[2px] border-2 border-dashed border-[#ACACAC] bg-[#F1F3F4] w-full" 
-                            style={{ 
+                        <div
+                            className="flex justify-end items-center self-stretch rounded-[2px] border-2 border-dashed border-[#ACACAC] bg-[#F1F3F4] w-full"
+                            style={{
                                 paddingTop: uploadedPhotos.length === 0 ? vwd(64) : vwd(20),
                                 paddingBottom: uploadedPhotos.length === 0 ? vwd(40) : vwd(20),
                                 paddingLeft: uploadedPhotos.length === 0 ? vwd(316) : vwd(16),
@@ -436,7 +439,7 @@ const RegisterProduct = () => {
                             {/* Image Area 111 */}
                             {uploadedPhotos.length === 0 ? (
                                 /* Upload Area - Show when no photos uploaded */
-                                <div 
+                                <div
                                     className="flex flex-col justify-center items-center text-center w-full cursor-pointer hover:opacity-80 transition-opacity"
                                     onClick={handleUploadClick}
                                     style={{ width: vwd(802) }}
@@ -464,8 +467,8 @@ const RegisterProduct = () => {
                                     <div className="grid grid-cols-5 w-full" style={{ gap: vwd(16) }}>
                                         {uploadedPhotos.map((photo, index) => (
                                             <div key={photo.id} className="relative group">
-                                                <img 
-                                                    src={photo.isExisting ? photo.url : photo.preview} 
+                                                <img
+                                                    src={photo.isExisting ? photo.url : photo.preview}
                                                     alt={`Photo ${index + 1}`}
                                                     className="object-cover rounded-lg"
                                                     style={{ ...responsiveMetricD(128, 128) }}
@@ -477,19 +480,19 @@ const RegisterProduct = () => {
                                                 >
                                                     ×
                                                 </button>
-                            </div>
+                                            </div>
                                         ))}
                                         {/* Add more button - show if less than 10 photos */}
                                         {uploadedPhotos.length < 10 && (
-                                            <div 
+                                            <div
                                                 className="border-2 border-dashed border-gray-300 bg-white rounded-lg flex items-center justify-center cursor-pointer hover:border-gray-400 transition-colors"
                                                 onClick={handleUploadClick}
-                                                style={{  ...responsiveMetricD(128, 128) }}
+                                                style={{ ...responsiveMetricD(128, 128) }}
                                             >
                                                 <div className="text-center">
                                                     <div className="text-gray-400 mb-2" style={{ ...responsiveTextD(24, 24) }}>+</div>
                                                     <div className="text-gray-500" style={{ ...responsiveTextD(14, 14) }}>追加</div>
-                        </div>
+                                                </div>
                                             </div>
                                         )}
                                     </div>
@@ -538,7 +541,7 @@ const RegisterProduct = () => {
                             {/* Frame 1231 */}
                             <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(4) }}>
                                 {/* Frame 12311 */}
-                                <div className="flex items-center self-stretch" style={{height: vwd(58), gap: vwd(12)}}>
+                                <div className="flex items-center self-stretch" style={{ height: vwd(58), gap: vwd(12) }}>
                                     <span style={{ ...responsiveTextD(21, 27, null, 'bold', 'noto', '#363636') }}>説明文</span>
                                     <span style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#ACACAC') }}>{description.length}/200</span>
                                 </div>
@@ -578,7 +581,7 @@ const RegisterProduct = () => {
                                 </div>
                             </div>
                             {/* Frame 1233 */}
-                            <div className="flex flex-col items-start self-stretch" style={{...responsiveMetricD('full', 404)}}>
+                            <div className="flex flex-col items-start self-stretch" style={{ ...responsiveMetricD('full', 404) }}>
                                 {/* Frame 12331 */}
                                 <div className="flex items-center self-stretch border-b border-[#E9E9E9]" style={{ gap: vwd(12), paddingTop: vwd(25), paddingBottom: vwd(6), marginBottom: vwd(21) }}>
                                     <span style={{ ...responsiveTextD(21, 27, null, 'bold', 'noto', '#363636') }}>販売価格</span>
@@ -611,7 +614,7 @@ const RegisterProduct = () => {
                                 </div>
                                 {/* Frame 12334: 販売数 */}
                                 <div className="flex items-start" style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636'), paddingLeft: vwd(30), marginBottom: vwd(21), opacity: isPaid ? 1 : 0.5 }}>
-                                販売数
+                                    販売数
                                 </div>
                                 {/* Frame 12335: Circle + 無制限 */}
                                 <div className="flex items-start" style={{ paddingLeft: vwd(30), paddingRight: vwd(718), marginBottom: vwd(21), opacity: isPaid ? 1 : 0.5, cursor: isPaid ? 'pointer' : 'not-allowed' }} onClick={isPaid ? () => setIsUnlimited(true) : undefined}>
@@ -656,36 +659,45 @@ const RegisterProduct = () => {
                             </div>
                         </div>
                         {/* Frame 1234 */}
-                        <div className="flex flex-col items-start self-stretch w-full" style={{paddingTop: vwd(12.81), gap: vwd(4)}}>
+                        <div className="flex flex-col items-start self-stretch w-full" style={{ paddingTop: vwd(12.81), gap: vwd(4) }}>
                             {/* Frame 12341 */}
-                            <div className="flex items-center self-stretch border-b border-[#E9E9E9]" style={{paddingTop: vwd(25), paddingBottom: vwd(6), gap: vwd(12), marginBottom: vwd(12)}}>
+                            <div className="flex items-center self-stretch border-b border-[#E9E9E9]" style={{ paddingTop: vwd(25), paddingBottom: vwd(6), gap: vwd(12), marginBottom: vwd(12) }}>
                                 <span style={{ ...responsiveTextD(21, 27, null, 'bold', 'noto', '#363636') }}>表示設定</span>
                                 <span style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#ACACAC') }}>どれか１つを選択</span>
                             </div>
                             {/* Frame 12342 */}
                             <div className="flex flex-col items-start w-full self-stretch">
                                 {/* 123421: 3 photo options, aligned */}
-                                <div className="flex flex-row justify-center items-start w-full" style={{gap: vwd(14)}}>
+                                <div className="flex flex-row justify-center items-start w-full" style={{ gap: vwd(14) }}>
                                     {/* 1234211: 設定しない */}
-                                    <div className="flex flex-col items-start cursor-pointer" style={{gap: vwd(5), ...responsiveMetricD(258, 250)}} onClick={() => setDisplayMode('normal')}>
-                                        <img src={photo1} alt="設定しない" className="object-cover" style={{...responsiveMetricD(258, 106), borderRadius: vwd(12)}}/>
-                                        <div className="flex items-center w-full" style={{gap: vwd(10)}}>
+                                    <div className="flex flex-col items-start cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => setDisplayMode('normal')}>
+                                        <img src={photo1} alt="設定しない" className="object-cover" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }} />
+                                        <div className="flex items-center w-full" style={{ gap: vwd(10) }}>
                                             {displayMode === 'normal' ? (
-                                                <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
+                                                <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                             ) : (
-                                                <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{...responsiveMetricD(20, 20)}} />
+                                                <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
                                             )}
                                             <span style={{ ...responsiveTextD(14, 22, null, 'normal', 'noto', '#363636') }}>設定しない</span>
                                         </div>
                                     </div>
                                     {/* 1234212: ガチャ */}
-                                    <div className="flex flex-col items-start cursor-pointer" style={{gap: vwd(5), ...responsiveMetricD(258, 250)}} onClick={() => setDisplayMode('gacha')}>
-                                        <img src={photo2} alt="ガチャ" className="object-cover" style={{...responsiveMetricD(258, 106), borderRadius: vwd(12)}}/>
-                                        <div className="flex items-center w-full" style={{gap: vwd(10)}}>
+                                    <div className="flex flex-col items-start cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => setDisplayMode('gacha')}>
+                                        <div className="flex relative overflow-hidden" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12), backgroundColor: '#A0A5AC' }}>
+                                            <img src={photo1} alt="ガチャ" className="object-cover filter blur-[4px]" style={{ ...responsiveMetricD(256, 106), borderRadius: vwd(4) }} />
+                                            <div className="absolute top-0 left-0 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px]" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }} />
+                                            <div className="flex" style={{ ...responsiveMetricD(258, 107), borderRadius: vwd(11), ...responsivePositionD(-0.5), border: vwd(4), borderColor: '#D741EB', borderStyle: 'solid' }} />
+                                            <div className="flex flex-col items-center" style={{ ...responsivePositionD(21, 85) }}>
+                                                <img src={bubble} alt="bubble" style={{ ...responsiveMetricD(36, 36), marginBottom: vwd(5) }} />
+                                                <span style={{ ...responsiveTextD(10, 13, null, 'black', 'noto', '#FFF') }}>ガチャ</span>
+                                                <span style={{ ...responsiveTextD(7.3, 11, null, 'normal', 'noto', '#FFF') }}>ランダムで1枚選定されます</span>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center w-full" style={{ gap: vwd(10) }}>
                                             {displayMode === 'gacha' ? (
-                                                <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
+                                                <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                             ) : (
-                                                <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{...responsiveMetricD(20, 20)}} />
+                                                <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
                                             )}
                                             <span style={{ ...responsiveTextD(14, 22, null, 'normal', 'noto', '#363636') }}>ガチャ</span>
                                         </div>
@@ -694,13 +706,22 @@ const RegisterProduct = () => {
                                         </div>
                                     </div>
                                     {/* 1234213: ぼかしフィルター */}
-                                    <div className="flex flex-col items-end cursor-pointer" style={{gap: vwd(5), ...responsiveMetricD(258, 250)}} onClick={() => setDisplayMode('blur')}>
-                                        <img src={photo3} alt="ぼかしフィルター" className="object-cover" style={{...responsiveMetricD(258, 106), borderRadius: vwd(12)}}/>
-                                        <div className="flex items-center w-full" style={{gap: vwd(10)}}>
+                                    <div className="flex flex-col items-end cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => setDisplayMode('blur')}>
+                                        <div className="flex relative overflow-hidden" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12), backgroundColor: '#A0A5AC' }}>
+                                            <img src={photo1} alt="ぼかしフィルター" className="object-cover filter blur-[4px]" style={{ ...responsiveMetricD(256, 106), borderRadius: vwd(4) }} />
+                                            <div className="absolute top-0 left-0 bg-black opacity-50 filter blur-[4px]" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }} />
+                                            <div className="flex" style={{ ...responsiveMetricD(258, 107), borderRadius: vwd(11), ...responsivePositionD(-0.5), border: vwd(4), borderColor: '#000', borderStyle: 'solid' }} />
+                                            <div className="flex flex-col items-center" style={{ ...responsivePositionD(21, 92) }}>
+                                                <img src={question} alt="question" style={{ ...responsiveMetricD(36, 36), marginBottom: vwd(5) }} />
+                                                <span style={{ ...responsiveTextD(10, 13, null, 'black', 'noto', '#FFF') }}>ぼかしフィルター</span>
+                                                <span style={{ ...responsiveTextD(7.3, 11, null, 'normal', 'noto', '#FFF') }}>印刷して確認しよう！</span>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center w-full" style={{ gap: vwd(10) }}>
                                             {displayMode === 'blur' ? (
-                                                <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
+                                                <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                             ) : (
-                                                <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{...responsiveMetricD(20, 20)}} />
+                                                <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
                                             )}
                                             <span style={{ ...responsiveTextD(14, 22, null, 'normal', 'noto', '#363636') }}>ぼかしフィルター</span>
                                         </div>
@@ -710,15 +731,22 @@ const RegisterProduct = () => {
                                     </div>
                                 </div>
                                 {/* 123422: 2 options, stacked below */}
-                                <div className="flex flex-row justify-left items-start w-full" style={{gap: vwd(14)}}>
+                                <div className="flex flex-row justify-left items-start w-full" style={{ gap: vwd(14) }}>
                                     {/* 1234221: パスワード */}
-                                    <div className="flex flex-col items-start cursor-pointer" style={{gap: vwd(5), ...responsiveMetricD(258, 250)}} onClick={() => setDisplayMode('password')}>
-                                        <img src={photo4} alt="パスワード" className="object-cover" style={{...responsiveMetricD(258, 106), borderRadius: vwd(12)}}/>
-                                        <div className="flex items-center w-full" style={{gap: vwd(10)}}>
+                                    <div className="flex flex-col items-start cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => setDisplayMode('password')}>
+                                        <div className="flex relative overflow-hidden" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }}>
+                                            <div className="absolute top-0 left-0 bg-[#586B88]" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }} />
+                                            <div className="flex flex-col items-center" style={{ ...responsivePositionD(21, 92) }}>
+                                                <img src={lock} alt="question" style={{ ...responsiveMetricD(36, 36), marginBottom: vwd(5) }} />
+                                                <span style={{ ...responsiveTextD(10, 13, null, 'black', 'noto', '#CDD9EC') }}>パスワード</span>
+                                                <span style={{ ...responsiveTextD(7.3, 11, null, 'normal', 'noto', '#CDD9EC') }}>PWを入れて印刷しよう</span>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center w-full" style={{ gap: vwd(10) }}>
                                             {displayMode === 'password' ? (
-                                                <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
+                                                <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                             ) : (
-                                                <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{...responsiveMetricD(20, 20)}} />
+                                                <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
                                             )}
                                             <span style={{ ...responsiveTextD(14, 22, null, 'normal', 'noto', '#363636') }}>パスワード</span>
                                         </div>
@@ -726,29 +754,31 @@ const RegisterProduct = () => {
                                             <span style={{ ...responsiveTextD(13, 19.5, null, 'medium', 'noto', '#87969F') }}>写真は非公開。パスワードを知っている人だけに公開します。</span>
                                         </div>
                                         {displayMode === 'password' && (
-                                        <input
-                                            type="text"
+                                            <input
+                                                type="text"
                                                 className="flex h-[45.99px] w-full rounded-[5.71px] bg-white border border-[#E9E9E9] focus:outline-none"
-                                            placeholder="半角英数16文字まで"
+                                                placeholder="半角英数16文字まで"
                                                 value={password}
                                                 onChange={(e) => setPassword(e.target.value)}
                                                 maxLength={16}
                                                 style={{ ...responsiveMetricD(258, 45.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto', '#ACACAC'), marginTop: vwd(2) }}
-                                        />
+                                            />
                                         )}
                                     </div>
                                     {/* 1234222: ワンクッション with overlay */}
-                                    <div className="flex flex-col items-end cursor-pointer" style={{gap: vwd(5), ...responsiveMetricD(258, 250)}} onClick={() => setDisplayMode('cushion')}>
-                                        <div className="relative flex items-center justify-center" style={{...responsiveMetricD(258, 106), borderRadius: vwd(12), backgroundColor: '#A0A5AC'}}>
-
-                                            {/* Overlay image/label */}
-                                            <img src={overlay} alt="overlay" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                                    <div className="flex flex-col items-end cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => setDisplayMode('cushion')}>
+                                        <div className="flex relative items-center justify-center bg-[#A0A5AC]" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12)}}>
+                                            <div className="flex flex-col items-center">
+                                                <img src={warning} alt="question" style={{ ...responsiveMetricD(36, 36), marginBottom: vwd(5) }} />
+                                                <span style={{ ...responsiveTextD(10, 13, null, 'black', 'noto', '#464F5D') }}>WARNING</span>
+                                                <span style={{ ...responsiveTextD(7.3, 11, null, 'normal', 'noto', '#464F5D') }}>クリックして内容を確認</span>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center w-full" style={{gap: vwd(10)}}>
+                                        <div className="flex items-center w-full" style={{ gap: vwd(10) }}>
                                             {displayMode === 'cushion' ? (
-                                                <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
+                                                <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                             ) : (
-                                                <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{...responsiveMetricD(20, 20)}} />
+                                                <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
                                             )}
                                             <span style={{ ...responsiveTextD(14, 22, null, 'normal', 'noto', '#363636') }}>ワンクッション</span>
                                         </div>
@@ -757,30 +787,30 @@ const RegisterProduct = () => {
                                 </div>
                             </div>
                             {/* Frame 12343 */}
-                            <div className="flex flex-col items-start w-full" style={{gap: vwd(20)}}>
+                            <div className="flex flex-col items-start w-full" style={{ gap: vwd(20) }}>
                                 {/* Frame 123431 */}
-                                <div className="flex items-center self-stretch border-b border-[#E9E9E9]" style={{paddingTop: vwd(25), paddingBottom: vwd(6), gap: vwd(12)}}>
+                                <div className="flex items-center self-stretch border-b border-[#E9E9E9]" style={{ paddingTop: vwd(25), paddingBottom: vwd(6), gap: vwd(12) }}>
                                     <span style={{ ...responsiveTextD(21, 27, null, 'bold', 'noto', '#363636') }}>商品カテゴリに追加</span>
                                 </div>
                                 {/* Frame 123432 */}
-                                <div className="flex flex-col items-start self-stretch" style={{gap: vwd(8)}}>
-                                    <div className="flex items-center cursor-pointer" style={{gap: vwd(10)}} onClick={() => setAddToCategory(false)}>
+                                <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
+                                    <div className="flex items-center cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setAddToCategory(false)}>
                                         {!addToCategory ? (
-                                            <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
+                                            <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                         ) : (
-                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{...responsiveMetricD(20, 20)}} />
+                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
                                         )}
                                         <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>追加しない</span>
                                     </div>
                                 </div>
                                 {/* Frame 123433 */}
-                                <div className="flex flex-col items-start self-stretch" style={{gap: vwd(8)}}>
+                                <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                                     {/* 1234331 */}
-                                    <div className="flex items-center cursor-pointer" style={{gap: vwd(10)}} onClick={() => setAddToCategory(true)}>
+                                    <div className="flex items-center cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setAddToCategory(true)}>
                                         {addToCategory ? (
-                                            <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
+                                            <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                         ) : (
-                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{...responsiveMetricD(20, 20)}} />
+                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
                                         )}
                                         <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>商品カテゴリに追加</span>
                                     </div>
@@ -788,80 +818,80 @@ const RegisterProduct = () => {
                                     <span style={{ ...responsiveTextD(13, 19.5, null, 'medium', 'noto', '#87969F') }}>複数選択可能</span>
                                 </div>
                                 {/* Frame 123434 */}
-                                <div className="flex justify-center items-start w-full flex-wrap" style={{gap: vwd(14)}}>
+                                <div className="flex justify-center items-start w-full flex-wrap" style={{ gap: vwd(14) }}>
                                     {categories && categories.length > 0 ? (
                                         categories.map((category, index) => (
-                                            <div 
-                                                key={category.id} 
+                                            <div
+                                                key={category.id}
                                                 className={`flex items-center justify-center cursor-pointer transition-colors ${isCategorySelected(category.id) ? 'border-[#FF2AA1] bg-[#FFEFF8]' : 'border-[#E9E9E9] bg-white'}`}
-                                                style={{...responsiveMetricD(258, 60), padding: vwd(2), borderRadius: vwd(8), border: '1px solid'}}
+                                                style={{ ...responsiveMetricD(258, 60), padding: vwd(2), borderRadius: vwd(8), border: '1px solid' }}
                                                 onClick={() => toggleCategory(category.id)}
                                             >
                                                 <span style={{ ...responsiveTextD(16, 21, null, 'normal', 'noto', isCategorySelected(category.id) ? '#FF2AA1' : '#363636') }}>{category.title}</span>
                                             </div>
                                         ))
                                     ) : (
-                                        <div className="flex items-center justify-center" style={{...responsiveMetricD(258, 60), padding: vwd(2), borderRadius: vwd(8), border: '1px solid #E9E9E9', backgroundColor: '#FFFFFF'}}>
+                                        <div className="flex items-center justify-center" style={{ ...responsiveMetricD(258, 60), padding: vwd(2), borderRadius: vwd(8), border: '1px solid #E9E9E9', backgroundColor: '#FFFFFF' }}>
                                             <span style={{ ...responsiveTextD(16, 21, null, 'normal', 'noto', '#ACACAC') }}>カテゴリがありません</span>
                                         </div>
                                     )}
                                 </div>
                             </div>
                             {/* Frame 12344 */}
-                            <div className="flex flex-col items-start self-stretch" style={{gap: vwd(20)}}>
+                            <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(20) }}>
                                 {/* Frame 123441 */}
-                                <div className="flex items-center self-stretch border-b border-[#E9E9E9]" style={{paddingTop: vwd(25), paddingBottom: vwd(6), gap: vwd(12)}}>
-                                    <div className="flex items-center" style={{gap: vwd(10)}}>
+                                <div className="flex items-center self-stretch border-b border-[#E9E9E9]" style={{ paddingTop: vwd(25), paddingBottom: vwd(6), gap: vwd(12) }}>
+                                    <div className="flex items-center" style={{ gap: vwd(10) }}>
                                         <span style={{ ...responsiveTextD(21, 27, null, 'bold', 'noto', '#363636') }}>シリアル番号設定</span>
                                         <span style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#ACACAC') }}>いずれかを選択</span>
                                     </div>
                                 </div>
                                 {/* Frame 123442 */}
-                                <div className="flex flex-col items-start self-stretch" style={{gap: vwd(8)}}>
+                                <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                                     {/* 1234421 */}
-                                    <div className="flex items-center cursor-pointer" style={{gap: vwd(10)}} onClick={() => setPrintSerial(true)}>
+                                    <div className="flex items-center cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setPrintSerial(true)}>
                                         {printSerial ? (
-                                            <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
+                                            <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                         ) : (
-                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{...responsiveMetricD(20, 20)}} />
+                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
                                         )}
                                         <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>印字する</span>
                                     </div>
                                     {/* 1234422, 1234423, 1234424: Indented - Only show when printSerial is true */}
                                     {printSerial && (
-                                        <div className="flex flex-col items-start self-stretch" style={{paddingLeft: vwd(30), gap: vwd(8)}}>
-                                        {/* 1234422 */}
+                                        <div className="flex flex-col items-start self-stretch" style={{ paddingLeft: vwd(30), gap: vwd(8) }}>
+                                            {/* 1234422 */}
                                             <span style={{ ...responsiveTextD(13, 19.5, null, 'medium', 'noto', '#87969F') }}>プリントする時にシリアル番号を印字することができます</span>
-                                        {/* 1234423 */}
-                                            <div className="flex items-center cursor-pointer" style={{gap: vwd(15), ...responsiveMetricD(772, 24)}} onClick={() => setSerialFormat('number')}>
+                                            {/* 1234423 */}
+                                            <div className="flex items-center cursor-pointer" style={{ gap: vwd(15), ...responsiveMetricD(772, 24) }} onClick={() => setSerialFormat('number')}>
                                                 {serialFormat === 'number' ? (
-                                                    <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
+                                                    <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                                 ) : (
-                                                    <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{...responsiveMetricD(20, 20)}} />
+                                                    <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
                                                 )}
                                                 <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>発行枚数を表示</span>
                                                 <span style={{ ...responsiveTextD(17, 24, null, 'normal', 'noto', '#ACACAC') }}>例：000001,000002</span>
-                                        </div>
-                                        {/* 1234424 */}
-                                            <div className="flex items-center cursor-pointer" style={{gap: vwd(15), ...responsiveMetricD(772, 24)}} onClick={() => setSerialFormat('random')}>
+                                            </div>
+                                            {/* 1234424 */}
+                                            <div className="flex items-center cursor-pointer" style={{ gap: vwd(15), ...responsiveMetricD(772, 24) }} onClick={() => setSerialFormat('random')}>
                                                 {serialFormat === 'random' ? (
-                                                    <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
+                                                    <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                                 ) : (
-                                                    <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{...responsiveMetricD(20, 20)}} />
+                                                    <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
                                                 )}
                                                 <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>乱数6文字で表示</span>
                                                 <span style={{ ...responsiveTextD(17, 24, null, 'normal', 'noto', '#ACACAC') }}>例：736593,918482</span>
+                                            </div>
                                         </div>
-                                    </div>
                                     )}
                                 </div>
                                 {/* Frame 123443 */}
-                                <div className="flex flex-col items-start self-stretch" style={{gap: vwd(8)}}>
-                                    <div className="flex items-center cursor-pointer" style={{gap: vwd(10)}} onClick={() => setPrintSerial(false)}>
+                                <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
+                                    <div className="flex items-center cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setPrintSerial(false)}>
                                         {!printSerial ? (
-                                            <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
+                                            <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                         ) : (
-                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{...responsiveMetricD(20, 20)}} />
+                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
                                         )}
                                         <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>印字しない</span>
                                     </div>
@@ -869,20 +899,20 @@ const RegisterProduct = () => {
                                 </div>
                             </div>
                             {/* Frame 12345 */}
-                            <div className="flex flex-col items-start self-stretch" style={{gap: vwd(20)}}>
+                            <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(20) }}>
                                 {/* 123451 */}
-                                <div className="flex items-center self-stretch border-b border-[#E9E9E9]" style={{paddingTop: vwd(25), paddingBottom: vwd(6), gap: vwd(12)}}>
+                                <div className="flex items-center self-stretch border-b border-[#E9E9E9]" style={{ paddingTop: vwd(25), paddingBottom: vwd(6), gap: vwd(12) }}>
                                     <span style={{ ...responsiveTextD(21, 27, null, 'bold', 'noto', '#363636') }}>公開設定</span>
                                     <span style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#ACACAC') }}>いずれかを選択</span>
                                 </div>
                                 {/* 123452 */}
-                                <div className="flex flex-col items-start self-stretch" style={{gap: vwd(8)}}>
+                                <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                                     {/* 1234521 */}
-                                    <div className="flex items-start cursor-pointer" style={{gap: vwd(10)}} onClick={() => setIsPublic(true)}>
+                                    <div className="flex items-start cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setIsPublic(true)}>
                                         {isPublic ? (
-                                            <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
+                                            <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                         ) : (
-                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{...responsiveMetricD(20, 20)}} />
+                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
                                         )}
                                         <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>公開</span>
                                     </div>
@@ -890,13 +920,13 @@ const RegisterProduct = () => {
                                     <span style={{ ...responsiveTextD(13, 19.5, null, 'medium', 'noto', '#87969F') }}>誰でも商品ページを見ることができます</span>
                                 </div>
                                 {/* 123453 */}
-                                <div className="flex flex-col items-start self-stretch" style={{gap: vwd(8)}}>
+                                <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                                     {/* 1234531 */}
-                                    <div className="flex items-start cursor-pointer" style={{gap: vwd(10)}} onClick={() => setIsPublic(false)}>
+                                    <div className="flex items-start cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setIsPublic(false)}>
                                         {!isPublic ? (
-                                            <img src={radio} alt="radio" style={{...responsiveMetricD(20, 20)}} />
+                                            <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                         ) : (
-                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{...responsiveMetricD(20, 20)}} />
+                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
                                         )}
                                         <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>非公開</span>
                                     </div>
@@ -906,18 +936,18 @@ const RegisterProduct = () => {
                             </div>
                         </div>
                         {/* Frame 1235 */}
-                        <div className="flex flex-col items-center self-stretch" style={{gap: vwd(10), ...responsiveMetricD(802, 104.8), paddingTop: vwd(32.8)}}>
+                        <div className="flex flex-col items-center self-stretch" style={{ gap: vwd(10), ...responsiveMetricD(802, 104.8), paddingTop: vwd(32.8) }}>
                             {/* 12351: Button */}
                             <button
                                 className="flex flex-col justify-center items-center"
-                                style={{...responsiveMetricD(802, 50), padding: vwd(15), borderRadius: vwd(8), background: 'linear-gradient(to left, #AB31D3, #FF2AA1)', boxShadow: '0 4px 8px 0 rgba(255,42,161,0.20)'}}
+                                style={{ ...responsiveMetricD(802, 50), padding: vwd(15), borderRadius: vwd(8), background: 'linear-gradient(to left, #AB31D3, #FF2AA1)', boxShadow: '0 4px 8px 0 rgba(255,42,161,0.20)' }}
                                 type="button"
                                 onClick={handleSubmit}
                                 disabled={isSubmitting}
                             >
-                                                                  <span style={{ ...responsiveTextD(18, 14, null, 'bold', 'noto', '#FFFFFF') }}>
-                                      {isSubmitting ? (editMode ? '保存中...' : '登録中...') : (editMode ? '保存' : '登録する')}
-                                  </span>
+                                <span style={{ ...responsiveTextD(18, 14, null, 'bold', 'noto', '#FFFFFF') }}>
+                                    {isSubmitting ? (editMode ? '保存中...' : '登録中...') : (editMode ? '保存' : '登録する')}
+                                </span>
                             </button>
                             {/* 12352: Note */}
                             <span style={{ ...responsiveTextD(12, 18, null, 'normal', 'noto', '#87969F') }}>
@@ -952,44 +982,44 @@ const RegisterProduct = () => {
                     {/* Frame 1 */}
                     <section className="flex flex-col items-start self-stretch bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]" style={{ paddingTop: vw(20), paddingLeft: vw(16), paddingRight: vw(16), paddingBottom: vw(20), gap: vw(16), borderRadius: vw(10) }}>
                         {/* Frame 11 */}
-                        <div 
-                            className="flex justify-center items-center rounded-[2px] border-2 border-dashed border-[#ACACAC] bg-[#F1F3F4] w-full cursor-pointer hover:opacity-80 transition-opacity" 
-                            style={{ 
+                        <div
+                            className="flex justify-center items-center rounded-[2px] border-2 border-dashed border-[#ACACAC] bg-[#F1F3F4] w-full cursor-pointer hover:opacity-80 transition-opacity"
+                            style={{
                                 paddingTop: uploadedPhotos.length === 0 ? vwd(18) : vwd(20),
                                 paddingBottom: uploadedPhotos.length === 0 ? vwd(14) : vwd(20),
                                 paddingLeft: uploadedPhotos.length === 0 ? vwd(62) : vwd(16),
                                 paddingRight: uploadedPhotos.length === 0 ? vwd(63) : vwd(16)
-                                }}
+                            }}
                             onClick={handleUploadClick}
                         >
                             {uploadedPhotos.length === 0 ? (
                                 /* Upload Area - Show when no photos uploaded */
-                            <div className="flex flex-col justify-center items-center w-full">
-                                {/* mountain svg */}
+                                <div className="flex flex-col justify-center items-center w-full">
+                                    {/* mountain svg */}
                                     <div className="flex flex-col items-start" style={{ ...responsiveMetric(56, 36), maxWidth: vw(792), paddingBottom: vw(6) }}>
                                         <img src={mountain_down} alt="upload" style={{ ...responsiveMetric(56, 36) }} />
-                                </div>
-                                {/* 1121 */}
+                                    </div>
+                                    {/* 1121 */}
                                     <div className="flex flex-col items-start self-stretch" style={{ gap: vw(4) }}>
                                         <span className="w-full text-center" style={{ ...responsiveText(16, 12, null, 'bold', 'noto', '#ACACAC') }}>ファイルを選択</span>
                                         <span className="w-full text-center" style={{ ...responsiveText(12, 12, null, 'medium', 'noto', '#ACACAC') }}>サイズ:6000px*6000px以内</span>
-                                    {/* 11211 */}
+                                        {/* 11211 */}
                                         <div className="flex flex-row items-center w-full" style={{ gap: vw(4), paddingTop: vw(4) }}>
                                             <span className="whitespace-nowrap" style={{ ...responsiveText(12, 12, null, 'medium', 'noto', '#ACACAC') }}>対応フォーマット:</span>
                                             <span className="flex items-center justify-center rounded-[4px] bg-white text-center" style={{ ...responsiveMetric(26, 16), paddingLeft: vw(2), paddingRight: vw(2), ...responsiveText(9, 10, null, 'normal', 'noto', '#87969F') }}>JPG</span>
                                             <span className="flex items-center justify-center rounded-[4px] bg-white text-center" style={{ ...responsiveMetric(26, 16), paddingLeft: vw(2), paddingRight: vw(2), ...responsiveText(9, 10, null, 'normal', 'noto', '#87969F') }}>PNG</span>
                                             <span className="flex items-center justify-center rounded-[4px] bg-white text-center" style={{ ...responsiveMetric(26, 16), paddingLeft: vw(2), paddingRight: vw(2), ...responsiveText(9, 10, null, 'normal', 'noto', '#87969F') }}>PDF</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             ) : (
                                 /* Photo Grid - Show when photos are uploaded */
                                 <div className="w-full">
                                     <div className="grid grid-cols-3 w-full" style={{ gap: vw(8) }}>
                                         {uploadedPhotos.map((photo, index) => (
                                             <div key={photo.id} className="relative group">
-                                                <img 
-                                                    src={photo.preview} 
+                                                <img
+                                                    src={photo.preview}
                                                     alt={`Photo ${index + 1}`}
                                                     className="object-cover rounded-lg"
                                                     style={{ ...responsiveMetric(88, 88) }}
@@ -1005,7 +1035,7 @@ const RegisterProduct = () => {
                                         ))}
                                         {/* Add more button - show if less than 10 photos */}
                                         {uploadedPhotos.length < 10 && (
-                                            <div 
+                                            <div
                                                 className="border-2 border-dashed border-gray-300 bg-white rounded-lg flex items-center justify-center cursor-pointer hover:border-gray-400 transition-colors"
                                                 onClick={handleUploadClick}
                                                 style={{ ...responsiveMetric(88, 88) }}
@@ -1196,7 +1226,16 @@ const RegisterProduct = () => {
                                             </div>
                                             {/* 1234212: ガチャ */}
                                             <div className="flex flex-col items-start cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 220) }} onClick={() => setDisplayMode('gacha')}>
-                                                <img src={photo2_m} alt="ガチャ" className="object-cover" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
+                                                <div className="flex relative overflow-hidden" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12), backgroundColor: '#A0A5AC' }}>
+                                                    <img src={photo1} alt="ぼかしフィルター" className="object-cover filter blur-[4px]" style={{ ...responsiveMetric(213, 88), borderRadius: vw(4) }} />
+                                                    <div className="absolute top-0 left-0 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px]" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
+                                                    <div className="flex" style={{ ...responsiveMetric(148, 88), borderRadius: vw(11), ...responsivePosition(-0.5), border: vw(2), borderColor: '#D741EB', borderStyle: 'solid' }} />
+                                                    <div className="flex flex-col items-center" style={{ gap: vw(4), ...responsivePosition(12, 16) }}>
+                                                        <img src={bubble} alt="bubble" style={{ ...responsiveMetric(30, 30) }} />
+                                                        <span style={{ ...responsiveText(10, 13, null, 'black', 'noto', '#FFF') }}>ガチャ</span>
+                                                        <span style={{ ...responsiveText(9, 9.5, null, 'normal', 'noto', '#FFF') }}>ランダムで1枚選定されます</span>
+                                                    </div>
+                                                </div>
                                                 <div className="flex items-center w-full" style={{ gap: vw(10) }}>
                                                     {displayMode === 'gacha' ? (
                                                         <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20) }} />
@@ -1214,7 +1253,17 @@ const RegisterProduct = () => {
                                         <div className="flex flex-row justify-left items-start w-full" style={{ gap: vw(14) }}>
                                             {/* 1234213: ぼかしフィルター */}
                                             <div className="flex flex-col items-end cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 250), paddingTop: vw(10) }} onClick={() => setDisplayMode('blur')}>
-                                                <img src={photo3_m} alt="ぼかしフィルター" className="object-cover" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
+                                                <div className="flex relative overflow-hidden" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12), backgroundColor: '#A0A5AC' }}>
+                                                    <img src={photo1} alt="ぼかしフィルター" className="object-cover filter blur-[4px]" style={{ ...responsiveMetric(213, 88), borderRadius: vw(4) }} />
+                                                    <div className="absolute top-0 left-0 bg-black opacity-50 filter blur-[4px]" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
+                                                    <div className="flex" style={{ ...responsiveMetric(148, 88), borderRadius: vw(11), ...responsivePosition(-0.5), border: vw(2), borderColor: '#000', borderStyle: 'solid' }} />
+                                                    <div className="flex flex-col items-center" style={{ gap: vw(4), ...responsivePosition(12, 26) }}>
+                                                        <img src={question} alt="question" style={{ ...responsiveMetric(30, 30) }} />
+                                                        <span style={{ ...responsiveText(10, 13, null, 'black', 'noto', '#FFF') }}>ぼかしフィルター</span>
+                                                        <span style={{ ...responsiveText(9, 9.5, null, 'normal', 'noto', '#FFF') }}>印刷して確認しよう！</span>
+                                                    </div>
+                                                </div>
+
                                                 <div className="flex items-center w-full" style={{ gap: vw(10), paddingTop: vw(10) }}>
                                                     {displayMode === 'blur' ? (
                                                         <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20) }} />
@@ -1229,7 +1278,14 @@ const RegisterProduct = () => {
                                             </div>
                                             {/* 1234221: パスワード */}
                                             <div className="flex flex-col items-start cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 262), paddingTop: vw(10) }} onClick={() => setDisplayMode('password')}>
-                                                <img src={photo4_m} alt="パスワード" className="object-cover" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
+                                                <div className="flex relative overflow-hidden" style={{ ...responsiveMetric(148, 88), borderRadius: vw(4) }}>
+                                                    <div className="absolute top-0 left-0 bg-[#586B88]" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
+                                                    <div className="flex flex-col items-center" style={{ gap: vw(4), ...responsivePosition(12, 26) }}>
+                                                        <img src={lock} alt="question" style={{ ...responsiveMetric(30, 30) }} />
+                                                        <span style={{ ...responsiveText(10, 13, null, 'black', 'noto', '#FFF') }}>パスワード</span>
+                                                        <span style={{ ...responsiveText(9, 9.5, null, 'normal', 'noto', '#FFF') }}>PWを入れて印刷しよう</span>
+                                                    </div>
+                                                </div>
                                                 <div className="flex items-center w-full" style={{ gap: vw(10), paddingTop: vw(10) }}>
                                                     {displayMode === 'password' ? (
                                                         <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20) }} />
@@ -1242,23 +1298,27 @@ const RegisterProduct = () => {
                                                     <span style={{ ...responsiveText(12, 19.5, null, 'normal', 'noto', '#87969F') }}>写真は非公開。パスワードを知っている人だけに公開します。</span>
                                                 </div>
                                                 {displayMode === 'password' && (
-                                                <input
-                                                    type="text"
+                                                    <input
+                                                        type="text"
                                                         className="flex w-full bg-white border border-[#E9E9E9] focus:outline-none"
-                                                    placeholder="半角英数16文字まで"
+                                                        placeholder="半角英数16文字まで"
                                                         value={password}
                                                         onChange={(e) => setPassword(e.target.value)}
                                                         maxLength={16}
                                                         style={{ ...responsiveMetric('full', 45.99), borderRadius: vw(5.71), ...responsiveText(13, 14, null, 'normal', 'noto', '#363636'), marginTop: vw(8) }}
-                                                />
+                                                    />
                                                 )}
                                             </div>
                                         </div>
                                         {/* 1234213: warning */}
                                         <div className="flex flex-col items-end cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 220), paddingTop: vw(10) }} onClick={() => setDisplayMode('cushion')}>
-                                            <div className="relative flex items-center justify-center bg-[#A0A5AC]" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12), marginTop: vw(20) }}>
-                                                {/* Overlay image/label */}
-                                                <img src={overlay_m} alt="overlay" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                                            <div className="flex relative overflow-hidden" style={{ ...responsiveMetric(148, 88), borderRadius: vw(4) }}>
+                                                <div className="absolute top-0 left-0 bg-[#A0A5AC]" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
+                                                <div className="flex flex-col items-center" style={{ gap: vw(4), ...responsivePosition(12, 26) }}>
+                                                    <img src={warning} alt="question" style={{ ...responsiveMetric(30, 30) }} />
+                                                    <span style={{ ...responsiveText(10, 13, null, 'black', 'noto', '#464F5D') }}>WARNING</span>
+                                                    <span style={{ ...responsiveText(9, 9.5, null, 'normal', 'noto', '#464F5D') }}>クリックして内容を確認</span>
+                                                </div>
                                             </div>
                                             <div className="flex items-center w-full" style={{ gap: vw(10), marginTop: vw(12) }}>
                                                 {displayMode === 'cushion' ? (
@@ -1311,8 +1371,8 @@ const RegisterProduct = () => {
                                         <div className="flex justify-center items-start flex-wrap" style={{ gap: vw(14) }}>
                                             {categories && categories.length > 0 ? (
                                                 categories.map((category, index) => (
-                                                    <div 
-                                                        key={category.id} 
+                                                    <div
+                                                        key={category.id}
                                                         className={`flex items-center justify-center cursor-pointer transition-colors ${isCategorySelected(category.id) ? 'border-[#FF2AA1] bg-[#FFEFF8]' : 'border-[#E9E9E9] bg-white'}`}
                                                         style={{ ...responsiveMetric(148, 48), paddingLeft: vw(2), paddingRight: vw(2), borderRadius: vw(8), border: '1px solid' }}
                                                         onClick={() => toggleCategory(category.id)}
@@ -1350,9 +1410,9 @@ const RegisterProduct = () => {
                                             {/* 1234422, 1234423, 1234424: Indented - Only show when printSerial is true */}
                                             {printSerial && (
                                                 <div className="flex flex-col items-start self-stretch" style={{ paddingLeft: vw(30), gap: vw(8) }}>
-                                                {/* 1234422 */}
+                                                    {/* 1234422 */}
                                                     <span style={{ ...responsiveText(13, 19.5, null, 'medium', 'noto', '#87969F') }}>プリントする時にシリアル番号を印字することができます</span>
-                                                {/* 1234423 */}
+                                                    {/* 1234423 */}
                                                     <div className="flex items-center cursor-pointer" style={{ gap: vw(15), width: '100%' }} onClick={() => setSerialFormat('number')}>
                                                         {serialFormat === 'number' ? (
                                                             <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20) }} />
@@ -1361,8 +1421,8 @@ const RegisterProduct = () => {
                                                         )}
                                                         <span style={{ ...responsiveText(14, 24, null, 'normal', 'noto', '#363636') }}>発行枚数を表示</span>
                                                         <span style={{ ...responsiveText(12, 18, null, 'normal', 'noto', '#ACACAC') }}>例：000001,000002</span>
-                                                </div>
-                                                {/* 1234424 */}
+                                                    </div>
+                                                    {/* 1234424 */}
                                                     <div className="flex items-center cursor-pointer" style={{ gap: vw(15), width: '100%' }} onClick={() => setSerialFormat('random')}>
                                                         {serialFormat === 'random' ? (
                                                             <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20) }} />
@@ -1371,8 +1431,8 @@ const RegisterProduct = () => {
                                                         )}
                                                         <span style={{ ...responsiveText(14, 24, null, 'normal', 'noto', '#363636') }}>乱数6文字で表示</span>
                                                         <span style={{ ...responsiveText(12, 18, null, 'normal', 'noto', '#ACACAC') }}>例：736593,918482</span>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             )}
                                         </div>
                                         {/* Frame 123443 */}
@@ -1435,9 +1495,9 @@ const RegisterProduct = () => {
                                         disabled={isSubmitting}
                                         style={{ ...responsiveMetric(311, 'auto'), paddingLeft: vw(36), paddingRight: vw(36), paddingTop: vw(15), paddingBottom: vw(15), borderRadius: vw(8) }}
                                     >
-                                                                                  <span style={{ ...responsiveText(18, 14, null, 'bold', 'noto', '#FFFFFF') }}>
-                                              {isSubmitting ? (editMode ? '保存中...' : '登録中...') : (editMode ? '保存' : '登録する')}
-                                          </span>
+                                        <span style={{ ...responsiveText(18, 14, null, 'bold', 'noto', '#FFFFFF') }}>
+                                            {isSubmitting ? (editMode ? '保存中...' : '登録中...') : (editMode ? '保存' : '登録する')}
+                                        </span>
                                     </button>
                                     {/* 12352: Note */}
                                     <span className="self-stretch text-center" style={{ ...responsiveText(12, 18, null, 'normal', 'noto', '#87969F') }}>

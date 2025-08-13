@@ -19,7 +19,7 @@ import {vwd, vw, responsiveTextD, responsiveText, vwR, responsiveMetricR, respon
 
 const ShopNewCategory = () => {
     const { productBatches, category } = usePage().props;
-    console.log('ShopNewCategory props:', { productBatches, category });
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     // Transform productBatches to match the expected format for ProductCarousel
     const transformedProducts = productBatches ? productBatches.map(batch => ({
         id: batch.id,
@@ -31,24 +31,25 @@ const ShopNewCategory = () => {
         like: 0, // We can add likes later if needed
         badge1: batch.badge1,
         badge2: batch.badge2,
+        display_mode: batch.display_mode,
         user: batch.user,
     })) : [];
 
     return (
         <div className="bg-white">
             <Header />
-            <section className="flex-col justify-center items-start bg-white" style={{paddingTop: vwR(32, 32), paddingBottom: vwR(32, 80), paddingLeft: vwR(16, 120), paddingRight: vwR(16, 120), gap: vwR(16, 10)}}>
+            <section className="flex flex-col justify-center items-start bg-white" style={{paddingTop: vwR(32, 32), paddingBottom: vwR(32, 80), paddingLeft: vwR(16, 120), paddingRight: vwR(16, 120), gap: vwR(16, 10)}}>
                 {/* Frame 11 */}
                 <a href="/shoptop" className="flex flex-row items-center self-stretch" style={{gap: vwR(4, 4), paddingTop: vwR(4, 4), paddingBottom: vwR(4, 4)}}>
                     <img src={arrow_left} alt="arrow left" style={{...responsiveMetricR(18.375, 13.125, 18.375, 13.125)}}/>
                     <span style={{...responsiveTextR(14, 18, 'normal', 16, 24, 'normal', 'noto', '#000')}}>一覧に戻る</span>
                 </a>
-                <div className='flex flex-col md:flex-row items-center md:justify-between' style={{...responsiveMetricR('full', null, 1200, null), gap: vwR(16, 0)}}>
+                <div className='flex flex-col md:flex-row items-start md:items-center md:justify-between w-full' style={{gap: vwR(16, 0)}}>
                     <div className='flex flex-row items-center' style={{gap: vwR(8, 16)}}>
                         <img src={category?.user?.image || girl} alt="user" className='rounded-full' style={{...responsiveMetricR(40, 40, 64, 64)}}/>
                         <span style={{...responsiveTextR(16, 18, 'bold', 21, 32, 'bold', 'noto', '#000')}}>{category?.user?.shop_title || category?.user?.name || 'Shop'}</span>
                     </div>
-                    <div className='flex flex-row items-center' style={{gap: vwR(4, 4)}}>
+                    <div className='flex flex-row items-center' style={{gap: vwR(28, 28)}}>
                         <div className='flex flex-row items-center' style={{gap: vwR(4, 4)}}>
                             <img src={recyclebin} alt="recyclebin" style={{...responsiveMetricR(16, 16, 16, 16)}}/>
                             <span style={{...responsiveTextR(12, 18, 'normal', 12, 18, 'normal', 'noto', '#000')}}>削除</span>
@@ -72,8 +73,8 @@ const ShopNewCategory = () => {
                     {/* 212: Product List */}
                     <ProductCarousel
                         products={transformedProducts}
-                        isMobile={false}
-                        horizontalScroll={true}
+                        isMobile={isMobile}
+                        horizontalScroll={isMobile ? false : true}
                     />
                 </div>
             </section>

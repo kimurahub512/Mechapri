@@ -14,6 +14,7 @@ import {vwd, vw, responsiveTextD, responsiveText, vwR, responsiveMetricR, respon
 
 const shoptop = () => {
     const { shopData, latestProducts, categoryProducts } = usePage().props;
+    console.log('categoryProducts', categoryProducts);
     return (
         <div className="bg-white">
             <Header />

@@ -41,7 +41,7 @@ class CategoryController extends Controller
                     'title' => $category->title,
                     'description' => $category->description,
                     'is_public' => $category->is_public,
-                    'batch_cnt' => $category->product_batches_count,
+                    'batch_cnt' => $category->batch_cnt,
                     'created_at' => $category->created_at->format('Y-m-d H:i:s'),
                 ];
             });

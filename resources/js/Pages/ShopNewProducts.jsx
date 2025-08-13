@@ -32,6 +32,7 @@ const ShopNewProducts = () => {
         like: 0, // We can add likes later if needed
         badge1: batch.badge1,
         badge2: batch.badge2,
+        display_mode: batch.display_mode,
         user: batch.user,
     })) : [];
 
