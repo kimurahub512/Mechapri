@@ -3,7 +3,6 @@ import logo from '@/assets/images/mechapuri-logo.svg';
 import '@/../css/registration.css';
 import { useForm, Link } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
-import Modal from '@/Components/Modal';
 
 
 export default function Register() {
@@ -14,8 +13,7 @@ export default function Register() {
         email_verified: false,
     });
     const [errors, setErrors] = useState({});
-    const [showErrorModal, setShowErrorModal] = useState(false);
-    const [modalMessage, setModalMessage] = useState('');
+    const [resultMessage, setResultMessage] = useState({ type: '', message: '' });
     
     // Email verification states
     const [showVerificationInput, setShowVerificationInput] = useState(false);
@@ -41,6 +39,7 @@ export default function Register() {
 
         setCodeVerifying(true);
         setErrors({});
+        setResultMessage({ type: '', message: '' });
 
         try {
             const response = await fetch('/api/verify-email-code', {
@@ -61,24 +60,34 @@ export default function Register() {
                 if (data.verified) {
                     // Code is correct, proceed with registration
                     setVerificationSuccess(true);
-                    setModalMessage('メールアドレスの認証が完了しました。登録を続行します。');
-                    setShowErrorModal(true);
+                    setResultMessage({ type: 'success', message: 'メールアドレスの認証が完了しました。登録を続行します。' });
                     
                     // Set email as verified and proceed with actual registration
                     setData('email_verified', true);
+                    
+                    // Ensure all form data is set before registration
                     setTimeout(() => {
-                        post(route('register'));
+                        // Make sure the form data is complete
+                        const formData = {
+                            email: pendingEmail,
+                            password: data.password,
+                            password_confirmation: data.password_confirmation,
+                            email_verified: true
+                        };
+                        
+                        // Use Inertia's post method with the complete data
+                        post(route('register'), formData);
                     }, 2000);
                 } else {
-                    setErrors({ captcha: '認証コードが正しくありません' });
+                    setResultMessage({ type: 'error', message: '認証コードが正しくありません' });
                     setVerificationCode(['', '', '', '', '', '']);
                 }
             } else {
-                setErrors({ captcha: '認証コードの確認に失敗しました' });
+                setResultMessage({ type: 'error', message: '認証コードの確認に失敗しました' });
             }
         } catch (error) {
             console.error('Error verifying code:', error);
-            setErrors({ captcha: '認証コードの確認に失敗しました' });
+            setResultMessage({ type: 'error', message: '認証コードの確認に失敗しました' });
         } finally {
             setCodeVerifying(false);
         }
@@ -109,16 +118,16 @@ export default function Register() {
             // Send verification email first
             sendVerificationEmail();
         } else {
-            // Show first error in modal
+            // Show first error as result message
             const firstError = Object.values(newErrors)[0];
-            setModalMessage(firstError);
-            setShowErrorModal(true);
+            setResultMessage({ type: 'error', message: firstError });
         }
     };
 
     const sendVerificationEmail = async () => {
         setEmailSending(true);
         setErrors({});
+        setResultMessage({ type: '', message: '' });
 
         try {
             // Create an AbortController for timeout
@@ -144,23 +153,19 @@ export default function Register() {
             if (response.ok) {
                 setPendingEmail(data.email);
                 setShowVerificationInput(true);
-                setModalMessage('認証コードを送信しました。6桁のコードを入力してください。');
-                setShowErrorModal(true);
+                setResultMessage({ type: 'success', message: '認証コードを送信しました。6桁のコードを入力してください。' });
             } else {
                 // Show the specific error message from the server
-                setModalMessage(responseData.message || '認証コードの送信に失敗しました');
-                setShowErrorModal(true);
+                setResultMessage({ type: 'error', message: responseData.message || '認証コードの送信に失敗しました' });
             }
         } catch (error) {
             console.error('Error sending verification email:', error);
             
             if (error.name === 'AbortError') {
-                setModalMessage('メールの送信がタイムアウトしました。しばらく時間をおいて再度お試しください。');
+                setResultMessage({ type: 'error', message: 'メールの送信がタイムアウトしました。しばらく時間をおいて再度お試しください。' });
             } else {
-                setModalMessage('認証コードの送信に失敗しました。しばらく時間をおいて再度お試しください。');
+                setResultMessage({ type: 'error', message: '認証コードの送信に失敗しました。しばらく時間をおいて再度お試しください。' });
             }
-            
-            setShowErrorModal(true);
         } finally {
             setEmailSending(false);
         }
@@ -168,18 +173,15 @@ export default function Register() {
 
     return (
         <>
-            <Modal show={showErrorModal} maxWidth="sm" onClose={() => setShowErrorModal(false)}>
-                <div className="p-6 text-center">
-                    <div className="text-lg text-red-600 mb-4">{modalMessage}</div>
-                    <button
-                        className="registration-button"
-                        type="button"
-                        onClick={() => setShowErrorModal(false)}
-                    >
-                        閉じる
-                    </button>
+            {/* Result Message */}
+            {resultMessage.type && (
+                <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg ${resultMessage.type === 'success'
+                    ? 'bg-green-500 text-white'
+                    : 'bg-red-500 text-white'
+                    }`}>
+                    {resultMessage.message}
                 </div>
-            </Modal>
+            )}
             <Header />
             <div className="registration-container">
                 <div className="registration-modal">
