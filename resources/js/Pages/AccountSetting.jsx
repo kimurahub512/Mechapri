@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import '@/../../resources/css/shopmanagement.css';
@@ -651,10 +652,10 @@ const AccountSetting = () => {
             </div>
         </div>
         <div className="flex flex-row items-center gap-[16px]">
-          <a href={route('logout')} className="flex flex-row p-[10px] justify-center items-center self-stretch rounded-[6px] bg-[#E9EEF1] gap-[8px]">
+          <Link href={route('logout')} method="post" as="button" className="flex flex-row p-[10px] justify-center items-center self-stretch rounded-[6px] bg-[#E9EEF1] gap-[8px]">
             <img src={logout} alt="logout" className="w-[24px] h-[24px]" />
             <span style={{ ...responsiveTextD(18, 21, null, 'black', 'noto', '#969696') }}>ログアウト</span>
-          </a>
+          </Link>
           <button className="flex flex-row p-[10px] justify-center items-center self-stretch rounded-[6px] gap-[8px] bg-[#E9EEF1]">
             <img src={recyclebin} alt="recyclebin" className="w-[24px] h-[24px]" />
             <span style={{ ...responsiveTextD(18, 21, null, 'black', 'noto', '#969696') }}>アカウント削除</span>
@@ -913,6 +914,16 @@ const AccountSetting = () => {
             <span style={{ ...responsiveText(18, 21, null, 'black', 'noto', '#969696') }}>
               {saving ? '保存中...' : '保存する'}
             </span>
+          </button>
+        </div>
+        <div className="flex flex-row items-center w-full justify-center gap-[16px]">
+          <Link href={route('logout')} method="post" as="button" className="flex flex-row p-[10px] justify-center items-center self-stretch rounded-[6px] bg-[#E9EEF1] gap-[8px]">
+            <img src={logout} alt="logout" className="w-[24px] h-[24px]" />
+            <span style={{ ...responsiveTextD(18, 21, null, 'black', 'noto', '#969696') }}>ログアウト</span>
+          </Link>
+          <button className="flex flex-row p-[10px] justify-center items-center self-stretch rounded-[6px] gap-[8px] bg-[#E9EEF1]">
+            <img src={recyclebin} alt="recyclebin" className="w-[24px] h-[24px]" />
+            <span style={{ ...responsiveTextD(18, 21, null, 'black', 'noto', '#969696') }}>アカウント削除</span>
           </button>
         </div>
       </main>

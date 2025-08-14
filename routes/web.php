@@ -24,6 +24,9 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'show'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
 
+    // Logout Route
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
     // Password Reset Routes
     Route::get('/forgot-password', function () {
         return Inertia::render('ForgotPassword', [
