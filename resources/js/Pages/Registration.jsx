@@ -121,6 +121,10 @@ export default function Register() {
         setErrors({});
 
         try {
+            // Create an AbortController for timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
             const response = await fetch('/api/send-verification-code', {
                 method: 'POST',
                 headers: {
@@ -129,8 +133,13 @@ export default function Register() {
                 },
                 body: JSON.stringify({
                     email: data.email
-                })
+                }),
+                signal: controller.signal
             });
+
+            clearTimeout(timeoutId);
+
+            const responseData = await response.json();
 
             if (response.ok) {
                 setPendingEmail(data.email);
@@ -138,13 +147,19 @@ export default function Register() {
                 setModalMessage('認証コードを送信しました。6桁のコードを入力してください。');
                 setShowErrorModal(true);
             } else {
-                const errorData = await response.json();
-                setModalMessage(errorData.message || '認証コードの送信に失敗しました');
+                // Show the specific error message from the server
+                setModalMessage(responseData.message || '認証コードの送信に失敗しました');
                 setShowErrorModal(true);
             }
         } catch (error) {
             console.error('Error sending verification email:', error);
-            setModalMessage('認証コードの送信に失敗しました');
+            
+            if (error.name === 'AbortError') {
+                setModalMessage('メールの送信がタイムアウトしました。しばらく時間をおいて再度お試しください。');
+            } else {
+                setModalMessage('認証コードの送信に失敗しました。しばらく時間をおいて再度お試しください。');
+            }
+            
             setShowErrorModal(true);
         } finally {
             setEmailSending(false);

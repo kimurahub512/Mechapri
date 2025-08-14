@@ -186,34 +186,48 @@ class ProfileController extends Controller
             session(['email_verification_code' => $code]);
             session(['email_verification_email' => $email]);
             
-            // Set a shorter timeout for email sending
-            $timeout = 15; // 15 seconds timeout
-            
             // Send the verification email
             try {
                 // Force new connection by clearing any existing connections
                 Mail::purge('smtp');
                 
-                Mail::to($email)->send(new VerificationCodeMail($code));
+                // Send email with timeout handling
+                $mailSent = false;
+                $mailError = null;
                 
-                return response()->json([
-                    'message' => 'Verification code sent successfully'
-                ]);
+                try {
+                    Mail::to($email)->send(new VerificationCodeMail($code));
+                    $mailSent = true;
+                } catch (\Exception $e) {
+                    $mailError = $e->getMessage();
+                    \Log::error('Email sending failed: ' . $mailError);
+                }
+                
+                if ($mailSent) {
+                    return response()->json([
+                        'message' => '認証コードを送信しました。6桁のコードを入力してください。'
+                    ]);
+                } else {
+                    // For development/testing, you can return the code directly
+                    if (app()->environment('local')) {
+                        return response()->json([
+                            'message' => 'Email sending failed, but here is your code for testing: ' . $code,
+                            'code' => $code,
+                            'error' => $mailError
+                        ], 500);
+                    }
+                    
+                    return response()->json([
+                        'message' => 'メールの送信に失敗しました。しばらく時間をおいて再度お試しください。',
+                        'error' => 'Email service temporarily unavailable'
+                    ], 500);
+                }
             } catch (\Exception $mailException) {
                 // Log the specific mail error
                 \Log::error('Email sending failed: ' . $mailException->getMessage());
                 
-                // For development/testing, you can return the code directly
-                if (app()->environment('local')) {
-                    return response()->json([
-                        'message' => 'Email sending failed, but here is your code for testing: ' . $code,
-                        'code' => $code,
-                        'error' => $mailException->getMessage()
-                    ], 500);
-                }
-                
                 return response()->json([
-                    'message' => 'Failed to send verification code. Please try again later.',
+                    'message' => 'メールの送信に失敗しました。しばらく時間をおいて再度お試しください。',
                     'error' => 'Email service temporarily unavailable'
                 ], 500);
             }
@@ -221,7 +235,7 @@ class ProfileController extends Controller
             \Log::error('Verification code generation failed: ' . $e->getMessage());
             
             return response()->json([
-                'message' => 'Failed to send verification code',
+                'message' => '認証コードの生成に失敗しました',
                 'error' => $e->getMessage()
             ], 500);
         }
