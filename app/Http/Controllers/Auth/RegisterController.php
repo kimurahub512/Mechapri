@@ -59,10 +59,15 @@ class RegisterController extends Controller
                 'email_verified_at' => now(), // Mark email as verified
             ]);
 
+            // Set default name after user creation
+            $user->update([
+                'name' => 'mechapri' . $user->id
+            ]);
+
             auth()->login($user);
             Log::info('User registered successfully', ['user_id' => $user->id]);
 
-            return redirect()->intended('/homelogin');
+            return redirect('/homelogin');
         } catch (\Exception $e) {
             Log::error('Registration failed', [
                 'error' => $e->getMessage(),

@@ -7,6 +7,8 @@ import logo_group from '@/assets/images/homepage/logo_group.png';
 import header_image from '@/assets/images/homepage/hero.png';
 import hero_m1 from '@/assets/images/homepage/hero_m1.png';
 import hero_m2 from '@/assets/images/homepage/hero_m2.png';
+import m2_b from '@/assets/images/homepage/m2_b.png';
+import m2_f from '@/assets/images/homepage/m2_f.png';
 import header_image_3 from '@/assets/images/homepage/hero_3.png';
 import section2_image from '@/assets/images/homepage/section2.png';
 import section2_image_m from '@/assets/images/homepage/section2_image_m.png';
@@ -330,16 +332,15 @@ export default function Home() {
         <div className='flex flex-col items-center w-full  px-[32px] gap-[24px]'>
           {/*hero section*/}
           <div className='flex flex-col items-center relative' style={{ ...responsiveMetric('full', 350) }}>
-            <img src={hero_m2} alt="header_image" style={{ ...responsiveMetric(178, 291), ...responsivePosition(4, 36, null) }} />
+            <img src={hero_m2} alt="header_image" style={{ ...responsiveMetric(178, 291), ...responsivePosition(4, 86, null) }} />
             <img src={hero_m1} alt="header_image" className='object-cover' style={{
               maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
               WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
-              filter: 'blur(0.5px)',
-              transform: 'scale(1.02)',
               ...responsiveMetric(472, 394),
-              ...responsivePosition(0, -28, null)
-            }} />
-            <img src={header_image_3} alt="header_image" style={{ ...responsiveMetric(227, 238), ...responsivePosition(103, null, -10) }} />
+              ...responsivePosition(0, -36, null)
+              }} />
+              <img src={header_image_3} alt="header_image" style={{ ...responsiveMetric(227, 238), ...responsivePosition(103, null, -14) }} />
+              
           </div>
           <div className='flex flex-col items-center w-full relative'>
             <div className='flex flex-col items-start w-full gap-[8px]'>

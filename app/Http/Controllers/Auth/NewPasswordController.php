@@ -21,7 +21,7 @@ class NewPasswordController extends Controller
      */
     public function create(Request $request): Response
     {
-        return Inertia::render('Auth/ResetPassword', [
+        return Inertia::render('ResetPassword', [
             'email' => $request->email,
             'token' => $request->route('token'),
         ]);
@@ -59,11 +59,11 @@ class NewPasswordController extends Controller
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
         if ($status == Password::PASSWORD_RESET) {
-            return redirect()->route('login')->with('status', __($status));
+            return redirect()->route('login')->with('status', 'パスワードが正常にリセットされました。新しいパスワードでログインしてください。');
         }
 
         throw ValidationException::withMessages([
-            'email' => [trans($status)],
+            'email' => ['パスワードリセットに失敗しました。リンクが無効または期限切れです。'],
         ]);
     }
 }

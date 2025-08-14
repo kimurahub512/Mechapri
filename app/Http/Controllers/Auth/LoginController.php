@@ -11,7 +11,9 @@ class LoginController extends Controller
 {
     public function show()
     {
-        return Inertia::render('Login');
+        return Inertia::render('Login', [
+            'status' => session('status'),
+        ]);
     }
 
     public function login(Request $request)
@@ -23,7 +25,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/homelogin');
+            return redirect('/homelogin');
         }
 
         return back()->withErrors([

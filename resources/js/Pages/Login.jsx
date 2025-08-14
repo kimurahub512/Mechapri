@@ -5,7 +5,7 @@ import { useForm, Link } from '@inertiajs/react';
 import { useState } from 'react';
 import Modal from '@/Components/Modal';
 
-export default function Login() {
+export default function Login({ status }) {
     const { data, setData, post, processing, errors: backendErrors } = useForm({
         email: '',
         password: '',
@@ -107,6 +107,13 @@ export default function Login() {
                         />
                         {errors.password && <div className="login-error">{errors.password}</div>}
                         {backendErrors.password && <div className="login-error">{backendErrors.password}</div>}
+                        
+                        {status && (
+                            <div className="login-success">
+                                {status}
+                            </div>
+                        )}
+                        
                         <div className="password-remember-container">
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
@@ -147,12 +154,17 @@ export default function Login() {
                             </Link>
                         </div>
                         <div className="login-login-link">
-                            <span style={{ color: '#0D0D0D', fontFamily: '"Hiragino Sans"' }}>
-                                パスワードを忘れた場合は
-                            </span>
-                            <span style={{ color: '#FF2AA1', fontFamily: '"Hiragino Sans"' }}>
-                                こちら
-                            </span>
+                            <Link
+                                href="/forgot-password"
+                                style={{ textDecoration: 'none' }}
+                            >
+                                <span style={{ color: '#0D0D0D', fontFamily: '"Hiragino Sans"' }}>
+                                    パスワードを忘れた場合は
+                                </span>
+                                <span style={{ color: '#FF2AA1', fontFamily: '"Hiragino Sans"' }}>
+                                    こちら
+                                </span>
+                            </Link>
                         </div>
                         <div className="login-divider">
                             <span className="login-divider-text">または</span>

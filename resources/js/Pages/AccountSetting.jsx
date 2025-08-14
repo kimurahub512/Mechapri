@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import '@/../../resources/css/shopmanagement.css';
+import logout from '@/assets/images/logout.svg';
+import recyclebin from '@/assets/images/recyclebin.svg';
 import { vw, vwd, responsiveText, responsivePosition, responsiveMetric, responsiveTextD, responsivePositionD, responsiveMetricD } from '@/lib/utils';
 
 const AccountSetting = () => {
@@ -391,9 +393,9 @@ const AccountSetting = () => {
 
 
       {/* Main Section (Desktop) */}
-      <main className="hidden md:flex justify-center items-start gap-[10px] flex-1 self-stretch p-[32px_0_80px_0]">
+      <main className="hidden md:flex flex-col justify-center items-center gap-[32px] flex-1 self-stretch p-[32px_0_80px_0]">
         {/* Frame 1 */}
-        <div className="flex flex-col items-center gap-[16px]" style={{ width: vwd(874) }}>
+        <div className="flex flex-col items-center gap-[16px]" style={{ maxWidth: vwd(874) }}>
           {/* Frame 11 */}
           <div className="flex flex-col items-start w-full gap-[8px]">
             <span style={{ ...responsiveTextD(36, 54, null, 'bold', 'noto, "#363636"') }}>アカウント</span>
@@ -469,8 +471,7 @@ const AccountSetting = () => {
                 </div>
 
                 {/* Email Verification Input */}
-                {/* {showVerificationInput && ( */}
-                {true && (
+                {showVerificationInput && (
                   <div className="flex flex-col gap-[8px] w-full">
                     <span className="text-center" style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#363636') }}>認証コードを入力してください</span>
                     <div className="flex flex-row gap-[8px] justify-center items-center relative">
@@ -648,7 +649,17 @@ const AccountSetting = () => {
                 </span>
               </button>
             </div>
-          </div>
+        </div>
+        <div className="flex flex-row items-center gap-[16px]">
+          <a href={route('logout')} className="flex flex-row p-[10px] justify-center items-center self-stretch rounded-[6px] bg-[#E9EEF1] gap-[8px]">
+            <img src={logout} alt="logout" className="w-[24px] h-[24px]" />
+            <span style={{ ...responsiveTextD(18, 21, null, 'black', 'noto', '#969696') }}>ログアウト</span>
+          </a>
+          <button className="flex flex-row p-[10px] justify-center items-center self-stretch rounded-[6px] gap-[8px] bg-[#E9EEF1]">
+            <img src={recyclebin} alt="recyclebin" className="w-[24px] h-[24px]" />
+            <span style={{ ...responsiveTextD(18, 21, null, 'black', 'noto', '#969696') }}>アカウント削除</span>
+          </button>
+        </div>
       </main>
       {/* Mobile Main Section */}
       <main className="inline-flex md:hidden flex-col items-start w-full" style={{ gap: vw(16) }}>
@@ -726,8 +737,7 @@ const AccountSetting = () => {
               </div>
 
               {/* Email Verification Input (Mobile) */}
-              {/* {showVerificationInput && ( */}
-              {true && (
+              {showVerificationInput && (
                 <div className="flex flex-col gap-[8px] w-full">
                   <span className="text-center" style={{ ...responsiveText(16, 24, null, 'normal', 'noto', '#363636') }}>認証コードを入力してください</span>
                   <div className="flex flex-row gap-[8px] justify-center items-center relative">

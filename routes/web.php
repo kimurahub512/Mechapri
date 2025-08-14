@@ -24,6 +24,27 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'show'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
 
+    // Password Reset Routes
+    Route::get('/forgot-password', function () {
+        return Inertia::render('ForgotPassword', [
+            'status' => session('status'),
+        ]);
+    })->name('password.request');
+
+    Route::post('/forgot-password', [App\Http\Controllers\Auth\PasswordResetLinkController::class, 'store'])
+        ->name('password.email');
+
+    Route::get('/reset-password/{token}', function (Request $request) {
+        return Inertia::render('ResetPassword', [
+            'email' => $request->email,
+            'token' => $request->route('token'),
+            'status' => session('status'),
+        ]);
+    })->name('password.reset');
+
+    Route::post('/reset-password', [App\Http\Controllers\Auth\NewPasswordController::class, 'store'])
+        ->name('password.store');
+
     // Social Authentication Routes
     Route::get('/login/google', [SocialAuthController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('/login/google/callback', [SocialAuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
