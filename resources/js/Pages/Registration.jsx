@@ -31,6 +31,8 @@ export default function Register() {
     const [codeVerifying, setCodeVerifying] = useState(false);
     const [verificationSuccess, setVerificationSuccess] = useState(false);
     const [emailSending, setEmailSending] = useState(false);
+    const [storedPassword, setStoredPassword] = useState('');
+    const [storedPasswordConfirmation, setStoredPasswordConfirmation] = useState('');
 
     // Auto-verify when 6 digits are entered
     useEffect(() => {
@@ -81,14 +83,17 @@ export default function Register() {
                     
                     // Ensure all form data is set before registration
                     setTimeout(() => {
-                        // Make sure the email is set to the verified email
+                        // Make sure all form data is properly set
                         setData('email', pendingEmail);
+                        setData('password', storedPassword);
+                        setData('password_confirmation', storedPasswordConfirmation);
+                        setData('email_verified', true);
                         
                         // Debug: Log the form data being sent
                         console.log('Form data being sent:', {
                             email: pendingEmail,
-                            password: data.password,
-                            password_confirmation: data.password_confirmation,
+                            password: storedPassword,
+                            password_confirmation: storedPasswordConfirmation,
                             email_verified: true
                         });
                         
@@ -147,6 +152,10 @@ export default function Register() {
         const newErrors = validate();
         setErrors(newErrors);
         if (Object.keys(newErrors).length === 0) {
+            // Store password data before sending verification email
+            setStoredPassword(data.password);
+            setStoredPasswordConfirmation(data.password_confirmation);
+            
             // Send verification email first
             sendVerificationEmail();
         } else {
