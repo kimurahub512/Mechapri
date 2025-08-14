@@ -1,7 +1,7 @@
 import Header from '@/Components/header/header';
 import logo from '@/assets/images/mechapuri-logo.svg';
 import '@/../css/registration.css';
-import { useForm, Link } from '@inertiajs/react';
+import { useForm, Link, router } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 
 
@@ -100,30 +100,8 @@ export default function Register() {
                         // Debug: Log the form data being sent
                         console.log('Form data being sent:', registrationData);
                         
-                        // Use direct fetch instead of useForm post
-                        fetch(route('register'), {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                            },
-                            body: JSON.stringify(registrationData)
-                        }).then(response => {
-                            if (response.redirected) {
-                                window.location.href = response.url;
-                            } else {
-                                return response.json();
-                            }
-                        }).then(data => {
-                            if (data && data.errors) {
-                                console.log('Registration errors:', data.errors);
-                                const firstError = Object.values(data.errors)[0];
-                                setResultMessage({ type: 'error', message: firstError });
-                            }
-                        }).catch(error => {
-                            console.error('Registration error:', error);
-                            setResultMessage({ type: 'error', message: '登録に失敗しました' });
-                        });
+                        // Use Inertia router to post the data
+                        router.post('/register', registrationData);
                     }, 2000);
                 } else {
                     setResultMessage({ type: 'error', message: '認証コードが正しくありません' });
