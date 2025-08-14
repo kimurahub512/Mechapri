@@ -12,6 +12,15 @@ export default function Register() {
         password_confirmation: '',
         email_verified: false,
     });
+    
+    // Debug: Log backend errors
+    useEffect(() => {
+        if (Object.keys(backendErrors).length > 0) {
+            console.log('Backend errors:', backendErrors);
+            const firstError = Object.values(backendErrors)[0];
+            setResultMessage({ type: 'error', message: firstError });
+        }
+    }, [backendErrors]);
     const [errors, setErrors] = useState({});
     const [resultMessage, setResultMessage] = useState({ type: '', message: '' });
     
@@ -72,6 +81,17 @@ export default function Register() {
                     
                     // Ensure all form data is set before registration
                     setTimeout(() => {
+                        // Make sure the email is set to the verified email
+                        setData('email', pendingEmail);
+                        
+                        // Debug: Log the form data being sent
+                        console.log('Form data being sent:', {
+                            email: pendingEmail,
+                            password: data.password,
+                            password_confirmation: data.password_confirmation,
+                            email_verified: true
+                        });
+                        
                         // Use the form data from the useForm hook
                         post(route('register'));
                     }, 2000);
