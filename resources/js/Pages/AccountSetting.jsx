@@ -27,7 +27,7 @@ const AccountSetting = () => {
 
   // Email verification states
   const [showVerificationInput, setShowVerificationInput] = useState(false);
-  const [verificationCode, setVerificationCode] = useState('');
+  const [verificationCode, setVerificationCode] = useState(['', '', '', '', '', '']); // Array instead of string
   const [pendingEmail, setPendingEmail] = useState('');
   const [codeVerifying, setCodeVerifying] = useState(false);
   const [verificationSuccess, setVerificationSuccess] = useState(false);
@@ -53,7 +53,8 @@ const AccountSetting = () => {
 
   // Auto-verify when 6 digits are entered
   useEffect(() => {
-    if (verificationCode.length === 6) {
+    const codeString = verificationCode.join('');
+    if (codeString.length === 6) {
       handleVerifyCode();
     }
   }, [verificationCode]);
@@ -194,7 +195,8 @@ const AccountSetting = () => {
 
 
   const handleVerifyCode = async () => {
-    if (!verificationCode || verificationCode.length !== 6) {
+    const codeString = verificationCode.join('');
+    if (!codeString || codeString.length !== 6) {
       return;
     }
 
@@ -210,7 +212,7 @@ const AccountSetting = () => {
         },
         body: JSON.stringify({
           email: pendingEmail,
-          code: verificationCode
+          code: verificationCode.join('')
         })
       });
 
@@ -256,7 +258,7 @@ const AccountSetting = () => {
             type: 'error',
             message: '認証コードが正しくありません'
           });
-          setVerificationCode(''); // Clear the input for retry
+          setVerificationCode(['', '', '', '', '', '']); // Clear the input for retry
         }
       } else {
         setResultMessage({
@@ -277,7 +279,7 @@ const AccountSetting = () => {
 
   const handleCloseVerificationInput = () => {
     setShowVerificationInput(false);
-    setVerificationCode('');
+    setVerificationCode(['', '', '', '', '', '']);
     setPendingEmail('');
   };
 
@@ -467,7 +469,8 @@ const AccountSetting = () => {
                 </div>
 
                 {/* Email Verification Input */}
-                {showVerificationInput && (
+                {/* {showVerificationInput && ( */}
+                {true && (
                   <div className="flex flex-col gap-[8px] w-full">
                     <span className="text-center" style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#363636') }}>認証コードを入力してください</span>
                     <div className="flex flex-row gap-[8px] justify-center items-center relative">
@@ -477,29 +480,90 @@ const AccountSetting = () => {
                             type="text"
                             maxLength="1"
                             placeholder=""
-                            value={verificationCode[index] || ''}
+                            value={verificationCode[index]}
                             onChange={(e) => {
                               const value = e.target.value.replace(/\D/g, '');
-                              if (value) {
-                                const newCode = verificationCode.split('');
-                                newCode[index] = value;
-                                const updatedCode = newCode.join('');
-                                setVerificationCode(updatedCode);
-                                
-                                // Move to next input if not the last one
-                                if (index < 5) {
-                                  const nextInput = e.target.parentNode.children[index + 1];
-                                  if (nextInput) nextInput.focus();
+                              const newCode = [...verificationCode];
+                              newCode[index] = value;
+                              setVerificationCode(newCode);
+                              
+                              // Move to next input if not the last one and a value was entered
+                              if (value && index < 5) {
+                                // Find the next input element more reliably
+                                const container = e.target.parentNode;
+                                const inputs = container.querySelectorAll('input[type="text"]');
+                                if (inputs[index + 1]) {
+                                  inputs[index + 1].focus();
                                 }
                               }
                             }}
+                            onPaste={(e) => {
+                              e.preventDefault();
+                              const pastedData = e.clipboardData.getData('text');
+                              const numbersOnly = pastedData.replace(/\D/g, '');
+                              
+                              if (numbersOnly.length >= 6) {
+                                // Take only the first 6 digits
+                                const newCode = ['', '', '', '', '', ''];
+                                for (let i = 0; i < 6; i++) {
+                                  newCode[i] = numbersOnly[i];
+                                }
+                                setVerificationCode(newCode);
+                                
+                                // Focus on the last input
+                                const container = e.target.parentNode;
+                                const inputs = container.querySelectorAll('input[type="text"]');
+                                if (inputs[5]) inputs[5].focus();
+                              } else if (numbersOnly.length > 0) {
+                                // If less than 6 digits, fill what we have
+                                const newCode = [...verificationCode];
+                                for (let i = 0; i < Math.min(numbersOnly.length, 6); i++) {
+                                  newCode[i] = numbersOnly[i];
+                                }
+                                setVerificationCode(newCode);
+                                
+                                // Focus on the next empty input or the last one
+                                const nextIndex = Math.min(numbersOnly.length, 5);
+                                const container = e.target.parentNode;
+                                const inputs = container.querySelectorAll('input[type="text"]');
+                                if (inputs[nextIndex]) inputs[nextIndex].focus();
+                              }
+                            }}
                             onKeyDown={(e) => {
-                              if (e.key === 'Backspace' && !verificationCode[index] && index > 0) {
-                                const newCode = verificationCode.split('');
-                                newCode[index - 1] = '';
-                                setVerificationCode(newCode.join(''));
-                                const prevInput = e.target.parentNode.children[index - 1];
-                                if (prevInput) prevInput.focus();
+                              if (e.key === 'Backspace' || e.key === 'Delete') {
+                                e.preventDefault();
+                                const newCode = [...verificationCode];
+                                
+                                if (e.key === 'Backspace') {
+                                  if (verificationCode[index]) {
+                                    // If current field has a value, clear it
+                                    newCode[index] = '';
+                                    setVerificationCode(newCode);
+                                  } else if (index > 0) {
+                                    // If current field is empty, clear previous field and move back
+                                    newCode[index - 1] = '';
+                                    setVerificationCode(newCode);
+                                    // Find the previous input element more reliably
+                                    const container = e.target.parentNode;
+                                    const inputs = container.querySelectorAll('input[type="text"]');
+                                    if (inputs[index - 1]) {
+                                      inputs[index - 1].focus();
+                                    }
+                                  }
+                                } else if (e.key === 'Delete') {
+                                  // Delete key clears current field and moves to next
+                                  newCode[index] = '';
+                                  setVerificationCode(newCode);
+                                  
+                                  // Move to next input if not the last one
+                                  if (index < 5) {
+                                    const container = e.target.parentNode;
+                                    const inputs = container.querySelectorAll('input[type="text"]');
+                                    if (inputs[index + 1]) {
+                                      inputs[index + 1].focus();
+                                    }
+                                  }
+                                }
                               }
                             }}
                             className="text-center p-[12.5px_11.99px_12.49px_11.99px] rounded-[5.71px] bg-gray-200 border border-[#E9E9E9] focus:outline-none focus:border-blue-500"
@@ -662,7 +726,8 @@ const AccountSetting = () => {
               </div>
 
               {/* Email Verification Input (Mobile) */}
-              {showVerificationInput && (
+              {/* {showVerificationInput && ( */}
+              {true && (
                 <div className="flex flex-col gap-[8px] w-full">
                   <span className="text-center" style={{ ...responsiveText(16, 24, null, 'normal', 'noto', '#363636') }}>認証コードを入力してください</span>
                   <div className="flex flex-row gap-[8px] justify-center items-center relative">
@@ -672,31 +737,92 @@ const AccountSetting = () => {
                           type="text"
                           maxLength="1"
                           placeholder=""
-                          value={verificationCode[index] || ''}
+                          value={verificationCode[index]}
                           onChange={(e) => {
                             const value = e.target.value.replace(/\D/g, '');
-                            if (value) {
-                              const newCode = verificationCode.split('');
-                              newCode[index] = value;
-                              const updatedCode = newCode.join('');
-                              setVerificationCode(updatedCode);
-                              
-                              // Move to next input if not the last one
-                              if (index < 5) {
-                                const nextInput = e.target.parentNode.children[index + 1];
-                                if (nextInput) nextInput.focus();
+                            const newCode = [...verificationCode];
+                            newCode[index] = value;
+                            setVerificationCode(newCode);
+                            
+                            // Move to next input if not the last one and a value was entered
+                            if (value && index < 5) {
+                              // Find the next input element more reliably
+                              const container = e.target.parentNode;
+                              const inputs = container.querySelectorAll('input[type="text"]');
+                              if (inputs[index + 1]) {
+                                inputs[index + 1].focus();
                               }
                             }
                           }}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Backspace' && !verificationCode[index] && index > 0) {
-                              const newCode = verificationCode.split('');
-                              newCode[index - 1] = '';
-                              setVerificationCode(newCode.join(''));
-                              const prevInput = e.target.parentNode.children[index - 1];
-                              if (prevInput) prevInput.focus();
+                          onPaste={(e) => {
+                            e.preventDefault();
+                            const pastedData = e.clipboardData.getData('text');
+                            const numbersOnly = pastedData.replace(/\D/g, '');
+                            
+                            if (numbersOnly.length >= 6) {
+                              // Take only the first 6 digits
+                              const newCode = ['', '', '', '', '', ''];
+                              for (let i = 0; i < 6; i++) {
+                                newCode[i] = numbersOnly[i];
+                              }
+                              setVerificationCode(newCode);
+                              
+                              // Focus on the last input
+                              const container = e.target.parentNode;
+                              const inputs = container.querySelectorAll('input[type="text"]');
+                              if (inputs[5]) inputs[5].focus();
+                            } else if (numbersOnly.length > 0) {
+                              // If less than 6 digits, fill what we have
+                              const newCode = [...verificationCode];
+                              for (let i = 0; i < Math.min(numbersOnly.length, 6); i++) {
+                                newCode[i] = numbersOnly[i];
+                              }
+                              setVerificationCode(newCode);
+                              
+                              // Focus on the next empty input or the last one
+                              const nextIndex = Math.min(numbersOnly.length, 5);
+                              const container = e.target.parentNode;
+                              const inputs = container.querySelectorAll('input[type="text"]');
+                              if (inputs[nextIndex]) inputs[nextIndex].focus();
                             }
                           }}
+                                                      onKeyDown={(e) => {
+                              if (e.key === 'Backspace' || e.key === 'Delete') {
+                                e.preventDefault();
+                                const newCode = [...verificationCode];
+                                
+                                if (e.key === 'Backspace') {
+                                  if (verificationCode[index]) {
+                                    // If current field has a value, clear it
+                                    newCode[index] = '';
+                                    setVerificationCode(newCode);
+                                  } else if (index > 0) {
+                                    // If current field is empty, clear previous field and move back
+                                    newCode[index - 1] = '';
+                                    setVerificationCode(newCode);
+                                    // Find the previous input element more reliably
+                                    const container = e.target.parentNode;
+                                    const inputs = container.querySelectorAll('input[type="text"]');
+                                    if (inputs[index - 1]) {
+                                      inputs[index - 1].focus();
+                                    }
+                                  }
+                                } else if (e.key === 'Delete') {
+                                  // Delete key clears current field and moves to next
+                                  newCode[index] = '';
+                                  setVerificationCode(newCode);
+                                  
+                                  // Move to next input if not the last one
+                                  if (index < 5) {
+                                    const container = e.target.parentNode;
+                                    const inputs = container.querySelectorAll('input[type="text"]');
+                                    if (inputs[index + 1]) {
+                                      inputs[index + 1].focus();
+                                    }
+                                  }
+                                }
+                              }
+                            }}
                           className="text-center rounded-[5.71px] bg-gray-200 border border-[#E9E9E9] focus:outline-none focus:border-blue-500"
                           style={{ ...responsiveMetric(36, 48) }}
                           disabled={codeVerifying}

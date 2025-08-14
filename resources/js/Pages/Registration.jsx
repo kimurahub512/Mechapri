@@ -2,7 +2,7 @@ import Header from '@/Components/header/header';
 import logo from '@/assets/images/mechapuri-logo.svg';
 import '@/../css/registration.css';
 import { useForm, Link } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from '@/Components/Modal';
 
 
@@ -11,10 +11,78 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
+        email_verified: false,
     });
     const [errors, setErrors] = useState({});
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
+    
+    // Email verification states
+    const [showVerificationInput, setShowVerificationInput] = useState(false);
+    const [verificationCode, setVerificationCode] = useState(['', '', '', '', '', '']);
+    const [pendingEmail, setPendingEmail] = useState('');
+    const [codeVerifying, setCodeVerifying] = useState(false);
+    const [verificationSuccess, setVerificationSuccess] = useState(false);
+    const [emailSending, setEmailSending] = useState(false);
+
+    // Auto-verify when 6 digits are entered
+    useEffect(() => {
+        const codeString = verificationCode.join('');
+        if (codeString.length === 6) {
+            handleVerifyCode();
+        }
+    }, [verificationCode]);
+
+    const handleVerifyCode = async () => {
+        const codeString = verificationCode.join('');
+        if (!codeString || codeString.length !== 6) {
+            return;
+        }
+
+        setCodeVerifying(true);
+        setErrors({});
+
+        try {
+            const response = await fetch('/api/verify-email-code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    email: pendingEmail,
+                    code: codeString
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                if (data.verified) {
+                    // Code is correct, proceed with registration
+                    setVerificationSuccess(true);
+                    setModalMessage('メールアドレスの認証が完了しました。登録を続行します。');
+                    setShowErrorModal(true);
+                    
+                    // Set email as verified and proceed with actual registration
+                    setData('email_verified', true);
+                    setTimeout(() => {
+                        post(route('register'));
+                    }, 2000);
+                } else {
+                    setErrors({ captcha: '認証コードが正しくありません' });
+                    setVerificationCode(['', '', '', '', '', '']);
+                }
+            } else {
+                setErrors({ captcha: '認証コードの確認に失敗しました' });
+            }
+        } catch (error) {
+            console.error('Error verifying code:', error);
+            setErrors({ captcha: '認証コードの確認に失敗しました' });
+        } finally {
+            setCodeVerifying(false);
+        }
+    };
 
     const validate = () => {
         const newErrors = {};
@@ -38,12 +106,48 @@ export default function Register() {
         const newErrors = validate();
         setErrors(newErrors);
         if (Object.keys(newErrors).length === 0) {
-            post(route('register'));
+            // Send verification email first
+            sendVerificationEmail();
         } else {
             // Show first error in modal
             const firstError = Object.values(newErrors)[0];
             setModalMessage(firstError);
             setShowErrorModal(true);
+        }
+    };
+
+    const sendVerificationEmail = async () => {
+        setEmailSending(true);
+        setErrors({});
+
+        try {
+            const response = await fetch('/api/send-verification-code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    email: data.email
+                })
+            });
+
+            if (response.ok) {
+                setPendingEmail(data.email);
+                setShowVerificationInput(true);
+                setModalMessage('認証コードを送信しました。6桁のコードを入力してください。');
+                setShowErrorModal(true);
+            } else {
+                const errorData = await response.json();
+                setModalMessage(errorData.message || '認証コードの送信に失敗しました');
+                setShowErrorModal(true);
+            }
+        } catch (error) {
+            console.error('Error sending verification email:', error);
+            setModalMessage('認証コードの送信に失敗しました');
+            setShowErrorModal(true);
+        } finally {
+            setEmailSending(false);
         }
     };
 
@@ -131,8 +235,201 @@ export default function Register() {
                         {backendErrors.password_confirmation && (
                             <div className="registration-error">{backendErrors.password_confirmation}</div>
                         )}
-                        <button className="registration-button" type="submit" disabled={processing}>
-                            登録する
+                        
+                        {/* Email Verification Input */}
+                        {showVerificationInput && (
+                            <div style={{
+                                marginTop: '20px',
+                                marginBottom: '20px',
+                                padding: '20px',
+                                border: '1px solid #E9E9E9',
+                                borderRadius: '8px',
+                                backgroundColor: '#F9F9F9'
+                            }}>
+                                <div style={{
+                                    textAlign: 'center',
+                                    marginBottom: '15px',
+                                    fontSize: '16px',
+                                    color: '#363636',
+                                    fontFamily: '"Hiragino Sans"'
+                                }}>
+                                    認証コードを入力してください
+                                </div>
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    marginBottom: '15px'
+                                }}>
+                                    {[0, 1, 2, 3, 4, 5].map((index) => (
+                                        <div key={index} style={{ position: 'relative' }}>
+                                            <input
+                                                type="text"
+                                                maxLength="1"
+                                                placeholder=""
+                                                value={verificationCode[index]}
+                                                onChange={(e) => {
+                                                    const value = e.target.value.replace(/\D/g, '');
+                                                    const newCode = [...verificationCode];
+                                                    newCode[index] = value;
+                                                    setVerificationCode(newCode);
+                                                    
+                                                    // Move to next input if not the last one and a value was entered
+                                                    if (value && index < 5) {
+                                                        const container = e.target.parentNode.parentNode;
+                                                        const inputs = container.querySelectorAll('input[type="text"]');
+                                                        if (inputs[index + 1]) {
+                                                            inputs[index + 1].focus();
+                                                        }
+                                                    }
+                                                }}
+                                                onPaste={(e) => {
+                                                    e.preventDefault();
+                                                    const pastedData = e.clipboardData.getData('text');
+                                                    const numbersOnly = pastedData.replace(/\D/g, '');
+                                                    
+                                                    if (numbersOnly.length >= 6) {
+                                                        const newCode = ['', '', '', '', '', ''];
+                                                        for (let i = 0; i < 6; i++) {
+                                                            newCode[i] = numbersOnly[i];
+                                                        }
+                                                        setVerificationCode(newCode);
+                                                        
+                                                        const container = e.target.parentNode.parentNode;
+                                                        const inputs = container.querySelectorAll('input[type="text"]');
+                                                        if (inputs[5]) inputs[5].focus();
+                                                    } else if (numbersOnly.length > 0) {
+                                                        const newCode = [...verificationCode];
+                                                        for (let i = 0; i < Math.min(numbersOnly.length, 6); i++) {
+                                                            newCode[i] = numbersOnly[i];
+                                                        }
+                                                        setVerificationCode(newCode);
+                                                        
+                                                        const nextIndex = Math.min(numbersOnly.length, 5);
+                                                        const container = e.target.parentNode.parentNode;
+                                                        const inputs = container.querySelectorAll('input[type="text"]');
+                                                        if (inputs[nextIndex]) inputs[nextIndex].focus();
+                                                    }
+                                                }}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === 'Backspace' || e.key === 'Delete') {
+                                                        e.preventDefault();
+                                                        const newCode = [...verificationCode];
+                                                        
+                                                        if (e.key === 'Backspace') {
+                                                            if (verificationCode[index]) {
+                                                                newCode[index] = '';
+                                                                setVerificationCode(newCode);
+                                                            } else if (index > 0) {
+                                                                newCode[index - 1] = '';
+                                                                setVerificationCode(newCode);
+                                                                const container = e.target.parentNode.parentNode;
+                                                                const inputs = container.querySelectorAll('input[type="text"]');
+                                                                if (inputs[index - 1]) {
+                                                                    inputs[index - 1].focus();
+                                                                }
+                                                            }
+                                                        } else if (e.key === 'Delete') {
+                                                            newCode[index] = '';
+                                                            setVerificationCode(newCode);
+                                                            
+                                                            if (index < 5) {
+                                                                const container = e.target.parentNode.parentNode;
+                                                                const inputs = container.querySelectorAll('input[type="text"]');
+                                                                if (inputs[index + 1]) {
+                                                                    inputs[index + 1].focus();
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }}
+                                                style={{
+                                                    width: '40px',
+                                                    height: '50px',
+                                                    textAlign: 'center',
+                                                    fontSize: '18px',
+                                                    border: '1px solid #E9E9E9',
+                                                    borderRadius: '5px',
+                                                    backgroundColor: 'white',
+                                                    outline: 'none'
+                                                }}
+                                                disabled={codeVerifying}
+                                            />
+                                            {index === 2 && (
+                                                <div style={{
+                                                    position: 'absolute',
+                                                    right: '-12px',
+                                                    top: '50%',
+                                                    transform: 'translateY(-50%)',
+                                                    width: '8px',
+                                                    height: '1px',
+                                                    backgroundColor: '#E9E9E9'
+                                                }}></div>
+                                            )}
+                                            {index === 5 && verificationSuccess && (
+                                                <div style={{
+                                                    position: 'absolute',
+                                                    right: '-30px',
+                                                    top: '50%',
+                                                    transform: 'translateY(-50%)',
+                                                    width: '20px',
+                                                    height: '20px',
+                                                    backgroundColor: '#10B981',
+                                                    borderRadius: '50%',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center'
+                                                }}>
+                                                    <svg width="12" height="12" fill="white" viewBox="0 0 20 20">
+                                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                    </svg>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                                {codeVerifying && (
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        gap: '8px',
+                                        marginTop: '10px'
+                                    }}>
+                                        <div style={{
+                                            width: '16px',
+                                            height: '16px',
+                                            border: '2px solid #E5E7EB',
+                                            borderTop: '2px solid #3B82F6',
+                                            borderRadius: '50%',
+                                            animation: 'spin 1s linear infinite'
+                                        }}></div>
+                                        <span style={{
+                                            fontSize: '14px',
+                                            color: '#363636',
+                                            fontFamily: '"Hiragino Sans"'
+                                        }}>
+                                            認証中...
+                                        </span>
+                                    </div>
+                                )}
+                                {errors.captcha && (
+                                    <div style={{
+                                        color: '#E53E3E',
+                                        fontSize: '12px',
+                                        textAlign: 'center',
+                                        marginTop: '10px',
+                                        fontFamily: '"Hiragino Sans"'
+                                    }}>
+                                        {errors.captcha}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                        
+                        <button className="registration-button" type="submit" disabled={processing || emailSending}>
+                            {emailSending ? '認証コード送信中...' : '登録する'}
                         </button>
                         <div className="registration-login-link">
                             <Link

@@ -37,9 +37,17 @@ class RegisterController extends Controller
                 return back()->withErrors($validator)->withInput();
             }
 
+            // Check if email was verified (this will be set by the frontend after verification)
+            if (!$request->has('email_verified') || !$request->email_verified) {
+                return back()->withErrors([
+                    'error' => 'Email verification is required before registration.'
+                ])->withInput();
+            }
+
             $user = User::create([
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'email_verified_at' => now(), // Mark email as verified
             ]);
 
             auth()->login($user);
