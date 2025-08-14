@@ -65,29 +65,41 @@ export default function Register() {
                     // Set email as verified and proceed with actual registration
                     setData('email_verified', true);
                     
+                    // Clear result message after 3 seconds
+                    setTimeout(() => {
+                        setResultMessage({ type: '', message: '' });
+                    }, 3000);
+                    
                     // Ensure all form data is set before registration
                     setTimeout(() => {
-                        // Make sure the form data is complete
-                        const formData = {
-                            email: pendingEmail,
-                            password: data.password,
-                            password_confirmation: data.password_confirmation,
-                            email_verified: true
-                        };
-                        
-                        // Use Inertia's post method with the complete data
-                        post(route('register'), formData);
+                        // Use the form data from the useForm hook
+                        post(route('register'));
                     }, 2000);
                 } else {
                     setResultMessage({ type: 'error', message: '認証コードが正しくありません' });
                     setVerificationCode(['', '', '', '', '', '']);
+                    
+                    // Clear error message after 5 seconds
+                    setTimeout(() => {
+                        setResultMessage({ type: '', message: '' });
+                    }, 5000);
                 }
             } else {
                 setResultMessage({ type: 'error', message: '認証コードの確認に失敗しました' });
+                
+                // Clear error message after 5 seconds
+                setTimeout(() => {
+                    setResultMessage({ type: '', message: '' });
+                }, 5000);
             }
         } catch (error) {
             console.error('Error verifying code:', error);
             setResultMessage({ type: 'error', message: '認証コードの確認に失敗しました' });
+            
+            // Clear error message after 5 seconds
+            setTimeout(() => {
+                setResultMessage({ type: '', message: '' });
+            }, 5000);
         } finally {
             setCodeVerifying(false);
         }
@@ -121,6 +133,11 @@ export default function Register() {
             // Show first error as result message
             const firstError = Object.values(newErrors)[0];
             setResultMessage({ type: 'error', message: firstError });
+            
+            // Clear error message after 5 seconds
+            setTimeout(() => {
+                setResultMessage({ type: '', message: '' });
+            }, 5000);
         }
     };
 
@@ -154,9 +171,19 @@ export default function Register() {
                 setPendingEmail(data.email);
                 setShowVerificationInput(true);
                 setResultMessage({ type: 'success', message: '認証コードを送信しました。6桁のコードを入力してください。' });
+                
+                // Clear result message after 5 seconds
+                setTimeout(() => {
+                    setResultMessage({ type: '', message: '' });
+                }, 5000);
             } else {
                 // Show the specific error message from the server
                 setResultMessage({ type: 'error', message: responseData.message || '認証コードの送信に失敗しました' });
+                
+                // Clear error message after 5 seconds
+                setTimeout(() => {
+                    setResultMessage({ type: '', message: '' });
+                }, 5000);
             }
         } catch (error) {
             console.error('Error sending verification email:', error);
@@ -166,6 +193,11 @@ export default function Register() {
             } else {
                 setResultMessage({ type: 'error', message: '認証コードの送信に失敗しました。しばらく時間をおいて再度お試しください。' });
             }
+            
+            // Clear error message after 5 seconds
+            setTimeout(() => {
+                setResultMessage({ type: '', message: '' });
+            }, 5000);
         } finally {
             setEmailSending(false);
         }
