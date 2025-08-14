@@ -19,6 +19,9 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
+        // Debug: Log the request data
+        Log::info('Registration request data:', $request->all());
+        
         try {
             $validator = Validator::make($request->all(), [
                 'email' => [
@@ -38,7 +41,13 @@ class RegisterController extends Controller
             }
 
             // Check if email was verified (this will be set by the frontend after verification)
-            if (!$request->has('email_verified') || !$request->email_verified) {
+            Log::info('Email verification check:', [
+                'has_email_verified' => $request->has('email_verified'),
+                'email_verified_value' => $request->email_verified,
+                'email_verified_type' => gettype($request->email_verified)
+            ]);
+            
+            if (!$request->has('email_verified') || !filter_var($request->email_verified, FILTER_VALIDATE_BOOLEAN)) {
                 return back()->withErrors([
                     'error' => 'Email verification is required before registration.'
                 ])->withInput();
