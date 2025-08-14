@@ -89,16 +89,19 @@ export default function Register() {
                         setData('password_confirmation', storedPasswordConfirmation);
                         setData('email_verified', true);
                         
-                        // Debug: Log the form data being sent
-                        console.log('Form data being sent:', {
+                        // Send registration with explicit data
+                        const registrationData = {
                             email: pendingEmail,
                             password: storedPassword,
                             password_confirmation: storedPasswordConfirmation,
                             email_verified: true
-                        });
+                        };
+                        
+                        // Debug: Log the form data being sent
+                        console.log('Form data being sent:', registrationData);
                         
                         // Use the form data from the useForm hook
-                        post(route('register'));
+                        post(route('register'), registrationData);
                     }, 2000);
                 } else {
                     setResultMessage({ type: 'error', message: '認証コードが正しくありません' });
