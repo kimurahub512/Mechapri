@@ -150,7 +150,7 @@ const AccountSetting = () => {
           });
         } else {
           // Email doesn't exist, send verification code
-          const sendCodeResponse = await fetch('/api/send-verification-code', {
+          const sendCodeResponse = await fetch('/api/send-verification-code-auth', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ const AccountSetting = () => {
     setResultMessage({ type: '', message: '' });
 
     try {
-      const response = await fetch('/api/verify-email-code', {
+      const response = await fetch('/api/verify-email-code-auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

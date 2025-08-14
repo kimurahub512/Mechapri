@@ -171,6 +171,10 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
     })->middleware('throttle:6,1')->name('verification.send');
 });
 
+// Email verification routes (for registration - no auth required)
+Route::post('/api/send-verification-code', [ProfileController::class, 'sendVerificationCode'])->name('email.send-code');
+Route::post('/api/verify-email-code', [ProfileController::class, 'verifyEmailCode'])->name('email.verify-code');
+
 // Protected Routes
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -185,11 +189,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/api/account-settings', [ProfileController::class, 'getAccountSettings'])->name('account.settings.get');
     Route::post('/api/account-settings', [ProfileController::class, 'updateAccountSettings'])->name('account.settings.update');
 
-    // Email verification routes
+    // Email verification routes (for account settings - requires auth)
     Route::post('/api/check-email', [ProfileController::class, 'checkEmail'])->name('email.check');
     Route::post('/api/update-email', [ProfileController::class, 'updateEmail'])->name('email.update');
-    Route::post('/api/send-verification-code', [ProfileController::class, 'sendVerificationCode'])->name('email.send-code');
-    Route::post('/api/verify-email-code', [ProfileController::class, 'verifyEmailCode'])->name('email.verify-code');
+    Route::post('/api/send-verification-code-auth', [ProfileController::class, 'sendVerificationCode'])->name('email.send-code-auth');
+    Route::post('/api/verify-email-code-auth', [ProfileController::class, 'verifyEmailCode'])->name('email.verify-code-auth');
     
 
     
