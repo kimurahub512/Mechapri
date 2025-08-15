@@ -149,7 +149,6 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
 
     Route::get('/unpurchasedproduct/{id}', [App\Http\Controllers\ProductBatchController::class, 'showUnpurchased'])
         ->name('product.unpurchased');
-    });
 
     Route::get('/unpurchasedproductexpand', function(){
         return Inertia::render('UnpurchasedProductExpand');
