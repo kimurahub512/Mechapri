@@ -20,9 +20,10 @@ import qr from '@/assets/images/productdetails/qr.jpg';
 import x from '@/assets/images/x_logo.svg';
 import instagram from '@/assets/images/instagram.svg';
 import favoriteshops_follow from '@/assets/images/favoriteshop_white.svg';
+import default_user from '@/assets/images/default-user.png';
 
 
-const PurchasedProduct = () => {
+const PurchasedProduct = ({ product }) => {
     return (
         <div className='product-details-no-footer-gap bg-[#FFF]'>
             <Header />
@@ -39,12 +40,12 @@ const PurchasedProduct = () => {
                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
                                     {/* 112111 */}
                                     <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
+                                        <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
                                     </div>
                                 </div>
                                 {/* 11212 */}
                                 <div className="flex flex-col items-start">
-                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 </div>
                             </div>
                             {/* 1122: Edit/Delete buttons */}
@@ -59,12 +60,12 @@ const PurchasedProduct = () => {
                         <div className="flex flex-col items-start gap-[8px] w-full">
                             {/* 1131: Title */}
                             <div className="flex flex-col items-start w-[1200px]">
-                                <span className="text-[#363636] font-noto text-[36px] font-bold leading-[54px]">郊外のカフェにて</span>
+                                <span className="text-[#363636] font-noto text-[36px] font-bold leading-[54px]">{product.title}</span>
                             </div>
                             {/* 1132: Description and Date */}
                             <div className="flex flex-col items-start gap-[4px] w-full">
-                                <span className="text-[#363636] font-noto text-[18px] font-normal leading-[32.4px]">郊外のカフェです</span>
-                                <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">2025/10/05まで販売</span>
+                                <span className="text-[#363636] font-noto text-[18px] font-normal leading-[32.4px]">{product.description}</span>
+                                <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">{product.sales_deadline}まで販売</span>
                             </div>
                         </div>
                         {/* 114 */}
@@ -113,7 +114,23 @@ const PurchasedProduct = () => {
                             <div className="flex w-[500px] px-[90px] py-[10px] justify-center items-center rounded-[16px] bg-[#F6F6F6] mx-auto mt-[40px] relative">
                                 {/* Blurred image */}
                                 <div className="flex w-[320px] max-w-[396px] flex-col justify-center items-center flex-shrink-0 relative">
-                                    <img src={photo1} alt="main" className="h-[480px] max-w-[396px] w-full object-cover rounded-[8px]" />
+                                    <div className="relative h-[480px] max-w-[396px] w-full">
+                                        <img 
+                                            src={product.image} 
+                                            alt={product.title} 
+                                            className={`h-full w-full object-cover rounded-[8px] ${
+                                                product.display_mode === 'blur' ? 'blur-lg' :
+                                                product.display_mode === 'gacha' ? 'grayscale' :
+                                                product.display_mode === 'cushion' ? 'brightness-50' :
+                                                product.display_mode === 'password' ? 'blur-lg brightness-50' : ''
+                                            }`}
+                                        />
+                                        {product.display_mode === 'password' && (
+                                            <div className="absolute inset-0 flex items-center justify-center">
+                                                <span className="text-white text-lg font-bold">パスワードが必要です</span>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                             {/* 1212: Print info blocks */}
@@ -310,10 +327,10 @@ const PurchasedProduct = () => {
                                     {/* 112111 */}
                                     <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
                                         <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                            <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
+                                            <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
                                         </div>
                                     </div>
-                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 </div>
                             </div>
                             <button className="flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border border-[#FF2AA1] bg-[#FF2AA1]">
@@ -324,12 +341,12 @@ const PurchasedProduct = () => {
                             <div className="flex flex-col items-start gap-[10px] w-full">
                                 {/* 11221 */}
                                 <div className="flex flex-col justify-center items-start gap-[12px] w-full">
-                                    <span className="text-[#363636] text-left font-noto text-[24px] font-bold leading-[24px] w-full">郊外のカフェにて</span>
+                                    <span className="text-[#363636] text-left font-noto text-[24px] font-bold leading-[24px] w-full">{product.title}</span>
                                 </div>
                                 {/* 11222 */}
                                 <div className="flex flex-col items-start gap-[4px] w-full">
-                                    <span className="text-[#363636] font-noto text-[14px] font-bold leading-[14px] w-full">郊外のカフェです</span>
-                                    <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">2025/10/05まで販売</span>
+                                    <span className="text-[#363636] font-noto text-[14px] font-bold leading-[14px] w-full">{product.description}</span>
+                                    <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">{product.sales_deadline}まで販売</span>
                                 </div>
                                 {/* 1131 */}
                                 <div className="flex flex-col items-start gap-[10px] p-[8px] rounded-[6px] border-[1px] border-solid border-[#FF2AA1]">
@@ -369,7 +386,23 @@ const PurchasedProduct = () => {
                             <div className="flex w-full px-[16px] py-[10px] justify-center items-center rounded-[10px] bg-[#F6F6F6] mx-auto mt-[24px] relative">
                                 {/* Blurred image */}
                                 <div className="flex w-full max-w-[200px] flex-col justify-center items-center flex-shrink-0 relative">
-                                    <img src={photo1} alt="main" className="h-[298px] w-full object-cover rounded-[6px]" />                                    
+                                    <div className="relative h-[298px] w-full">
+                                        <img 
+                                            src={product.image} 
+                                            alt={product.title} 
+                                            className={`h-full w-full object-cover rounded-[6px] ${
+                                                product.display_mode === 'blur' ? 'blur-lg' :
+                                                product.display_mode === 'gacha' ? 'grayscale' :
+                                                product.display_mode === 'cushion' ? 'brightness-50' :
+                                                product.display_mode === 'password' ? 'blur-lg brightness-50' : ''
+                                            }`}
+                                        />
+                                        {product.display_mode === 'password' && (
+                                            <div className="absolute inset-0 flex items-center justify-center">
+                                                <span className="text-white text-sm font-bold">パスワードが必要です</span>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                             {/* 1212: Print info blocks */}

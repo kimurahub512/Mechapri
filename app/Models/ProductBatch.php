@@ -34,6 +34,7 @@ class ProductBatch extends Model
         'sn',
         'is_public',
         'password',
+        'sales_cnt',
     ];
 
     /**
@@ -47,6 +48,7 @@ class ProductBatch extends Model
         'is_public' => 'boolean',
         'image_cnt' => 'integer',
         'sales_limit' => 'integer',
+        'sales_cnt' => 'integer',
     ];
 
     /**
@@ -128,5 +130,21 @@ class ProductBatch extends Model
     public function scopePrivate($query)
     {
         return $query->where('is_public', false);
+    }
+
+    /**
+     * Get the purchases for this product batch.
+     */
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(UserPurchasedProduct::class, 'batch_id');
+    }
+
+    /**
+     * Check if the product batch is purchased by a specific user.
+     */
+    public function isPurchasedBy(User $user): bool
+    {
+        return $this->purchases()->where('user_id', $user->id)->exists();
     }
 }

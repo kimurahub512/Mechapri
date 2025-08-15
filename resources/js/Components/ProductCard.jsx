@@ -11,8 +11,8 @@ import { vwd, vw, responsiveText, responsiveTextD, responsivePosition, responsiv
 const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 1 }) => {
     const handleClick = () => {
         // Determine which page to show based on product status
-        const isPurchased = false; // This should come from your backend
-        const isFree = product.price === '無料';
+        const isPurchased = product.is_purchased;
+        const isFree = product.price === 0;
         
         if (isPurchased || isFree) {
             router.visit(`/purchasedproduct/${product.id}`);
