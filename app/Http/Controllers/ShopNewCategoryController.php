@@ -79,6 +79,7 @@ class ShopNewCategoryController extends Controller
                     'name' => $category->user->name,
                     'image' => $category->user->image,
                     'shop_title' => $category->user->shop_title,
+                    'follower_count' => $category->user->favoritedBy()->count(),
                 ],
             ],
         ]);

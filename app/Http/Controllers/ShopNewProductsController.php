@@ -55,6 +55,7 @@ class ShopNewProductsController extends Controller
                         'name' => $batch->user->name,
                         'image' => $batch->user->image,
                         'shop_title' => $batch->user->shop_title,
+                        'follower_count' => $batch->user->favoritedBy()->count(),
                     ],
                     'files' => $batch->files->map(function($file) {
                         return [

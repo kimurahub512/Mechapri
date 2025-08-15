@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -86,6 +87,32 @@ class User extends Authenticatable //implements MustVerifyEmail
     public function categories(): HasMany
     {
         return $this->hasMany(UserCategory::class);
+    }
+
+    /**
+     * Get the users who have favorited this user's shop.
+     */
+    public function favoritedBy(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favorite_shops', 'favorite_user_id', 'user_id')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Get the favorite shops for this user.
+     */
+    public function favoriteShops(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favorite_shops', 'user_id', 'favorite_user_id')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Check if this user has favorited a specific shop.
+     */
+    public function hasFavoritedShop($shopUserId): bool
+    {
+        return $this->favoriteShops()->where('favorite_user_id', $shopUserId)->exists();
     }
 
     /**

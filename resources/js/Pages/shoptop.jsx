@@ -3,6 +3,7 @@ import { usePage } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import ProductCarousel from '@/Components/ProductCarousel';
+import FavoriteShopButton from '@/Components/FavoriteShopButton';
 import '@/../../resources/css/shopmanagement.css';
 import default_user from '@/assets/images/default-user.png';
 import instagram from '@/assets/images/instagram.svg';
@@ -13,8 +14,11 @@ import mountain from '@/assets/images/mountain_gray.svg';
 import {vwd, vw, responsiveTextD, responsiveText, vwR, responsiveMetricR, responsiveTextR} from '@/lib/utils';
 
 const shoptop = () => {
-    const { shopData, latestProducts, categoryProducts } = usePage().props;
+    const { shopData, latestProducts, categoryProducts, auth } = usePage().props;
     console.log('categoryProducts', categoryProducts);
+    
+    // Check if current user has favorited this shop
+    const isFavorited = shopData?.is_favorited_by_current_user || false;
     return (
         <div className="bg-white">
             <Header />
@@ -60,10 +64,14 @@ const shoptop = () => {
                         <div className="flex justify-end items-center self-stretch" style={{ gap: vw(8) }}>
                             <span style={{ ...responsiveText(16, 16, null, 'normal', 'noto', '#000') }}>{shopData?.follower_count || 0}人が登録</span>
                             {/* 11121: Follow button */}
-                            <button className="flex items-center rounded-[40px] border border-[#FF2AA1] bg-white" style={{ gap: vw(8), paddingLeft: vw(16), paddingRight: vw(16), paddingTop: vw(7), paddingBottom: vw(7) }}>
-                                <img src={favoriteshop} alt="favoriteshop" className="aspect-square opacity-100" style={{ width: vw(20), height: vw(20) }} />
-                                <span style={{ ...responsiveText(14, 14, null, 'medium', 'noto', '#FF2AA1') }}>ショップをフォロー</span>
-                            </button>
+                            {auth?.user && auth.user.id !== shopData?.id && (
+                                <FavoriteShopButton 
+                                    shopUserId={shopData?.id}
+                                    initialIsFavorited={isFavorited}
+                                    isMobile={true}
+                                    refreshOnToggle={true}
+                                />
+                            )}
                         </div>
                         {/* 112: Description */}
                         <div className="flex flex-col items-start self-stretch" style={{ maxWidth: vw(1248) }}>
@@ -142,10 +150,14 @@ const shoptop = () => {
                     <div className="absolute inline-flex items-center" style={{ top: vwd(106), right: vwd(16), gap: vwd(8) }}>
                         <span className="text-[#000] font-noto font-normal" style={{ ...responsiveTextD(16, 16, null, 'normal', 'noto', '#000') }}>{shopData?.follower_count || 0}人が登録</span>
                         {/* 1151: Follow button */}
-                        <button className="flex items-center rounded-[40px] border border-[#FF2AA1] bg-white" style={{ gap: vwd(8), paddingLeft: vwd(16), paddingRight: vwd(16), paddingTop: vwd(7), paddingBottom: vwd(7) }}>
-                            <img src={favoriteshop} alt="favoriteshop" className="aspect-square opacity-100" style={{ width: vwd(20), height: vwd(20) }} />
-                            <span style={{ ...responsiveTextD(14, 14, null, 'medium', 'noto', '#FF2AA1') }}>ショップをフォロー</span>
-                        </button>
+                        {auth?.user && auth.user.id !== shopData?.id && (
+                            <FavoriteShopButton 
+                                shopUserId={shopData?.id}
+                                initialIsFavorited={isFavorited}
+                                isMobile={false}
+                                refreshOnToggle={true}
+                            />
+                        )}
                     </div>
                     {/* 116: Description */}
                     <div className="absolute flex flex-col items-start self-stretch" style={{ top: vwd(194), left: vwd(16), maxWidth: vwd(1248) }}>

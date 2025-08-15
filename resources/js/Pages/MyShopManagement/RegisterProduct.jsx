@@ -105,27 +105,7 @@ const RegisterProduct = () => {
         setIsSubmitting(true);
 
         try {
-            // Test authentication first
-            const authTest = await fetch('/api/test-auth', {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                },
-                credentials: 'same-origin',
-            });
-
-            if (!authTest.ok) {
-                throw new Error('Authentication test failed');
-            }
-
-            const authResult = await authTest.json();
-
-            if (!authResult.authenticated) {
-                setError('認証エラーが発生しました。再度ログインしてください。');
-                setTimeout(() => scrollToTop(), 100);
-                setIsSubmitting(false);
-                return;
-            }
+            // Authentication is already handled by Laravel middleware
             // Validate required fields
             if (!title.trim()) {
                 setError('商品タイトルは必須です。');
@@ -290,10 +270,11 @@ const RegisterProduct = () => {
                     setIsPaid(true);
                     setIsUnlimited(true);
                     setDisplayMode('normal');
-                    setAddToCategory(false);
-                    setPrintSerial(true);
-                    setSerialFormat('number');
-                    setIsPublic(true);
+                                                        setAddToCategory(false);
+                                    setSelectedCategories([]);  // Reset selected categories
+                                    setPrintSerial(true);
+                                    setSerialFormat('number');
+                                    setIsPublic(true);
                 }
             } else {
                 // Handle validation errors
@@ -823,9 +804,9 @@ const RegisterProduct = () => {
                                         categories.map((category, index) => (
                                             <div
                                                 key={category.id}
-                                                className={`flex items-center justify-center cursor-pointer transition-colors ${isCategorySelected(category.id) ? 'border-[#FF2AA1] bg-[#FFEFF8]' : 'border-[#E9E9E9] bg-white'}`}
+                                                className={`flex items-center justify-center transition-colors ${!addToCategory ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} ${isCategorySelected(category.id) ? 'border-[#FF2AA1] bg-[#FFEFF8]' : 'border-[#E9E9E9] bg-white'}`}
                                                 style={{ ...responsiveMetricD(258, 60), padding: vwd(2), borderRadius: vwd(8), border: '1px solid' }}
-                                                onClick={() => toggleCategory(category.id)}
+                                                onClick={() => addToCategory && toggleCategory(category.id)}
                                             >
                                                 <span style={{ ...responsiveTextD(16, 21, null, 'normal', 'noto', isCategorySelected(category.id) ? '#FF2AA1' : '#363636') }}>{category.title}</span>
                                             </div>
@@ -1373,9 +1354,9 @@ const RegisterProduct = () => {
                                                 categories.map((category, index) => (
                                                     <div
                                                         key={category.id}
-                                                        className={`flex items-center justify-center cursor-pointer transition-colors ${isCategorySelected(category.id) ? 'border-[#FF2AA1] bg-[#FFEFF8]' : 'border-[#E9E9E9] bg-white'}`}
+                                                        className={`flex items-center justify-center transition-colors ${!addToCategory ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} ${isCategorySelected(category.id) ? 'border-[#FF2AA1] bg-[#FFEFF8]' : 'border-[#E9E9E9] bg-white'}`}
                                                         style={{ ...responsiveMetric(148, 48), paddingLeft: vw(2), paddingRight: vw(2), borderRadius: vw(8), border: '1px solid' }}
-                                                        onClick={() => toggleCategory(category.id)}
+                                                        onClick={() => addToCategory && toggleCategory(category.id)}
                                                     >
                                                         <span className="text-center" style={{ ...responsiveText(16, 21, null, 'normal', 'noto', isCategorySelected(category.id) ? '#FF2AA1' : '#363636') }}>{category.title}</span>
                                                     </div>

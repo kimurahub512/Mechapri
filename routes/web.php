@@ -115,9 +115,13 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
         return Inertia::render('FavoriteProducts');
     });
 
-    Route::get('/favoriteshops', function(){
-        return Inertia::render('FavoriteShops');
-    });
+    Route::get('/favoriteshops', [App\Http\Controllers\FavoriteShopController::class, 'index'])->name('favoriteshops.index');
+    
+    // Favorite shops API routes
+    Route::post('/api/favorite-shops', [App\Http\Controllers\FavoriteShopController::class, 'store'])->name('favoriteshops.store');
+    Route::delete('/api/favorite-shops', [App\Http\Controllers\FavoriteShopController::class, 'destroy'])->name('favoriteshops.destroy');
+    Route::post('/api/favorite-shops/toggle', [App\Http\Controllers\FavoriteShopController::class, 'toggle'])->name('favoriteshops.toggle');
+    Route::get('/api/favorite-shops/check', [App\Http\Controllers\FavoriteShopController::class, 'check'])->name('favoriteshops.check');
 
     Route::get('/purchasehistory', function(){
         return Inertia::render('PurchaseHistory');
@@ -140,12 +144,11 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
         return Inertia::render('ProductDetailsFree');
     });
 
-    Route::get('/purchasedproduct', function(){
-        return Inertia::render('PurchasedProduct');
-    });
+    Route::get('/purchasedproduct/{id}', [App\Http\Controllers\ProductBatchController::class, 'showPurchased'])
+        ->name('product.purchased');
 
-    Route::get('/unpurchasedproduct', function(){
-        return Inertia::render('UnpurchasedProduct');
+    Route::get('/unpurchasedproduct/{id}', [App\Http\Controllers\ProductBatchController::class, 'showUnpurchased'])
+        ->name('product.unpurchased');
     });
 
     Route::get('/unpurchasedproductexpand', function(){
@@ -239,5 +242,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 
+
+// User shop route - must be at the end to avoid conflicts with other routes
+Route::get('/{user_id}', [App\Http\Controllers\ShopTopController::class, 'show'])
+    ->name('user.shop')
+    ->where('user_id', '[0-9]+');
 
 require __DIR__.'/auth.php';

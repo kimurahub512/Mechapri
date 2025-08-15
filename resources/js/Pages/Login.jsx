@@ -87,7 +87,7 @@ export default function Login({ status }) {
                                             type="email"
                                             name="email"
                                             placeholder="example@email.com"
-                                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 placeholder:text-[#ACACAC]"
                                             value={data.email}
                                             onChange={e => setData('email', e.target.value)}
                                             autoComplete="email"
@@ -109,7 +109,7 @@ export default function Login({ status }) {
                                             type="password"
                                             name="password"
                                             placeholder="半角英数字8文字以上"
-                                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 placeholder:text-[#ACACAC]"
                                             value={data.password}
                                             onChange={e => setData('password', e.target.value)}
                                             autoComplete="new-password"
@@ -212,7 +212,7 @@ export default function Login({ status }) {
                         {/* Social Login Buttons */}
                         <div className="flex flex-row gap-3">
                             <button
-                                className="flex items-center justify-center gap-3 w-full h-[50px] py-3 px-[21px] bg-green-500 text-white rounded-lg hover:opacity-90 transition-opacity"
+                                className="flex items-center justify-center gap-1 w-full h-[50px] py-3 px-[21px] bg-green-500 text-white rounded-lg hover:opacity-90 transition-opacity"
                                 type="button"
                                 onClick={() => window.location.href = route('auth.line')}
                             >
@@ -226,7 +226,7 @@ export default function Login({ status }) {
                                 <span style={{ fontSize: '12px', fontWeight: 'bold', fontFamily: '"Noto Sans JP", sans-serif', color: '#FFF' }}>LINEでログイン</span>
                             </button>
                             <button
-                                className="flex items-center justify-center gap-3 w-full h-[50px] py-3 px-[21px] bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                                className="flex items-center justify-center gap-1 w-full h-[50px] py-3 px-[21px] bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
                                 type="button"
                                 onClick={() => window.location.href = route('auth.google')}
                             >
@@ -286,7 +286,7 @@ export default function Login({ status }) {
                                             type="email"
                                             name="email"
                                             placeholder="example@email.com"
-                                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 placeholder:text-[#ACACAC]"
                                             value={data.email}
                                             onChange={e => setData('email', e.target.value)}
                                             autoComplete="email"
@@ -308,7 +308,7 @@ export default function Login({ status }) {
                                             type="password"
                                             name="password"
                                             placeholder="半角英数字8文字以上"
-                                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 placeholder:text-[#ACACAC]"
                                             value={data.password}
                                             onChange={e => setData('password', e.target.value)}
                                             autoComplete="new-password"

@@ -80,6 +80,14 @@ class ProductBatch extends Model
         return $this->hasMany(ProductBatchFile::class)->orderBy('sort_order');
     }
 
+    /**
+     * Get the users who have favorited this product batch.
+     */
+    public function favoritedBy(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favorite_products', 'product_batch_id', 'user_id')
+                    ->withTimestamps();
+    }
 
 
     /**

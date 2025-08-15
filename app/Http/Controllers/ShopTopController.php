@@ -37,6 +37,14 @@ class ShopTopController extends Controller
         $categoryProducts = [];
 
         if ($featuredUser) {
+            // Get current user if authenticated
+            $currentUser = Auth::user();
+            $isFavoritedByCurrentUser = false;
+            
+            if ($currentUser && $currentUser->id !== $featuredUser->id) {
+                $isFavoritedByCurrentUser = $currentUser->hasFavoritedShop($featuredUser->id);
+            }
+            
             // Get shop information
             $shopData = [
                 'id' => $featuredUser->id,
@@ -47,8 +55,9 @@ class ShopTopController extends Controller
                 'xlink' => $featuredUser->xlink,
                 'instagram' => $featuredUser->instagram,
                 'youtube' => $featuredUser->youtube,
-                'follower_count' => 1000, // Mock data for now
+                'follower_count' => $featuredUser->favoritedBy()->count(),
                 'product_count' => $featuredUser->productBatches()->where('is_public', true)->count(),
+                'is_favorited_by_current_user' => $isFavoritedByCurrentUser,
             ];
 
             // Get latest products (最新の出品)
@@ -95,6 +104,99 @@ class ShopTopController extends Controller
                         'products' => $categoryBatches,
                     ];
                 }
+            }
+        }
+
+        return Inertia::render('ShopTop', [
+            'shopData' => $shopData,
+            'latestProducts' => $latestProducts,
+            'categoryProducts' => $categoryProducts,
+        ]);
+    }
+
+    public function show($userId)
+    {
+        // Find the specific user
+        $featuredUser = User::with(['productBatches' => function($query) {
+                $query
+                // ->where('is_public', true)
+                      ->with(['files' => function($fileQuery) {
+                          $fileQuery->orderBy('sort_order');
+                      }])
+                      ->orderBy('created_at', 'desc');
+            }])
+            ->find($userId);
+
+        if (!$featuredUser) {
+            abort(404, 'User not found');
+        }
+
+        // Get current user if authenticated
+        $currentUser = Auth::user();
+        $isFavoritedByCurrentUser = false;
+        
+        if ($currentUser && $currentUser->id !== $featuredUser->id) {
+            $isFavoritedByCurrentUser = $currentUser->hasFavoritedShop($featuredUser->id);
+        }
+        
+        // Get shop information
+        $shopData = [
+            'id' => $featuredUser->id,
+            'name' => $featuredUser->name,
+            'shop_title' => $featuredUser->shop_title ?: $featuredUser->name . "'s SHOP",
+            'shop_description' => $featuredUser->shop_description,
+            'image' => $featuredUser->image,
+            'xlink' => $featuredUser->xlink,
+            'instagram' => $featuredUser->instagram,
+            'youtube' => $featuredUser->youtube,
+            'follower_count' => $featuredUser->favoritedBy()->count(),
+            'product_count' => $featuredUser->productBatches()->where('is_public', true)->count(),
+            'is_favorited_by_current_user' => $isFavoritedByCurrentUser,
+        ];
+
+        // Get latest products (最新の出品)
+        $latestProducts = $featuredUser->productBatches()
+            // ->where('is_public', true)
+            ->with(['files' => function($query) {
+                $query->orderBy('sort_order');
+            }])
+            ->orderBy('created_at', 'desc')
+            ->limit(20)
+            ->get()
+            ->map(function($batch) {
+                return $this->formatProductBatch($batch);
+            });
+
+        // Get category-based new list products (新しいリスト)
+        $categoryProducts = [];
+        $categories = $featuredUser->categories()
+            // ->where('is_public', true)
+            ->orderBy('sort_order', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        foreach ($categories as $category) {
+            $categoryBatches = $category->productBatches()
+                // ->where('is_public', true)
+                ->with(['files' => function($query) {
+                    $query->orderBy('sort_order');
+                }])
+                ->orderBy('created_at', 'desc')
+                ->limit(20)
+                ->get()
+                ->map(function($batch) {
+                    return $this->formatProductBatch($batch);
+                });
+
+            if ($categoryBatches->count() > 0) {
+                $categoryProducts[] = [
+                    'category' => [
+                        'id' => $category->id,
+                        'title' => $category->title,
+                        'description' => $category->description,
+                    ],
+                    'products' => $categoryBatches,
+                ];
             }
         }
 

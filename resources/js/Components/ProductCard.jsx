@@ -1,4 +1,5 @@
 import React from 'react';
+import { router } from '@inertiajs/react';
 import girl from '@/assets/images/favoriteshops/girl.svg';
 import question from '@/assets/images/question_cloud.svg';
 import lock from '@/assets/images/lock.svg';
@@ -8,10 +9,23 @@ import { vwd, vw, responsiveText, responsiveTextD, responsivePosition, responsiv
 
 
 const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 1 }) => {
+    const handleClick = () => {
+        // Determine which page to show based on product status
+        const isPurchased = false; // This should come from your backend
+        const isFree = product.price === '無料';
+        
+        if (isPurchased || isFree) {
+            router.visit(`/purchasedproduct/${product.id}`);
+        } else {
+            router.visit(`/unpurchasedproduct/${product.id}`);
+        }
+    };
     console.log(product);
     if (isMobile) {
         return (
-            <div className="flex w-[160px] p-[5.839px] flex-col items-start rounded-[5.839px] bg-white shadow-[0_2.236px_21.022px_0_rgba(0,0,0,0.10)] relative flex-shrink-0">
+            <div 
+                onClick={handleClick}
+                className="flex w-[160px] p-[5.839px] flex-col items-start rounded-[5.839px] bg-white shadow-[0_2.236px_21.022px_0_rgba(0,0,0,0.10)] relative flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity">
                 {/* 212111: Image and Badge */}
                 <div className="flex flex-col items-start h-[228.905px] pb-[45.945px] self-stretch relative">
                     {/* 2121111: Main Image */}
@@ -112,7 +126,9 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
 
     // Desktop version
     return (
-        <div className="flex w-[274px] p-[10px] flex-col items-start rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] flex-shrink-0">
+        <div 
+            onClick={handleClick}
+            className="flex w-[274px] p-[10px] flex-col items-start rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity">
             {/* 212111: Image and Badge */}
             <div className="flex flex-col items-start self-stretch relative">
                 {/* 2121111: Main Image */}

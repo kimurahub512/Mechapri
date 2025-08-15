@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class ProductBatchController extends Controller
 {
@@ -289,5 +290,79 @@ class ProductBatchController extends Controller
                 'error' => config('app.debug') ? $e->getMessage() : null
             ], 500);
         }
+    }
+
+    /**
+     * Show the purchased product page.
+     */
+    public function showPurchased(ProductBatch $id)
+    {
+        // Load the product with its relationships
+        $product = $id->load(['user', 'files' => function($query) {
+            $query->orderBy('sort_order');
+        }]);
+
+        // Check if the product is free or purchased by the user
+        $isFree = $product->price == 0;
+        $isPurchased = false; // TODO: Implement purchase check logic
+
+        if (!$isFree && !$isPurchased) {
+            return redirect()->route('product.unpurchased', $product->id);
+        }
+
+        return Inertia::render('PurchasedProduct', [
+            'product' => [
+                'id' => $product->id,
+                'title' => $product->title,
+                'description' => $product->description,
+                'price' => $product->price,
+                'display_mode' => $product->display_mode,
+                'image' => $product->files->first() ? $product->files->first()->url : null,
+                'images' => $product->files->pluck('url'),
+                'user' => [
+                    'id' => $product->user->id,
+                    'name' => $product->user->name,
+                    'image' => $product->user->image,
+                ],
+                'created_at' => $product->created_at,
+            ]
+        ]);
+    }
+
+    /**
+     * Show the unpurchased product page.
+     */
+    public function showUnpurchased(ProductBatch $id)
+    {
+        // Load the product with its relationships
+        $product = $id->load(['user', 'files' => function($query) {
+            $query->orderBy('sort_order');
+        }]);
+
+        // Check if the product is free or purchased by the user
+        $isFree = $product->price == 0;
+        $isPurchased = false; // TODO: Implement purchase check logic
+
+        if ($isFree || $isPurchased) {
+            return redirect()->route('product.purchased', $product->id);
+        }
+
+        return Inertia::render('UnpurchasedProduct', [
+            'product' => [
+                'id' => $product->id,
+                'title' => $product->title,
+                'description' => $product->description,
+                'price' => $product->price,
+                'display_mode' => $product->display_mode,
+                'image' => $product->files->first() ? $product->files->first()->url : null,
+                'images' => $product->files->pluck('url'),
+                'user' => [
+                    'id' => $product->user->id,
+                    'name' => $product->user->name,
+                    'image' => $product->user->image,
+                ],
+                'created_at' => $product->created_at,
+            ]
+        ]);
     }
 }
