@@ -1,7 +1,7 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 
-const ProductCarousel = ({ products, isMobile = false, haveAccount = false, rowCnt = 1, horizontalScroll = false }) => {
+const ProductCarousel = ({ products, isMobile = false, haveAccount = false, rowCnt = 1, horizontalScroll = false, currentUserId = null }) => {
     // For mobile, display in 2-column grid or horizontal scroll based on prop
     if (isMobile) {
         if (horizontalScroll) {
@@ -14,12 +14,13 @@ const ProductCarousel = ({ products, isMobile = false, haveAccount = false, rowC
                     {/* Product Cards (horizontal scroll) */}
                     <div className="flex flex-nowrap gap-[23px] w-full rounded-[7.839px] py-[16px] overflow-x-auto scrollbar-hide" style={{ width: '100%' }}>
                         {products.map((product) => (
-                            <ProductCard 
+                                                            <ProductCard 
                                 key={product.id} 
                                 product={product} 
                                 isMobile={isMobile} 
                                 haveAccount={haveAccount}
                                 rowCnt={rowCnt}
+                                currentUserId={currentUserId}
                             />
                         ))}
                     </div>
@@ -31,12 +32,13 @@ const ProductCarousel = ({ products, isMobile = false, haveAccount = false, rowC
                     {/* Product Cards (carousel) */}
                     <div className="grid grid-cols-2 gap-[23px] w-full rounded-[7.839px] py-[16px]">
                         {products.map((product) => (
-                            <ProductCard 
+                                                            <ProductCard 
                                 key={product.id} 
                                 product={product} 
                                 isMobile={isMobile} 
                                 haveAccount={haveAccount}
                                 rowCnt={rowCnt}
+                                currentUserId={currentUserId}
                             />
                         ))}
                     </div>
@@ -56,13 +58,14 @@ const ProductCarousel = ({ products, isMobile = false, haveAccount = false, rowC
                 {/* Product Cards (horizontal scroll) */}
                 <div className="flex flex-nowrap gap-[24px] w-full rounded-[10px] overflow-x-auto p-[16px]" style={{ width: '100%' }}>
                     {products.map((product) => (
-                        <ProductCard 
-                            key={product.id} 
-                            product={product} 
-                            isMobile={isMobile} 
-                            haveAccount={haveAccount}
-                            rowCnt={rowCnt}
-                        />
+                                                        <ProductCard 
+                                key={product.id} 
+                                product={product} 
+                                isMobile={isMobile} 
+                                haveAccount={haveAccount}
+                                rowCnt={rowCnt}
+                                currentUserId={currentUserId}
+                            />
                     ))}
                 </div>
             </div>
@@ -84,13 +87,14 @@ const ProductCarousel = ({ products, isMobile = false, haveAccount = false, rowC
                     {productRows.map((rowProducts, rowIndex) => (
                         <div key={rowIndex} className="flex flex-nowrap items-start gap-[24px]">
                             {rowProducts.map((product) => (
-                                <ProductCard 
-                                    key={product.id} 
-                                    product={product} 
-                                    isMobile={isMobile} 
-                                    haveAccount={haveAccount}
-                                    rowCnt={rowCnt}
-                                />
+                                                                <ProductCard 
+                                key={product.id} 
+                                product={product} 
+                                isMobile={isMobile} 
+                                haveAccount={haveAccount}
+                                rowCnt={rowCnt}
+                                currentUserId={currentUserId}
+                            />
                             ))}
                         </div>
                     ))}

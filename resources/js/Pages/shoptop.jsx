@@ -93,6 +93,7 @@ const shoptop = () => {
                         products={latestProducts || []} 
                         isMobile={true}
                         horizontalScroll={true}
+                        currentUserId={auth?.user?.id}
                     />
                 </div>
                 {/* Category Sections */}
@@ -108,6 +109,7 @@ const shoptop = () => {
                             products={categorySection.products || []} 
                             isMobile={true}
                             horizontalScroll={true}
+                            currentUserId={auth?.user?.id}
                         />
                     </div>
                 ))):(
@@ -182,6 +184,7 @@ const shoptop = () => {
                         products={latestProducts || []} 
                         isMobile={false}
                         horizontalScroll={true}
+                        currentUserId={auth?.user?.id}
                     />
                 </div>
                 {/* Category Sections */}
@@ -197,6 +200,7 @@ const shoptop = () => {
                             products={categorySection.products || []} 
                             isMobile={false}
                             horizontalScroll={true}
+                            currentUserId={auth?.user?.id}
                         />
                     </div>
                 ))):

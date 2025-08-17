@@ -231,6 +231,7 @@ class ShopTopController extends Controller
 
         return [
             'id' => $batch->id,
+            'user_id' => $batch->user_id,
             'title' => $batch->title,
             'image' => $mainImage ? $mainImage->url : null,
             'badges' => $additionalImages,

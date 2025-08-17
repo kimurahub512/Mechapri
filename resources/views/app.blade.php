@@ -16,7 +16,7 @@
         <!-- Scripts -->
         @routes
         @viteReactRefresh
-        @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
+        @vite('resources/js/app.jsx')
         @inertiaHead
         <!-- <link rel="icon" type="image/svg+xml" href="/images/mechapuri_logo.svg"> -->
 

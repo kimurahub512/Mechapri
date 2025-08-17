@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class ProductBatch extends Model
 {
@@ -89,6 +90,23 @@ class ProductBatch extends Model
     {
         return $this->belongsToMany(User::class, 'favorite_products', 'product_batch_id', 'user_id')
                     ->withTimestamps();
+    }
+
+    /**
+     * Check if the product is favorited by a specific user
+     */
+    public function isFavoritedBy(?User $user): bool
+    {
+        if (!$user) return false;
+        return $this->favoritedBy()->where('user_id', $user->id)->exists();
+    }
+
+    /**
+     * Get the number of users who favorited this product
+     */
+    public function getFavoriteCountAttribute(): int
+    {
+        return $this->favoritedBy()->count();
     }
 
 

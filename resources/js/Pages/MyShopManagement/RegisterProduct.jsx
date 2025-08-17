@@ -58,6 +58,11 @@ const RegisterProduct = () => {
     const [salesDeadline, setSalesDeadline] = useState(editMode && productBatch ? (productBatch.sales_deadline ? productBatch.sales_deadline : '') : '');
     const [password, setPassword] = useState(editMode && productBatch ? (productBatch.password || '') : '');
 
+    // Calculate max date (180 days from today)
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 180);
+    const maxDateString = maxDate.toISOString().split('T')[0];
+
     // Radio button states
     const [isPaid, setIsPaid] = useState(editMode && productBatch ? productBatch.price > 0 : true); // true for 有料, false for 無料
     const [isUnlimited, setIsUnlimited] = useState(editMode && productBatch ? !productBatch.sales_limit : true); // true for 無制限, false for 販売数を指定
@@ -133,6 +138,19 @@ const RegisterProduct = () => {
                 setTimeout(() => scrollToTop(), 100);
                 setIsSubmitting(false);
                 return;
+            }
+
+            if (salesDeadline) {
+                const selectedDate = new Date(salesDeadline);
+                const maxAllowedDate = new Date();
+                maxAllowedDate.setDate(maxAllowedDate.getDate() + 180);
+                
+                if (selectedDate > maxAllowedDate) {
+                    setError('印刷期限は180日以内に設定してください。');
+                    setTimeout(() => scrollToTop(), 100);
+                    setIsSubmitting(false);
+                    return;
+                }
             }
 
             if (printSerial && !serialFormat) {
@@ -556,8 +574,9 @@ const RegisterProduct = () => {
                                         placeholder="2025/11/24"
                                         value={salesDeadline}
                                         onChange={(e) => setSalesDeadline(e.target.value)}
-                                        min={new Date().toISOString().split('T')[0]}
-                                        style={{ ...responsiveMetricD('full', 45.99), paddingLeft: vwd(12.5), paddingRight: vwd(11.99), paddingTop: vwd(12.49), paddingBottom: vwd(11.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto', '#ACACAC') }}
+                                                                                                min={new Date().toISOString().split('T')[0]}
+                                                        max={maxDateString}
+                                                        style={{ ...responsiveMetricD('full', 45.99), paddingLeft: vwd(12.5), paddingRight: vwd(11.99), paddingTop: vwd(12.49), paddingBottom: vwd(11.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto', '#ACACAC') }}
                                     />
                                 </div>
                             </div>
@@ -1100,8 +1119,9 @@ const RegisterProduct = () => {
                                             placeholder="2025/11/24"
                                             value={salesDeadline}
                                             onChange={(e) => setSalesDeadline(e.target.value)}
-                                            min={new Date().toISOString().split('T')[0]}
-                                            style={{ ...responsiveMetric(311, 45.99), paddingTop: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49), borderRadius: vw(5.71), ...responsiveText(14, 14, null, 'normal', 'noto', '#ACACAC') }}
+                                                                                                        min={new Date().toISOString().split('T')[0]}
+                                                            max={maxDateString}
+                                                            style={{ ...responsiveMetric(311, 45.99), paddingTop: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49), borderRadius: vw(5.71), ...responsiveText(14, 14, null, 'normal', 'noto', '#ACACAC') }}
                                         />
                                     </div>
                                 </div>

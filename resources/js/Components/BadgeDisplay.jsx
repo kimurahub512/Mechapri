@@ -6,10 +6,14 @@ const BadgeDisplay = ({
   buttonClassName = "",
   textClassName = "",
   width = "24px",
-  height = "24px"
+  height = "24px",
+  onClick
 }) => {
   return (
-    <div className={`flex items-center ${buttonClassName}`}>
+    <button 
+      type="button"
+      onClick={onClick}
+      className={`flex items-center ${buttonClassName}`}>
       {/* Images */}
       <div className="flex items-center">
         {images.map((image, index) => (
@@ -26,7 +30,7 @@ const BadgeDisplay = ({
       >
         {text}
       </span>
-    </div>
+    </button>
   );
 };
 

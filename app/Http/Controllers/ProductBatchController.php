@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductBatchRequest;
 
 use App\Models\ProductBatch;
+use App\Models\UserPurchasedProduct;
 use App\Services\ProductBatchService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class ProductBatchController extends Controller
@@ -213,7 +215,7 @@ class ProductBatchController extends Controller
             'sn_print' => $request->sn_print == '1',
             'sn_format' => $request->sn_format,
             'is_public' => $request->is_public == '1',
-            'password' => $request->password,
+            'password' => $request->password ? Hash::make($request->password) : $productBatch->password,
         ]);
         
         // Handle file management
@@ -295,25 +297,59 @@ class ProductBatchController extends Controller
     /**
      * Show the purchased product page.
      */
-    public function showPurchased(ProductBatch $id)
+    public function showPurchased(Request $request, $id)
     {
-        // Load the product with its relationships
-        $product = $id->load(['user', 'files' => function($query) {
+        // Get the last segment of the path as the product ID
+        $segments = explode('/', trim($request->path(), '/'));
+        $productId = end($segments);
+
+        Log::info('Showing purchased product', [
+            'segments' => $segments,
+            'product_id' => $productId,
+            'user_id' => $request->route('user_id'),
+            'url' => $request->url(),
+            'full_url' => $request->fullUrl(),
+            'path' => $request->path(),
+            'auth_user_id' => auth()->id()
+        ]);
+
+        // Find the product
+        $product = ProductBatch::with(['user', 'files' => function($query) {
             $query->orderBy('sort_order');
-        }]);
+        }])->findOrFail($productId);
+
+        // If this is a direct route (no user_id) and the product isn't owned by the current user,
+        // redirect to the user-scoped route
+        $userId = $request->route('user_id');
+        if (!$userId && $product->user_id !== auth()->id()) {
+            return redirect()->route('user.product.purchased', [
+                'user_id' => $product->user_id,
+                'id' => $product->id
+            ]);
+        }
 
         // Check if the product is free or purchased by the user
         $isFree = $product->price == 0;
         $isPurchased = false; // TODO: Implement purchase check logic
 
         if (!$isFree && !$isPurchased) {
-            return redirect()->route('product.unpurchased', $product->id);
+            // If we're on a user-scoped route, redirect to user-scoped unpurchased
+            $userId = $request->route('user_id');
+            if ($userId) {
+                return redirect()->route('user.product.unpurchased', [
+                    'user_id' => $userId,
+                    'id' => $product->id
+                ]);
+            }
+            // Otherwise, redirect to direct unpurchased
+            return redirect()->route('product.unpurchased', ['id' => $product->id]);
         }
 
         return Inertia::render('PurchasedProduct', [
             'product' => [
                 'id' => $product->id,
                 'title' => $product->title,
+                'sales_deadline' => $product->sales_deadline ? $product->sales_deadline->format('Y/m/d') : null,
                 'description' => $product->description,
                 'price' => $product->price,
                 'display_mode' => $product->display_mode,
@@ -323,8 +359,22 @@ class ProductBatchController extends Controller
                     'id' => $product->user->id,
                     'name' => $product->user->name,
                     'image' => $product->user->image,
+                    'is_followed_by_current_user' => auth()->user()->hasFavoritedShop($product->user->id),
                 ],
                 'created_at' => $product->created_at,
+                'is_favorited' => $product->isFavoritedBy(auth()->user()),
+                'favorite_count' => $product->favorite_count,
+                'print_deadline' => now()->addDays(30)->format('Y/m/d'),
+                'top_buyers' => UserPurchasedProduct::getTopBuyersForProduct($product->id)->map(function($purchase) {
+                    return [
+                        'user' => [
+                            'id' => $purchase->user->id,
+                            'name' => $purchase->user->name,
+                            'image' => $purchase->user->image,
+                        ],
+                        'total_quantity' => $purchase->total_quantity,
+                    ];
+                }),
             ]
         ]);
     }
@@ -332,22 +382,140 @@ class ProductBatchController extends Controller
     /**
      * Show the unpurchased product page.
      */
-    public function showUnpurchased(ProductBatch $id)
+    public function showUnpurchased(Request $request, $id)
     {
-        // Load the product with its relationships
-        $product = $id->load(['user', 'files' => function($query) {
+        // Get the last segment of the path as the product ID
+        $segments = explode('/', trim($request->path(), '/'));
+        $productId = end($segments);
+
+        Log::info('Showing unpurchased product', [
+            'segments' => $segments,
+            'product_id' => $productId,
+            'user_id' => $request->route('user_id'),
+            'url' => $request->url(),
+            'full_url' => $request->fullUrl(),
+            'path' => $request->path(),
+            'auth_user_id' => auth()->id()
+        ]);
+
+        // Find the product
+        $product = ProductBatch::with(['user', 'files' => function($query) {
             $query->orderBy('sort_order');
-        }]);
+        }])->findOrFail($productId);
+
+        // If this is a direct route (no user_id) and the product isn't owned by the current user,
+        // redirect to the user-scoped route
+        $userId = $request->route('user_id');
+        if (!$userId && $product->user_id !== auth()->id()) {
+            return redirect()->route('user.product.unpurchased', [
+                'user_id' => $product->user_id,
+                'id' => $product->id
+            ]);
+        }
 
         // Check if the product is free or purchased by the user
         $isFree = $product->price == 0;
         $isPurchased = false; // TODO: Implement purchase check logic
 
         if ($isFree || $isPurchased) {
-            return redirect()->route('product.purchased', $product->id);
+            // If we're on a user-scoped route, redirect to user-scoped purchased
+            $userId = $request->route('user_id');
+            if ($userId) {
+                return redirect()->route('user.product.purchased', [
+                    'user_id' => $userId,
+                    'id' => $product->id
+                ]);
+            }
+            // Otherwise, redirect to direct purchased
+            return redirect()->route('product.purchased', ['id' => $product->id]);
         }
 
         return Inertia::render('UnpurchasedProduct', [
+            'product' => [
+                'id' => $product->id,
+                'title' => $product->title,
+                'description' => $product->description,
+                'sales_deadline' => $product->sales_deadline ? $product->sales_deadline->format('Y/m/d') : null,
+                'price' => $product->price,
+                'display_mode' => $product->display_mode,
+                'image' => $product->files->first() ? $product->files->first()->url : null,
+                'images' => $product->files->pluck('url'),
+                'user' => [
+                    'id' => $product->user->id,
+                    'name' => $product->user->name,
+                    'image' => $product->user->image,
+                    'is_followed_by_current_user' => auth()->user()->hasFavoritedShop($product->user->id),
+                ],
+                'created_at' => $product->created_at,
+                'is_favorited' => $product->isFavoritedBy(auth()->user()),
+                'favorite_count' => $product->favorite_count,
+                'print_deadline' => now()->addDays(30)->format('Y/m/d'),
+                'top_buyers' => UserPurchasedProduct::getTopBuyersForProduct($product->id)->map(function($purchase) {
+                    return [
+                        'user' => [
+                            'id' => $purchase->user->id,
+                            'name' => $purchase->user->name,
+                            'image' => $purchase->user->image,
+                        ],
+                        'total_quantity' => $purchase->total_quantity,
+                    ];
+                }),
+            ]
+        ]);
+    }
+
+    /**
+     * Show the purchased product expand page.
+     */
+    public function showPurchasedExpand(Request $request, $id)
+    {
+        // Get the last segment of the path as the product ID
+        $segments = explode('/', trim($request->path(), '/'));
+        $productId = end($segments);
+
+        Log::info('Showing purchased product expand', [
+            'segments' => $segments,
+            'product_id' => $productId,
+            'user_id' => $request->route('user_id'),
+            'url' => $request->url(),
+            'full_url' => $request->fullUrl(),
+            'path' => $request->path(),
+            'auth_user_id' => auth()->id()
+        ]);
+
+        // Find the product
+        $product = ProductBatch::with(['user', 'files' => function($query) {
+            $query->orderBy('sort_order');
+        }])->findOrFail($productId);
+
+        // If this is a direct route (no user_id) and the product isn't owned by the current user,
+        // redirect to the user-scoped route
+        $userId = $request->route('user_id');
+        if (!$userId && $product->user_id !== auth()->id()) {
+            return redirect()->route('user.product.purchased.expand', [
+                'user_id' => $product->user_id,
+                'id' => $product->id
+            ]);
+        }
+
+        // Check if the product is free or purchased by the user
+        $isFree = $product->price == 0;
+        $isPurchased = false; // TODO: Implement purchase check logic
+
+        if (!$isFree && !$isPurchased) {
+            // If we're on a user-scoped route, redirect to user-scoped unpurchased
+            $userId = $request->route('user_id');
+            if ($userId) {
+                return redirect()->route('user.product.unpurchased.expand', [
+                    'user_id' => $userId,
+                    'id' => $product->id
+                ]);
+            }
+            // Otherwise, redirect to direct unpurchased
+            return redirect()->route('product.unpurchased.expand', ['id' => $product->id]);
+        }
+
+        return Inertia::render('PurchasedProductExpand', [
             'product' => [
                 'id' => $product->id,
                 'title' => $product->title,
@@ -360,8 +528,106 @@ class ProductBatchController extends Controller
                     'id' => $product->user->id,
                     'name' => $product->user->name,
                     'image' => $product->user->image,
+                    'is_followed_by_current_user' => auth()->user()->hasFavoritedShop($product->user->id),
                 ],
                 'created_at' => $product->created_at,
+                'is_favorited' => $product->isFavoritedBy(auth()->user()),
+                'favorite_count' => $product->favorite_count,
+                'print_deadline' => now()->addDays(30)->format('Y/m/d'),
+                'top_buyers' => UserPurchasedProduct::getTopBuyersForProduct($product->id)->map(function($purchase) {
+                    return [
+                        'user' => [
+                            'id' => $purchase->user->id,
+                            'name' => $purchase->user->name,
+                            'image' => $purchase->user->image,
+                        ],
+                        'total_quantity' => $purchase->total_quantity,
+                    ];
+                }),
+            ]
+        ]);
+    }
+
+    /**
+     * Show the unpurchased product expand page.
+     */
+    public function showUnpurchasedExpand(Request $request, $id)
+    {
+        // Get the last segment of the path as the product ID
+        $segments = explode('/', trim($request->path(), '/'));
+        $productId = end($segments);
+
+        Log::info('Showing unpurchased product expand', [
+            'segments' => $segments,
+            'product_id' => $productId,
+            'user_id' => $request->route('user_id'),
+            'url' => $request->url(),
+            'full_url' => $request->fullUrl(),
+            'path' => $request->path(),
+            'auth_user_id' => auth()->id()
+        ]);
+
+        // Find the product
+        $product = ProductBatch::with(['user', 'files' => function($query) {
+            $query->orderBy('sort_order');
+        }])->findOrFail($productId);
+
+        // If this is a direct route (no user_id) and the product isn't owned by the current user,
+        // redirect to the user-scoped route
+        $userId = $request->route('user_id');
+        if (!$userId && $product->user_id !== auth()->id()) {
+            return redirect()->route('user.product.unpurchased.expand', [
+                'user_id' => $product->user_id,
+                'id' => $product->id
+            ]);
+        }
+
+        // Check if the product is free or purchased by the user
+        $isFree = $product->price == 0;
+        $isPurchased = false; // TODO: Implement purchase check logic
+
+        if ($isFree || $isPurchased) {
+            // If we're on a user-scoped route, redirect to user-scoped purchased
+            $userId = $request->route('user_id');
+            if ($userId) {
+                return redirect()->route('user.product.purchased.expand', [
+                    'user_id' => $userId,
+                    'id' => $product->id
+                ]);
+            }
+            // Otherwise, redirect to direct purchased
+            return redirect()->route('product.purchased.expand', ['id' => $product->id]);
+        }
+
+        return Inertia::render('UnpurchasedProductExpand', [
+            'product' => [
+                'id' => $product->id,
+                'title' => $product->title,
+                'description' => $product->description,
+                'price' => $product->price,
+                'display_mode' => $product->display_mode,
+                'image' => $product->files->first() ? $product->files->first()->url : null,
+                'images' => $product->files->pluck('url'),
+                'user' => [
+                    'id' => $product->user->id,
+                    'name' => $product->user->name,
+                    'image' => $product->user->image,
+                    'is_followed_by_current_user' => auth()->user()->hasFavoritedShop($product->user->id),
+                ],
+                'created_at' => $product->created_at,
+                'is_favorited' => $product->isFavoritedBy(auth()->user()),
+                'favorite_count' => $product->favorite_count,
+                'print_deadline' => now()->addDays(30)->format('Y/m/d'),
+                'top_buyers' => UserPurchasedProduct::getTopBuyersForProduct($product->id)->map(function($purchase) {
+                    return [
+                        'user' => [
+                            'id' => $purchase->user->id,
+                            'name' => $purchase->user->name,
+                            'image' => $purchase->user->image,
+                        ],
+                        'total_quantity' => $purchase->total_quantity,
+                    ];
+                }),
             ]
         ]);
     }

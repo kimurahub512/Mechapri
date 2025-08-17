@@ -123,6 +123,10 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
     Route::post('/api/favorite-shops/toggle', [App\Http\Controllers\FavoriteShopController::class, 'toggle'])->name('favoriteshops.toggle');
     Route::get('/api/favorite-shops/check', [App\Http\Controllers\FavoriteShopController::class, 'check'])->name('favoriteshops.check');
 
+    // Favorite products API routes
+    Route::post('/api/favorite-products/toggle', [App\Http\Controllers\FavoriteProductController::class, 'toggle'])->name('favoriteproducts.toggle');
+    Route::get('/api/favorite-products/check', [App\Http\Controllers\FavoriteProductController::class, 'check'])->name('favoriteproducts.check');
+
     Route::get('/purchasehistory', function(){
         return Inertia::render('PurchaseHistory');
     });
@@ -144,15 +148,23 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
         return Inertia::render('ProductDetailsFree');
     });
 
-    Route::get('/purchasedproduct/{id}', [App\Http\Controllers\ProductBatchController::class, 'showPurchased'])
-        ->name('product.purchased');
+    // Direct expand routes (for viewing own products)
+    Route::get('/purchasedproductexpand/{id}', [App\Http\Controllers\ProductBatchController::class, 'showPurchasedExpand'])
+        ->name('product.purchased.expand')
+        ->where('id', '[0-9]+');
 
-    Route::get('/unpurchasedproduct/{id}', [App\Http\Controllers\ProductBatchController::class, 'showUnpurchased'])
-        ->name('product.unpurchased');
+    Route::get('/unpurchasedproductexpand/{id}', [App\Http\Controllers\ProductBatchController::class, 'showUnpurchasedExpand'])
+        ->name('product.unpurchased.expand')
+        ->where('id', '[0-9]+');
 
-    Route::get('/unpurchasedproductexpand', function(){
-        return Inertia::render('UnpurchasedProductExpand');
-    });
+    // User-scoped expand routes (for viewing other users' products)
+    Route::get('/user/{user_id}/purchasedproductexpand/{id}', [App\Http\Controllers\ProductBatchController::class, 'showPurchasedExpand'])
+        ->name('user.product.purchased.expand')
+        ->where(['user_id' => '[0-9]+', 'id' => '[0-9]+']);
+
+    Route::get('/user/{user_id}/unpurchasedproductexpand/{id}', [App\Http\Controllers\ProductBatchController::class, 'showUnpurchasedExpand'])
+        ->name('user.product.unpurchased.expand')
+        ->where(['user_id' => '[0-9]+', 'id' => '[0-9]+']);
 
     Route::get('/howtoprint', function(){
         return Inertia::render('HowToPrint');
@@ -228,6 +240,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('Idol/ImageUpload');
     })->middleware('auth');
 
+    // Product Password Routes
+    Route::post('/api/product/verify-password', [App\Http\Controllers\ProductPasswordController::class, 'verify'])->name('product.verify.password');
+    Route::post('/api/product/check-password-status', [App\Http\Controllers\ProductPasswordController::class, 'checkStatus'])->name('product.check.password.status');
+
+    // Payment Routes
+    Route::get('/payment/checkout/{product}', [App\Http\Controllers\PaymentController::class, 'checkout'])->name('payment.checkout');
+    Route::get('/payment/complete', [App\Http\Controllers\PaymentController::class, 'complete'])->name('payment.complete');
+    Route::post('/stripe/webhook', [App\Http\Controllers\PaymentController::class, 'webhook'])->name('stripe.webhook')->middleware('verify.stripe.signature');
+
     // Product Batch API Routes
     Route::prefix('api/product-batches')->group(function () {
         Route::post('/', [ProductBatchController::class, 'store'])->name('product-batches.store');
@@ -241,6 +262,27 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 
+
+// Product routes
+Route::middleware(['auth'])->group(function () {
+    // Direct product routes (for viewing own products)
+    Route::get('/purchasedproduct/{id}', [App\Http\Controllers\ProductBatchController::class, 'showPurchased'])
+        ->name('product.purchased')
+        ->where('id', '[0-9]+');
+
+    Route::get('/unpurchasedproduct/{id}', [App\Http\Controllers\ProductBatchController::class, 'showUnpurchased'])
+        ->name('product.unpurchased')
+        ->where('id', '[0-9]+');
+
+    // User-scoped product routes (for viewing other users' products)
+    Route::get('/user/{user_id}/purchasedproduct/{id}', [App\Http\Controllers\ProductBatchController::class, 'showPurchased'])
+        ->name('user.product.purchased')
+        ->where(['user_id' => '[0-9]+', 'id' => '[0-9]+']);
+
+    Route::get('/user/{user_id}/unpurchasedproduct/{id}', [App\Http\Controllers\ProductBatchController::class, 'showUnpurchased'])
+        ->name('user.product.unpurchased')
+        ->where(['user_id' => '[0-9]+', 'id' => '[0-9]+']);
+});
 
 // User shop route - must be at the end to avoid conflicts with other routes
 Route::get('/{user_id}', [App\Http\Controllers\ShopTopController::class, 'show'])

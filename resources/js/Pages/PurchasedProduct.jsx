@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { router, usePage } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import '@/../../resources/css/shopmanagement.css';
@@ -19,11 +20,18 @@ import eleven from '@/assets/images/productdetails/eleven.png';
 import qr from '@/assets/images/productdetails/qr.jpg';
 import x from '@/assets/images/x_logo.svg';
 import instagram from '@/assets/images/instagram.svg';
+import favoriteshops from '@/assets/images/favoriteshop.svg';
 import favoriteshops_follow from '@/assets/images/favoriteshop_white.svg';
 import default_user from '@/assets/images/default-user.png';
+import bubble from '@/assets/images/bubble.svg';
+import question_cloud from '@/assets/images/question_cloud.svg';
+import lock from '@/assets/images/lock.svg';
+import warning from '@/assets/images/warning.svg';
+import BadgeDisplay from '@/Components/BadgeDisplay';
 
 
 const PurchasedProduct = ({ product }) => {
+    const { auth } = usePage().props;
     return (
         <div className='product-details-no-footer-gap bg-[#FFF]'>
             <Header />
@@ -50,9 +58,49 @@ const PurchasedProduct = ({ product }) => {
                             </div>
                             {/* 1122: Edit/Delete buttons */}
                             <div className="flex items-center absolute right-0 top-[15px]">
-                                <button className="flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border border-[#FF2AA1] bg-[#FF2AA1]">
-                                    <img src={favoriteshops_follow} alt="favoriteshop" />
-                                    <span className="text-[#fff] text-center font-medium text-[14px] leading-[21px] font-noto">フォロー中</span>
+                                <button
+                                    onClick={async () => {
+                                        try {
+                                            const response = await fetch(route('favoriteshops.toggle'), {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                                },
+                                                body: JSON.stringify({ shop_user_id: product.user.id }),
+                                            });
+                                            const data = await response.json();
+                                            if (data.success) {
+                                                router.reload();
+                                            }
+                                        } catch (error) {
+                                            console.error('Error toggling shop follow:', error);
+                                            console.error('Error details:', {
+                                                error,
+                                                csrf: document.querySelector('meta[name="csrf-token"]')?.content,
+                                                productUserId: product.user.id,
+                                                authUserId: auth.user.id
+                                            });
+                                        }
+                                    }}
+                                    disabled={auth.user.id === product.user.id}
+                                    className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${
+                                        auth.user.id === product.user.id
+                                            ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
+                                            : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.user.is_followed_by_current_user ? 'bg-[#FF2AA1]' : 'bg-white'}`
+                                    }`}
+                                >
+                                    <img
+                                        src={product.user.is_followed_by_current_user ? favoriteshops_follow : favoriteshops}
+                                        alt="favoriteshop"
+                                    />
+                                    <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${
+                                        auth.user.id === product.user.id
+                                            ? 'text-[#767676]'
+                                            : product.user.is_followed_by_current_user ? 'text-white' : 'text-[#FF2AA1]'
+                                    }`}>
+                                        {product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー'}
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -74,12 +122,45 @@ const PurchasedProduct = ({ product }) => {
                             <div className="flex items-center gap-[10px]">
                                 {/* 11411 */}
                                 <div className="flex flex-col items-start gap-[10px] py-[8px]">
-                                    {/* 114111: Heart, お気に入り, 1000 */}
-                                    <div className="flex items-center gap-[4px] border-[1px] border-solid border-[#FF2AA1] rounded-[6px] p-[8px]">
+                                    {/* Favorite button */}
+                                    <button
+                                        onClick={async () => {
+                                            try {
+                                                const response = await fetch(route('favoriteproducts.toggle'), {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                                    },
+                                                    body: JSON.stringify({ product_id: product.id }),
+                                                });
+                                                const data = await response.json();
+                                                if (data.success) {
+                                                    router.reload();
+                                                }
+                                            } catch (error) {
+                                                console.error('Error toggling favorite:', error);
+                                            }
+                                        }}
+                                        disabled={auth.user.id === product.user.id}
+                                        className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${
+                                            auth.user.id === product.user.id
+                                                ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
+                                                : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
+                                        }`}
+                                    >
                                         <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                        <span className="text-[#FF2AA1] font-noto text-[14px] font-bold leading-[21px]">お気に入り</span>
-                                        <span className="text-[#FF2AA1] font-noto text-[14px] font-bold leading-[21px]">1000</span>
-                                    </div>
+                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${
+                                            product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                        }`}>
+                                            {product.is_favorited ? 'お気に入り中' : 'お気に入り'}
+                                        </span>
+                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${
+                                            product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                        }`}>
+                                            {product.favorite_count}
+                                        </span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -114,23 +195,82 @@ const PurchasedProduct = ({ product }) => {
                             <div className="flex w-[500px] px-[90px] py-[10px] justify-center items-center rounded-[16px] bg-[#F6F6F6] mx-auto mt-[40px] relative">
                                 {/* Blurred image */}
                                 <div className="flex w-[320px] max-w-[396px] flex-col justify-center items-center flex-shrink-0 relative">
-                                    <div className="relative h-[480px] max-w-[396px] w-full">
-                                        <img 
-                                            src={product.image} 
-                                            alt={product.title} 
-                                            className={`h-full w-full object-cover rounded-[8px] ${
-                                                product.display_mode === 'blur' ? 'blur-lg' :
-                                                product.display_mode === 'gacha' ? 'grayscale' :
-                                                product.display_mode === 'cushion' ? 'brightness-50' :
-                                                product.display_mode === 'password' ? 'blur-lg brightness-50' : ''
-                                            }`}
-                                        />
-                                        {product.display_mode === 'password' && (
-                                            <div className="absolute inset-0 flex items-center justify-center">
-                                                <span className="text-white text-lg font-bold">パスワードが必要です</span>
+                                    <div className={`flex h-[480px] max-w-[396px] w-full flex-col justify-center items-center flex-shrink-0 rounded-[8px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
+                                        {product.display_mode === 'normal' ? (
+                                            <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                        ) : product.display_mode === 'gacha' ? (
+                                            <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                <img src={product.image} alt="ガチャ" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
+                                                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px] rounded-[8px]" />
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={bubble} alt="bubble" className="w-[42px] h-[42px]" />
+                                                    <span className="text-white text-[15px] font-bold">ガチャ</span>
+                                                    <span className="text-white text-[13px]">ランダムで1枚選定されます</span>
+                                                </div>
                                             </div>
+                                        ) : product.display_mode === 'blur' ? (
+                                            <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                <img src={product.image} alt="ぼかしフィルター" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
+                                                <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 filter blur-[4px] rounded-[8px]" />
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={question} alt="question" className="w-[42px] h-[42px]" />
+                                                    <span className="text-white text-[15px] font-bold">ぼかしフィルター</span>
+                                                    <span className="text-white text-[13px]">印刷して確認しよう！</span>
+                                                </div>
+                                            </div>
+                                        ) : product.display_mode === 'password' ? (
+                                            <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[8px]" />
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={lock} alt="lock" className="w-[42px] h-[42px]" />
+                                                    <span className="text-[#CDD9EC] text-[15px] font-bold">パスワード</span>
+                                                    <span className="text-[#CDD9EC] text-[13px]">PWを入れて印刷しよう</span>
+                                                </div>
+                                            </div>
+                                        ) : product.display_mode === 'cushion' ? (
+                                            <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px]" />
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
+                                                    <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
+                                                    <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
                                         )}
                                     </div>
+                                    {product.images.length > 0 && (
+                                        <BadgeDisplay
+                                            buttonClassName="px-[16px] py-[8px] gap-[4px] rounded-[10px] border-[1px] border-solid border-[#FF2AA1]"
+                                            textClassName="text-[#FF2AA1] text-[18px] font-medium leading-[18px]"
+                                            images={product.images.slice(0, 3).map((url, index) => ({
+                                                src: url,
+                                                alt: `${product.title} image ${index + 1}`
+                                            }))}
+                                            text={`${product.images.length}点を全て表示`}
+                                            textColor="#E862CB"
+                                            borderColor="#FF2AA1"
+                                            width="32px"
+                                            height="32px"
+                                            onClick={() => {
+                                                const pathParts = window.location.pathname.split('/');
+                                                const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
+                                                
+                                                if (isOnUserShopPage) {
+                                                    const shopUserId = Number(pathParts[1]);
+                                                    router.visit(route('user.product.purchased.expand', { 
+                                                        user_id: shopUserId, 
+                                                        id: product.id 
+                                                    }));
+                                                } else {
+                                                    router.visit(route('product.purchased.expand', { 
+                                                        id: product.id 
+                                                    }));
+                                                }
+                                            }}
+                                        />
+                                    )}
                                 </div>
                             </div>
                             {/* 1212: Print info blocks */}
@@ -333,9 +473,44 @@ const PurchasedProduct = ({ product }) => {
                                     <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 </div>
                             </div>
-                            <button className="flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border border-[#FF2AA1] bg-[#FF2AA1]">
-                                <img src={favoriteshops_follow} alt="favoriteshop" />
-                                <span className="text-[#fff] text-center font-medium text-[14px] leading-[21px] font-noto">フォロー中</span>
+                            <button
+                                onClick={async (e) => {
+                                    e.preventDefault();
+                                    try {
+                                        const response = await fetch(route('favoriteshops.toggle'), {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                            },
+                                            body: JSON.stringify({ shop_user_id: product.user.id }),
+                                        });
+                                        const data = await response.json();
+                                        if (data.success) {
+                                            router.reload();
+                                        }
+                                    } catch (error) {
+                                        console.error('Error toggling shop follow:', error);
+                                    }
+                                }}
+                                disabled={auth.user.id === product.user.id}
+                                className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${
+                                    auth.user.id === product.user.id
+                                        ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
+                                        : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.user.is_followed_by_current_user ? 'bg-[#FF2AA1]' : 'bg-white'}`
+                                }`}
+                            >
+                                <img
+                                    src={product.user.is_followed_by_current_user ? favoriteshops_follow : favoriteshops}
+                                    alt="favoriteshop"
+                                />
+                                <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${
+                                    auth.user.id === product.user.id
+                                        ? 'text-[#767676]'
+                                        : product.user.is_followed_by_current_user ? 'text-white' : 'text-[#FF2AA1]'
+                                }`}>
+                                    {product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー'}
+                                </span>
                             </button>
                             {/* 1122 */}
                             <div className="flex flex-col items-start gap-[10px] w-full">
@@ -349,13 +524,44 @@ const PurchasedProduct = ({ product }) => {
                                     <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">{product.sales_deadline}まで販売</span>
                                 </div>
                                 {/* 1131 */}
-                                <div className="flex flex-col items-start gap-[10px] p-[8px] rounded-[6px] border-[1px] border-solid border-[#FF2AA1]">
-                                    <div className="flex items-center gap-[4px]">
+                                                                    <button
+                                    onClick={async () => {
+                                        try {
+                                            const response = await fetch(route('favoriteproducts.toggle'), {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                                },
+                                                body: JSON.stringify({ product_id: product.id }),
+                                            });
+                                            const data = await response.json();
+                                            if (data.success) {
+                                                router.reload();
+                                            }
+                                        } catch (error) {
+                                            console.error('Error toggling favorite:', error);
+                                        }
+                                    }}
+                                    disabled={auth.user.id === product.user.id}
+                                    className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${
+                                        auth.user.id === product.user.id
+                                            ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
+                                            : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
+                                    }`}
+                                >
                                         <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                        <span className="text-[#FF2AA1] font-noto text-[12px] font-normal leading-[21px]">お気に入り</span>
-                                        <span className="text-[#FF2AA1] font-['Red Hat Display'] text-[14px] font-bold leading-[15px]">1000</span>
-                                    </div>
-                                </div>
+                                    <span className={`font-noto text-[12px] font-normal leading-[21px] ${
+                                        product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                    }`}>
+                                        {product.is_favorited ? 'お気に入り中' : 'お気に入り'}
+                                    </span>
+                                    <span className={`font-noto text-[14px] font-bold leading-[15px] ${
+                                        product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                    }`}>
+                                        {product.favorite_count}
+                                    </span>
+                                </button>
                             </div>
                         </div>
                         {/* 113 */}
@@ -386,23 +592,80 @@ const PurchasedProduct = ({ product }) => {
                             <div className="flex w-full px-[16px] py-[10px] justify-center items-center rounded-[10px] bg-[#F6F6F6] mx-auto mt-[24px] relative">
                                 {/* Blurred image */}
                                 <div className="flex w-full max-w-[200px] flex-col justify-center items-center flex-shrink-0 relative">
-                                    <div className="relative h-[298px] w-full">
-                                        <img 
-                                            src={product.image} 
-                                            alt={product.title} 
-                                            className={`h-full w-full object-cover rounded-[6px] ${
-                                                product.display_mode === 'blur' ? 'blur-lg' :
-                                                product.display_mode === 'gacha' ? 'grayscale' :
-                                                product.display_mode === 'cushion' ? 'brightness-50' :
-                                                product.display_mode === 'password' ? 'blur-lg brightness-50' : ''
-                                            }`}
-                                        />
-                                        {product.display_mode === 'password' && (
-                                            <div className="absolute inset-0 flex items-center justify-center">
-                                                <span className="text-white text-sm font-bold">パスワードが必要です</span>
+                                    <div className={`flex h-[298px] w-full flex-col justify-center items-center flex-shrink-0 rounded-[6px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
+                                        {product.display_mode === 'normal' ? (
+                                            <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
+                                        ) : product.display_mode === 'gacha' ? (
+                                            <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
+                                                <img src={product.image} alt="ガチャ" className="h-full w-full object-cover filter blur-[4px] rounded-[6px]" />
+                                                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px] rounded-[6px]" />
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={bubble} alt="bubble" className="w-[24px] h-[24px]" />
+                                                    <span className="text-white text-[10px] font-bold">ガチャ</span>
+                                                    <span className="text-white text-[8px]">ランダムで1枚選定されます</span>
+                                                </div>
                                             </div>
+                                        ) : product.display_mode === 'blur' ? (
+                                            <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
+                                                <img src={product.image} alt="ぼかしフィルター" className="h-full w-full object-cover filter blur-[4px] rounded-[6px]" />
+                                                <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 filter blur-[4px] rounded-[6px]" />
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={question} alt="question" className="w-[24px] h-[24px]" />
+                                                    <span className="text-white text-[10px] font-bold">ぼかしフィルター</span>
+                                                    <span className="text-white text-[8px]">印刷して確認しよう！</span>
+                                                </div>
+                                            </div>
+                                        ) : product.display_mode === 'password' ? (
+                                            <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
+                                                <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[6px]" />
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={lock} alt="lock" className="w-[24px] h-[24px]" />
+                                                    <span className="text-[#CDD9EC] text-[10px] font-bold">パスワード</span>
+                                                    <span className="text-[#CDD9EC] text-[8px]">PWを入れて印刷しよう</span>
+                                                </div>
+                                            </div>
+                                        ) : product.display_mode === 'cushion' ? (
+                                            <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
+                                                <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px]" />
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={warning} alt="warning" className="w-[24px] h-[24px]" />
+                                                    <span className="text-[#464F5D] text-[10px] font-bold">WARNING</span>
+                                                    <span className="text-[#464F5D] text-[8px]">クリックして内容を確認</span>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
                                         )}
                                     </div>
+                                    {product.images.length > 0 && (
+                                        <BadgeDisplay
+                                            buttonClassName="px-[12px] py-[6px] gap-[3px] rounded-[10px] border-[1px] border-solid border-[#E862CB]"
+                                            textClassName="text-[#E862CB] text-[18px] font-medium leading-[18px]"
+                                            images={product.images.slice(0, 3).map((url, index) => ({
+                                                src: url,
+                                                alt: `${product.title} image ${index + 1}`
+                                            }))}
+                                            text={`${product.images.length}点を全て表示`}
+                                            width="24px"
+                                            height="24px"
+                                            onClick={() => {
+                                                const pathParts = window.location.pathname.split('/');
+                                                const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
+                                                
+                                                if (isOnUserShopPage) {
+                                                    const shopUserId = Number(pathParts[1]);
+                                                    router.visit(route('user.product.purchased.expand', { 
+                                                        user_id: shopUserId, 
+                                                        id: product.id 
+                                                    }));
+                                                } else {
+                                                    router.visit(route('product.purchased.expand', { 
+                                                        id: product.id 
+                                                    }));
+                                                }
+                                            }}
+                                        />
+                                    )}
                                 </div>
                             </div>
                             {/* 1212: Print info blocks */}

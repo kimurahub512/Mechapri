@@ -51,7 +51,7 @@ const Transaction = () => {
                                     <span className="text-[#272B2B] font-medium text-[14px] leading-[21px] font-[\'Noto Sans JP\']">ｵｰﾊﾞｰｴｯｸｽ(ｶ</span>
                                 </div>
                                 {/* 振込先口座の指定 */}
-                                <span className="text-[#FF2AA1] font-medium text-[14px] leading-[21px] font-[\'Noto Sans JP\'] cursor-pointer">振込先口座の指定</span>
+                                <a href='/myshop/settransferaccount' className="text-[#FF2AA1] font-medium text-[14px] leading-[21px] font-[\'Noto Sans JP\'] cursor-pointer">振込先口座の指定</a>
                             </div>
                         </div>
                     </div>
@@ -376,7 +376,7 @@ const Transaction = () => {
                                 <span className="text-[#272B2B] font-medium text-[14px] leading-[21px] font-[\'Noto Sans JP\'] whitespace-nowrap">普通 ****84</span>
                                 <span className="text-[#272B2B] font-medium text-[14px] leading-[21px] font-[\'Noto Sans JP\'] whitespace-nowrap">ｵｰﾊﾞｰｴｯｸｽ(ｶ</span>
                             </div>
-                            <span className="text-[#FF2AA1] font-medium text-[14px] leading-[21px] font-[\'Noto Sans JP\'] cursor-pointer">振込先口座の指定</span>
+                            <a href='/myshop/settransferaccount' className="text-[#FF2AA1] font-medium text-[14px] leading-[21px] font-[\'Noto Sans JP\'] cursor-pointer">振込先口座の指定</a>
                         </div>
                     </div>
                     {/* Frame 12 (mobile only, now inside Frame 1) */}

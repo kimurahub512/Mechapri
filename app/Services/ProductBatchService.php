@@ -8,6 +8,7 @@ use App\Services\ProductBatchFileService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 
 class ProductBatchService
 {
@@ -45,7 +46,7 @@ class ProductBatchService
                 'sn_format' => $data['sn_format'] ?? 'number',
                 'sn' => $sn,
                 'is_public' => $data['is_public'],
-                'password' => $data['password'] ?? null,
+                'password' => isset($data['password']) ? Hash::make($data['password']) : null,
             ]);
 
             // Upload files if provided

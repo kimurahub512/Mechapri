@@ -8,19 +8,68 @@ import warning from '@/assets/images/warning.svg';
 import { vwd, vw, responsiveText, responsiveTextD, responsivePosition, responsiveMetric, responsiveMetricD, responsivePositionD } from '@/lib/utils';
 
 
-const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 1 }) => {
+const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 1, currentUserId = null }) => {
     const handleClick = () => {
         // Determine which page to show based on product status
         const isPurchased = product.is_purchased;
         const isFree = product.price === 0;
+
+        // Get the current page's user ID from the URL
+        const pathParts = window.location.pathname.split('/');
+        const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
         
-        if (isPurchased || isFree) {
-            router.visit(`/purchasedproduct/${product.id}`);
-        } else {
-            router.visit(`/unpurchasedproduct/${product.id}`);
+        // If we're on a user's shop page, we should always use the user-scoped routes
+        if (isOnUserShopPage) {
+            const shopUserId = Number(pathParts[1]);
+            const purchasedUrl = route('user.product.purchased', { user_id: shopUserId, id: product.id });
+            const unpurchasedUrl = route('user.product.unpurchased', { user_id: shopUserId, id: product.id });
+            
+            console.log('Generated URLs:', {
+                purchasedUrl,
+                unpurchasedUrl,
+                shopUserId,
+                productId: product.id,
+                pathParts,
+                isOnUserShopPage
+            });
+
+            if (isPurchased || isFree) {
+                router.visit(purchasedUrl);
+            } else {
+                router.visit(unpurchasedUrl);
+            }
+            return;
         }
+
+        // Otherwise, use the direct routes
+        const purchasedUrl = route('product.purchased', { id: product.id });
+        const unpurchasedUrl = route('product.unpurchased', { id: product.id });
+
+        console.log('Generated URLs:', {
+            purchasedUrl,
+            unpurchasedUrl,
+            productId: product.id,
+            pathParts,
+            isOnUserShopPage
+        });
+
+        if (isPurchased || isFree) {
+            router.visit(purchasedUrl);
+        } else {
+            router.visit(unpurchasedUrl);
+        }
+
+        console.log('ProductCard navigation:', {
+            product_id: product.id,
+            is_on_user_shop_page: isOnUserShopPage,
+            is_free: isFree,
+            is_purchased: isPurchased,
+            current_url: window.location.pathname
+        });
+
+
     };
-    console.log(product);
+    console.log('ProductCard props:', { product, currentUserId });
     if (isMobile) {
         return (
             <div 

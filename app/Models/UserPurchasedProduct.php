@@ -35,4 +35,16 @@ class UserPurchasedProduct extends Model
     {
         return $this->belongsTo(ProductBatch::class, 'batch_id');
     }
+
+    public static function getTopBuyersForProduct($productId, $limit = 5)
+    {
+        return static::where('batch_id', $productId)
+            ->select('user_id')
+            ->selectRaw('SUM(cnt) as total_quantity')
+            ->with('user:id,name,image')
+            ->groupBy('user_id')
+            ->orderByDesc('total_quantity')
+            ->limit($limit)
+            ->get();
+    }
 }

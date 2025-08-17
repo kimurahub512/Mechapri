@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { router, usePage } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import BadgeDisplay from '@/Components/BadgeDisplay';
@@ -18,6 +19,7 @@ import qr from '@/assets/images/productdetails/qr.jpg';
 import x from '@/assets/images/x_logo.svg';
 import instagram from '@/assets/images/instagram.svg';
 import favoriteshops from '@/assets/images/favoriteshop.svg';
+import favoriteshops_follow from '@/assets/images/favoriteshop_white.svg';
 import logo from '@/assets/images/logo_white.svg';
 import cart from '@/assets/images/icon-cart.svg';
 import QuantityControl from '@/Components/QuantityControl';
@@ -27,15 +29,50 @@ import photo4 from '@/assets/images/shoptop/photo3.png';
 import purchase_qr from '@/assets/images/purchase_qr.svg';
 import print_qr from '@/assets/images/print_qr.svg';
 import default_user from '@/assets/images/default-user.png';
+import bubble from '@/assets/images/bubble.svg';
+import question from '@/assets/images/question_cloud.svg';
+import lock from '@/assets/images/lock.svg';
+import warning from '@/assets/images/warning.svg';
 
 
 const UnpurchasedProduct = ({ product }) => {
+    const { auth } = usePage().props;
+    const [password, setPassword] = useState('');
+    const [isUnlocked, setIsUnlocked] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+
+    const handlePasswordSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch(route('product.verify.password'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                },
+                body: JSON.stringify({
+                    product_id: product.id,
+                    password: password
+                }),
+            });
+            const data = await response.json();
+            if (data.success) {
+                setIsUnlocked(true);
+                setPasswordError(false);
+            } else {
+                setPasswordError(true);
+            }
+        } catch (error) {
+            console.error('Error verifying password:', error);
+            setPasswordError(true);
+        }
+    };
 
     const [quantities, setQuantities] = useState({
-        item1: 1,
-        item2: 1,
-        mobileItem1: 1,
-        mobileItem2: 1
+        cart: 1,
+        direct: 1,
+        mobileCart: 1,
+        mobileDirect: 1
     });
 
     const handleQuantityChange = (itemKey, newQuantity) => {
@@ -70,9 +107,49 @@ const UnpurchasedProduct = ({ product }) => {
                             </div>
                             {/* 1122: Edit/Delete buttons */}
                             <div className="flex items-center absolute right-0 top-[15px]">
-                                <button className="flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border border-[#FF2AA1]">
-                                    <img src={favoriteshops} alt="favoriteshop" />
-                                    <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-noto">ショップをフォロー</span>
+                                <button
+                                    onClick={async (e) => {
+                                        e.preventDefault();
+                                        try {
+                                            console.log('Toggling shop follow...');
+                                            const response = await fetch(route('favoriteshops.toggle'), {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                                },
+                                                body: JSON.stringify({ shop_user_id: product.user.id }),
+                                            });
+                                            const data = await response.json();
+                                            if (data.success) {
+                                                router.reload();
+                                            }
+                                        } catch (error) {
+                                            console.error('Error toggling shop follow:', error);
+                                            console.error('Error details:', {
+                                                error,
+                                                csrf: document.querySelector('meta[name="csrf-token"]')?.content,
+                                                productUserId: product.user.id,
+                                                authUserId: auth.user.id
+                                            });
+                                        }
+                                    }}
+                                    disabled={auth.user.id === product.user.id}
+                                    className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${auth.user.id === product.user.id
+                                            ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
+                                            : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.user.is_followed_by_current_user ? 'bg-[#FF2AA1]' : 'bg-white'}`
+                                        }`}
+                                >
+                                    <img
+                                        src={product.user.is_followed_by_current_user ? favoriteshops_follow : favoriteshops}
+                                        alt="favoriteshop"
+                                    />
+                                    <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${auth.user.id === product.user.id
+                                            ? 'text-[#767676]'
+                                            : product.user.is_followed_by_current_user ? 'text-white' : 'text-[#FF2AA1]'
+                                        }`}>
+                                        {product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー'}
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -85,7 +162,7 @@ const UnpurchasedProduct = ({ product }) => {
                             {/* 1132: Description and Date */}
                             <div className="flex flex-col items-start gap-[4px] w-full">
                                 <span className="text-[#363636] font-noto text-[18px] font-normal leading-[32.4px]">{product.description}</span>
-                                <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">{product.sales_deadline}まで販売</span>
+                                {/* <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">{product.sales_deadline}まで販売</span> */}
                             </div>
                         </div>
                         {/* 114 */}
@@ -94,12 +171,42 @@ const UnpurchasedProduct = ({ product }) => {
                             <div className="flex items-center gap-[10px]">
                                 {/* 11411 */}
                                 <div className="flex flex-col items-start gap-[10px] py-[8px]">
-                                    {/* 114111: Heart, お気に入り, 1000 */}
-                                    <div className="flex items-center gap-[4px] border-[1px] border-solid border-[#FF2AA1] rounded-[6px] p-[8px]">
-                                        <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                        <span className="text-[#FF2AA1] font-noto text-[14px] font-bold leading-[21px]">お気に入り</span>
-                                        <span className="text-[#FF2AA1] font-noto text-[14px] font-bold leading-[21px]">1000</span>
-                                    </div>
+                                    {/* Favorite button */}
+                                    <button
+                                        onClick={async () => {
+                                            try {
+                                                const response = await fetch(route('favoriteproducts.toggle'), {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                                    },
+                                                    body: JSON.stringify({ product_id: product.id }),
+                                                });
+                                                const data = await response.json();
+                                                if (data.success) {
+                                                    router.reload();
+                                                }
+                                            } catch (error) {
+                                                console.error('Error toggling favorite:', error);
+                                            }
+                                        }}
+                                        disabled={auth.user.id === product.user.id}
+                                        className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${auth.user.id === product.user.id
+                                                ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
+                                                : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
+                                            }`}
+                                    >
+                                        <img src={heart} alt="heart" className={`w-[20px] h-[20px] ${product.is_favorited ? 'filter invert' : ''}`} />
+                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                            }`}>
+                                            {product.is_favorited ? 'お気に入り中' : 'お気に入り'}
+                                        </span>
+                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                            }`}>
+                                            {product.favorite_count}
+                                        </span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -134,29 +241,77 @@ const UnpurchasedProduct = ({ product }) => {
                                 <div className="flex flex-col items-center gap-[16px]">
                                     {/* Blurred image with overlay */}
                                     <div className="flex w-[500px] px-[90px] py-[10px] justify-center items-center rounded-[16px] bg-[#F6F6F6] mx-auto relative">
-                                        <div className="flex w-[320px] max-w-[396px] flex-col justify-center items-center flex-shrink-0 relative logo">
-                                            <div className="relative h-[480px] max-w-[396px] w-full">
-                                                <img 
-                                                    src={product.image} 
-                                                    alt={product.title} 
-                                                    className={`h-full w-full object-cover rounded-[8px] ${
-                                                        product.display_mode === 'blur' ? 'blur-lg' :
-                                                        product.display_mode === 'gacha' ? 'grayscale' :
-                                                        product.display_mode === 'cushion' ? 'brightness-50' :
-                                                        product.display_mode === 'password' ? 'blur-lg brightness-50' : ''
-                                                    }`}
-                                                />
-                                                {product.display_mode === 'password' && (
-                                                    <div className="absolute inset-0 flex items-center justify-center">
-                                                        <span className="text-white text-lg font-bold">パスワードが必要です</span>
+                                        <div className="flex w-[320px] max-w-[396px] flex-col justify-center items-center flex-shrink-0 relative">
+                                            <div className={`flex h-[480px] max-w-[396px] w-full flex-col justify-center items-center flex-shrink-0 rounded-[8px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
+                                                {product.display_mode === 'normal' ? (
+                                                    <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                                ) : product.display_mode === 'gacha' ? (
+                                                    <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                        <img src={product.image} alt="ガチャ" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
+                                                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px] rounded-[8px]" />
+                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                            <img src={bubble} alt="bubble" className="w-[42px] h-[42px]" />
+                                                            <span className="text-white text-[15px] font-bold">ガチャ</span>
+                                                            <span className="text-white text-[13px]">ランダムで1枚選定されます</span>
+                                                        </div>
                                                     </div>
+                                                ) : product.display_mode === 'blur' ? (
+                                                    <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                        <img src={product.image} alt="ぼかしフィルター" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
+                                                        <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 filter blur-[4px] rounded-[8px]" />
+                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                            <img src={question} alt="question" className="w-[42px] h-[42px]" />
+                                                            <span className="text-white text-[15px] font-bold">ぼかしフィルター</span>
+                                                            <span className="text-white text-[13px]">印刷して確認しよう！</span>
+                                                        </div>
+                                                    </div>
+                                                ) : product.display_mode === 'password' && !isUnlocked ? (
+                                                    <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                        <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[8px]" />
+                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                            <img src={lock} alt="lock" className="w-[42px] h-[42px]" />
+                                                            <span className="text-[#CDD9EC] text-[15px] font-bold">パスワード</span>
+                                                            <span className="text-[#CDD9EC] text-[13px]">PWを入れて印刷しよう</span>
+                                                            <form onSubmit={handlePasswordSubmit} className="mt-4 flex flex-col items-center gap-2">
+                                                                <input
+                                                                    type="password"
+                                                                    value={password}
+                                                                    onChange={(e) => setPassword(e.target.value)}
+                                                                    className={`w-[200px] px-4 py-2 rounded-md border ${passwordError ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#586B88]`}
+                                                                    placeholder="パスワードを入力"
+                                                                />
+                                                                {passwordError && (
+                                                                    <span className="text-red-500 text-[12px]">パスワードが正しくありません</span>
+                                                                )}
+                                                                <button
+                                                                    type="submit"
+                                                                    className="mt-2 px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-opacity-90 transition-all"
+                                                                >
+                                                                    確認
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                ) : product.display_mode === 'password' && isUnlocked ? (
+                                                    <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                                ) : product.display_mode === 'cushion' ? (
+                                                    <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                        <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px]" />
+                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                            <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
+                                                            <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
+                                                            <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
                                                 )}
                                             </div>
                                         </div>
                                 {/* Blurred image */}
                                         {/* Overlay Area: 12111~12115 */}
                                         <div
-                                            className="flex flex-col items-start absolute top-0 left-3 h-full opacity-75"
+                                            className="flex flex-col items-start absolute top-0 left-3 h-full opacity-25"
                                             style={{
                                                 width: '474.958px',
                                                 // gap: '-150px',
@@ -234,22 +389,40 @@ const UnpurchasedProduct = ({ product }) => {
                                             </div>
                                         </div>
                                     </div>
+                                    {product.images.length > 0 && (product.display_mode !== 'password' || isUnlocked) && (
                                     <BadgeDisplay
                                         buttonClassName="px-[16px] py-[8px] gap-[4px] rounded-[10px] border-[1px] border-solid border-[#FF2AA1]"
                                         textClassName="text-[#FF2AA1] text-[18px] font-medium leading-[18px]"
-                                        images={product.images.map((url, index) => ({
-                                            src: url,
-                                            alt: `${product.title} image ${index + 1}`
-                                        }))}
-                                        text="10点を全て表示"
+                                            images={product.images.slice(0, 3).map((url, index) => ({
+                                                src: url,
+                                                alt: `${product.title} image ${index + 1}`
+                                            }))}
+                                            text={`${product.images.length}点を全て表示`}
                                         textColor="#E862CB"
                                         borderColor="#FF2AA1"
                                         width="32px"
                                         height="32px"
-                                    />
+                                            onClick={() => {
+                                                const pathParts = window.location.pathname.split('/');
+                                                const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
+
+                                                if (isOnUserShopPage) {
+                                                    const shopUserId = Number(pathParts[1]);
+                                                    router.visit(route('user.product.unpurchased.expand', {
+                                                        user_id: shopUserId,
+                                                        id: product.id
+                                                    }));
+                                                } else {
+                                                    router.visit(route('product.unpurchased.expand', {
+                                                        id: product.id
+                                                    }));
+                                                }
+                                            }}
+                                        />
+                                    )}
                                 </div>
                                 <div className="flex flex-col items-center gap-[4px]">
-                                    <span className="text-black font-noto text-[18px] leading-[32px] ">2025/07/25 まで購入できます</span>
+                                    <span className="text-black font-noto text-[18px] leading-[32px] ">{product.sales_deadline} まで購入できます</span>
                                     <div className="flex flex-row items-center">
                                         <span className="text-black font-noto font-bold text-[46px] leading-[54px]">{product.price}</span>
                                         <span className="text-black font-noto font-bold text-[24px] leading-[24px]">円</span>
@@ -259,8 +432,8 @@ const UnpurchasedProduct = ({ product }) => {
                                     <div className="flex flex-row items-center px-[24px] w-full">
                                         <div className="mr-auto">
                                             <QuantityControl
-                                                quantity={quantities.item1}
-                                                onQuantityChange={(newQuantity) => handleQuantityChange('item1', newQuantity)}
+                                                    quantity={quantities.cart}
+                                                    onQuantityChange={(newQuantity) => handleQuantityChange('cart', newQuantity)}
                                             />
                             </div>
                                         <button className="flex w-[240px] h-[74px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] ml-auto">
@@ -271,11 +444,19 @@ const UnpurchasedProduct = ({ product }) => {
                                     <div className="flex flex-row items-center px-[24px] w-full">
                                         <div className="mr-auto">
                                             <QuantityControl
-                                                quantity={quantities.item1}
-                                                onQuantityChange={(newQuantity) => handleQuantityChange('item1', newQuantity)}
+                                                    quantity={quantities.direct}
+                                                    onQuantityChange={(newQuantity) => handleQuantityChange('direct', newQuantity)}
                                             />
                                         </div>
-                                        <button className="flex w-[240px] h-[74px] px-[24px] justify-center items-center rounded-[10px] bg-[#AB31D3] ml-auto">
+                                        {/* <button className="flex w-[240px] h-[74px] px-[24px] justify-center items-center rounded-[10px] bg-[#AB31D3] 
+                                        ml-auto">
+                                            <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-noto 
+                                            whitespace-nowrap">すぐにプリントコード購入</span>
+                                        </button> */}
+                                        <button
+                                            onClick={() => router.visit(route('payment.checkout', { product: product.id }))}
+                                            className="flex w-[240px] h-[74px] px-[24px] justify-center items-center rounded-[10px] bg-[#AB31D3] ml-auto hover:bg-opacity-90 transition-all"
+                                        >
                                             <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-noto whitespace-nowrap">すぐにプリントコード購入</span>
                                         </button>
                                     </div>
@@ -323,10 +504,10 @@ const UnpurchasedProduct = ({ product }) => {
                                                 </span>
                                             </div>
                                         </div>
-                                        <div className=" absolute flex items-center gap-[8px]" style={{ top: 222, left: 142}}>
+                                        <a href='/howtoprint' className=" absolute flex items-center gap-[8px]" style={{ top: 222, left: 142 }}>
                                             <img src={question_circle} alt="question_circle" className="w-[20px] h-[20px]" />
                                             <span className="text-[#767676] font-noto text-[13px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</span>
-                                        </div>
+                                        </a>
                                     </div>
                                     {/* 12112 */}
                                     <div className="flex min-h-[64px] p-4 justify-center items-center gap-[12px] self-stretch">
@@ -339,7 +520,7 @@ const UnpurchasedProduct = ({ product }) => {
                                             </div>
                                             {/* 1211212 */}
                                             <div className="flex flex-col items-start opacity-70">
-                                                <span className="text-[#E862CB] font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                                <span className="text-[#E862CB] font-noto text-[14px] font-bold leading-[14px]">{product.print_deadline}まで</span>
                                             </div>
                                         </div>
                                     </div>
@@ -353,96 +534,34 @@ const UnpurchasedProduct = ({ product }) => {
                                 <span className="text-[#000] font-noto text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">ランキング</span>
                                 {/* 12211: Ranking list */}
                                 <div className="flex flex-col items-start gap-[24px] w-full">
-                                    {/* 122111: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
+                                    {product.top_buyers.map((buyer, index) => (
+                                        <div key={index} className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[24px]">
                                             <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-noto text-[36px] font-bold leading-[54px]">1</span>
+                                                    <span className={`font-noto font-bold ${
+                                                        index === 0 ? 'text-[36px] leading-[54px]' :
+                                                        index <= 2 ? 'text-[28px] leading-[42px]' :
+                                                        'text-[24px] leading-[24px]'
+                                                    } ${index <= 2 ? 'text-[#AB31D3]' : 'text-[#222]'}`}>
+                                                        {index + 1}
+                                                    </span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
                                                     <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
+                                                            <img src={buyer.user.image || default_user} alt={buyer.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                                        <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{buyer.user.name}</span>
                                                 </div>
+                                                    <div className="flex flex-col items-end">
+                                                        <span className="text-[#767676] font-noto text-[14px] font-bold leading-[21px]">{buyer.total_quantity}点</span>
                                             </div>
                                         </div>
                                     </div>
-                                    {/* 122112: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-noto text-[28px] font-bold leading-[42px]">2</span>
                                             </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122113: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-noto text-[28px] font-bold leading-[42px]">3</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122114: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#222] font-noto text-[24px] font-bold leading-[24px]">4</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122115: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#222] font-noto text-[24px] font-bold leading-[24px]">5</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -496,9 +615,49 @@ const UnpurchasedProduct = ({ product }) => {
                                     <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 </div>
                             </div>
-                            <button className="flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border border-[#FF2AA1]">
-                                <img src={favoriteshops} alt="favoriteshop" />
-                                <span className="text-[#FF2AA1] text-center font-medium text-[14px] leading-[21px] font-noto">ショップをフォロー</span>
+                            <button
+                                onClick={async (e) => {
+                                    e.preventDefault();
+                                    try {
+                                        console.log('Toggling shop follow...');
+                                        const response = await fetch(route('favoriteshops.toggle'), {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                            },
+                                            body: JSON.stringify({ shop_user_id: product.user.id }),
+                                        });
+                                        const data = await response.json();
+                                        if (data.success) {
+                                            router.reload();
+                                        }
+                                    } catch (error) {
+                                        console.error('Error toggling shop follow:', error);
+                                        console.error('Error details:', {
+                                            error,
+                                            csrf: document.querySelector('meta[name="csrf-token"]')?.content,
+                                            productUserId: product.user.id,
+                                            authUserId: auth.user.id
+                                        });
+                                    }
+                                }}
+                                disabled={auth.user.id === product.user.id}
+                                className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${auth.user.id === product.user.id
+                                        ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
+                                        : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.user.is_followed_by_current_user ? 'bg-[#FF2AA1]' : 'bg-white'}`
+                                    }`}
+                            >
+                                <img
+                                    src={product.user.is_followed_by_current_user ? favoriteshops_follow : favoriteshops}
+                                    alt="favoriteshop"
+                                />
+                                <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${auth.user.id === product.user.id
+                                        ? 'text-[#767676]'
+                                        : product.user.is_followed_by_current_user ? 'text-white' : 'text-[#FF2AA1]'
+                                    }`}>
+                                    {product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー'}
+                                </span>
                             </button>
                             {/* 1122 */}
                             <div className="flex flex-col items-start gap-[10px] w-full">
@@ -509,16 +668,44 @@ const UnpurchasedProduct = ({ product }) => {
                                 {/* 11222 */}
                                 <div className="flex flex-col items-start gap-[4px] w-full">
                                     <span className="text-[#363636] font-noto text-[14px] font-bold leading-[14px] w-full">{product.description}</span>
-                                    <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">{product.sales_deadline}まで販売</span>
+                                    {/* <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">{product.sales_deadline}まで販売</span> */}
                                 </div>
                                 {/* 1131 */}
-                                <div className="flex flex-col items-start gap-[10px] p-[8px] rounded-[6px] border-[1px] border-solid border-[#FF2AA1]">
-                                    <div className="flex items-center gap-[4px]">
+                                <button
+                                    onClick={async () => {
+                                        try {
+                                            const response = await fetch(route('favoriteproducts.toggle'), {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                                },
+                                                body: JSON.stringify({ product_id: product.id }),
+                                            });
+                                            const data = await response.json();
+                                            if (data.success) {
+                                                router.reload();
+                                            }
+                                        } catch (error) {
+                                            console.error('Error toggling favorite:', error);
+                                        }
+                                    }}
+                                    disabled={auth.user.id === product.user.id}
+                                    className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${auth.user.id === product.user.id
+                                            ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
+                                            : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
+                                        }`}
+                                >
                                         <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                        <span className="text-[#FF2AA1] font-noto text-[12px] font-normal leading-[21px]">お気に入り</span>
-                                        <span className="text-[#FF2AA1] font-['Red Hat Display'] text-[14px] font-bold leading-[15px]">1000</span>
-                                    </div>
-                                </div>
+                                    <span className={`font-noto text-[12px] font-normal leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                        }`}>
+                                        {product.is_favorited ? 'お気に入り中' : 'お気に入り'}
+                                    </span>
+                                    <span className={`font-noto text-[14px] font-bold leading-[15px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                        }`}>
+                                        {product.favorite_count}
+                                    </span>
+                                </button>
                             </div>
                         </div>
                         {/* 113 */}
@@ -549,21 +736,69 @@ const UnpurchasedProduct = ({ product }) => {
                             <div className="flex w-full px-[16px] py-[10px] justify-center items-center rounded-[10px] bg-[#F6F6F6] mx-auto mt-[24px] relative">
                                 {/* Blurred image */}
                                 <div className="flex w-full max-w-[200px] flex-col justify-center items-center flex-shrink-0 relative">
-                                    <div className="relative h-[298px] w-full">
-                                        <img 
-                                            src={product.image} 
-                                            alt={product.title} 
-                                            className={`h-full w-full object-cover rounded-[6px] ${
-                                                product.display_mode === 'blur' ? 'blur-lg' :
-                                                product.display_mode === 'gacha' ? 'grayscale' :
-                                                product.display_mode === 'cushion' ? 'brightness-50' :
-                                                product.display_mode === 'password' ? 'blur-lg brightness-50' : ''
-                                            }`}
-                                        />
-                                        {product.display_mode === 'password' && (
-                                            <div className="absolute inset-0 flex items-center justify-center">
-                                                <span className="text-white text-sm font-bold">パスワードが必要です</span>
+                                    <div className={`flex h-[298px] w-full flex-col justify-center items-center flex-shrink-0 rounded-[6px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
+                                        {product.display_mode === 'normal' ? (
+                                            <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
+                                        ) : product.display_mode === 'gacha' ? (
+                                            <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
+                                                <img src={product.image} alt="ガチャ" className="h-full w-full object-cover filter blur-[4px] rounded-[6px]" />
+                                                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px] rounded-[6px]" />
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={bubble} alt="bubble" className="w-[24px] h-[24px]" />
+                                                    <span className="text-white text-[10px] font-bold">ガチャ</span>
+                                                    <span className="text-white text-[8px]">ランダムで1枚選定されます</span>
+                                                </div>
                                             </div>
+                                        ) : product.display_mode === 'blur' ? (
+                                            <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
+                                                <img src={product.image} alt="ぼかしフィルター" className="h-full w-full object-cover filter blur-[4px] rounded-[6px]" />
+                                                <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 filter blur-[4px] rounded-[6px]" />
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={question} alt="question" className="w-[24px] h-[24px]" />
+                                                    <span className="text-white text-[10px] font-bold">ぼかしフィルター</span>
+                                                    <span className="text-white text-[8px]">印刷して確認しよう！</span>
+                                                </div>
+                                            </div>
+                                        ) : product.display_mode === 'password' && !isUnlocked ? (
+                                            <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
+                                                <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[6px]" />
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={lock} alt="lock" className="w-[24px] h-[24px]" />
+                                                    <span className="text-[#CDD9EC] text-[10px] font-bold">パスワード</span>
+                                                    <span className="text-[#CDD9EC] text-[8px]">PWを入れて印刷しよう</span>
+                                                    <form onSubmit={handlePasswordSubmit} className="mt-4 flex flex-col items-center gap-2">
+                                                        <input
+                                                            type="password"
+                                                            value={password}
+                                                            onChange={(e) => setPassword(e.target.value)}
+                                                            className={`w-[150px] px-3 py-1.5 rounded-md border ${passwordError ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#586B88] text-[12px]`}
+                                                            placeholder="パスワードを入力"
+                                                        />
+                                                        {passwordError && (
+                                                            <span className="text-red-500 text-[10px]">パスワードが正しくありません</span>
+                                                        )}
+                                                        <button
+                                                            type="submit"
+                                                            className="mt-2 px-3 py-1.5 bg-[#586B88] text-white rounded-md hover:bg-opacity-90 transition-all text-[12px]"
+                                                        >
+                                                            確認
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        ) : product.display_mode === 'password' && isUnlocked ? (
+                                            <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
+                                        ) : product.display_mode === 'cushion' ? (
+                                            <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
+                                                <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px]" />
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={warning} alt="warning" className="w-[24px] h-[24px]" />
+                                                    <span className="text-[#464F5D] text-[10px] font-bold">WARNING</span>
+                                                    <span className="text-[#464F5D] text-[8px]">クリックして内容を確認</span>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
                                         )}
                                     </div>
                                 </div>
@@ -584,8 +819,8 @@ const UnpurchasedProduct = ({ product }) => {
                                             alignSelf: 'stretch',
                                         }}
                                     >
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
                                     </div>
                                     {/* Mobile 12112: Logo row */}
                                     <div
@@ -596,9 +831,9 @@ const UnpurchasedProduct = ({ product }) => {
                                             alignSelf: 'stretch',
                                         }}
                                     >
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
                                     </div>
                                     {/* Mobile 12113: Logo row */}
                                     <div
@@ -609,9 +844,9 @@ const UnpurchasedProduct = ({ product }) => {
                                             alignSelf: 'stretch',
                                         }}
                                     >
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
                                     </div>
                                     {/* Mobile 12114: Logo row */}
                                     <div
@@ -622,9 +857,9 @@ const UnpurchasedProduct = ({ product }) => {
                                             alignSelf: 'stretch',
                                         }}
                                     >
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
                                     </div>
                                     {/* Mobile 12115: Logo row */}
                                     <div
@@ -635,29 +870,47 @@ const UnpurchasedProduct = ({ product }) => {
                                             alignSelf: 'stretch',
                                         }}
                                     >
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px'}} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
+                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
                                     </div>
                                 </div>
                             </div>
                             {/* 1212: Badge display */}
                             <div className="flex justify-center w-full mt-[16px]">
+                                {product.images.length > 0 && (product.display_mode !== 'password' || isUnlocked) && (
                                 <BadgeDisplay
                                     buttonClassName="px-[12px] py-[6px] gap-[3px] rounded-[10px] border-[1px] border-solid border-[#E862CB]"
                                     textClassName="text-[#E862CB] text-[18px] font-medium leading-[18px]"
-                                    images={product.images.map((url, index) => ({
-                                        src: url,
-                                        alt: `${product.title} image ${index + 1}`
-                                    }))}
-                                    text="10点を全て表示"
+                                        images={product.images.slice(0, 3).map((url, index) => ({
+                                            src: url,
+                                            alt: `${product.title} image ${index + 1}`
+                                        }))}
+                                        text={`${product.images.length}点を全て表示`}
                                     width="24px"
                                     height="24px"
-                                />
+                                        onClick={() => {
+                                            const pathParts = window.location.pathname.split('/');
+                                            const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
+
+                                            if (isOnUserShopPage) {
+                                                const shopUserId = Number(pathParts[1]);
+                                                router.visit(route('user.product.unpurchased.expand', {
+                                                    user_id: shopUserId,
+                                                    id: product.id
+                                                }));
+                                            } else {
+                                                router.visit(route('product.unpurchased.expand', {
+                                                    id: product.id
+                                                }));
+                                            }
+                                        }}
+                                    />
+                                )}
                             </div>
                             {/* 1213: Price and purchase info */}
                             <div className="flex flex-col items-center gap-[4px] mt-[24px]">
-                                <span className="text-black font-noto text-[16px] leading-[27px]">2025/07/25 まで購入できます</span>
+                                <span className="text-black font-noto text-[16px] leading-[27px]">{product.sales_deadline} まで購入できます</span>
                                 <div className="flex flex-row items-center gap-[4px]">
                                     <span className="text-black font-noto font-bold text-[36px] leading-[48px]">{product.price}</span>
                                     <span className="text-black font-noto font-bold text-[20px] leading-[23px]">円</span>
@@ -668,8 +921,8 @@ const UnpurchasedProduct = ({ product }) => {
                                 <div className="flex flex-row items-center w-full">
                                     <div className="ml-auto">
                                         <QuantityControl
-                                            quantity={quantities.mobileItem1}
-                                            onQuantityChange={(newQuantity) => handleQuantityChange('mobileItem1', newQuantity)}
+                                                quantity={quantities.mobileCart}
+                                                onQuantityChange={(newQuantity) => handleQuantityChange('mobileCart', newQuantity)}
                                         />
                                     </div>
                                     <button className="flex w-[160px] h-[40px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] mr-auto">
@@ -680,8 +933,8 @@ const UnpurchasedProduct = ({ product }) => {
                                 <div className="flex flex-row items-center w-full">
                                     <div className="ml-auto">
                                         <QuantityControl
-                                            quantity={quantities.mobileItem2}
-                                            onQuantityChange={(newQuantity) => handleQuantityChange('mobileItem2', newQuantity)}
+                                                quantity={quantities.mobileDirect}
+                                                onQuantityChange={(newQuantity) => handleQuantityChange('mobileDirect', newQuantity)}
                                         />
                                     </div>
                                     <button className="flex w-[160px] h-[40px] px-[16px] justify-center items-center rounded-[10px] bg-[#AB31D3] mr-auto">
@@ -720,10 +973,10 @@ const UnpurchasedProduct = ({ product }) => {
                                             </span>
                                         </div>
                                     </div>
-                                    <div className="absolute flex items-center gap-[6px]" style={{ top: 209, left: 45 }}>
+                                    <a href='/howtoprint' className="absolute flex items-center gap-[6px]" style={{ top: 209, left: 45 }}>
                                         <img src={question_circle} alt="question_circle" className="w-[20px] h-[20px]" />
                                         <span className="text-[#767676] font-noto text-[13px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</span>
-                                    </div>
+                                    </a>
                                 </div>
                                 {/* 12162 */}
                                 <div className="flex min-h-[48px] p-3 justify-center items-center gap-[8px] self-stretch ">
@@ -736,7 +989,7 @@ const UnpurchasedProduct = ({ product }) => {
                                         </div>
                                         {/* 1216212 */}
                                         <div className="flex flex-col items-start opacity-70">
-                                            <span className="text-[#E862CB] font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                            <span className="text-[#E862CB] font-noto text-[14px] font-bold leading-[14px]">{product.print_deadline}まで</span>
                                         </div>
                                     </div>
                                 </div>
@@ -749,96 +1002,34 @@ const UnpurchasedProduct = ({ product }) => {
                                 <span className="text-[#000] font-noto text-[18px] font-bold leading-[24px]">ランキング</span>
                                 {/* 12211: Ranking list */}
                                 <div className="flex flex-col items-start gap-[16px] w-full">
-                                    {/* 122111: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
+                                    {product.top_buyers.map((buyer, index) => (
+                                        <div key={index} className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
                                         <div className="flex items-center gap-[16px]">
                                             <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#AB31D3] font-noto text-[24px] font-bold leading-[32px]">1</span>
+                                                    <span className={`font-noto font-bold ${
+                                                        index === 0 ? 'text-[24px] leading-[32px]' :
+                                                        index <= 2 ? 'text-[20px] leading-[28px]' :
+                                                        'text-[18px] leading-[24px]'
+                                                    } ${index <= 2 ? 'text-[#AB31D3]' : 'text-[#222]'}`}>
+                                                        {index + 1}
+                                                    </span>
                                             </div>
                                             <div className="flex items-center">
                                                 <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
                                                     <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
+                                                            <img src={buyer.user.image || default_user} alt={buyer.user.name} className="w-[48px] h-[48px] rounded-full object-cover" />
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
+                                                        <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">{buyer.user.name}</span>
                                                 </div>
+                                                    <div className="flex flex-col items-end">
+                                                        <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">{buyer.total_quantity}点</span>
                                             </div>
                                         </div>
                                     </div>
-                                    {/* 122112: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#AB31D3] font-noto text-[20px] font-bold leading-[28px]">2</span>
                                             </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122113: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#AB31D3] font-noto text-[20px] font-bold leading-[28px]">3</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122114: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#222] font-noto text-[18px] font-bold leading-[24px]">4</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122115: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#222] font-noto text-[18px] font-bold leading-[24px]">5</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
