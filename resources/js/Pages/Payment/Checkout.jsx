@@ -6,7 +6,15 @@ import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 
 // Load Stripe outside of components to avoid recreating Stripe object
-const stripePromise = loadStripe(process.env.MIX_STRIPE_KEY);
+let stripePromise;
+function getStripePromise(stripeKeyFromProps) {
+    const key = stripeKeyFromProps || import.meta.env.VITE_STRIPE_KEY;
+    if (!key) return null;
+    if (!stripePromise) {
+        stripePromise = loadStripe(key);
+    }
+    return stripePromise;
+}
 
 const CheckoutForm = ({ product, clientSecret }) => {
     const stripe = useStripe();
@@ -65,7 +73,7 @@ const CheckoutForm = ({ product, clientSecret }) => {
     );
 };
 
-const Checkout = ({ product, clientSecret }) => {
+const Checkout = ({ product, clientSecret, stripeKey }) => {
     const options = {
         clientSecret,
         appearance: {
@@ -76,13 +84,30 @@ const Checkout = ({ product, clientSecret }) => {
         },
     };
 
+    const stripe = getStripePromise(stripeKey);
+
+    if (!stripe) {
+        return (
+            <div className="min-h-screen bg-gray-50">
+                <Header />
+                <main className="container mx-auto px-4 py-12">
+                    <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8 text-center">
+                        <h1 className="text-2xl font-bold mb-4">設定エラー</h1>
+                        <p className="text-gray-600">Stripeの公開キーが設定されていません。STRIPE_KEY または VITE_STRIPE_KEY を設定してください。</p>
+                    </div>
+                </main>
+                <Footer />
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-gray-50">
             <Header />
             <main className="container mx-auto px-4 py-12">
                 <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
                     <h1 className="text-3xl font-bold text-center mb-8">お支払い</h1>
-                    <Elements stripe={stripePromise} options={options}>
+                    <Elements stripe={stripe} options={options}>
                         <CheckoutForm product={product} clientSecret={clientSecret} />
                     </Elements>
                 </div>

@@ -330,7 +330,7 @@ class ProductBatchController extends Controller
 
         // Check if the product is free or purchased by the user
         $isFree = $product->price == 0;
-        $isPurchased = false; // TODO: Implement purchase check logic
+        $isPurchased = $product->isPurchasedBy(auth()->user());
 
         if (!$isFree && !$isPurchased) {
             // If we're on a user-scoped route, redirect to user-scoped unpurchased
@@ -415,7 +415,7 @@ class ProductBatchController extends Controller
 
         // Check if the product is free or purchased by the user
         $isFree = $product->price == 0;
-        $isPurchased = false; // TODO: Implement purchase check logic
+        $isPurchased = $product->isPurchasedBy(auth()->user());
 
         if ($isFree || $isPurchased) {
             // If we're on a user-scoped route, redirect to user-scoped purchased
@@ -500,7 +500,7 @@ class ProductBatchController extends Controller
 
         // Check if the product is free or purchased by the user
         $isFree = $product->price == 0;
-        $isPurchased = false; // TODO: Implement purchase check logic
+        $isPurchased = $product->isPurchasedBy(auth()->user());
 
         if (!$isFree && !$isPurchased) {
             // If we're on a user-scoped route, redirect to user-scoped unpurchased
@@ -584,7 +584,7 @@ class ProductBatchController extends Controller
 
         // Check if the product is free or purchased by the user
         $isFree = $product->price == 0;
-        $isPurchased = false; // TODO: Implement purchase check logic
+        $isPurchased = $product->isPurchasedBy(auth()->user());
 
         if ($isFree || $isPurchased) {
             // If we're on a user-scoped route, redirect to user-scoped purchased

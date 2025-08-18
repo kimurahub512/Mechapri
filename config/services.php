@@ -47,4 +47,9 @@ return [
         'redirect' => env('LINE_REDIRECT_URI'),
     ],
 
+    'stripe' => [
+        'key' => env('STRIPE_KEY'), // publishable key
+        'secret' => env('STRIPE_SECRET'),
+    ],
+
 ];

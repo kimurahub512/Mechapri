@@ -4,6 +4,10 @@ import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 
 const Success = ({ payment }) => {
+    const title = payment?.productBatch?.title ?? '購入商品';
+    const amount = payment?.amount ?? 0;
+    const paidAt = payment?.paid_at ? new Date(payment.paid_at).toLocaleDateString('ja-JP') : '';
+
     return (
         <div className="min-h-screen bg-gray-50">
             <Header />
@@ -24,14 +28,16 @@ const Success = ({ payment }) => {
                     </p>
 
                     <div className="bg-gray-50 rounded-lg p-6 mb-8">
-                        <h2 className="text-xl font-bold mb-4">{payment.productBatch.title}</h2>
-                        <p className="text-gray-600 mb-2">金額: ¥{payment.amount}</p>
-                        <p className="text-gray-600">支払日: {new Date(payment.paid_at).toLocaleDateString('ja-JP')}</p>
+                        <h2 className="text-xl font-bold mb-4">{title}</h2>
+                        <p className="text-gray-600 mb-2">金額: ¥{amount}</p>
+                        {paidAt && (
+                            <p className="text-gray-600">支払日: {paidAt}</p>
+                        )}
                     </div>
 
                     <div className="flex justify-center gap-4">
                         <Link
-                            href={route('product.purchased', { id: payment.product_batch_id })}
+                            href={route('product.purchased', { id: payment?.product_batch_id ?? '' })}
                             className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#FF2AA1] hover:bg-opacity-90"
                         >
                             商品を見る

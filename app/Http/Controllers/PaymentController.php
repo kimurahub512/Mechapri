@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\ProductBatch;
+use App\Models\UserPurchasedProduct;
+use App\Services\NWPSService;
+use App\Jobs\UploadToNWPSJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -29,6 +32,9 @@ class PaymentController extends Controller
                 'amount' => $product->price * 100, // Convert to cents
                 'currency' => 'jpy',
                 'customer' => $stripeCustomer->id,
+                'automatic_payment_methods' => [
+                    'enabled' => true,
+                ],
                 'metadata' => [
                     'product_id' => $product->id,
                     'user_id' => $request->user()->id,
@@ -49,6 +55,7 @@ class PaymentController extends Controller
             return Inertia::render('Payment/Checkout', [
                 'product' => $product,
                 'clientSecret' => $paymentIntent->client_secret,
+                'stripeKey' => config('services.stripe.key'),
             ]);
 
         } catch (ApiErrorException $e) {
@@ -73,6 +80,43 @@ class PaymentController extends Controller
                 ]);
 
                 if ($paymentIntent->status === 'succeeded') {
+                    // Ensure a purchase is recorded (useful when webhooks are not configured locally)
+                    try {
+                        $product = ProductBatch::find($payment->product_batch_id);
+                        if ($product) {
+                            $purchase = UserPurchasedProduct::firstOrCreate(
+                                [
+                                    'user_id' => $payment->user_id,
+                                    'batch_id' => $product->id,
+                                ],
+                                [
+                                    'price' => $payment->amount,
+                                    'cnt' => 0,
+                                    'purchase_time' => now(),
+                                    'nwps_upload_status' => 'pending',
+                                    'print_status' => 'not_printed',
+                                    'print_expires_at' => now()->addDays(30),
+                                ]
+                            );
+
+                            if ($purchase->wasRecentlyCreated) {
+                                $purchase->cnt = 1;
+                                $purchase->save();
+                            } else {
+                                $purchase->increment('cnt');
+                                $purchase->update([
+                                    'purchase_time' => now(),
+                                    'print_expires_at' => now()->addDays(30),
+                                ]);
+                            }
+
+                            // Kick off NWPS upload
+                            UploadToNWPSJob::dispatch($purchase->id);
+                        }
+                    } catch (\Throwable $e) {
+                        Log::error('Failed to upsert purchase on complete(): ' . $e->getMessage());
+                    }
+
                     return Inertia::render('Payment/Success', [
                         'payment' => $payment->load('productBatch'),
                     ]);
@@ -113,6 +157,28 @@ class PaymentController extends Controller
                             'status' => 'succeeded',
                             'paid_at' => now(),
                         ]);
+
+                        // Create purchase record and initialize NWPS fields
+                        try {
+                            $product = ProductBatch::find($payment->product_batch_id);
+                            if ($product) {
+                                $purchase = UserPurchasedProduct::create([
+                                    'user_id' => $payment->user_id,
+                                    'batch_id' => $product->id,
+                                    'price' => $payment->amount,
+                                    'cnt' => 1,
+                                    'purchase_time' => now(),
+                                    'nwps_upload_status' => 'pending',
+                                    'print_status' => 'not_printed',
+                                    'print_expires_at' => now()->addDays(30),
+                                ]);
+
+                                // Trigger async job to upload to NWPS
+                                UploadToNWPSJob::dispatch($purchase->id);
+                            }
+                        } catch (\Throwable $e) {
+                            Log::error('Failed to create purchase or initialize NWPS: ' . $e->getMessage());
+                        }
                     }
                     break;
 
