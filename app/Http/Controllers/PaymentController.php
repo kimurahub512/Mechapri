@@ -112,6 +112,13 @@ class PaymentController extends Controller
 
                             // Kick off NWPS upload
                             UploadToNWPSJob::dispatch($purchase->id);
+
+                            // If requester asked to redirect to purchase history, do so with purchase id
+                            if ($request->query('redirect') === 'purchasehistory') {
+                                return redirect()->route('purchase.history', [
+                                    'purchase_id' => $purchase->id,
+                                ]);
+                            }
                         }
                     } catch (\Throwable $e) {
                         Log::error('Failed to upsert purchase on complete(): ' . $e->getMessage());

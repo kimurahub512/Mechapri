@@ -1,4 +1,5 @@
 import React from 'react';
+import { usePage } from '@inertiajs/react';
 import logo from '@/assets/images/mechapuri-logo.svg';
 import footerSvg2 from '@/assets/images/instagram.svg';
 import xLogo from '@/assets/images/x_logo.svg';
@@ -64,6 +65,8 @@ const showDocumentModal = (title, documentUrl) => {
 };
 
 const Footer = () => {
+  const { cartCount } = usePage().props;
+  
   return (
     <footer className="mechapuri-footer" style={{marginTop: vwd(80)}}>
       {/* Desktop Section */}
@@ -333,7 +336,7 @@ const Footer = () => {
           <div className='flex flex-row items-center gap-[2px]'>
             <span style={{ ...responsiveText(10, 13, null, 'medium', 'noto', '#363636') }}>カート</span>
             <div className='flex items-center justify-center p-[2px]' style={{ ...responsiveMetric(16, 18), borderRadius: vw(3), background: '#FF2AA1' }}>
-              <span style={{ ...responsiveText(13, 10, null, 'medium', 'noto', '#FFF') }}>1</span>
+              <span style={{ ...responsiveText(13, 10, null, 'medium', 'noto', '#FFF') }}>{cartCount || 0}</span>
             </div>
           </div>
         </div>

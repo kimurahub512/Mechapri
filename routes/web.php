@@ -111,9 +111,7 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
         return Inertia::render('AccountSetting');
     });
 
-    Route::get('/favoriteproducts', function(){
-        return Inertia::render('FavoriteProducts');
-    });
+    Route::get('/favoriteproducts', [App\Http\Controllers\FavoriteProductController::class, 'index'])->name('favoriteproducts.index');
 
     Route::get('/favoriteshops', [App\Http\Controllers\FavoriteShopController::class, 'index'])->name('favoriteshops.index');
     
@@ -127,13 +125,15 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
     Route::post('/api/favorite-products/toggle', [App\Http\Controllers\FavoriteProductController::class, 'toggle'])->name('favoriteproducts.toggle');
     Route::get('/api/favorite-products/check', [App\Http\Controllers\FavoriteProductController::class, 'check'])->name('favoriteproducts.check');
 
-    Route::get('/purchasehistory', function(){
-        return Inertia::render('PurchaseHistory');
-    });
+    Route::get('/purchasehistory', [App\Http\Controllers\PurchaseHistoryController::class, 'index'])->name('purchase.history');
+    Route::get('/api/purchasehistory/{id}', [App\Http\Controllers\PurchaseHistoryController::class, 'show'])->name('purchase.history.show');
 
-    Route::get('/cart', function(){
-        return Inertia::render('Cart');
-    });
+    // Cart routes
+    Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
+    Route::post('/api/cart/add', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
+    Route::put('/api/cart/{cartItem}', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
+    Route::delete('/api/cart/{cartItem}', [App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
+    Route::delete('/api/cart', [App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
         
     Route::get('/shoptop', [App\Http\Controllers\ShopTopController::class, 'index'])->name('shoptop');
     Route::get('/shop-newproducts', [App\Http\Controllers\ShopNewProductsController::class, 'index'])->name('shop.newproducts');

@@ -23,44 +23,47 @@ class NWPSService
 
     public function systemSpec(): array
     {
-        return $this->get('/api/v2/system/spec');
+        return $this->get('/nwpsapi/v2/spec');
     }
 
     public function maintenanceInfo(): array
     {
-        return $this->get('/api/v2/system/maintenance');
+        return $this->get('/nwpsapi/v2/maintenanceinfo');
     }
 
     public function guestLogin(string $client, array $deviceInfo, int $days): array
     {
         $payload = array_merge([
             'app_key' => $this->appKey,
-            'period' => $days,
+            'expire' => $days,
             'client' => $client,
         ], $deviceInfo);
 
-        return $this->postJson('/api/v2/auth/guest/login', $payload);
+        // NWPS v2 guest login endpoint
+        return $this->postJson('/nwpsapi/v2/loginforguest', $payload);
     }
 
     public function uploadFile(string $token, array $multipart): array
     {
         // $multipart should include file part and required metadata per spec
-        return $this->postMultipart('/api/v2/files', $token, $multipart);
+        return $this->postMultipart('/nwpsapi/v2/files', $token, $multipart);
     }
 
     public function registerFileFromUrl(string $token, array $data): array
     {
-        return $this->postJson('/api/v2/files/url', $data, $token);
+        // Image registration (retrieval from URL)
+        return $this->postJson('/nwpsapi/v2/filesfromurl/image', $data, $token);
     }
 
     public function getFileInfo(string $token, string $fileId): array
     {
-        return $this->get("/api/v2/files/{$fileId}", $token);
+        // Get file information
+        return $this->get("/nwpsapi/v2/files/{$fileId}", $token);
     }
 
     public function deleteFile(string $token, string $fileId): array
     {
-        return $this->delete("/api/v2/files/{$fileId}", $token);
+        return $this->delete("/nwpsapi/v2/files/{$fileId}", $token);
     }
 
     private function get(string $uri, ?string $token = null): array
@@ -104,7 +107,8 @@ class NWPSService
         ];
 
         if ($token) {
-            $headers['Authorization'] = 'Bearer ' . $token;
+            // NWPS expects X-NWPSToken header for authenticated requests
+            $headers['X-NWPSToken'] = $token;
         }
 
         return $headers;

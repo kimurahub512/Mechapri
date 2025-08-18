@@ -34,7 +34,7 @@ const CheckoutForm = ({ product, clientSecret }) => {
         const { error: submitError } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: `${window.location.origin}/payment/complete`,
+                return_url: `${window.location.origin}/payment/complete?redirect=purchasehistory`,
             },
         });
 

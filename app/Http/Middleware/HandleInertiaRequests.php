@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\CartItem;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -30,6 +31,11 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $cartCount = 0;
+        if ($request->user()) {
+            $cartCount = CartItem::where('user_id', $request->user()->id)->sum('quantity');
+        }
+
         return [
             ...parent::share($request),
             'auth' => [
@@ -40,6 +46,7 @@ class HandleInertiaRequests extends Middleware
                     'image' => $request->user()->image,
                 ] : null,
             ],
+            'cartCount' => $cartCount,
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),

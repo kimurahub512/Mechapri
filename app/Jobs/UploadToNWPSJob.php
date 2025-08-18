@@ -55,14 +55,13 @@ class UploadToNWPSJob implements ShouldQueue
                 'nwps_token_expires_at' => now()->addDays($days),
             ]);
 
-            // 2) Register files by URL (preferred to avoid streaming large uploads)
-            // Note: Adjust payload keys to match official NWPS spec
+            // 2) Register image(s) by URL (filesfromurl/image)
             $fileId = null;
             foreach ($product->files as $index => $file) {
                 $data = [
-                    'app_key' => config('nwps.app_key'),
-                    'url' => $file->url,
-                    'name' => $file->original_name ?? basename($file->file_path),
+                    'file_url' => $file->url,
+                    'file_name' => $file->original_name ?? basename($file->file_path),
+                    // 'expire' => (int) config('nwps.guest_token_days', 30), // days
                 ];
                 $registered = $nwps->registerFileFromUrl($token, $data);
                 $fileId = $registered['file_id'] ?? $fileId;
@@ -78,21 +77,20 @@ class UploadToNWPSJob implements ShouldQueue
                 'nwps_upload_status' => 'uploaded',
             ]);
 
-            // 3) Poll until print data ready and reservation number issued
+            // 3) Poll file info until printable and reservation number is available
             $reservationNo = null;
             $maxAttempts = 24; // ~2 minutes at 5s interval
             for ($i = 0; $i < $maxAttempts; $i++) {
                 $info = $nwps->getFileInfo($token, $fileId);
-                $status = $info['status'] ?? null;
-                // Adjust fields based on official spec
-                $reservationNo = $info['reservation_no'] ?? ($info['print_code'] ?? null);
+                // Spec mentions create_status becomes PRINTABLE when ready
+                $createStatus = $info['create_status'] ?? null;
+                $reservationNo = $info['user_number'] ?? null; // user_number is the print number
 
-                if ($reservationNo) {
+                if ($createStatus === 'PRINTABLE' && $reservationNo) {
                     break;
                 }
 
-                // States like "processing", "converting", etc.
-                if ($status === 'failed') {
+                if ($createStatus === 'FAILED') {
                     $purchase->update(['nwps_upload_status' => 'failed']);
                     return;
                 }

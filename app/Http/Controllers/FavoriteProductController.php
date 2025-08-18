@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProductBatch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class FavoriteProductController extends Controller
 {
@@ -51,6 +52,45 @@ class FavoriteProductController extends Controller
             'success' => true,
             'isFavorited' => $product->isFavoritedBy($user),
             'favoriteCount' => $product->favorite_count
+        ]);
+    }
+
+    /**
+     * Display the user's favorite products.
+     */
+    public function index()
+    {
+        $user = Auth::user();
+        $favoriteProducts = $user->favoriteProducts()
+            ->with(['user', 'files'])
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function($product) {
+                                 return [
+                     'id' => $product->id,
+                     'title' => $product->title,
+                     'price' => $product->price,
+                     'sales_deadline' => $product->sales_deadline ? $product->sales_deadline->format('Y/m/d') : null,
+                     'image_cnt' => $product->image_cnt,
+                     'favorite_count' => $product->favorite_count,
+                     'is_favorited' => true, // Since these are from favoriteProducts relationship
+                     'user' => [
+                         'id' => $product->user->id,
+                         'name' => $product->user->name,
+                         'image' => $product->user->image,
+                     ],
+                     'files' => $product->files->map(function($file) {
+                         return [
+                             'id' => $file->id,
+                             'file_path' => $file->file_path,
+                             'url' => $file->url,
+                         ];
+                     }),
+                 ];
+            });
+
+        return Inertia::render('FavoriteProducts', [
+            'favoriteProducts' => $favoriteProducts
         ]);
     }
 }

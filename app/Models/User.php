@@ -117,6 +117,15 @@ class User extends Authenticatable //implements MustVerifyEmail
     }
 
     /**
+     * Get the favorite products for this user.
+     */
+    public function favoriteProducts(): BelongsToMany
+    {
+        return $this->belongsToMany(ProductBatch::class, 'favorite_products', 'user_id', 'product_batch_id')
+                    ->withTimestamps();
+    }
+
+    /**
      * Send the password reset notification.
      *
      * @param  string  $token

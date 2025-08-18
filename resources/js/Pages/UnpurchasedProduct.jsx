@@ -111,7 +111,6 @@ const UnpurchasedProduct = ({ product }) => {
                                     onClick={async (e) => {
                                         e.preventDefault();
                                         try {
-                                            console.log('Toggling shop follow...');
                                             const response = await fetch(route('favoriteshops.toggle'), {
                                                 method: 'POST',
                                                 headers: {
@@ -436,7 +435,31 @@ const UnpurchasedProduct = ({ product }) => {
                                                     onQuantityChange={(newQuantity) => handleQuantityChange('cart', newQuantity)}
                                             />
                             </div>
-                                        <button className="flex w-[240px] h-[74px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] ml-auto">
+                                        <button 
+                                            onClick={async () => {
+                                                try {
+                                                    const response = await fetch(route('cart.add'), {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                                        },
+                                                        body: JSON.stringify({
+                                                            product_batch_id: product.id,
+                                                            quantity: quantities.cart
+                                                        }),
+                                                    });
+                                                    const data = await response.json();
+                                                    if (data.success) {
+                                                        // Show success message or redirect to cart
+                                                        router.visit(route('cart.index'));
+                                                    }
+                                                } catch (error) {
+                                                    console.error('Error adding to cart:', error);
+                                                }
+                                            }}
+                                            className="flex w-[240px] h-[74px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] ml-auto hover:opacity-90 transition-opacity"
+                                        >
                                             <img src={cart} alt="favoriteshop" style={{ filter: 'brightness(0) invert(1)' }} />
                                             <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-noto">カートに入れる</span>
                                         </button>
@@ -925,7 +948,31 @@ const UnpurchasedProduct = ({ product }) => {
                                                 onQuantityChange={(newQuantity) => handleQuantityChange('mobileCart', newQuantity)}
                                         />
                                     </div>
-                                    <button className="flex w-[160px] h-[40px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] mr-auto">
+                                    <button 
+                                        onClick={async () => {
+                                            try {
+                                                const response = await fetch(route('cart.add'), {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                                    },
+                                                    body: JSON.stringify({
+                                                        product_batch_id: product.id,
+                                                        quantity: quantities.mobileCart
+                                                    }),
+                                                                                                    });
+                                                const data = await response.json();
+                                                if (data.success) {
+                                                    // Show success message or redirect to cart
+                                                    router.visit(route('cart.index'));
+                                                }
+                                            } catch (error) {
+                                                console.error('Error adding to cart:', error);
+                                            }
+                                        }}
+                                        className="flex w-[160px] h-[40px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] mr-auto hover:opacity-90 transition-opacity"
+                                    >
                                         <img src={cart} alt="cart" style={{ filter: 'brightness(0) invert(1)' }} className="w-[20px] h-[19px]" />
                                         <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-noto whitespace-nowrap">カートに入れる</span>
                                     </button>
