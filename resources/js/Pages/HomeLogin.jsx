@@ -13,6 +13,12 @@ const HomeLogin = ({
     purchaseHistory = [], 
     recommendedProducts = [] 
 }) => {
+    // Debug logging to check if props are received
+    console.log('HomeLogin props:', {
+        favoriteShopsNewProducts: favoriteShopsNewProducts,
+        purchaseHistory: purchaseHistory,
+        recommendedProducts: recommendedProducts
+    });
     const handleProductClick = (product) => {
         router.visit(`/user/${product.user.id}/unpurchasedproduct/${product.id}`);
     };
