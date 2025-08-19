@@ -9,6 +9,11 @@ import { vwd, vw, responsiveText, responsiveTextD, responsivePosition, responsiv
 
 
 const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 1, currentUserId = null }) => {
+    // Safety check for product
+    if (!product) {
+        console.warn('ProductCard: product prop is undefined or null');
+        return null;
+    }
     const handleClick = () => {
         // Determine which page to show based on product status
         const isPurchased = product.is_purchased;
@@ -137,7 +142,7 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                             <div className="flex px-[4.672px] py-[2.336px] items-center gap-[2.336px] rounded-[17.518px] bg-[#FF2AA1]">
                                 {/* 2121113111: Images */}
                                 <div className="flex items-center gap-[-4.088px]">
-                                    {product.badges.map((img, i) => (
+                                    {product.badges && Array.isArray(product.badges) && product.badges.map((img, i) => (
                                         <img key={i} src={img} alt={`badge${i + 1}`} className={`w-[12px] h-[12px] rounded-full${i > 0 ? ' -ml-[4px]' : ''}`} />
                                     ))}
                                 </div>
@@ -248,7 +253,7 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                             <div className="flex px-[8px] py-[4px] items-center gap-[4px] rounded-[30px] bg-[#FF2AA1]">
                                 {/* 2121113111: Images */}
                                 <div className="flex items-center">
-                                    {product.badges.map((img, i) => (
+                                    {product.badges && Array.isArray(product.badges) && product.badges.map((img, i) => (
                                         <img key={i} src={img} alt={`badge${i + 1}`} className={`w-[24px] h-[24px] rounded-full${i > 0 ? ' -ml-[7px]' : ''}`} />
                                     ))}
                                 </div>
