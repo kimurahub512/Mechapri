@@ -49,7 +49,7 @@ class UploadToNWPSJob implements ShouldQueue
                 $purchase->update(['nwps_upload_status' => 'failed']);
                 return;
             }
-
+            Log::info('NWPS token: ' . $token);
             $purchase->update([
                 'nwps_token' => $token,
                 'nwps_token_expires_at' => now()->addDays($days),
@@ -61,7 +61,9 @@ class UploadToNWPSJob implements ShouldQueue
                 $data = [
                     'file_url' => $file->url,
                     'file_name' => $file->original_name ?? basename($file->file_path),
-                    // 'expire' => (int) config('nwps.guest_token_days', 30), // days
+                    'expire' => (int) config('nwps.guest_token_days', 30), // days
+                    'auto_delete' => true,
+                    'printing_limit' => 3,
                 ];
                 $registered = $nwps->registerFileFromUrl($token, $data);
                 $fileId = $registered['file_id'] ?? $fileId;

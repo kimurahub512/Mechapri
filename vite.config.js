@@ -6,7 +6,7 @@ export default defineConfig({
     build: {
         chunkSizeWarningLimit: 1000,
         rollupOptions: {
-            external: ['@stripe/stripe-js', '@stripe/react-stripe-js', 'react', 'react-dom', '@inertiajs/react'],
+            external: ['@stripe/stripe-js', '@stripe/react-stripe-js'],
         },
     },
     plugins: [
