@@ -295,37 +295,37 @@ const Footer = () => {
 
       {/* Mobile Navigation Section */}
       <div className='md:hidden flex flex-row justify-between p-[8px_16px_12px_16px] bg-[#FFF]'>
-        <div className='flex flex-col items-center gap-[10px]' style={{...responsiveMetric(60, null)}}>
+        <div className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
           {/* Home */}
           <img
             src={home}
             alt="Home"
             style={{ ...responsiveMetric(20, 20) }}
           />
-          <div className="text-center" style={{ ...responsiveText(10, 13, null, 'medium', 'noto', '#363636') }}>ホーム</div>
+          <div className="text-center" style={{ height: vw(26), ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>ホーム</div>
         </div>
         {/* Favorites */}
-        <div className='flex flex-col items-center gap-[10px]' style={{...responsiveMetric(60, null)}}>
+        <div className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
           <img
             src={heart}
             alt="Favorites"
             style={{ ...responsiveMetric(20, 20) }}
           />
-          <a href='/favoriteproducts' style={{ ...responsiveText(10, 13, null, 'medium', 'noto', '#363636') }}>お気に入り</a>
+          <a href='/favoriteproducts' style={{ height: vw(26), ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>お気に入り</a>
         </div>
 
         {/* Purchase History */}
-        <div className='flex flex-col items-center gap-[10px]'>
+        <div className='flex flex-col items-center gap-[4px]'>
           <img
             src={clock}
             alt="History"
             style={{ ...responsiveMetric(20, 20) }}
           />
-          <a href='/purchasehistory' style={{ ...responsiveText(10, 13, null, 'medium', 'noto', '#363636') }}>購入履歴</a>
+          <a href='/purchasehistory' style={{ ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>購入履歴</a>
         </div>
 
         {/* Cart */}
-        <div className='flex flex-col items-center gap-[10px]' style={{...responsiveMetric(60, null)}}>
+        <div className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
           <a href='/cart'>
             <img
               src={cart}
@@ -333,22 +333,24 @@ const Footer = () => {
               style={{ ...responsiveMetric(20, 20) }}
             />
           </a>
-          <div className='flex flex-row items-center gap-[2px]'>
-            <span style={{ ...responsiveText(10, 13, null, 'medium', 'noto', '#363636') }}>カート</span>
-            <div className='flex items-center justify-center p-[2px]' style={{ ...responsiveMetric(16, 18), borderRadius: vw(3), background: '#FF2AA1' }}>
-              <span style={{ ...responsiveText(13, 10, null, 'medium', 'noto', '#FFF') }}>{cartCount || 0}</span>
-            </div>
+          <div className='flex flex-row items-baseline gap-[2px]'>
+            <span style={{ ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>カート</span>
+            {cartCount > 0 && (
+              <div className='flex items-center justify-center p-[2px]' style={{ ...responsiveMetric(16, 18), borderRadius: vw(3), background: '#FF2AA1' }}>
+                <span style={{ ...responsiveText(13, 10, null, 'medium', 'noto', '#FFF') }}>{cartCount}</span>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Account */}
-        <div className='flex flex-col items-center gap-[10px]' style={{...responsiveMetric(60, null)}}>
+        <div className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
           <img
             src={man_mobile}
             alt="Account"
             style={{ ...responsiveMetric(20, 20) }}
           />
-          <a href='/accountsetting' style={{ ...responsiveText(10, 13, null, 'medium', 'noto', '#363636') }}>アカウント</a>
+          <a href='/accountsetting' style={{ height: vw(26), ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>アカウント</a>
         </div>
       </div>
     </footer>

@@ -72,9 +72,9 @@ const Header = ({ authButton }) => {
                 <a href='/cart' className='align-middle text-whitewash bg-transparent flex items-center whitespace-nowrap relative' style={{...responsiveTextD(15, 22, null, 'normal', 'noto', '#222'), paddingLeft: vwd(7), paddingRight: vwd(7), paddingTop: vwd(5), paddingBottom: vwd(5)}}>
                   <img src={cart} alt='cart' className='mr-2' style={{...responsiveMetricD(16, 16)}}/>
                   カート
-                  <div className='flex items-center justify-center' style={{...responsiveMetricD(18, 18), borderRadius: vwd(4), background: '#FF2AA1'}}>
-                    <span style={{...responsiveTextD(10, 10, null, 'medium', 'noto', '#FFF')}}>{cartCount || 0}</span>
-                  </div>
+                  {cartCount && (<div className='flex items-center justify-center' style={{...responsiveMetricD(18, 18), borderRadius: vwd(4), background: '#FF2AA1'}}>
+                    <span style={{...responsiveTextD(10, 10, null, 'medium', 'noto', '#FFF')}}>{cartCount}</span>
+                  </div>)}
                 </a>
               </li>
               <li>

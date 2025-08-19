@@ -170,9 +170,7 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
         return Inertia::render('HowToPrint');
     });
 
-    Route::get('/homelogin', function(){
-        return Inertia::render('HomeLogin');
-    })->name('homelogin');
+    Route::get('/homelogin', [App\Http\Controllers\HomeLoginController::class, 'index'])->name('homelogin');
 
     Route::get('/verify-email', function () {
         return Inertia::render('Auth/VerifyEmail');

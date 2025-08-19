@@ -126,6 +126,14 @@ class User extends Authenticatable //implements MustVerifyEmail
     }
 
     /**
+     * Get the purchases for this user.
+     */
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(UserPurchasedProduct::class);
+    }
+
+    /**
      * Send the password reset notification.
      *
      * @param  string  $token
