@@ -13,7 +13,7 @@ import arrow_right from '@/assets/images/arrow_right.svg';
 import mountain from '@/assets/images/mountain_gray.svg';
 import {vwd, vw, responsiveTextD, responsiveText, vwR, responsiveMetricR, responsiveTextR} from '@/lib/utils';
 
-const shoptop = () => {
+const ShopTop = () => {
     const { shopData, latestProducts, categoryProducts, auth } = usePage().props;
     console.log('categoryProducts', categoryProducts);
     
@@ -223,4 +223,4 @@ const shoptop = () => {
     );
 };
 
-export default shoptop;
+export default ShopTop;
