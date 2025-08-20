@@ -41,6 +41,10 @@ const Cart = ({ cartItems = [] }) => {
                     ...prev,
                     [itemId]: newQuantity
                 }));
+                // Refresh the page to update cart count in header
+                router.reload();
+            } else {
+                console.error('Failed to update quantity:', data.message);
             }
         } catch (error) {
             console.error('Error updating quantity:', error);

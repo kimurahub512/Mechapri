@@ -54,7 +54,7 @@ class ShopController extends Controller
             $image = $request->file('image');
             $extension = $image->getClientOriginalExtension();
             $imageName = $user->id . '.' . $extension;
-            $imagePath = $image->storeAs('user_images', $imageName);
+            $imagePath = $image->storeAs('user_images', $imageName, 'public');
             $validated['image'] = '/storage/user_images/' . $imageName;
             
         }

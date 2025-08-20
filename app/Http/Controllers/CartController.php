@@ -6,6 +6,7 @@ use App\Models\CartItem;
 use App\Models\ProductBatch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class CartController extends Controller
@@ -47,11 +48,23 @@ class CartController extends Controller
 
     public function update(Request $request, CartItem $cartItem)
     {
+        Log::info('CartController::update called', [
+            'cartItem_id' => $cartItem->id,
+            'user_id' => Auth::id(),
+            'cartItem_user_id' => $cartItem->user_id,
+            'request_quantity' => $request->quantity
+        ]);
+
         $request->validate([
             'quantity' => 'required|integer|min:1'
         ]);
 
         if ($cartItem->user_id !== Auth::id()) {
+            Log::warning('Unauthorized cart update attempt', [
+                'cartItem_id' => $cartItem->id,
+                'user_id' => Auth::id(),
+                'cartItem_user_id' => $cartItem->user_id
+            ]);
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized'
@@ -60,6 +73,11 @@ class CartController extends Controller
 
         $cartItem->update([
             'quantity' => $request->quantity
+        ]);
+
+        Log::info('Cart item updated successfully', [
+            'cartItem_id' => $cartItem->id,
+            'new_quantity' => $request->quantity
         ]);
 
         return response()->json([

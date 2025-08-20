@@ -86,7 +86,6 @@ const SalesHistory = () => {
                     </div>
                 </section>
             </main>
-            <ShopMobileTopBlock/>
         </div>
         <Footer/>
         </>

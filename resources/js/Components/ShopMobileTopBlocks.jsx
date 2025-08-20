@@ -3,10 +3,12 @@ import sm_hero from '@/assets/images/sm_hero.png';
 import mountain from '@/assets/images/mountain.svg';
 import list_unordered from '@/assets/images/list_unordered.svg';
 import p_circle from '@/assets/images/p_circle.svg';
-import clock from '@/assets/images/clock.svg';
+import clock from '@/assets/images/clock_pink.svg';
 import pen_paper from '@/assets/images/pen_paper.svg';
+import { usePage } from '@inertiajs/react';
 
 const ShopMobileTopBlocks = () => {
+  const { auth } = usePage().props;
   const isEditPage = window.location.pathname === '/myshop/edit';
   const isMyContents = window.location.pathname === '/myshop/contents';
   const isTransaction = window.location.pathname === '/myshop/transaction';
@@ -20,10 +22,10 @@ const ShopMobileTopBlocks = () => {
           <div className="shopmanagement-mobile-header-left">
             <img
               className="shopmanagement-mobile-hero"
-              src={sm_hero}
+              src={auth?.user?.image || sm_hero}
               alt="Shop Hero"
             />
-            <span className="shopmanagement-mobile-title">anchiy15P</span>
+            <span className="shopmanagement-mobile-title">{auth?.user?.name}’s SHOP</span>
           </div>
           <div className="shopmanagement-mobile-shop-btn">自分のショップ</div>
         </div>

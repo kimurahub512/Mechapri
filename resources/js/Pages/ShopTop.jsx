@@ -134,7 +134,7 @@ const ShopTop = () => {
                     {/* 112: Shop Title */}
                     <span className="absolute text-[#000] font-noto font-medium" style={{ ...responsiveTextD(24, 24, null, 'medium', 'noto', '#000'), top: vwd(34), left: vwd(191) }}>{shopData?.shop_title || 'Shop'}</span>
                     {/* 113: Follower count and item count */}
-                    <span className="absolute text-[#000] font-noto font-normal" style={{ ...responsiveTextD(16, 16, null, 'normal', 'noto', '#000'), top: vwd(66), left: vwd(191) }}>お気に入り登録者 {shopData?.follower_count || 0}人 アイテム数 {shopData?.product_count || 0}</span>
+                    <span className="absolute text-[#000] font-noto font-normal" style={{ ...responsiveTextD(16, 16, null, 'normal', 'noto', '#000'), top: vwd(66), left: vwd(191) }}>お気に入り登録者 {shopData?.follower_count || 0}人&nbsp;&nbsp;アイテム数 {shopData?.product_count || 0}</span>
                     {/* 114: SNS */}
                     <div className="absolute flex items-start" style={{ width: vwd(108), maxWidth: vwd(1248), top: vwd(100), left: vwd(191), gap: vwd(4), paddingTop: vwd(10) }}>
                         {shopData?.xlink && (

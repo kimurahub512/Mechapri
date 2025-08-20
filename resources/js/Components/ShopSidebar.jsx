@@ -8,8 +8,11 @@ import p_circle from '@/assets/images/p_circle.svg';
 import clock_pink from '@/assets/images/clock_pink.svg';
 import file_add from '@/assets/images/file_add.svg';
 import { vwd, responsiveTextD, responsiveMetricD, responsivePositionD } from '@/lib/utils';
+import { usePage } from '@inertiajs/react';
 
 const ShopSidebar = () => {
+  const { auth } = usePage().props;
+  console.log(auth);
   const isShopManagement = window.location.pathname === '/shop-management';
   const isMyShopEdit = window.location.pathname === '/myshop/edit';
   const isMyContents = window.location.pathname === '/myshop/contents';
@@ -22,10 +25,10 @@ const ShopSidebar = () => {
         <div className="flex flex-col items-center border-b-[0.999px] border-[#E9E9E9]" style={{ gap: vwd(16), paddingBottom: vwd(16) }}>
           <img
             style={{ ...responsiveMetricD(96, 96), borderRadius: vwd(76), objectFit: 'cover' }}
-            src={sm_hero}
+            src={auth?.user?.image || sm_hero}
             alt="Shop Hero"
           />
-          <div style={{ ...responsiveTextD(21, 24), fontWeight: 700, color: '#222', textAlign: 'center' }}>anchiy1005’s SHOP</div>
+          <div style={{ ...responsiveTextD(21, 24), fontWeight: 700, color: '#222', textAlign: 'center' }}>{auth?.user?.name}’s SHOP</div>
           <a href="/shoptop" className="flex items-center justify-center w-full border-[1px] border-[#FF8D4E] text-center" style={{ ...responsiveTextD(12, 18, null, 'bold', 'noto', '#E358A6'), height: vwd(34), borderRadius: vwd(5) }}>自分のショップを見る</a>
           <div className="w-full" style={{ gap: vwd(10) }}>
             <a href="/myshop/edit"
