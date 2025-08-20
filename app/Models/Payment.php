@@ -17,6 +17,7 @@ class Payment extends Model
         'status',
         'payment_method_type',
         'paid_at',
+        'cart_item_id',
     ];
 
     protected $casts = [
@@ -32,5 +33,10 @@ class Payment extends Model
     public function productBatch(): BelongsTo
     {
         return $this->belongsTo(ProductBatch::class);
+    }
+
+    public function cartItem(): BelongsTo
+    {
+        return $this->belongsTo(CartItem::class);
     }
 }

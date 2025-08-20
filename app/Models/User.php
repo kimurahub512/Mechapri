@@ -134,6 +134,22 @@ class User extends Authenticatable //implements MustVerifyEmail
     }
 
     /**
+     * Get the notifications for this user.
+     */
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(\App\Models\Notification::class);
+    }
+
+    /**
+     * Get unread notifications count for this user.
+     */
+    public function unreadNotificationsCount(): int
+    {
+        return $this->notifications()->unread()->count();
+    }
+
+    /**
      * Send the password reset notification.
      *
      * @param  string  $token

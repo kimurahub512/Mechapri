@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from '@inertiajs/react';
+import React, { useEffect } from 'react';
+import { Link, router } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 
@@ -7,6 +7,11 @@ const Success = ({ payment }) => {
     const title = payment?.productBatch?.title ?? '購入商品';
     const amount = payment?.amount ?? 0;
     const paidAt = payment?.paid_at ? new Date(payment.paid_at).toLocaleDateString('ja-JP') : '';
+
+    // Add a button to check cart status
+    const checkCart = () => {
+        router.visit('/cart');
+    };
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -42,6 +47,12 @@ const Success = ({ payment }) => {
                         >
                             商品を見る
                         </Link>
+                        <button
+                            onClick={checkCart}
+                            className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                        >
+                            カートを確認
+                        </button>
                         <Link
                             href={route('dashboard')}
                             className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"

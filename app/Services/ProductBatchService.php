@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\ProductBatch;
 use App\Models\User;
 use App\Services\ProductBatchFileService;
+use App\Services\NotificationService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -78,6 +79,15 @@ class ProductBatchService
                 'files_uploaded' => count($files),
                 'categories_assigned' => $categoriesAssigned,
             ]);
+
+            // Create new item notifications for followers if product is public
+            if ($productBatch->is_public) {
+                try {
+                    NotificationService::createNewItemNotification($user, $productBatch);
+                } catch (\Exception $e) {
+                    Log::error('Failed to create new item notification: ' . $e->getMessage());
+                }
+            }
 
             return $productBatch->load(['files', 'categories']);
         });

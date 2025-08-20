@@ -80,7 +80,6 @@ const Cart = ({ cartItems = [] }) => {
                         <h1 className="text-[#363636] text-center font-bold text-[36px] leading-[54px] font-noto self-stretch">カート</h1>
                     </div>
                     {/* Frame 12 */}
-                    {console.log('cartItems', cartItems)}
                     <div className="flex flex-col items-start self-stretch gap-[16px]">
                         {cartItems.length === 0 ? (
                             <div className="text-center py-12 w-full">
@@ -139,7 +138,7 @@ const Cart = ({ cartItems = [] }) => {
                                         </div>
                                         {/* Purchase button */}
                                         <button 
-                                            onClick={() => router.visit(route('payment.checkout', { product: item.product_batch.id }))}
+                                            onClick={() => router.visit(`/payment/checkout/${item.product_batch.id}/${item.id}`)}
                                             className="flex w-[240px] h-[60px] px-[12px] justify-between items-center flex-shrink-0 rounded-[10px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]"
                                         >
                                             <span className="text-white text-center font-noto font-bold text-[18px] leading-[20.7px] whitespace-nowrap">すぐにプリントコード購入</span>
@@ -236,7 +235,7 @@ const Cart = ({ cartItems = [] }) => {
                                 </div>
                                 {/* Purchase button */}
                                 <button 
-                                    onClick={() => router.visit(route('payment.checkout', { product: item.product_batch.id }))}
+                                    onClick={() => router.visit(`/payment/checkout/${item.product_batch.id}/${item.id}`)}
                                     className="flex w-[240px] h-[40px] px-[24px] justify-between items-center flex-shrink-0 rounded-[10px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] mt-[16px] mx-auto"
                                 >
                                     <span className="text-white text-center font-noto font-bold text-[12px] leading-[12px]">すぐにプリントコード購入</span>

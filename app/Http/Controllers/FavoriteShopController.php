@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\FavoriteShop;
+use App\Services\NotificationService;
 use Inertia\Inertia;
 
 class FavoriteShopController extends Controller
@@ -57,6 +58,14 @@ class FavoriteShopController extends Controller
 
         // Add to favorites
         $user->favoriteShops()->attach($shopUserId);
+
+        // Create follow notification
+        try {
+            $followedUser = User::find($shopUserId);
+            NotificationService::createFollowNotification($followedUser, $user);
+        } catch (\Exception $e) {
+            \Log::error('Failed to create follow notification: ' . $e->getMessage());
+        }
 
         return response()->json([
             'success' => true,
@@ -115,6 +124,14 @@ class FavoriteShopController extends Controller
             $user->favoriteShops()->attach($shopUserId);
             $isFavorited = true;
             $message = 'お気に入りに追加しました。';
+
+            // Create follow notification
+            try {
+                $followedUser = User::find($shopUserId);
+                NotificationService::createFollowNotification($followedUser, $user);
+            } catch (\Exception $e) {
+                \Log::error('Failed to create follow notification: ' . $e->getMessage());
+            }
         }
 
         return response()->json([

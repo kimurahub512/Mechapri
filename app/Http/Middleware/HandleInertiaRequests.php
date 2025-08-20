@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\CartItem;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -32,8 +33,10 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         $cartCount = 0;
+        $unreadNotificationCount = 0;
         if ($request->user()) {
             $cartCount = CartItem::where('user_id', $request->user()->id)->sum('quantity');
+            $unreadNotificationCount = Notification::where('user_id', $request->user()->id)->where('read', false)->count();
         }
 
         return [
@@ -47,6 +50,7 @@ class HandleInertiaRequests extends Middleware
                 ] : null,
             ],
             'cartCount' => $cartCount,
+            'unreadNotificationCount' => $unreadNotificationCount,
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),

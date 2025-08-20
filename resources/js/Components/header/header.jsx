@@ -11,7 +11,7 @@ import bell from '@/assets/images/bell.svg'
 import '@/../../resources/css/header.css';
 
 const Header = ({ authButton }) => {
-  const { auth, cartCount } = usePage().props;
+  const { auth, cartCount, unreadNotificationCount } = usePage().props;
 
   return (
     <>
@@ -46,8 +46,13 @@ const Header = ({ authButton }) => {
                       会員登録
                     </a>
                 )}
-                  <a href='/notification' className='flex flex-col justify-center items-center whitespace-nowrap' style={{height: vwd(26), ...responsiveTextD(12, 22, null, 'normal', 'noto', '#222'), paddingLeft: vwd(6), paddingRight: vwd(6), paddingTop: vwd(1.5), paddingBottom: vwd(2.5)}}>
+                  <a href='/notification' className='flex flex-col justify-center items-center whitespace-nowrap relative' style={{height: vwd(26), ...responsiveTextD(12, 22, null, 'normal', 'noto', '#222'), paddingLeft: vwd(6), paddingRight: vwd(6), paddingTop: vwd(1.5), paddingBottom: vwd(2.5)}}>
                     お知らせ
+                    {unreadNotificationCount > 0 && (
+                      <div className='absolute -top-2 -right-2 flex items-center justify-center' style={{...responsiveMetricD(18, 18), borderRadius: vwd(9), background: '#FF2AA1'}}>
+                        <span style={{...responsiveTextD(10, 10, null, 'medium', 'noto', '#FFF')}}>{unreadNotificationCount}</span>
+                      </div>
+                    )}
                   </a>
                 <li className='inline-block'>
                   <a href='/myshop/registerproduct' className='flex flex-row items-center rounded bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] justify-center' style={{...responsiveMetricD(120, 32), paddingLeft: vwd(12), paddingRight: vwd(12)}}>
@@ -108,9 +113,14 @@ const Header = ({ authButton }) => {
                 <img src={shop} alt='shop' style={{...responsiveMetric(21, 18)}} />
                 ショップ管理
               </a>
-              <a href='/notification' className='flex flex-col items-center px-[6px] py-[1.5px] gap-[6px] whitespace-nowrap' style={{...responsiveText(10, 15, null, 'medium', 'noto', '#222')}}>
+              <a href='/notification' className='flex flex-col items-center px-[6px] py-[1.5px] gap-[6px] whitespace-nowrap relative' style={{...responsiveText(10, 15, null, 'medium', 'noto', '#222')}}>
                 <img src={bell} alt='shop' style={{...responsiveMetric(21, 18)}} />
                 お知らせ
+                {unreadNotificationCount > 0 && (
+                  <div className='absolute -top-2 -right-2 flex items-center justify-center' style={{...responsiveMetric(16, 18), borderRadius: vw(3), background: '#FF2AA1'}}>
+                    <span style={{...responsiveText(13, 10, null, 'medium', 'noto', '#FFF')}}>{unreadNotificationCount}</span>
+                  </div>
+                )}
               </a>
               <div className='flex flex-col items-start justify-center px-[6px] py-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] rounded-[5px]'>
                 <a href='/upload' className='flex flex-col items-center gap-[3px] whitespace-nowrap' style={{...responsiveText(10, 19.5, null, 'medium', 'noto', '#FFF')}}>

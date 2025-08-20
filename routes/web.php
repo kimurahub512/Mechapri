@@ -101,9 +101,14 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
         return Inertia::render('MyShopManagement/SetTransferAccount');
     });
     
-    Route::get('/notification', function(){
-        return Inertia::render('Notification');
-    });
+    Route::get('/notification', [App\Http\Controllers\NotificationController::class, 'index'])->name('notification.index');
+    
+    // Notification API routes
+    Route::get('/api/notifications', [App\Http\Controllers\NotificationController::class, 'getNotifications'])->name('notification.get');
+    Route::post('/api/notifications/mark-read', [App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notification.mark-read');
+    Route::post('/api/notifications/mark-all-read', [App\Http\Controllers\NotificationController::class, 'markAllAsRead'])->name('notification.mark-all-read');
+    Route::delete('/api/notifications/{id}', [App\Http\Controllers\NotificationController::class, 'delete'])->name('notification.delete');
+    Route::get('/api/notifications/unread-count', [App\Http\Controllers\NotificationController::class, 'getUnreadCount'])->name('notification.unread-count');
 
     Route::get('/accountsetting', function(){
         return Inertia::render('AccountSetting');
@@ -241,7 +246,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/api/product/check-password-status', [App\Http\Controllers\ProductPasswordController::class, 'checkStatus'])->name('product.check.password.status');
 
     // Payment Routes
-    Route::get('/payment/checkout/{product}', [App\Http\Controllers\PaymentController::class, 'checkout'])->name('payment.checkout');
+    Route::get('/payment/checkout/{product}/{cartItem?}', [App\Http\Controllers\PaymentController::class, 'checkout'])->name('payment.checkout');
     Route::get('/payment/complete', [App\Http\Controllers\PaymentController::class, 'complete'])->name('payment.complete');
     Route::post('/stripe/webhook', [App\Http\Controllers\PaymentController::class, 'webhook'])->name('stripe.webhook')->middleware('verify.stripe.signature');
 
