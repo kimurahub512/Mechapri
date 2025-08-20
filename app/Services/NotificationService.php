@@ -6,6 +6,12 @@ use App\Models\User;
 use App\Models\Notification;
 use App\Models\ProductBatch;
 use App\Models\UserPurchasedProduct;
+use App\Mail\PurchaseNotificationMail;
+use App\Mail\FollowNotificationMail;
+use App\Mail\NewItemNotificationMail;
+use App\Mail\RelistNotificationMail;
+use App\Mail\MediPanelNotificationMail;
+use Illuminate\Support\Facades\Mail;
 
 class NotificationService
 {
@@ -22,7 +28,7 @@ class NotificationService
         $buyer = $purchase->user;
         $product = $purchase->productBatch;
 
-        Notification::create([
+        $notification = Notification::create([
             'user_id' => $seller->id,
             'type' => 'purchase',
             'title' => '商品が購入されました',
@@ -37,6 +43,15 @@ class NotificationService
                 'purchase_id' => $purchase->id,
             ],
         ]);
+
+        // Send email notification if enabled
+        if ($seller->email_notification_purchase) {
+            try {
+                Mail::to($seller->email)->send(new PurchaseNotificationMail($notification));
+            } catch (\Exception $e) {
+                \Log::error('Failed to send purchase notification email: ' . $e->getMessage());
+            }
+        }
     }
 
     /**
@@ -49,7 +64,7 @@ class NotificationService
             return;
         }
 
-        Notification::create([
+        $notification = Notification::create([
             'user_id' => $seller->id,
             'type' => 'relist',
             'title' => '再販リクエストが届きました',
@@ -61,6 +76,15 @@ class NotificationService
                 'product_title' => $product->title,
             ],
         ]);
+
+        // Send email notification if enabled
+        if ($seller->email_notification_relist) {
+            try {
+                Mail::to($seller->email)->send(new RelistNotificationMail($notification));
+            } catch (\Exception $e) {
+                \Log::error('Failed to send relist notification email: ' . $e->getMessage());
+            }
+        }
     }
 
     /**
@@ -73,7 +97,7 @@ class NotificationService
             return;
         }
 
-        Notification::create([
+        $notification = Notification::create([
             'user_id' => $followedUser->id,
             'type' => 'follow',
             'title' => '新しいフォロワーがいます',
@@ -83,6 +107,15 @@ class NotificationService
                 'follower_name' => $follower->name,
             ],
         ]);
+
+        // Send email notification if enabled
+        if ($followedUser->email_notification_follow) {
+            try {
+                Mail::to($followedUser->email)->send(new FollowNotificationMail($notification));
+            } catch (\Exception $e) {
+                \Log::error('Failed to send follow notification email: ' . $e->getMessage());
+            }
+        }
     }
 
     /**
@@ -96,7 +129,7 @@ class NotificationService
             ->get();
 
         foreach ($followers as $follower) {
-            Notification::create([
+            $notification = Notification::create([
                 'user_id' => $follower->id,
                 'type' => 'new_item',
                 'title' => 'フォロー中のショップが新商品を出品しました',
@@ -108,6 +141,15 @@ class NotificationService
                     'product_title' => $product->title,
                 ],
             ]);
+
+            // Send email notification if enabled
+            if ($follower->email_notification_new_item) {
+                try {
+                    Mail::to($follower->email)->send(new NewItemNotificationMail($notification));
+                } catch (\Exception $e) {
+                    \Log::error('Failed to send new item notification email: ' . $e->getMessage());
+                }
+            }
         }
     }
 
@@ -121,13 +163,22 @@ class NotificationService
             return;
         }
 
-        Notification::create([
+        $notification = Notification::create([
             'user_id' => $user->id,
             'type' => 'medi_panel',
             'title' => $title,
             'message' => $message,
             'data' => $data,
         ]);
+
+        // Send email notification if enabled
+        if ($user->email_notification_medi_panel) {
+            try {
+                Mail::to($user->email)->send(new MediPanelNotificationMail($notification));
+            } catch (\Exception $e) {
+                \Log::error('Failed to send medi panel notification email: ' . $e->getMessage());
+            }
+        }
     }
 
     /**
@@ -136,6 +187,7 @@ class NotificationService
     public static function createBulkNotification(array $userIds, string $type, string $title, string $message, array $data = [])
     {
         $notifications = [];
+        $usersToEmail = [];
         
         foreach ($userIds as $userId) {
             $user = User::find($userId);
@@ -156,10 +208,43 @@ class NotificationService
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
+
+            $usersToEmail[] = $user;
         }
 
         if (!empty($notifications)) {
             Notification::insert($notifications);
+            
+            // Send email notifications
+            foreach ($usersToEmail as $user) {
+                try {
+                    $notification = new Notification([
+                        'user_id' => $user->id,
+                        'type' => $type,
+                        'title' => $title,
+                        'message' => $message,
+                        'data' => $data,
+                    ]);
+                    
+                    // Determine which mail class to use based on type
+                    $mailClass = match($type) {
+                        'purchase' => PurchaseNotificationMail::class,
+                        'follow' => FollowNotificationMail::class,
+                        'new_item' => NewItemNotificationMail::class,
+                        'relist' => RelistNotificationMail::class,
+                        'medi_panel' => MediPanelNotificationMail::class,
+                        default => null,
+                    };
+                    
+                    // Check email notification preference
+                    $emailField = "email_notification_{$type}";
+                    if (isset($user->$emailField) && $user->$emailField && $mailClass) {
+                        Mail::to($user->email)->send(new $mailClass($notification));
+                    }
+                } catch (\Exception $e) {
+                    \Log::error('Failed to send bulk notification email: ' . $e->getMessage());
+                }
+            }
         }
     }
 }

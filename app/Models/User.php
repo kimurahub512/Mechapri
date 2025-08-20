@@ -43,6 +43,11 @@ class User extends Authenticatable //implements MustVerifyEmail
         'notification_follow',
         'notification_new_item',
         'notification_medi_panel',
+        'email_notification_purchase',
+        'email_notification_relist',
+        'email_notification_follow',
+        'email_notification_new_item',
+        'email_notification_medi_panel',
     ];
 
     /**
