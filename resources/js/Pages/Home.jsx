@@ -43,7 +43,7 @@ export default function Home() {
         <div className='flex flex-col items-center w-full relative px-[120px] pt-[66px] pb-[150px]'>
           <div className='flex flex-col items-start w-full gap-5'>
             <div className='flex flex-row items-start'>
-              <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={responsiveTextD(80, 104, null, 'black', 'noto', '#363636')}>
+              <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={responsiveTextD(80, 104, null, 'black', 'noto')}>
                 めちゃプリ
               </span>
               <span style={responsiveTextD(64, 104, null, 'black', 'noto', '#363636')}>

@@ -83,9 +83,7 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
     Route::get('/myshop/transaction', function(){
         return Inertia::render('MyShopManagement/Transaction');
     });
-    Route::get('/myshop/saleshistory', function(){
-        return Inertia::render('MyShopManagement/SalesHistory');
-    });
+    Route::get('/myshop/saleshistory', [App\Http\Controllers\SalesHistoryController::class, 'index'])->name('myshop.saleshistory');
     Route::get('/myshop/registerproduct', function(){
         $user = auth()->user();
         $categories = $user->categories()->orderBy('created_at', 'desc')->get();
