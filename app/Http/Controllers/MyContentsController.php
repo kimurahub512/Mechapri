@@ -129,9 +129,13 @@ class MyContentsController extends Controller
             }),
         ];
 
+        // Get user's categories for edit mode
+        $categories = $user->categories()->orderBy('created_at', 'desc')->get();
+
         return Inertia::render('MyShopManagement/RegisterProduct', [
             'editMode' => true,
             'productBatch' => $formattedBatch,
+            'categories' => $categories,
         ]);
     }
 

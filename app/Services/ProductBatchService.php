@@ -70,7 +70,7 @@ class ProductBatchService
             }
 
             // Log the creation
-            Log::info('Product batch created', [
+            \Illuminate\Support\Facades\Log::info('Product batch created', [
                 'user_id' => $user->id,
                 'product_batch_id' => $productBatch->id,
                 'title' => $productBatch->title,
@@ -85,7 +85,7 @@ class ProductBatchService
                 try {
                     NotificationService::createNewItemNotification($user, $productBatch);
                 } catch (\Exception $e) {
-                    Log::error('Failed to create new item notification: ' . $e->getMessage());
+                    \Illuminate\Support\Facades\Log::error('Failed to create new item notification: ' . $e->getMessage());
                 }
             }
 
@@ -198,14 +198,14 @@ class ProductBatchService
                 // Delete the product batch
                 $productBatch->delete();
                 
-                Log::info('Product batch deleted', [
+                \Illuminate\Support\Facades\Log::info('Product batch deleted', [
                     'product_batch_id' => $productBatch->id,
                     'user_id' => $productBatch->user_id,
                 ]);
                 
                 return true;
             } catch (\Exception $e) {
-                Log::error('Failed to delete product batch: ' . $e->getMessage(), [
+                \Illuminate\Support\Facades\Log::error('Failed to delete product batch: ' . $e->getMessage(), [
                     'product_batch_id' => $productBatch->id,
                     'exception' => $e,
                 ]);

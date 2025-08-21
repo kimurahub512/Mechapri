@@ -13,11 +13,23 @@ class UserPurchasedProduct extends Model
         'price',
         'cnt',
         'purchase_time',
+        'nwps_token',
+        'nwps_token_expires_at',
+        'nwps_file_id',
+        'nwps_upload_status',
+        'nwps_reservation_no',
+        'nwps_qr_code_url',
+        'print_status',
+        'printed_at',
+        'print_expires_at',
     ];
 
     protected $casts = [
         'purchase_time' => 'datetime',
         'price' => 'decimal:2',
+        'nwps_token_expires_at' => 'datetime',
+        'printed_at' => 'datetime',
+        'print_expires_at' => 'datetime',
     ];
 
     /**

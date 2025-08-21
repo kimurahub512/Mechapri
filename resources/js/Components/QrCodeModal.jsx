@@ -100,7 +100,11 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                 </div>
                                 {/*12122112*/}
                                 <div className="relative w-[358px] h-[150px] mt-[12px]">
-                                    <img src={qr} alt="qr" className="absolute top-0 left-0 w-[150px] h-[150px] " />
+                                    <img 
+                                        src={purchase?.nwps_qr_code_url || qr} 
+                                        alt="qr" 
+                                        className="absolute top-0 left-0 w-[150px] h-[150px] " 
+                                    />
                                     <span className="absolute top-[44.5px] left-[226px] text-[#000] font-noto text-[14px] font-normal leading-[21px]">印刷番号</span>
                                     <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">{purchase?.nwps_reservation_no || '発行中...'}</span>
                                 </div>
@@ -143,17 +147,16 @@ const QrCodeModal = ({ onClose, purchase }) => {
                     <div className="flex flex-col justify-between items-start">
                         {/* 12111 */}
                         <div className="flex flex-col items-start gap-[2px] w-full">
-                            <span className="text-[#363636] font-medium text-[14px] leading-[21px]">郊外のカフェにて</span>
-                            <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[11px] leading-[15px]">3枚セット</span>
+                            <span className="text-[#363636] font-medium text-[14px] leading-[21px]">{purchase?.product?.title || '商品'}</span>
                             <div className="flex items-center gap-[5px] m-[4px]">
-                                <img src={girl} alt="girl" className="w-[20px] h-[20px] rounded-full object-cover bg-gray-200" />
-                                <span className="text-[#222] font-noto text-[13px] leading-[20px] font-normal">anchly1005</span>
+                                <img src={purchase?.product?.user?.image || girl} alt="girl" className="w-[20px] h-[20px] rounded-full object-cover bg-gray-200" />
+                                <span className="text-[#222] font-noto text-[13px] leading-[20px] font-normal">{purchase?.product?.user?.name || ''}</span>
                             </div>
-                            <span className="text-[#363636] font-noto font-medium text-[14px] leading-[25px] mb-[4px]">2025/10/05 19:20に購入</span>
-                            <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">枚数：1</span>
-                            <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">購入金額： 300円</span>
-                            <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷番号：2CNM9FX279</span>
-                            <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷期限：2025/10/05まで</span>
+                            <span className="text-[#363636] font-noto font-medium text-[14px] leading-[25px] mb-[4px]">{purchase?.purchase_time || ''}に購入</span>
+                            <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">枚数：{purchase?.cnt ?? 1}</span>
+                            <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">購入金額： {purchase?.price ?? ''}円</span>
+                            <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷番号：{purchase?.nwps_reservation_no || '発行中...'}</span>
+                            <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷期限：{purchase?.print_expires_at || ''}まで</span>
                         </div>
                     </div>
                 </div>
@@ -167,7 +170,7 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                 <span className="text-white font-noto text-[14px] font-bold leading-[14px]">プリント期限</span>
                             </div>
                             <div className="flex flex-col items-start ml-[16px]">
-                                <span className="text-white font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                <span className="text-white font-noto text-[14px] font-bold leading-[14px]">{purchase?.print_expires_at || ''}まで</span>
                             </div>
                         </div>
                         {/* 12122: Print options */}
@@ -185,9 +188,13 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                     </div>
                                     {/*12122112*/}
                                     <div className="relative w-[240px] h-[100px] mt-[8px]">
-                                        <img src={qr} alt="qr" className="absolute top-0 left-0 w-[100px] h-[100px]" />
+                                        <img 
+                                            src={purchase?.nwps_qr_code_url || qr} 
+                                            alt="qr" 
+                                            className="absolute top-0 left-0 w-[100px] h-[100px]" 
+                                        />
                                         <span className="absolute top-[30px] left-[150px] text-[#000] font-noto text-[12px] font-normal leading-[16px]">印刷番号</span>
-                                        <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">2CNM9FX279</span>
+                                        <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">{purchase?.nwps_reservation_no || '発行中...'}</span>
                                     </div>
                                 </div>
                             </div>

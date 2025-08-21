@@ -89,7 +89,7 @@ class ProductBatchController extends Controller
             ], 422);
 
         } catch (\Exception $e) {
-            Log::error('Product batch creation failed: ' . $e->getMessage(), [
+            \Illuminate\Support\Facades\Log::error('Product batch creation failed: ' . $e->getMessage(), [
                 'user_id' => auth()->id(),
                 'request_data' => $request->except(['password', 'files']),
                 'exception' => $e
@@ -190,7 +190,7 @@ class ProductBatchController extends Controller
             
             // Log::info('Validation passed', $validated);
         } catch (\Illuminate\Validation\ValidationException $e) {
-            Log::error('Validation failed', [
+            \Illuminate\Support\Facades\Log::error('Validation failed', [
                 'errors' => $e->errors(),
                 'request_data' => $request->all(),
             ]);
@@ -280,7 +280,7 @@ class ProductBatchController extends Controller
             }
 
         } catch (\Exception $e) {
-            Log::error('Product batch deletion failed: ' . $e->getMessage(), [
+            \Illuminate\Support\Facades\Log::error('Product batch deletion failed: ' . $e->getMessage(), [
                 'user_id' => auth()->id(),
                 'product_batch_id' => $productBatch->id,
                 'exception' => $e
@@ -303,7 +303,7 @@ class ProductBatchController extends Controller
         $segments = explode('/', trim($request->path(), '/'));
         $productId = end($segments);
 
-        Log::info('Showing purchased product', [
+        \Illuminate\Support\Facades\Log::info('Showing purchased product', [
             'segments' => $segments,
             'product_id' => $productId,
             'user_id' => $request->route('user_id'),
@@ -388,7 +388,7 @@ class ProductBatchController extends Controller
         $segments = explode('/', trim($request->path(), '/'));
         $productId = end($segments);
 
-        Log::info('Showing unpurchased product', [
+        \Illuminate\Support\Facades\Log::info('Showing unpurchased product', [
             'segments' => $segments,
             'product_id' => $productId,
             'user_id' => $request->route('user_id'),
@@ -473,7 +473,7 @@ class ProductBatchController extends Controller
         $segments = explode('/', trim($request->path(), '/'));
         $productId = end($segments);
 
-        Log::info('Showing purchased product expand', [
+        \Illuminate\Support\Facades\Log::info('Showing purchased product expand', [
             'segments' => $segments,
             'product_id' => $productId,
             'user_id' => $request->route('user_id'),
@@ -557,7 +557,7 @@ class ProductBatchController extends Controller
         $segments = explode('/', trim($request->path(), '/'));
         $productId = end($segments);
 
-        Log::info('Showing unpurchased product expand', [
+        \Illuminate\Support\Facades\Log::info('Showing unpurchased product expand', [
             'segments' => $segments,
             'product_id' => $productId,
             'user_id' => $request->route('user_id'),

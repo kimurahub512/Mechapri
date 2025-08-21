@@ -51,7 +51,7 @@ class ProductBatchFileService
 
             // Validate file type
             if (!in_array($extension, ['jpg', 'jpeg', 'png', 'pdf'])) {
-                Log::warning('Invalid file type uploaded: ' . $extension);
+                \Illuminate\Support\Facades\Log::warning('Invalid file type uploaded: ' . $extension);
                 return null;
             }
 
@@ -73,7 +73,7 @@ class ProductBatchFileService
                 'sort_order' => $sortOrder,
             ]);
         } catch (\Exception $e) {
-            Log::error('File processing failed: ' . $e->getMessage(), [
+            \Illuminate\Support\Facades\Log::error('File processing failed: ' . $e->getMessage(), [
                 'file_name' => $file->getClientOriginalName(),
                 'file_size' => $file->getSize(),
                 'product_batch_id' => $productBatch->id,
@@ -118,7 +118,7 @@ class ProductBatchFileService
             }
         } catch (\Exception $e) {
             // If image processing fails, store the original file
-            Log::warning('Image processing failed, storing original file: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::warning('Image processing failed, storing original file: ' . $e->getMessage());
             Storage::disk('public')->putFileAs(dirname($path), $file, basename($path));
         }
     }
@@ -139,7 +139,7 @@ class ProductBatchFileService
 
             return true;
         } catch (\Exception $e) {
-            Log::error('Failed to delete file: ' . $e->getMessage(), [
+            \Illuminate\Support\Facades\Log::error('Failed to delete file: ' . $e->getMessage(), [
                 'file_id' => $file->id,
                 'file_path' => $file->file_path,
             ]);
@@ -170,7 +170,7 @@ class ProductBatchFileService
 
             return true;
         } catch (\Exception $e) {
-            Log::error('Failed to delete batch files: ' . $e->getMessage(), [
+            \Illuminate\Support\Facades\Log::error('Failed to delete batch files: ' . $e->getMessage(), [
                 'product_batch_id' => $productBatch->id,
             ]);
 
@@ -192,7 +192,7 @@ class ProductBatchFileService
 
             return true;
         } catch (\Exception $e) {
-            Log::error('Failed to reorder files: ' . $e->getMessage(), [
+            \Illuminate\Support\Facades\Log::error('Failed to reorder files: ' . $e->getMessage(), [
                 'product_batch_id' => $productBatch->id,
                 'file_ids' => $fileIds,
             ]);

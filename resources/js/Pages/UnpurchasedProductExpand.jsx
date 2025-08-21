@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { usePage, router } from '@inertiajs/react';
+import { usePage, router, Head } from '@inertiajs/react';
 import default_user from '@/assets/images/default-user.png';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
@@ -64,6 +64,7 @@ const UnpurchasedProductExpand = ({ product }) => {
 
     return (
         <div className='product-details-no-footer-gap bg-[#FFF]'>
+            <Head title="めちゃプリ" />
             <Header />
             <main className="hidden md:flex flex-col items-center px-[120px] pt-[44px] pb-[176px] w-full bg-[#FFF]">
                 {/* Frame 1 */}
@@ -77,13 +78,13 @@ const UnpurchasedProductExpand = ({ product }) => {
                                 {/* 11211 */}
                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
                                     {/* 112111 */}
-                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                        <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
-                                    </div>
-                                </div>
-                                {/* 11212 */}
-                                <div className="flex flex-col items-start">
-                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
+                                                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
+                                                    <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
+                                                </div>
+                                            </div>
+                                            {/* 11212 */}
+                                            <div className="flex flex-col items-start">
+                                                <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 </div>
                             </div>
                             {/* 1122: Edit/Delete buttons */}
@@ -146,44 +147,44 @@ const UnpurchasedProductExpand = ({ product }) => {
                                 {/* 11411 */}
                                 <div className="flex flex-col items-start gap-[10px] py-[8px]">
                                     {/* 114111: Heart, お気に入り, 1000 */}
-                                    <button
-                                        onClick={async () => {
-                                            try {
-                                                const response = await fetch(route('favoriteproducts.toggle'), {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'Content-Type': 'application/json',
-                                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                                                    },
-                                                    body: JSON.stringify({ product_id: product.id }),
-                                                });
-                                                const data = await response.json();
-                                                if (data.success) {
-                                                    router.reload();
+                                                                            <button
+                                            onClick={async () => {
+                                                try {
+                                                    const response = await fetch(route('favoriteproducts.toggle'), {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                                        },
+                                                        body: JSON.stringify({ product_id: product.id }),
+                                                    });
+                                                    const data = await response.json();
+                                                    if (data.success) {
+                                                        router.reload();
+                                                    }
+                                                } catch (error) {
+                                                    console.error('Error toggling favorite:', error);
                                                 }
-                                            } catch (error) {
-                                                console.error('Error toggling favorite:', error);
-                                            }
-                                        }}
-                                        disabled={auth.user.id === product.user.id}
-                                        className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${
-                                            auth.user.id === product.user.id
-                                                ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
-                                                : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
-                                        }`}
-                                    >
-                                        <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${
-                                            product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
-                                        }`}>
-                                            {product.is_favorited ? 'お気に入り中' : 'お気に入り'}
-                                        </span>
-                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${
-                                            product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
-                                        }`}>
-                                            {product.favorite_count}
-                                        </span>
-                                    </button>
+                                            }}
+                                            disabled={auth.user.id === product.user.id}
+                                            className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${
+                                                auth.user.id === product.user.id
+                                                    ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
+                                                    : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
+                                            }`}
+                                        >
+                                            <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
+                                            <span className={`font-noto text-[14px] font-bold leading-[21px] ${
+                                                product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                            }`}>
+                                                {product.is_favorited ? 'お気に入り中' : 'お気に入り'}
+                                            </span>
+                                            <span className={`font-noto text-[14px] font-bold leading-[21px] ${
+                                                product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                            }`}>
+                                                {product.favorite_count}
+                                            </span>
+                                        </button>
                                 </div>
                             </div>
                         </div>
@@ -216,7 +217,7 @@ const UnpurchasedProductExpand = ({ product }) => {
                         <div className="flex flex-col w-full rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] p-[70px_70px_92.5px_70px] ">
                             <div className="flex flex-col items-center gap-[24px]">
                                 <div className={`grid ${product.images.length === 1 ? 'grid-cols-1' : product.images.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-6 w-full justify-center`}>
-                                    {product.images.map((image, index) => (
+                                        {product.images.map((image, index) => (
                                         <div key={index} className="flex justify-center items-center rounded-[14px] bg-[#F6F6F6] relative">
                                             <div className="flex h-[348px] w-[232px] flex-col justify-center items-center relative">
                                                 <div className={`flex h-[348px] w-[232px] flex-col justify-center items-center flex-shrink-0 rounded-[8px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
@@ -230,8 +231,8 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                                 <img src={bubble} alt="bubble" className="w-[42px] h-[42px]" />
                                                                 <span className="text-white text-[15px] font-bold">ガチャ</span>
                                                                 <span className="text-white text-[13px]">ランダムで1枚選定されます</span>
-                                            </div>
-                                        </div>
+                                                            </div>
+                                                        </div>
                                                     ) : product.display_mode === 'blur' ? (
                                                         <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
                                                             <img src={image} alt="ぼかしフィルター" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
@@ -240,8 +241,8 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                                 <img src={question} alt="question" className="w-[42px] h-[42px]" />
                                                                 <span className="text-white text-[15px] font-bold">ぼかしフィルター</span>
                                                                 <span className="text-white text-[13px]">印刷して確認しよう！</span>
-                                            </div>
-                                        </div>
+                                                            </div>
+                                                        </div>
                                                     ) : product.display_mode === 'password' && !isUnlocked ? (
                                                         <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
                                                             <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[8px]" />
@@ -249,8 +250,8 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                                 <img src={lock} alt="lock" className="w-[42px] h-[42px]" />
                                                                 <span className="text-[#CDD9EC] text-[15px] font-bold">パスワード</span>
                                                                 <span className="text-[#CDD9EC] text-[13px]">PWを入れて印刷しよう</span>
-                                            </div>
-                                        </div>
+                                                            </div>
+                                                        </div>
                                                     ) : product.display_mode === 'password' && isUnlocked ? (
                                                         <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
                                                     ) : product.display_mode === 'cushion' ? (
@@ -260,8 +261,8 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                                 <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
                                                                 <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
                                                                 <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
-                                            </div>
-                                        </div>
+                                                            </div>
+                                                        </div>
                                                     ) : (
                                                         <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
                                                     )}

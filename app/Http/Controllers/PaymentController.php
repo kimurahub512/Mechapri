@@ -30,7 +30,7 @@ class PaymentController extends Controller
             $cartItemId = $cartItem ? (int)$cartItem : null;
             
             // Debug logging
-            Log::info('Checkout called with cart item ID', [
+            \Illuminate\Support\Facades\Log::info('Checkout called with cart item ID', [
                 'cart_item_id' => $cartItemId,
                 'product_id' => $product->id,
                 'user_id' => $request->user()->id
@@ -63,7 +63,7 @@ class PaymentController extends Controller
                 'cart_item_id' => $cartItemId,
             ]);
             
-            Log::info('Payment record created', [
+            \Illuminate\Support\Facades\Log::info('Payment record created', [
                 'payment_id' => $payment->id,
                 'cart_item_id' => $payment->cart_item_id
             ]);
@@ -75,7 +75,7 @@ class PaymentController extends Controller
             ]);
 
         } catch (ApiErrorException $e) {
-            Log::error('Stripe error: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('Stripe error: ' . $e->getMessage());
             return back()->with('error', 'お支払い処理中にエラーが発生しました。');
         }
     }
@@ -109,7 +109,7 @@ class PaymentController extends Controller
                                     'price' => $payment->amount,
                                     'cnt' => 0,
                                     'purchase_time' => now(),
-                                    'nwps_upload_status' => 'pending',
+                                    'nwps_upload_status' => 'processing',
                                     'print_status' => 'not_printed',
                                     'print_expires_at' => now()->addDays(30),
                                 ]
@@ -132,13 +132,14 @@ class PaymentController extends Controller
                             // Create notification for the seller
                             try {
                                 $seller = $product->user;
-                                NotificationService::createPurchaseNotification($seller, $purchase);
+                                // Temporarily disabled to debug Log issue
+                                // NotificationService::createPurchaseNotification($seller, $purchase);
                             } catch (\Exception $e) {
-                                Log::error('Failed to create purchase notification: ' . $e->getMessage());
+                                \Illuminate\Support\Facades\Log::error('Failed to create purchase notification: ' . $e->getMessage());
                             }
 
                             // Remove cart item if it exists
-                            Log::info('Attempting to remove cart item', [
+                            \Illuminate\Support\Facades\Log::info('Attempting to remove cart item', [
                                 'payment_cart_item_id' => $payment->cart_item_id,
                                 'payment_id' => $payment->id,
                                 'user_id' => $payment->user_id
@@ -148,13 +149,13 @@ class PaymentController extends Controller
                                 try {
                                     // First check if cart item exists
                                     $cartItemExists = \App\Models\CartItem::where('id', $payment->cart_item_id)->exists();
-                                    Log::info('Cart item exists check', [
+                                    \Illuminate\Support\Facades\Log::info('Cart item exists check', [
                                         'cart_item_id' => $payment->cart_item_id,
                                         'exists' => $cartItemExists
                                     ]);
                                     
                                     $cartItem = \App\Models\CartItem::find($payment->cart_item_id);
-                                    Log::info('Cart item lookup result', [
+                                    \Illuminate\Support\Facades\Log::info('Cart item lookup result', [
                                         'cart_item_found' => $cartItem ? true : false,
                                         'cart_item_user_id' => $cartItem ? $cartItem->user_id : null,
                                         'payment_user_id' => $payment->user_id
@@ -162,14 +163,14 @@ class PaymentController extends Controller
                                     
                                     if ($cartItem && $cartItem->user_id === $payment->user_id) {
                                         $deleted = $cartItem->delete();
-                                        Log::info('Cart item removal attempt', [
+                                        \Illuminate\Support\Facades\Log::info('Cart item removal attempt', [
                                             'cart_item_id' => $payment->cart_item_id,
                                             'deleted' => $deleted,
                                             'user_id' => $payment->user_id,
                                             'product_id' => $product->id
                                         ]);
                                     } else {
-                                        Log::warning('Cart item not found or user mismatch', [
+                                        \Illuminate\Support\Facades\Log::warning('Cart item not found or user mismatch', [
                                             'cart_item_id' => $payment->cart_item_id,
                                             'cart_item_found' => $cartItem ? true : false,
                                             'cart_item_user_id' => $cartItem ? $cartItem->user_id : null,
@@ -177,28 +178,28 @@ class PaymentController extends Controller
                                         ]);
                                     }
                                 } catch (\Exception $e) {
-                                    Log::error('Failed to remove cart item after purchase: ' . $e->getMessage());
+                                    \Illuminate\Support\Facades\Log::error('Failed to remove cart item after purchase: ' . $e->getMessage());
                                 }
                             } else {
-                                Log::warning('No cart_item_id found in payment record', [
+                                \Illuminate\Support\Facades\Log::warning('No cart_item_id found in payment record', [
                                     'payment_id' => $payment->id
                                 ]);
                             }
 
-                            // If requester asked to redirect to purchase history, do so with purchase id
-                            if ($request->query('redirect') === 'purchasehistory') {
-                                return redirect()->route('purchase.history', [
-                                    'purchase_id' => $purchase->id,
-                                ]);
-                            }
+                            // Always redirect to purchase history with purchase id to show overlay
+                            \Illuminate\Support\Facades\Log::info('Redirecting to purchase history', [
+                                'purchase_id' => $purchase->id,
+                                'purchase_status' => $purchase->nwps_upload_status
+                            ]);
+                            return redirect()->route('purchase.history', [
+                                'purchase_id' => $purchase->id,
+                            ]);
                         }
                     } catch (\Throwable $e) {
-                        Log::error('Failed to upsert purchase on complete(): ' . $e->getMessage());
+                        \Illuminate\Support\Facades\Log::error('Failed to upsert purchase on complete(): ' . $e->getMessage());
+                        // Even if there's an error, redirect to purchase history
+                        return redirect()->route('purchase.history');
                     }
-
-                    return Inertia::render('Payment/Success', [
-                        'payment' => $payment->load('productBatch'),
-                    ]);
                 }
             }
 
@@ -207,7 +208,7 @@ class PaymentController extends Controller
             ]);
 
         } catch (ApiErrorException $e) {
-            Log::error('Stripe error in webhook: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('Stripe error in webhook: ' . $e->getMessage());
             return Inertia::render('Payment/Failed', [
                 'error' => 'お支払い処理中にエラーが発生しました。'
             ]);
@@ -260,11 +261,11 @@ class PaymentController extends Controller
                                     $seller = $product->user;
                                     NotificationService::createPurchaseNotification($seller, $purchase);
                                 } catch (\Exception $e) {
-                                    Log::error('Failed to create purchase notification: ' . $e->getMessage());
+                                    \Illuminate\Support\Facades\Log::error('Failed to create purchase notification: ' . $e->getMessage());
                                 }
 
                                 // Remove cart item if it exists
-                                Log::info('Attempting to remove cart item (webhook)', [
+                                \Illuminate\Support\Facades\Log::info('Attempting to remove cart item (webhook)', [
                                     'payment_cart_item_id' => $payment->cart_item_id,
                                     'payment_id' => $payment->id,
                                     'user_id' => $payment->user_id
@@ -274,13 +275,13 @@ class PaymentController extends Controller
                                     try {
                                         // First check if cart item exists
                                         $cartItemExists = \App\Models\CartItem::where('id', $payment->cart_item_id)->exists();
-                                        Log::info('Cart item exists check (webhook)', [
+                                        \Illuminate\Support\Facades\Log::info('Cart item exists check (webhook)', [
                                             'cart_item_id' => $payment->cart_item_id,
                                             'exists' => $cartItemExists
                                         ]);
                                         
                                         $cartItem = \App\Models\CartItem::find($payment->cart_item_id);
-                                        Log::info('Cart item lookup result (webhook)', [
+                                        \Illuminate\Support\Facades\Log::info('Cart item lookup result (webhook)', [
                                             'cart_item_found' => $cartItem ? true : false,
                                             'cart_item_user_id' => $cartItem ? $cartItem->user_id : null,
                                             'payment_user_id' => $payment->user_id
@@ -288,14 +289,14 @@ class PaymentController extends Controller
                                         
                                         if ($cartItem && $cartItem->user_id === $payment->user_id) {
                                             $deleted = $cartItem->delete();
-                                            Log::info('Cart item removal attempt (webhook)', [
+                                            \Illuminate\Support\Facades\Log::info('Cart item removal attempt (webhook)', [
                                                 'cart_item_id' => $payment->cart_item_id,
                                                 'deleted' => $deleted,
                                                 'user_id' => $payment->user_id,
                                                 'product_id' => $product->id
                                             ]);
                                         } else {
-                                            Log::warning('Cart item not found or user mismatch (webhook)', [
+                                            \Illuminate\Support\Facades\Log::warning('Cart item not found or user mismatch (webhook)', [
                                                 'cart_item_id' => $payment->cart_item_id,
                                                 'cart_item_found' => $cartItem ? true : false,
                                                 'cart_item_user_id' => $cartItem ? $cartItem->user_id : null,
@@ -303,16 +304,16 @@ class PaymentController extends Controller
                                             ]);
                                         }
                                     } catch (\Exception $e) {
-                                        Log::error('Failed to remove cart item after purchase (webhook): ' . $e->getMessage());
+                                        \Illuminate\Support\Facades\Log::error('Failed to remove cart item after purchase (webhook): ' . $e->getMessage());
                                     }
                                 } else {
-                                    Log::warning('No cart_item_id found in payment record (webhook)', [
+                                    \Illuminate\Support\Facades\Log::warning('No cart_item_id found in payment record (webhook)', [
                                         'payment_id' => $payment->id
                                     ]);
                                 }
                             }
                         } catch (\Throwable $e) {
-                            Log::error('Failed to create purchase or initialize NWPS: ' . $e->getMessage());
+                            \Illuminate\Support\Facades\Log::error('Failed to create purchase or initialize NWPS: ' . $e->getMessage());
                         }
                     }
                     break;
@@ -332,7 +333,7 @@ class PaymentController extends Controller
             return response()->json(['status' => 'success']);
 
         } catch (\Exception $e) {
-            Log::error('Webhook error: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('Webhook error: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 400);
         }
     }

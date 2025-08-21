@@ -131,6 +131,11 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
     Route::get('/purchasehistory', [App\Http\Controllers\PurchaseHistoryController::class, 'index'])->name('purchase.history');
     Route::get('/api/purchasehistory/{id}', [App\Http\Controllers\PurchaseHistoryController::class, 'show'])->name('purchase.history.show');
 
+    // NWPS API routes
+    Route::get('/api/nwps/login-qrcode', [App\Http\Controllers\NWPSController::class, 'getLoginQrCode'])->name('api.nwps.login-qrcode');
+    
+
+
     // Cart routes
     Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
     Route::post('/api/cart/add', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');

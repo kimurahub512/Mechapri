@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('youtube')->nullable();
             /*Notification settings*/
             $table->boolean('notification_purchase')->default(true);
-            $table->boolean('notification_relist')->default(true);
+            $table->boolean('notification_relist')->default(false);
             $table->boolean('notification_follow')->default(true);
             $table->boolean('notification_new_item')->default(true);
             $table->boolean('notification_medi_panel')->default(true);

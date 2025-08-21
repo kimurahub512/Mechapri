@@ -20,30 +20,52 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
     const [showProgress, setShowProgress] = useState(false);
 
     useEffect(() => {
+        console.log('focusPurchaseId:', focusPurchaseId);
+        console.log('purchases:', purchases);
+        
         if (focusPurchaseId) {
             const p = purchases.find((x) => String(x.id) === String(focusPurchaseId));
+            console.log('Found purchase:', p);
+            
             if (p) {
+                console.log('Purchase details:', p);
+                console.log('nwps_reservation_no:', p.nwps_reservation_no);
+                console.log('nwps_upload_status:', p.nwps_upload_status);
+                
                 setSelectedPurchase(p);
-                // Open modal immediately; keep overlay until reservation ready
-                setShowQrModal(true);
-                setShowProgress(!p.nwps_reservation_no || p.nwps_upload_status !== 'ready');
+                // Show overlay if NWPS is processing or not ready yet
+                const shouldShowProgress = p.nwps_upload_status === 'processing' || (!p.nwps_reservation_no && p.nwps_upload_status !== 'ready');
+                console.log('shouldShowProgress:', shouldShowProgress);
+                setShowProgress(shouldShowProgress);
+                
+                // Only show QR modal if NWPS is ready
+                if (!shouldShowProgress) {
+                    setShowQrModal(true);
+                }
+            } else {
+                console.log('Purchase not found in purchases array');
             }
+        } else {
+            console.log('No focusPurchaseId provided');
         }
     }, [focusPurchaseId, purchases]);
 
     // Poll purchase status if in progress
     useEffect(() => {
         if (!showProgress || !selectedPurchase?.id) return;
+        console.log('Starting polling for purchase:', selectedPurchase.id);
         const interval = setInterval(async () => {
             try {
                 const { data } = await axios.get(`/api/purchasehistory/${selectedPurchase.id}`);
+                console.log('Polling result:', data);
                 setSelectedPurchase(data);
-                if (data.nwps_reservation_no) {
+                if (data.nwps_upload_status === 'ready') {
+                    console.log('NWPS ready, hiding overlay and showing QR modal');
                     setShowProgress(false);
                     setShowQrModal(true);
                 }
             } catch (e) {
-                // ignore
+                console.error('Polling error:', e);
             }
         }, 3000);
         return () => clearInterval(interval);

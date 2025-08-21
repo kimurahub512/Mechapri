@@ -18,6 +18,7 @@ class NWPSService
         $this->http = $client ?: new Client([
             'base_uri' => $this->baseUrl,
             'timeout' => config('nwps.timeout'),
+            'http_errors' => false, // Don't throw exceptions on HTTP error status codes
         ]);
     }
 
@@ -66,9 +67,30 @@ class NWPSService
         return $this->delete("/nwpsapi/v2/files/{$fileId}", $token);
     }
 
+    public function getLoginQrCode(string $token, ?string $couponCode = null): array
+    {
+        // Get QR code for convenience store login (requires existing token)
+        $uri = '/nwpsapi/v2/login/qrcode';
+        if ($couponCode) {
+            $uri .= '?coupon_code=' . urlencode($couponCode);
+        }
+        return $this->get($uri, $token);
+    }
+
     private function get(string $uri, ?string $token = null): array
     {
         $headers = $this->authHeaders($token);
+        $res = $this->http->get($uri, ['headers' => $headers]);
+        $responseBody = (string) $res->getBody();
+        return json_decode($responseBody, true) ?: [];
+    }
+
+    private function getUnauthenticated(string $uri): array
+    {
+        // For endpoints that don't require authentication
+        $headers = [
+            'Accept' => 'application/json',
+        ];
         $res = $this->http->get($uri, ['headers' => $headers]);
         return json_decode((string) $res->getBody(), true) ?: [];
     }
@@ -103,14 +125,16 @@ class NWPSService
     private function authHeaders(?string $token = null): array
     {
         $headers = [
-            'Accept' => 'application/json',
+            'Accept' => '*/*',
+            'Accept-Encoding' => 'gzip, deflate, br',
+            'Connection' => 'keep-alive',
+            'User-Agent' => 'PostmanRuntime/7.45.0',
         ];
 
         if ($token) {
             // NWPS expects X-NWPSToken header for authenticated requests
             $headers['X-NWPSToken'] = $token;
         }
-
         return $headers;
     }
 }

@@ -38,10 +38,10 @@ const AccountSetting = () => {
   // Map notification settings from database to UI
   const notificationMapping = {
     'notification_purchase': '商品が購入されたら通知を受け取る',
-    'notification_relist': '販売終了した商品の再販リクエスト',
+    // 'notification_relist': '販売終了した商品の再販リクエスト',
     'notification_follow': 'ユーザーからのフォロー',
     'notification_new_item': 'フォロー中のショップの新規出品',
-    'notification_medi_panel': 'メディパンネップリからのお知らせ'
+    'notification_medi_panel': '運営からのお知らせ'
   };
 
   // Check if email verification button should be disabled
@@ -604,10 +604,10 @@ const AccountSetting = () => {
                   <div className="flex flex-col items-start gap-[8px] self-stretch">
                     {[
                       '商品が購入されたら通知を受け取る',
-                      '販売終了した商品の再販リクエスト',
+                      // '販売終了した商品の再販リクエスト',
                       'ユーザーからのフォロー',
                       'フォロー中のショップの新規出品',
-                      'メディパンネップリからのお知らせ'
+                      '運営からのお知らせ'
                     ].map((text, idx) => (
                       <div key={idx} className="flex flex-col p-[14px_0] gap-[10px] self-stretch border-b border-[#E9E9E9]">
                         <div className="flex justify-between items-center self-stretch">
@@ -870,10 +870,10 @@ const AccountSetting = () => {
               <div className="flex flex-col items-start gap-[8px] self-stretch w-full">
                 {[
                   '商品が購入されたら通知を受け取る',
-                  '販売終了した商品の再販リクエスト',
+                  // '販売終了した商品の再販リクエスト',
                   'ユーザーからのフォロー',
                   'フォロー中のショップの新規出品',
-                  'メディパンネップリからのお知らせ'
+                  '運営からのお知らせ'
                 ].map((text, idx) => (
                   <div key={idx} className="flex flex-col p-[14px_0] gap-[10px] self-stretch border-b border-[#E9E9E9]" style={{ width: vw(311) }}>
                     <div className="flex justify-between items-center self-stretch">

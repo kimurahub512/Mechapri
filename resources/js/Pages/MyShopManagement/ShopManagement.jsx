@@ -27,8 +27,8 @@ const ShopManagement = () => {
         {/* Mobile Main Section */}
         <div className="md:hidden">
           <div className="flex flex-col items-start" style={{ gap: vw(32), paddingTop: vw(50), paddingBottom: vw(40), paddingLeft: vw(16), paddingRight: vw(16) }}>
-          <div className="flex flex-col items-start w-full" style={{ gap: vw(25) }}>
-            <h1 style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>さっそくはじめよう！</h1>
+            <div className="flex flex-col items-start w-full" style={{ gap: vw(25) }}>
+              <h1 style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>さっそくはじめよう！</h1>
               {/* First card */}
               <a href='/myshop/registerproduct' className="relative bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]" style={{ ...responsiveMetric(343, 108), paddingleft: vw(16) }}>
                 <div style={{ ...responsiveText(10, 16, null, 'normal', 'noto', '#272B2B'), ...responsivePosition(27, 16) }}>写真を商品登録</div>
@@ -42,8 +42,8 @@ const ShopManagement = () => {
                 </div>
               </a>
               {/* Second card */}
-              <div 
-                className="relative bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] cursor-pointer hover:shadow-[0_4px_36px_0_rgba(0,0,0,0.15)] transition-shadow" 
+              <div
+                className="relative bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] cursor-pointer hover:shadow-[0_4px_36px_0_rgba(0,0,0,0.15)] transition-shadow"
                 style={{ ...responsiveMetric(343, 108), paddingleft: vw(16) }}
                 onClick={() => router.visit('/myshop/edit')}
               >
@@ -54,77 +54,78 @@ const ShopManagement = () => {
                 </div>
                 <div className="absolute right-0 bottom-0 overflow-hidden" style={{ ...responsiveMetric(114, 108) }}>
                   <img src={sm_photo3} alt="shop info" style={{ ...responsiveMetric(117, 206), objectFit: 'cover', width: vw(117), height: vw(206) }} />
-              </div>
-              </div>
-            </div>
-          {/* Second container2 */}
-          <div className="flex flex-col items-start w-full  bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]" style={{ paddingTop: vw(20), paddingBottom: vw(20), paddingLeft: vw(16), paddingRight: vw(16), gap: vw(16)}}>
-            <div className="flex flex-col items-start w-full" style={{ gap: vw(16) }}>
-              <span style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>出金・売上の概要</span>
-              <div className="flex items-center" style={{ gap: vw(4), paddingTop: vw(12), paddingBottom: vw(12)}}>
-                <img src={list_unordered} alt="List" style={{ ...responsiveMetric(16, 16) }} />
-                <span style={{ ...responsiveText(14, 10, null, 'medium', 'noto', '#222') }}>詳細を見る</span>
-                <img src={arrow_right} alt="Arrow Right" style={{ ...responsiveMetric(20, 15) }} />
-              </div>
-            </div>
-            {/* frame 212 */}
-            <div className="flex flex-col items-start w-full" style={{ gap: vw(32) }}>
-              <div className="flex flex-col items-start" style={{ gap: vw(8) }}>
-                <span style={{ ...responsiveText(18, 23, null, 'medium', 'noto', '#363636') }}>収益残高</span>
-                <div className="flex items-baseline" style={{ gap: vw(2) }}>
-                  <span style={{ ...responsiveText(24, 26, null, 'bold', 'noto', '#363636') }}>0</span>
-                  <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#363636') }}>円</span>
                 </div>
-                  <div style={{ ...responsiveText(12, 19, null, 'normal', 'noto', '#272B2B') }}>販売手数料：15％ を差し引いた金額です。<br/>合計金額が5000円以上（お支払い基準額）の場合に、毎月支払いが行われます。</div>
               </div>
-              {/* container 2122 */}
-              <div className="flex flex-col items-start w-full" style={{ gap: vw(16), paddingBottom: vw(16) }}>
-                <div className="flex flex-col items-start w-full" style={{ gap: vw(16) }}>
-                  <span style={{ ...responsiveText(14, 14, null, 'bold', 'noto', '#363636'), marginTop: vw(12), marginBottom: vw(6) }}>今月の印刷・販売</span>
-                  <div className="flex flex-col items-start w-full" style={{ gap: vw(14) }}>
-                    <div className="flex flex-col items-start rounded-[10px] bg-[#F6F6F6] w-full" style={{ gap: vw(5), paddingRight: vw(16), paddingLeft: vw(16), paddingTop: vw(8), paddingBottom: vw(8)}}>
-                      <div className="flex flex-row items-center" style={{ gap: vw(6) }}>
-                        <img src={money_hand} alt="Money Hand" style={{...responsiveMetric(20, 20)}} />
-                        <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>販売売上</span>
-                    </div>
-                      <div className="flex items-baseline" style={{ gap: vw(2) }}>
-                        <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>0</span>
-                        <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>円</span>
+            </div>
+            {/* Second container2 */}
+            <div className="flex flex-col items-start w-full  bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]" style={{ paddingTop: vw(20), paddingBottom: vw(20), paddingLeft: vw(16), paddingRight: vw(16), gap: vw(16) }}>
+              <div className="flex flex-col items-start w-full" style={{ gap: vw(16) }}>
+                <span style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>出金・売上の概要</span>
+                <a href='/myshop/transaction' className="flex items-center" style={{ gap: vw(4), paddingTop: vw(12), paddingBottom: vw(12) }}>
+                  <img src={list_unordered} alt="List" style={{ ...responsiveMetric(16, 16) }} />
+                  <span style={{ ...responsiveText(14, 10, null, 'medium', 'noto', '#222') }}>詳細を見る</span>
+                  <img src={arrow_right} alt="Arrow Right" style={{ ...responsiveMetric(20, 15) }} />
+                </a>
+              </div>
+              {/* frame 212 */}
+              <div className="flex flex-col items-start w-full" style={{ gap: vw(32) }}>
+                <div className="flex flex-col items-start" style={{ gap: vw(8) }}>
+                  <span style={{ ...responsiveText(18, 23, null, 'medium', 'noto', '#363636') }}>収益残高</span>
+                  <div className="flex items-baseline" style={{ gap: vw(2) }}>
+                    <span style={{ ...responsiveText(24, 26, null, 'bold', 'noto', '#363636') }}>0</span>
+                    <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#363636') }}>円</span>
+                  </div>
+                  <div style={{ ...responsiveText(12, 19, null, 'normal', 'noto', '#272B2B') }}>販売手数料：15％ を差し引いた金額です。<br />合計金額が5000円以上（お支払い基準額）の場合に、毎月支払いが行われます。</div>
+                </div>
+                {/* container 2122 */}
+                <div className="flex flex-col items-start w-full" style={{ gap: vw(16), paddingBottom: vw(16) }}>
+                  <div className="flex flex-col items-start w-full" style={{ gap: vw(16) }}>
+                    <span style={{ ...responsiveText(14, 14, null, 'bold', 'noto', '#363636'), marginTop: vw(12), marginBottom: vw(6) }}>今月の印刷・販売</span>
+                    <div className="flex flex-col items-start w-full" style={{ gap: vw(14) }}>
+                      <div className="flex flex-col items-start rounded-[10px] bg-[#F6F6F6] w-full" style={{ gap: vw(5), paddingRight: vw(16), paddingLeft: vw(16), paddingTop: vw(8), paddingBottom: vw(8) }}>
+                        <div className="flex flex-row items-center" style={{ gap: vw(6) }}>
+                          <img src={money_hand} alt="Money Hand" style={{ ...responsiveMetric(20, 20) }} />
+                          <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>販売売上</span>
+                        </div>
+                        <div className="flex items-baseline" style={{ gap: vw(2) }}>
+                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>0</span>
+                          <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>円</span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex flex-col items-start rounded-[10px] bg-[#F6F6F6] w-full" style={{ gap: vw(5), paddingRight: vw(16), paddingLeft: vw(16), paddingTop: vw(8), paddingBottom: vw(8)}}>
-                      <div className="flex flex-row items-center" style={{ gap: vw(6) }}>
-                        <img src={complex} alt="Complex" style={{...responsiveMetric(20, 20)}} />
-                        <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
-                      </div>
-                      <div className="flex items-baseline" style={{ gap: vw(2) }}>
-                        <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>0</span>
-                        <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>枚</span>
+                      <div className="flex flex-col items-start rounded-[10px] bg-[#F6F6F6] w-full" style={{ gap: vw(5), paddingRight: vw(16), paddingLeft: vw(16), paddingTop: vw(8), paddingBottom: vw(8) }}>
+                        <div className="flex flex-row items-center" style={{ gap: vw(6) }}>
+                          <img src={complex} alt="Complex" style={{ ...responsiveMetric(20, 20) }} />
+                          <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
+                        </div>
+                        <div className="flex items-baseline" style={{ gap: vw(2) }}>
+                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>0</span>
+                          <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>枚</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-col items-start w-full" style={{ gap: vw(16) }}>
-                  <span style={{ ...responsiveText(14, 14, null, 'bold', 'noto', '#363636'), marginTop: vw(12), marginBottom: vw(6) }}>累計の印刷・販売</span>
-                  <div className="flex flex-col items-start w-full" style={{ gap: vw(14) }}>
-                    <div className="flex flex-col items-start rounded-[10px] bg-[#F6F6F6] w-full" style={{ gap: vw(5), paddingRight: vw(16), paddingLeft: vw(16), paddingTop: vw(8), paddingBottom: vw(8)}}>
-                      <div className="flex flex-row items-center" style={{ gap: vw(6) }}>
-                        <img src={money_hand} alt="Money Hand" style={{...responsiveMetric(20, 20)}} />
-                        <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>販売売上</span>
+                  <div className="flex flex-col items-start w-full" style={{ gap: vw(16) }}>
+                    <span style={{ ...responsiveText(14, 14, null, 'bold', 'noto', '#363636'), marginTop: vw(12), marginBottom: vw(6) }}>累計の印刷・販売</span>
+                    <div className="flex flex-col items-start w-full" style={{ gap: vw(14) }}>
+                      <div className="flex flex-col items-start rounded-[10px] bg-[#F6F6F6] w-full" style={{ gap: vw(5), paddingRight: vw(16), paddingLeft: vw(16), paddingTop: vw(8), paddingBottom: vw(8) }}>
+                        <div className="flex flex-row items-center" style={{ gap: vw(6) }}>
+                          <img src={money_hand} alt="Money Hand" style={{ ...responsiveMetric(20, 20) }} />
+                          <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>販売売上</span>
+                        </div>
+                        <div className="flex items-baseline" style={{ gap: vw(2) }}>
+                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>0</span>
+                          <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>円</span>
+                        </div>
                       </div>
-                      <div className="flex items-baseline" style={{ gap: vw(2) }}>
-                        <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>0</span>
-                        <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>円</span>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-start rounded-[10px] bg-[#F6F6F6] w-full" style={{ gap: vw(5), paddingRight: vw(16), paddingLeft: vw(16), paddingTop: vw(8), paddingBottom: vw(8)}}>
-                      <div className="flex flex-row items-center" style={{ gap: vw(6) }}>
-                        <img src={complex} alt="Complex" style={{...responsiveMetric(20, 20)}} />
-                        <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
-                      </div>
-                      <div className="flex items-baseline" style={{ gap: vw(2) }}>
-                        <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>0</span>
-                        <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>枚</span>
+                      <div className="flex flex-col items-start rounded-[10px] bg-[#F6F6F6] w-full" style={{ gap: vw(5), paddingRight: vw(16), paddingLeft: vw(16), paddingTop: vw(8), paddingBottom: vw(8) }}>
+                        <div className="flex flex-row items-center" style={{ gap: vw(6) }}>
+                          <img src={complex} alt="Complex" style={{ ...responsiveMetric(20, 20) }} />
+                          <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
+                        </div>
+                        <div className="flex items-baseline" style={{ gap: vw(2) }}>
+                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>0</span>
+                          <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>枚</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -132,7 +133,6 @@ const ShopManagement = () => {
               </div>
             </div>
           </div>
-        </div>
         </div>
         {/* Desktop Main Section */}
         <main className="hidden md:flex flex-col items-start justify-center" style={{ paddingTop: vwd(50), paddingBottom: vwd(40), paddingLeft: vwd(40), paddingRight: vwd(40), gap: vwd(32), width: vwd(928), marginLeft: vwd(55) }}>
@@ -152,8 +152,8 @@ const ShopManagement = () => {
                 </div>
               </a>
               {/* Second card */}
-              <div 
-                className="relative bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] cursor-pointer hover:shadow-[0_4px_36px_0_rgba(0,0,0,0.15)] transition-shadow" 
+              <div
+                className="relative bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] cursor-pointer hover:shadow-[0_4px_36px_0_rgba(0,0,0,0.15)] transition-shadow"
                 style={{ ...responsiveMetricD(420, 130), paddingleft: vwd(16) }}
                 onClick={() => router.visit('/myshop/edit')}
               >
@@ -169,15 +169,15 @@ const ShopManagement = () => {
             </div>
           </div>
           {/* Second container2 */}
-          <div className="flex flex-col items-start w-full  bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]" style={{ paddingTop: vwd(20), paddingBottom: vwd(20), paddingLeft: vwd(50), paddingRight: vwd(50), gap: vwd(16)}}>
+          <div className="flex flex-col items-start w-full  bg-white rounded-[10px] shadow-[0_4px_36px_0_rgba(0,0,0,0.10)]" style={{ paddingTop: vwd(20), paddingBottom: vwd(20), paddingLeft: vwd(50), paddingRight: vwd(50), gap: vwd(16) }}>
             <div className="flex flex-row items-start w-full justify-between">
               <span style={{ ...responsiveTextD(24, 37, 1.05, 'bold', 'noto', '#000') }}>出金・売上の概要</span>
-              <div className="flex items-center" style={{ gap: vwd(4), padding: vwd(12), width: vwd(152) }}>
+              <a href='/myshop/transaction' className="flex items-center" style={{ gap: vwd(4), padding: vwd(12), width: vwd(152) }}>
                 <img src={list_unordered} alt="List" style={{ ...responsiveMetricD(16, 16) }} />
                 <span style={{ ...responsiveTextD(14, 10, null, 'medium', 'noto', '#222') }}>詳細を見る</span>
                 <img src={arrow_right} alt="Arrow Right" style={{ ...responsiveMetricD(20, 15) }} />
-                    </div>
-                  </div>
+              </a>
+            </div>
             {/* frame 212 */}
             <div className="flex flex-col items-start w-full" style={{ gap: vwd(32) }}>
               <div className="flex flex-col items-start" style={{ gap: vwd(8) }}>
@@ -187,7 +187,7 @@ const ShopManagement = () => {
                   <span style={{ ...responsiveTextD(18, 30, null, 'normal', 'noto', '#363636') }}>円</span>
                 </div>
                 <div className="flex flex-col" style={{ gap: vwd(8) }}>
-                  <div style={{ ...responsiveTextD(12, 19, null, 'normal', 'noto', '#272B2B') }}>販売手数料：15％ を差し引いた金額です。<br/>合計金額が5000円以上（お支払い基準額）の場合に、毎月支払いが行われます。</div>
+                  <div style={{ ...responsiveTextD(12, 19, null, 'normal', 'noto', '#272B2B') }}>販売手数料：15％ を差し引いた金額です。<br />合計金額が5000円以上（お支払い基準額）の場合に、毎月支払いが行われます。</div>
                 </div>
               </div>
               {/* container 2122 */}
@@ -197,17 +197,17 @@ const ShopManagement = () => {
                   <div className="flex flex-row items-start w-full justify-between">
                     <div className="flex flex-col items-start rounded-[10px] bg-[#F6F6F6]" style={{ gap: vwd(5), paddingRight: vwd(16), paddingLeft: vwd(16), paddingTop: vwd(8), paddingBottom: vwd(8), width: vwd(368) }}>
                       <div className="flex flex-row items-center" style={{ gap: vwd(6) }}>
-                        <img src={money_hand} alt="Money Hand" style={{...responsiveMetricD(20, 20)}} />
+                        <img src={money_hand} alt="Money Hand" style={{ ...responsiveMetricD(20, 20) }} />
                         <span style={{ ...responsiveTextD(16, 32, null, 'bold', 'noto', '#272B2B') }}>販売売上</span>
                       </div>
                       <div className="flex items-baseline" style={{ gap: vwd(2) }}>
                         <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>0</span>
                         <span style={{ ...responsiveTextD(14, 21, 0.7, 'normal', 'noto', '#222') }}>円</span>
                       </div>
-                        </div>
+                    </div>
                     <div className="flex flex-col items-start rounded-[10px] bg-[#F6F6F6]" style={{ gap: vwd(5), paddingRight: vwd(16), paddingLeft: vwd(16), paddingTop: vwd(8), paddingBottom: vwd(8), width: vwd(368) }}>
                       <div className="flex flex-row items-center" style={{ gap: vwd(6) }}>
-                        <img src={complex} alt="Complex" style={{...responsiveMetricD(20, 20)}} />
+                        <img src={complex} alt="Complex" style={{ ...responsiveMetricD(20, 20) }} />
                         <span style={{ ...responsiveTextD(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
                       </div>
                       <div className="flex items-baseline" style={{ gap: vwd(2) }}>
@@ -216,15 +216,15 @@ const ShopManagement = () => {
                       </div>
                     </div>
                   </div>
-                          </div>
+                </div>
                 <div className="flex flex-col items-start w-full" style={{ gap: vwd(16) }}>
                   <span style={{ ...responsiveTextD(20, 28, null, 'bold', 'noto', '#363636'), marginTop: vwd(25), marginBottom: vwd(6) }}>累計の印刷・販売</span>
                   <div className="flex flex-row items-start w-full justify-between">
                     <div className="flex flex-col items-start rounded-[10px] bg-[#F6F6F6]" style={{ gap: vwd(5), paddingRight: vwd(16), paddingLeft: vwd(16), paddingTop: vwd(8), paddingBottom: vwd(8), width: vwd(368) }}>
                       <div className="flex flex-row items-center" style={{ gap: vwd(6) }}>
-                        <img src={money_hand} alt="Money Hand" style={{...responsiveMetricD(20, 20)}} />
+                        <img src={money_hand} alt="Money Hand" style={{ ...responsiveMetricD(20, 20) }} />
                         <span style={{ ...responsiveTextD(16, 32, null, 'bold', 'noto', '#272B2B') }}>販売売上</span>
-                          </div>
+                      </div>
                       <div className="flex items-baseline" style={{ gap: vwd(2) }}>
                         <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>0</span>
                         <span style={{ ...responsiveTextD(14, 21, 0.7, 'normal', 'noto', '#222') }}>円</span>
@@ -232,9 +232,9 @@ const ShopManagement = () => {
                     </div>
                     <div className="flex flex-col items-start rounded-[10px] bg-[#F6F6F6]" style={{ gap: vwd(5), paddingRight: vwd(16), paddingLeft: vwd(16), paddingTop: vwd(8), paddingBottom: vwd(8), width: vwd(368) }}>
                       <div className="flex flex-row items-center" style={{ gap: vwd(6) }}>
-                        <img src={complex} alt="Complex" style={{...responsiveMetricD(20, 20)}} />
+                        <img src={complex} alt="Complex" style={{ ...responsiveMetricD(20, 20) }} />
                         <span style={{ ...responsiveTextD(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
-                          </div>
+                      </div>
                       <div className="flex items-baseline" style={{ gap: vwd(2) }}>
                         <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>0</span>
                         <span style={{ ...responsiveTextD(14, 21, 0.7, 'normal', 'noto', '#222') }}>枚</span>

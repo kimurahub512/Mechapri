@@ -45,7 +45,7 @@ const HomeLogin = ({
             <Header />
             {/* Desktop Main Section */}
             <main className="hidden md:flex flex-col items-center px-[120px] py-[32px] w-full">
-                <div className="flex flex-row items-center justify-between p-[10px] w-full border-b border-solid border-[#DCDCDC]">
+                {/* <div className="flex flex-row items-center justify-between p-[10px] w-full border-b border-solid border-[#DCDCDC]">
                     <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">
                         おすすめ写真
                     </span>
@@ -66,7 +66,7 @@ const HomeLogin = ({
                         isMobile={false}
                         haveAccount={true}
                     />
-                </div>
+                </div> */}
                 <div className="flex flex-row items-center justify-between p-[10px] w-full border-b border-solid border-[#DCDCDC]">
                     <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">
                         お気に入りショップの新着写真
@@ -147,7 +147,7 @@ const HomeLogin = ({
             </main>
             {/* Mobile Main Section */}
             <section className="flex flex-col items-start py-[24px] px-[16px] w-full bg-white md:hidden">
-                <div className="md:hidden flex flex-col items-start gap-[8px] w-full">
+                {/* <div className="md:hidden flex flex-col items-start gap-[8px] w-full">
                     <div className="flex flex-col items-left pt-[12px] gap-[6px] w-full border-b border-solid border-[#DCDCDC]">
                         <span className="text-[#363636] font-noto text-[14px] font-bold leading-[14px]">
                             おすすめ写真
@@ -163,12 +163,11 @@ const HomeLogin = ({
                             <img src={arrow} alt="arrow" className="w-[16px] h-[16px] " />
                         </div>
                     </div>
-                    {/* 212: Product List */}
                     <ProductCarousel
                         products={recommendedProducts}
                         isMobile={true}
                     />
-                </div>
+                </div> */}
                 <div className="md:hidden flex flex-col items-start gap-[8px] w-full">
                     <div className="flex flex-col items-left pt-[12px] gap-[6px] w-full border-b border-solid border-[#DCDCDC]">
                         <span className="text-[#363636] font-noto text-[14px] font-bold leading-[14px]">

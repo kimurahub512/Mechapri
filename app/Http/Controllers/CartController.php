@@ -48,7 +48,7 @@ class CartController extends Controller
 
     public function update(Request $request, CartItem $cartItem)
     {
-        Log::info('CartController::update called', [
+        \Illuminate\Support\Facades\Log::info('CartController::update called', [
             'cartItem_id' => $cartItem->id,
             'user_id' => Auth::id(),
             'cartItem_user_id' => $cartItem->user_id,
@@ -60,7 +60,7 @@ class CartController extends Controller
         ]);
 
         if ($cartItem->user_id !== Auth::id()) {
-            Log::warning('Unauthorized cart update attempt', [
+            \Illuminate\Support\Facades\Log::warning('Unauthorized cart update attempt', [
                 'cartItem_id' => $cartItem->id,
                 'user_id' => Auth::id(),
                 'cartItem_user_id' => $cartItem->user_id
@@ -75,7 +75,7 @@ class CartController extends Controller
             'quantity' => $request->quantity
         ]);
 
-        Log::info('Cart item updated successfully', [
+        \Illuminate\Support\Facades\Log::info('Cart item updated successfully', [
             'cartItem_id' => $cartItem->id,
             'new_quantity' => $request->quantity
         ]);

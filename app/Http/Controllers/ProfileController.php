@@ -75,12 +75,12 @@ class ProfileController extends Controller
             'email' => $user->email,
             'notification_settings' => [
                 'notification_purchase' => $user->notification_purchase,
-                'notification_relist' => $user->notification_relist,
+                // 'notification_relist' => $user->notification_relist,
                 'notification_follow' => $user->notification_follow,
                 'notification_new_item' => $user->notification_new_item,
                 'notification_medi_panel' => $user->notification_medi_panel,
                 'email_notification_purchase' => $user->email_notification_purchase,
-                'email_notification_relist' => $user->email_notification_relist,
+                // 'email_notification_relist' => $user->email_notification_relist,
                 'email_notification_follow' => $user->email_notification_follow,
                 'email_notification_new_item' => $user->email_notification_new_item,
                 'email_notification_medi_panel' => $user->email_notification_medi_panel,
@@ -99,12 +99,12 @@ class ProfileController extends Controller
             'name' => 'required|string|max:20',
             'notification_settings' => 'required|array',
             'notification_settings.notification_purchase' => 'boolean',
-            'notification_settings.notification_relist' => 'boolean',
+            // 'notification_settings.notification_relist' => 'boolean',
             'notification_settings.notification_follow' => 'boolean',
             'notification_settings.notification_new_item' => 'boolean',
             'notification_settings.notification_medi_panel' => 'boolean',
             'notification_settings.email_notification_purchase' => 'boolean',
-            'notification_settings.email_notification_relist' => 'boolean',
+            // 'notification_settings.email_notification_relist' => 'boolean',
             'notification_settings.email_notification_follow' => 'boolean',
             'notification_settings.email_notification_new_item' => 'boolean',
             'notification_settings.email_notification_medi_panel' => 'boolean',
@@ -113,15 +113,24 @@ class ProfileController extends Controller
         try {
             $user->name = $request->name;
             $user->notification_purchase = $request->notification_settings['notification_purchase'];
-            $user->notification_relist = $request->notification_settings['notification_relist'];
+            // $user->notification_relist = $request->notification_settings['notification_relist'];
             $user->notification_follow = $request->notification_settings['notification_follow'];
             $user->notification_new_item = $request->notification_settings['notification_new_item'];
             $user->notification_medi_panel = $request->notification_settings['notification_medi_panel'];
-            $user->email_notification_purchase = $request->notification_settings['email_notification_purchase'];
-            $user->email_notification_relist = $request->notification_settings['email_notification_relist'];
-            $user->email_notification_follow = $request->notification_settings['email_notification_follow'];
-            $user->email_notification_new_item = $request->notification_settings['email_notification_new_item'];
-            $user->email_notification_medi_panel = $request->notification_settings['email_notification_medi_panel'];
+            // $user->email_notification_relist = $request->notification_settings['email_notification_relist'];
+            // Handle email notification settings if provided, otherwise keep existing values
+            if (isset($request->notification_settings['email_notification_purchase'])) {
+                $user->email_notification_purchase = $request->notification_settings['email_notification_purchase'];
+            }
+            if (isset($request->notification_settings['email_notification_follow'])) {
+                $user->email_notification_follow = $request->notification_settings['email_notification_follow'];
+            }
+            if (isset($request->notification_settings['email_notification_new_item'])) {
+                $user->email_notification_new_item = $request->notification_settings['email_notification_new_item'];
+            }
+            if (isset($request->notification_settings['email_notification_medi_panel'])) {
+                $user->email_notification_medi_panel = $request->notification_settings['email_notification_medi_panel'];
+            }
             $user->save();
 
             return response()->json([

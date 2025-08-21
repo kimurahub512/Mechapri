@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\UserPurchasedProduct;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -22,6 +23,7 @@ class PurchaseHistoryController extends Controller
                     'purchase_time' => optional($p->purchase_time)->format('Y/m/d H:i'),
                     'nwps_reservation_no' => $p->nwps_reservation_no,
                     'nwps_upload_status' => $p->nwps_upload_status,
+                    'nwps_qr_code_url' => $p->nwps_qr_code_url,
                     'print_expires_at' => optional($p->print_expires_at)->format('Y/m/d'),
                     'product' => [
                         'id' => $p->productBatch->id,
@@ -36,9 +38,16 @@ class PurchaseHistoryController extends Controller
                 ];
             });
 
+        $focusPurchaseId = $request->query('purchase_id');
+        \Illuminate\Support\Facades\Log::info('PurchaseHistory index called', [
+            'purchase_id' => $focusPurchaseId,
+            'purchases_count' => $purchases->count(),
+            'purchase_ids' => $purchases->pluck('id')->toArray()
+        ]);
+        
         return Inertia::render('PurchaseHistory', [
             'purchases' => $purchases,
-            'focusPurchaseId' => $request->query('purchase_id'),
+            'focusPurchaseId' => $focusPurchaseId,
         ]);
     }
 
@@ -55,6 +64,7 @@ class PurchaseHistoryController extends Controller
             'purchase_time' => optional($p->purchase_time)->format('Y/m/d H:i'),
             'nwps_reservation_no' => $p->nwps_reservation_no,
             'nwps_upload_status' => $p->nwps_upload_status,
+            'nwps_qr_code_url' => $p->nwps_qr_code_url,
             'print_expires_at' => optional($p->print_expires_at)->format('Y/m/d'),
             'product' => [
                 'id' => $p->productBatch->id,

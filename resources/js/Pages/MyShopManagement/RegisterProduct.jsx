@@ -67,7 +67,7 @@ const RegisterProduct = () => {
     const [isPaid, setIsPaid] = useState(editMode && productBatch ? productBatch.price > 0 : true); // true for 有料, false for 無料
     const [isUnlimited, setIsUnlimited] = useState(editMode && productBatch ? !productBatch.sales_limit : true); // true for 無制限, false for 販売数を指定
     const [displayMode, setDisplayMode] = useState(editMode && productBatch ? productBatch.display_mode : 'normal'); // 'normal', 'gacha', 'blur', 'password', 'cushion'
-    const [addToCategory, setAddToCategory] = useState(editMode && productBatch ? productBatch.add_category : false); // true for 商品カテゴリに追加, false for 追加しない
+    const [addToCategory, setAddToCategory] = useState(editMode && productBatch ? (productBatch.add_category || (productBatch.categories && productBatch.categories.length > 0)) : false); // true for 商品カテゴリに追加, false for 追加しない
     const [selectedCategories, setSelectedCategories] = useState(editMode && productBatch && productBatch.categories ? productBatch.categories.map(c => c.id) : []); // Array of selected category IDs
     const [printSerial, setPrintSerial] = useState(editMode && productBatch ? productBatch.sn_print : true); // true for 印字する, false for 印字しない
     const [serialFormat, setSerialFormat] = useState(editMode && productBatch ? productBatch.sn_format : 'number'); // 'number' for 発行枚数を表示, 'random' for 乱数6文字で表示
