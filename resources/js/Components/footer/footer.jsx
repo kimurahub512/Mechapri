@@ -100,9 +100,9 @@ const Footer = () => {
               ご利用について
             </div>
             <div className="flex flex-col" style={{gap: vwd(12)}}>
-              <div className='whitespace-nowrap' style={{...responsiveTextD(13, 20, null, 'semibold', 'noto', '#FFF')}}>
+              <a href='howtoprint' className='whitespace-nowrap' style={{...responsiveTextD(13, 20, null, 'semibold', 'noto', '#FFF')}}>
                 ネットワークプリントの使い方
-              </div>
+              </a>
               <div className='whitespace-nowrap' style={{...responsiveTextD(13, 20, null, 'semibold', 'noto', '#FFF')}}>
                 X連携の権限について
               </div>
@@ -210,9 +210,9 @@ const Footer = () => {
               ご利用について
             </div>
             <div className="flex flex-col" style={{gap: vw(12)}}>
-              <div style={{...responsiveText(13, 20, null, 'medium', 'noto', '#FFF')}}>
+              <a href='/howtoprint' style={{...responsiveText(13, 20, null, 'medium', 'noto', '#FFF')}}>
                 ネットワークプリントの使い方
-              </div>
+              </a>
               <div className='whitespace-nowrap' style={{...responsiveText(13, 20, null, 'medium', 'noto', '#FFF')}}>
                  X連携の権限について
               </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import sm_hero from '@/assets/images/sm_hero.png';
+import default_user from '@/assets/images/default-user.png';
 import mountain from '@/assets/images/mountain.svg';
 import list_unordered from '@/assets/images/list_unordered.svg';
 import p_circle from '@/assets/images/p_circle.svg';
@@ -22,7 +22,7 @@ const ShopMobileTopBlocks = () => {
           <div className="shopmanagement-mobile-header-left">
             <img
               className="shopmanagement-mobile-hero"
-              src={auth?.user?.image || sm_hero}
+              src={auth?.user?.image || default_user}
               alt="Shop Hero"
             />
             <span className="shopmanagement-mobile-title">{auth?.user?.name}’s SHOP</span>

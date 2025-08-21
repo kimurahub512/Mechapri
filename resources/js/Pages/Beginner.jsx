@@ -36,7 +36,7 @@ export default function Beginner() {
               }}
             />
             <div className="beginner-hero-gradient" />
-            <div className="beginner-hero-center-title">ネットワークプリントの使い方</div>
+            <div className="beginner-hero-center-title">かんたん出品ガイド</div>
           </div>
           <div className="beginner-hero-content">
             <h2 className="beginner-hero-title">めちゃプリとは</h2>
@@ -247,10 +247,10 @@ export default function Beginner() {
               </div>
             </div>
           </div>
-        </div>
         <div className="beginner-productinfo-cta-section">
           <div className="beginner-productinfo-cta-title">今すぐめちゃプリを体験！</div>
-          <button className="beginner-productinfo-cta-btn">出品をはじめる</button>
+          <a href="/myshop/registerproduct" className="beginner-productinfo-cta-btn">出品をはじめる</a>
+        </div>
         </div>
         {/* Mobile Hero Section */}
         <div className="beginner-hero-mobile-section">
@@ -260,7 +260,7 @@ export default function Beginner() {
               alt="beginner hero"
             />
             <span className="beginner-hero-image-mobile-text">
-              ネットワークプリントの使い方
+            かんたん出品ガイド
             </span>
           </div>
           <div className="beginner-hero-mobile-subtext">
@@ -450,7 +450,7 @@ export default function Beginner() {
         </div>
         <div className="beginner-mobile-cta-section md:hidden" >
           <div className="beginner-mobile-cta-title">今すぐめちゃプリを体験！</div>
-          <button className="beginner-mobile-cta-btn">出品をはじめる</button>
+          <a href="/myshop/registerproduct" className="beginner-mobile-cta-btn">出品をはじめる</a>
         </div>
         <Footer />
         </>

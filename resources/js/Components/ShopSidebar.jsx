@@ -1,5 +1,5 @@
 import React from 'react';
-import sm_hero from '@/assets/images/sm_hero.png';
+import default_user from '@/assets/images/default-user.png';
 import pen_paper from '@/assets/images/pen_paper.svg';
 import shop from '@/assets/images/Slider_03.svg';
 import select_multiple from '@/assets/images/select_multiple.svg';
@@ -25,7 +25,7 @@ const ShopSidebar = () => {
         <div className="flex flex-col items-center border-b-[0.999px] border-[#E9E9E9]" style={{ gap: vwd(16), paddingBottom: vwd(16) }}>
           <img
             style={{ ...responsiveMetricD(96, 96), borderRadius: vwd(76), objectFit: 'cover' }}
-            src={auth?.user?.image || sm_hero}
+            src={auth?.user?.image || default_user}
             alt="Shop Hero"
           />
           <div style={{ ...responsiveTextD(21, 24), fontWeight: 700, color: '#222', textAlign: 'center' }}>{auth?.user?.name}’s SHOP</div>
