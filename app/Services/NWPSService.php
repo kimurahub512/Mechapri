@@ -80,8 +80,10 @@ class NWPSService
     private function get(string $uri, ?string $token = null): array
     {
         $headers = $this->authHeaders($token);
+        // Log::info('NWPS GET request', ['uri' => $uri, 'base_url' => $this->baseUrl]);
         $res = $this->http->get($uri, ['headers' => $headers]);
         $responseBody = (string) $res->getBody();
+        // Log::info('NWPS GET response', ['uri' => $uri, 'status' => $res->getStatusCode(), 'body_length' => strlen($responseBody)]);
         return json_decode($responseBody, true) ?: [];
     }
 
@@ -105,11 +107,14 @@ class NWPSService
     private function postJson(string $uri, array $json, ?string $token = null): array
     {
         $headers = $this->authHeaders($token);
+        // Log::info('NWPS POST request', ['uri' => $uri, 'base_url' => $this->baseUrl, 'payload' => $json]);
         $res = $this->http->post($uri, [
             'headers' => $headers,
             'json' => $json,
         ]);
-        return json_decode((string) $res->getBody(), true) ?: [];
+        $responseBody = (string) $res->getBody();
+        // Log::info('NWPS POST response', ['uri' => $uri, 'status' => $res->getStatusCode(), 'body_length' => strlen($responseBody)]);
+        return json_decode($responseBody, true) ?: [];
     }
 
     private function postMultipart(string $uri, string $token, array $multipart): array

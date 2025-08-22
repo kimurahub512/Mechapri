@@ -25,28 +25,34 @@ class UploadToNWPSJob implements ShouldQueue
 
     public function handle(NWPSService $nwps): void
     {
-        \Illuminate\Support\Facades\Log::info('NWPS Job started', ['purchase_id' => $this->purchaseId]);
+        // Temporarily disable logging to avoid permission issues
+        // \Illuminate\Support\Facades\Log::info('NWPS Job started', [
+        //     'purchase_id' => $this->purchaseId,
+        //     'job_id' => $this->job->getJobId(),
+        //     'queue' => $this->queue,
+        //     'attempt' => $this->attempts()
+        // ]);
         
         $purchase = UserPurchasedProduct::find($this->purchaseId);
         if (!$purchase) {
-            \Illuminate\Support\Facades\Log::error('Purchase not found', ['purchase_id' => $this->purchaseId]);
+            // \Illuminate\Support\Facades\Log::error('Purchase not found', ['purchase_id' => $this->purchaseId]);
             return;
         }
 
         $product = ProductBatch::with('files')->find($purchase->batch_id);
         if (!$product) {
-            \Illuminate\Support\Facades\Log::error('Product not found', ['batch_id' => $purchase->batch_id]);
+            // \Illuminate\Support\Facades\Log::error('Product not found', ['batch_id' => $purchase->batch_id]);
             return;
         }
         
-        \Illuminate\Support\Facades\Log::info('Found product and purchase', [
-            'product_id' => $product->id,
-            'files_count' => $product->files->count()
-        ]);
+        // \Illuminate\Support\Facades\Log::info('Found product and purchase', [
+        //     'product_id' => $product->id,
+        //     'files_count' => $product->files->count()
+        // ]);
 
         try {
             // 1) Guest login
-            \Illuminate\Support\Facades\Log::info('Starting NWPS guest login');
+            // \Illuminate\Support\Facades\Log::info('Starting NWPS guest login');
             $days = (int) config('nwps.guest_token_days', 30);
             $login = $nwps->guestLogin('Web', [
                 'os' => php_uname('s') ?: 'PHP',
@@ -54,30 +60,30 @@ class UploadToNWPSJob implements ShouldQueue
                 'model' => php_uname('n') ?: 'Server',
             ], $days);
             
-            \Illuminate\Support\Facades\Log::info('NWPS guest login response', ['login' => $login]);
+            // \Illuminate\Support\Facades\Log::info('NWPS guest login response', ['login' => $login]);
 
             $token = $login['token'] ?? ($login['access_token'] ?? null);
             if (!$token) {
-                \Illuminate\Support\Facades\Log::error('No token received from NWPS login');
+                // \Illuminate\Support\Facades\Log::error('No token received from NWPS login');
                 $purchase->update(['nwps_upload_status' => 'failed']);
                 return;
             }
             
-            \Illuminate\Support\Facades\Log::info('Token received, updating purchase', ['token' => $token]);
+            // \Illuminate\Support\Facades\Log::info('Token received, updating purchase', ['token' => $token]);
             $purchase->update([
                 'nwps_token' => $token,
                 'nwps_token_expires_at' => now()->addDays($days),
             ]);
 
             // 2) Register image(s) by URL (filesfromurl/image)
-            \Illuminate\Support\Facades\Log::info('Starting file registration', ['files_count' => $product->files->count()]);
+            // \Illuminate\Support\Facades\Log::info('Starting file registration', ['files_count' => $product->files->count()]);
             $fileId = null;
             foreach ($product->files as $index => $file) {
-                \Illuminate\Support\Facades\Log::info('Registering file', [
-                    'file_index' => $index,
-                    'file_url' => $file->url,
-                    'file_name' => $file->original_name ?? basename($file->file_path)
-                ]);
+                // \Illuminate\Support\Facades\Log::info('Registering file', [
+                //     'file_index' => $index,
+                //     'file_url' => $file->url,
+                //     'file_name' => $file->original_name ?? basename($file->file_path)
+                // ]);
                 
                 $data = [
                     'file_url' => $file->url,
@@ -86,11 +92,12 @@ class UploadToNWPSJob implements ShouldQueue
                     'printing_limit' => 3,
                 ];
                 $registered = $nwps->registerFileFromUrl($token, $data);
-                \Illuminate\Support\Facades\Log::info('File registration response', ['registered' => $registered]);
+                // \Illuminate\Support\Facades\Log::info('File registration response', ['registered' => $registered]);
                 $fileId = $registered['file_id'] ?? $fileId;
             }
 
             if (!$fileId) {
+                // \Illuminate\Support\Facades\Log::error('No file ID received from NWPS registration');
                 $purchase->update(['nwps_upload_status' => 'failed']);
                 return;
             }
@@ -145,7 +152,7 @@ class UploadToNWPSJob implements ShouldQueue
                 $purchase->update(['nwps_upload_status' => 'processing']);
             }
         } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::error('NWPS upload failed: ' . $e->getMessage());
+            // \Illuminate\Support\Facades\Log::error('NWPS upload failed: ' . $e->getMessage());
             $purchase->update(['nwps_upload_status' => 'failed']);
         }
     }
