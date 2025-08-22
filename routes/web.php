@@ -20,8 +20,12 @@ Route::get('/api/watermarked-image/{path}', function($path) {
     Log::info('Request URL: ' . request()->url());
     Log::info('Request method: ' . request()->method());
     
+    // Handle both encoded and unencoded paths
     $decodedPath = urldecode($path);
     Log::info('Decoded path: ' . $decodedPath);
+    
+    // Also try the original path in case it's already unencoded
+    $originalPath = $path;
     
     // Validate the path to prevent directory traversal
     if (str_contains($decodedPath, '..') || !str_starts_with($decodedPath, 'product-batches/')) {
@@ -30,15 +34,22 @@ Route::get('/api/watermarked-image/{path}', function($path) {
     }
     
     try {
-        // Check if original file exists
-        if (!Storage::disk('public')->exists($decodedPath)) {
-            Log::error('Original image file not found: ' . $decodedPath);
+        // Check if original file exists - try both decoded and original path
+        $finalPath = null;
+        if (Storage::disk('public')->exists($decodedPath)) {
+            $finalPath = $decodedPath;
+            Log::info('Using decoded path: ' . $decodedPath);
+        } elseif (Storage::disk('public')->exists($originalPath)) {
+            $finalPath = $originalPath;
+            Log::info('Using original path: ' . $originalPath);
+        } else {
+            Log::error('Original image file not found for both paths: ' . $decodedPath . ' and ' . $originalPath);
             return response('Original image not found: ' . $decodedPath, 404);
         }
         
         Log::info('Original image exists, creating watermarked version');
         $watermarkService = app(\App\Services\ImageWatermarkService::class);
-        $watermarkedPath = $watermarkService->createWatermarkedImage($decodedPath);
+        $watermarkedPath = $watermarkService->createWatermarkedImage($finalPath);
         
         Log::info('Watermark service returned path: ' . ($watermarkedPath ?: 'null'));
         
