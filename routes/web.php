@@ -19,6 +19,52 @@ Route::get('/api/test', function() {
     return response('Test route working!');
 });
 
+// Route to serve watermarked images directly
+Route::get('/api/watermarked-image/{path}', function($path) {
+    Log::info('Watermark route called with path: ' . $path);
+    
+    $decodedPath = urldecode($path);
+    Log::info('Decoded path: ' . $decodedPath);
+    
+    // Validate the path to prevent directory traversal
+    if (str_contains($decodedPath, '..') || !str_starts_with($decodedPath, 'product-batches/')) {
+        Log::info('Path validation failed');
+        return response('Invalid path: ' . $decodedPath, 404);
+    }
+    
+    try {
+        $watermarkService = app(\App\Services\ImageWatermarkService::class);
+        $watermarkedPath = $watermarkService->createWatermarkedImage($decodedPath);
+        
+        if ($watermarkedPath && Storage::disk('public')->exists($watermarkedPath)) {
+            $fullPath = Storage::disk('public')->path($watermarkedPath);
+            
+            // Use a simple MIME type detection
+            $extension = pathinfo($fullPath, PATHINFO_EXTENSION);
+            $mimeType = match($extension) {
+                'jpg', 'jpeg' => 'image/jpeg',
+                'png' => 'image/png',
+                'gif' => 'image/gif',
+                'webp' => 'image/webp',
+                default => 'image/jpeg'
+            };
+            
+            Log::info('Serving watermarked image: ' . $watermarkedPath);
+            return response()->file($fullPath, [
+                'Content-Type' => $mimeType,
+                'Cache-Control' => 'no-cache, no-store, must-revalidate',
+                'Pragma' => 'no-cache',
+                'Expires' => '0'
+            ]);
+        } else {
+            Log::error('Watermarked image not found: ' . $watermarkedPath);
+            return response('Image not found', 404);
+        }
+    } catch (\Exception $e) {
+        Log::error('Error serving watermarked image: ' . $e->getMessage());
+        return response('Error: ' . $e->getMessage(), 500);
+    }
+})->where('path', '.*')->name('watermarked.image');
 
 
 

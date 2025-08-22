@@ -12,6 +12,7 @@ use App\Mail\NewItemNotificationMail;
 use App\Mail\RelistNotificationMail;
 use App\Mail\MediPanelNotificationMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class NotificationService
 {
@@ -49,7 +50,7 @@ class NotificationService
             try {
                 Mail::to($seller->email)->send(new PurchaseNotificationMail($notification));
             } catch (\Exception $e) {
-                \Log::error('Failed to send purchase notification email: ' . $e->getMessage());
+                Log::error('Failed to send purchase notification email: ' . $e->getMessage());
             }
         }
     }
@@ -82,7 +83,7 @@ class NotificationService
             try {
                 Mail::to($seller->email)->send(new RelistNotificationMail($notification));
             } catch (\Exception $e) {
-                \Log::error('Failed to send relist notification email: ' . $e->getMessage());
+                Log::error('Failed to send relist notification email: ' . $e->getMessage());
             }
         }
     }
@@ -113,7 +114,7 @@ class NotificationService
             try {
                 Mail::to($followedUser->email)->send(new FollowNotificationMail($notification));
             } catch (\Exception $e) {
-                \Log::error('Failed to send follow notification email: ' . $e->getMessage());
+                Log::error('Failed to send follow notification email: ' . $e->getMessage());
             }
         }
     }
@@ -147,7 +148,7 @@ class NotificationService
                 try {
                     Mail::to($follower->email)->send(new NewItemNotificationMail($notification));
                 } catch (\Exception $e) {
-                    \Log::error('Failed to send new item notification email: ' . $e->getMessage());
+                    Log::error('Failed to send new item notification email: ' . $e->getMessage());
                 }
             }
         }
@@ -176,7 +177,7 @@ class NotificationService
             try {
                 Mail::to($user->email)->send(new MediPanelNotificationMail($notification));
             } catch (\Exception $e) {
-                \Log::error('Failed to send medi panel notification email: ' . $e->getMessage());
+                Log::error('Failed to send medi panel notification email: ' . $e->getMessage());
             }
         }
     }
@@ -242,7 +243,7 @@ class NotificationService
                         Mail::to($user->email)->send(new $mailClass($notification));
                     }
                 } catch (\Exception $e) {
-                    \Log::error('Failed to send bulk notification email: ' . $e->getMessage());
+                    Log::error('Failed to send bulk notification email: ' . $e->getMessage());
                 }
             }
         }

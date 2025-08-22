@@ -20,6 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Test route to verify API routes are working
+Route::get('/test-watermark', function() {
+    return response('API routes are working!');
+});
+
 // Route to serve watermarked images directly
 Route::get('/watermarked-image/{path}', function($path) {
     Log::info('Watermark route called with path: ' . $path);
