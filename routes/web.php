@@ -14,14 +14,11 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Auth\Access\AuthorizationException;
 
-// Test route to check if routing is working
-Route::get('/api/test', function() {
-    return response('Test route working!');
-});
-
-// Route to serve watermarked images directly
+// Route to serve watermarked images directly - MUST BE FIRST
 Route::get('/api/watermarked-image/{path}', function($path) {
     Log::info('Watermark route called with path: ' . $path);
+    Log::info('Request URL: ' . request()->url());
+    Log::info('Request method: ' . request()->method());
     
     $decodedPath = urldecode($path);
     Log::info('Decoded path: ' . $decodedPath);
@@ -65,6 +62,16 @@ Route::get('/api/watermarked-image/{path}', function($path) {
         return response('Error: ' . $e->getMessage(), 500);
     }
 })->where('path', '.*')->name('watermarked.image');
+
+// Test route to check if routing is working
+Route::get('/api/test', function() {
+    return response('Test route working!');
+});
+
+// Simple test route for watermarked images
+Route::get('/api/watermark-test', function() {
+    return response('Watermark test route working!');
+});
 
 
 
