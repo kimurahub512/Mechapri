@@ -161,9 +161,8 @@ class ImageWatermarkService
         }
 
         // For unpurchased products, return the watermark route URL
-        // Use the actual server IP instead of localhost
         $encodedPath = urlencode($originalPath);
-        return 'http://172.16.5.41:8000/api/watermarked-image/' . $encodedPath;
+        return url('/api/watermarked-image/' . $encodedPath);
     }
 
     /**
