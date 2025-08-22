@@ -165,4 +165,60 @@ class ProductBatch extends Model
     {
         return $this->purchases()->where('user_id', $user->id)->exists();
     }
+
+    /**
+     * Get watermarked image URLs for unpurchased products
+     */
+    public function getWatermarkedImages(?User $user = null): array
+    {
+        $isPurchased = $user ? $this->isPurchasedBy($user) : false;
+        
+        if ($isPurchased) {
+            // Return original images for purchased products
+            return $this->files->map(function($file) {
+                return [
+                    'id' => $file->id,
+                    'url' => $file->url,
+                    'filename' => $file->filename,
+                    'sort_order' => $file->sort_order
+                ];
+            })->toArray();
+        }
+
+        // For unpurchased products, return watermarked HTML wrapper URLs
+        $watermarkService = app(\App\Services\ImageWatermarkService::class);
+        
+        return $this->files->map(function($file) use ($watermarkService) {
+            $watermarkedUrl = $watermarkService->getWatermarkedImageUrl($file->file_path);
+            return [
+                'id' => $file->id,
+                'url' => $watermarkedUrl,
+                'filename' => $file->filename,
+                'sort_order' => $file->sort_order
+            ];
+        })->toArray();
+    }
+
+    /**
+     * Get watermarked main image URL for unpurchased products
+     */
+    public function getWatermarkedImageUrl(?User $user = null): string
+    {
+        $isPurchased = $user ? $this->isPurchasedBy($user) : false;
+        
+        if ($isPurchased) {
+            // Return original image for purchased products
+            return $this->files->first()?->url ?? '';
+        }
+
+        // For unpurchased products, return watermarked image
+        $watermarkService = app(\App\Services\ImageWatermarkService::class);
+        $firstFile = $this->files->first();
+        
+        if (!$firstFile) {
+            return '';
+        }
+
+        return $watermarkService->getWatermarkedImageUrl($firstFile->file_path);
+    }
 }

@@ -14,13 +14,14 @@ class ShopNewProductsController extends Controller
     public function index(): Response
     {
         // Get all public product batches with files, ordered by creation date (newest first)
+        $currentUser = auth()->user();
         $productBatches = ProductBatch::with(['files' => function($query) {
                 $query->orderBy('sort_order');
             }])
             // ->where('is_public', true)
             ->orderBy('created_at', 'desc')
             ->get()
-            ->map(function($batch) {
+            ->map(function($batch) use ($currentUser) {
                 // Calculate time duration from registration
                 $createdAt = Carbon::parse($batch->created_at)->startOfDay();
                 $now = Carbon::now()->startOfDay();
@@ -37,6 +38,9 @@ class ShopNewProductsController extends Controller
                 } else {
                     $badge1 = $totalDays . '日';
                 }
+
+                // Get watermarked images for unpurchased products
+                $watermarkedImages = $batch->getWatermarkedImages($currentUser);
 
                 return [
                     'id' => $batch->id,
@@ -57,15 +61,7 @@ class ShopNewProductsController extends Controller
                         'shop_title' => $batch->user->shop_title,
                         'follower_count' => $batch->user->favoritedBy()->count(),
                     ],
-                    'files' => $batch->files->map(function($file) {
-                        return [
-                            'id' => $file->id,
-                            'filename' => $file->filename,
-                            'url' => $file->url,
-                            'file_type' => $file->file_type,
-                            'sort_order' => $file->sort_order,
-                        ];
-                    }),
+                    'files' => $watermarkedImages,
                 ];
             });
 

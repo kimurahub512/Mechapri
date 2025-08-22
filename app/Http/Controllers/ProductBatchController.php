@@ -438,8 +438,8 @@ class ProductBatchController extends Controller
                 'sales_deadline' => $product->sales_deadline ? $product->sales_deadline->format('Y/m/d') : null,
                 'price' => $product->price,
                 'display_mode' => $product->display_mode,
-                'image' => $product->files->first() ? $product->files->first()->url : null,
-                'images' => $product->files->pluck('url'),
+                'image' => $product->getWatermarkedImageUrl(auth()->user()),
+                'images' => collect($product->getWatermarkedImages(auth()->user()))->pluck('url'),
                 'user' => [
                     'id' => $product->user->id,
                     'name' => $product->user->name,
@@ -606,8 +606,8 @@ class ProductBatchController extends Controller
                 'description' => $product->description,
                 'price' => $product->price,
                 'display_mode' => $product->display_mode,
-                'image' => $product->files->first() ? $product->files->first()->url : null,
-                'images' => $product->files->pluck('url'),
+                'image' => $product->getWatermarkedImageUrl(auth()->user()),
+                'images' => collect($product->getWatermarkedImages(auth()->user()))->pluck('url'),
                 'user' => [
                     'id' => $product->user->id,
                     'name' => $product->user->name,

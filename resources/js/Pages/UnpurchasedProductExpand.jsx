@@ -232,6 +232,19 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                                 <span className="text-white text-[15px] font-bold">ガチャ</span>
                                                                 <span className="text-white text-[13px]">ランダムで1枚選定されます</span>
                                                             </div>
+                                                            {/* Watermark Overlay for Gacha */}
+                                                            <div className="absolute inset-0 pointer-events-none">
+                                                                <div className="absolute inset-0 opacity-30">
+                                                                    <div className="absolute top-[20%] left-[-15%] transform -rotate-45 flex gap-6">
+                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
+                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
+                                                                    </div>
+                                                                    <div className="absolute top-[60%] left-[-10%] transform -rotate-45 flex gap-6">
+                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
+                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     ) : product.display_mode === 'blur' ? (
                                                         <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
@@ -253,7 +266,22 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                             </div>
                                                         </div>
                                                     ) : product.display_mode === 'password' && isUnlocked ? (
-                                                        <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                                        <div className="relative h-full w-full">
+                                                            <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                                            {/* Watermark Overlay for Password (unlocked) */}
+                                                            <div className="absolute inset-0 pointer-events-none">
+                                                                <div className="absolute inset-0 opacity-30">
+                                                                    <div className="absolute top-[15%] left-[-20%] transform -rotate-45 flex gap-6">
+                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
+                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
+                                                                    </div>
+                                                                    <div className="absolute top-[55%] left-[-15%] transform -rotate-45 flex gap-6">
+                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
+                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     ) : product.display_mode === 'cushion' ? (
                                                         <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
                                                             <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px]" />
@@ -264,82 +292,46 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                             </div>
                                                         </div>
                                                     ) : (
-                                                        <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                                        <div className="relative h-full w-full">
+                                                            <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                                            {/* Watermark Overlay - Always show for unpurchased products */}
+                                                            <div className="absolute inset-0 pointer-events-none">
+                                                                <div className="absolute inset-0 opacity-40">
+                                                                    <div className="absolute top-[10%] left-[-20%] transform -rotate-45 flex gap-8">
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                    </div>
+                                                                    <div className="absolute top-[30%] left-[-10%] transform -rotate-45 flex gap-8">
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                    </div>
+                                                                    <div className="absolute top-[50%] left-[-5%] transform -rotate-45 flex gap-8">
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                    </div>
+                                                                    <div className="absolute top-[70%] left-[-15%] transform -rotate-45 flex gap-8">
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                    </div>
+                                                                    <div className="absolute top-[90%] left-[-25%] transform -rotate-45 flex gap-8">
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
+                                                                    </div>
+                                                                </div>
+                                                                <div className="absolute inset-0 flex items-center justify-center">
+                                                                    <div className="bg-black bg-opacity-30 rounded-lg px-4 py-2">
+                                                                        <span className="text-white text-sm font-bold">めちゃプリ</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     )}
-                                                </div>
-                                                {/* Overlay Area: 12111~12115 */}
-                                                <div
-                                                    className="flex flex-col items-start absolute top-[-16px] left-[-64px] h-full opacity-25 overflow-hidden"
-                                                    style={{
-                                                        width: '474.958px',
-                                                        pointerEvents: 'none',
-                                                    }}
-                                                >
-                                                    {/* 12111: Logo row */}
-                                                    <div
-                                                        className="flex items-center mt-[30px]"
-                                                        style={{
-                                                            transform: 'rotate(-30deg)',
-                                                            gap: '20px',
-                                                            alignSelf: 'stretch',
-                                                        }}
-                                                    >
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                    </div>
-                                                    {/* 12112: Logo row */}
-                                                    <div
-                                                        className="flex items-center logo mt-[70px]"
-                                                        style={{
-                                                            transform: 'rotate(-30deg)',
-                                                            gap: '20px',
-                                                            alignSelf: 'stretch',
-                                                        }}
-                                                    >
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                    </div>
-                                                    {/* 12113: Logo row */}
-                                                    <div
-                                                        className="flex items-center logo mt-[70px]"
-                                                        style={{
-                                                            transform: 'rotate(-30deg)',
-                                                            gap: '20px',
-                                                            alignSelf: 'stretch',
-                                                        }}
-                                                    >
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                    </div>
-                                                    {/* 12114: Logo row */}
-                                                    <div
-                                                        className="flex items-center logo mt-[70px]"
-                                                        style={{
-                                                            transform: 'rotate(-30deg)',
-                                                            gap: '20px',
-                                                            alignSelf: 'stretch',
-                                                        }}
-                                                    >
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                    </div>
-                                                    {/* 12115: Logo row */}
-                                                    <div
-                                                        className="flex items-center logo mt-[70px]"
-                                                        style={{
-                                                            transform: 'rotate(-30deg)',
-                                                            gap: '20px',
-                                                            alignSelf: 'stretch',
-                                                        }}
-                                                    >
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                        <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                            </div>
-                                        </div>
+                                                                                                </div>
                                             </div>
                                         </div>
                                     ))}

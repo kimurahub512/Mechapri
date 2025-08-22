@@ -23,7 +23,7 @@ class HomeLoginController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->limit(5)
                 ->get()
-                ->map(function($product) {
+                ->map(function($product) use ($user) {
                     return [
                         'id' => $product->id,
                         'title' => $product->title,
@@ -36,13 +36,7 @@ class HomeLoginController extends Controller
                             'name' => $product->user->name,
                             'image' => $product->user->image,
                         ],
-                        'files' => $product->files->map(function($file) {
-                            return [
-                                'id' => $file->id,
-                                'file_path' => $file->file_path,
-                                'url' => $file->url,
-                            ];
-                        }),
+                        'files' => $product->getWatermarkedImages($user),
                     ];
                 });
         }
@@ -87,7 +81,7 @@ class HomeLoginController extends Controller
             ->orderBy('created_at', 'desc')
             ->limit(10)
             ->get()
-            ->map(function($product) {
+            ->map(function($product) use ($user) {
                 return [
                     'id' => $product->id,
                     'title' => $product->title,
@@ -100,13 +94,7 @@ class HomeLoginController extends Controller
                         'name' => $product->user->name,
                         'image' => $product->user->image,
                     ],
-                    'files' => $product->files->map(function($file) {
-                        return [
-                            'id' => $file->id,
-                            'file_path' => $file->file_path,
-                            'url' => $file->url,
-                        ];
-                    }),
+                    'files' => $product->getWatermarkedImages($user),
                 ];
             });
 

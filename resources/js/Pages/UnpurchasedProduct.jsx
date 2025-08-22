@@ -253,6 +253,7 @@ const UnpurchasedProduct = ({ product }) => {
                                                             <span className="text-white text-[15px] font-bold">ガチャ</span>
                                                             <span className="text-white text-[13px]">ランダムで1枚選定されます</span>
                                                         </div>
+
                                                     </div>
                                                 ) : product.display_mode === 'blur' ? (
                                                     <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
@@ -263,6 +264,7 @@ const UnpurchasedProduct = ({ product }) => {
                                                             <span className="text-white text-[15px] font-bold">ぼかしフィルター</span>
                                                             <span className="text-white text-[13px]">印刷して確認しよう！</span>
                                                         </div>
+
                                                     </div>
                                                 ) : product.display_mode === 'password' && !isUnlocked ? (
                                                     <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
@@ -290,9 +292,13 @@ const UnpurchasedProduct = ({ product }) => {
                                                                 </button>
                                                             </form>
                                                         </div>
+
                                                     </div>
                                                 ) : product.display_mode === 'password' && isUnlocked ? (
-                                                    <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                                    <div className="relative h-full w-full">
+                                                        <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+
+                                                    </div>
                                                 ) : product.display_mode === 'cushion' ? (
                                                     <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
                                                         <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px]" />
@@ -301,90 +307,11 @@ const UnpurchasedProduct = ({ product }) => {
                                                             <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
                                                             <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
                                                         </div>
+
                                                     </div>
                                                 ) : (
                                                     <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
                                                 )}
-                                            </div>
-                                        </div>
-                                {/* Blurred image */}
-                                        {/* Overlay Area: 12111~12115 */}
-                                        <div
-                                            className="flex flex-col items-start absolute top-0 left-3 h-full opacity-25"
-                                            style={{
-                                                width: '474.958px',
-                                                // gap: '-150px',
-                                                pointerEvents: 'none',
-                                            }}
-                                        >
-                                            {/* 12111: Logo row */}
-                                            <div
-                                                className="flex items-center mt-[30px]"
-                                                style={{
-                                                    transform: 'rotate(-30deg)',
-                                                    gap: '20px',
-                                                    alignSelf: 'stretch',
-                                                }}
-                                            >
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                {/* Add more SVGs here if needed */}
-                                            </div>
-                                            {/* 12112: Logo row */}
-                                            <div
-                                                className="flex items-center logo mt-[70px]"
-                                                style={{
-                                                    transform: 'rotate(-30deg)',
-                                                    gap: '20px',
-                                                    alignSelf: 'stretch',
-                                                }}
-                                            >
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                {/* Add more SVGs here if needed */}
-                                            </div>
-                                            {/* 12113: Logo row */}
-                                            <div
-                                                className="flex items-center logo mt-[70px]"
-                                                style={{
-                                                    transform: 'rotate(-30deg)',
-                                                    gap: '20px',
-                                                    alignSelf: 'stretch',
-                                                }}
-                                            >
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                {/* Add more SVGs here if needed */}
-                                            </div>
-                                            {/* 12114: Logo row */}
-                                            <div
-                                                className="flex items-center logo mt-[70px]"
-                                                style={{
-                                                    transform: 'rotate(-30deg)',
-                                                    gap: '20px',
-                                                    alignSelf: 'stretch',
-                                                }}
-                                            >
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                {/* Add more SVGs here if needed */}
-                                            </div>
-                                            {/* 12115: Logo row */}
-                                            <div
-                                                className="flex items-center logo mt-[70px]"
-                                                style={{
-                                                    transform: 'rotate(-30deg)',
-                                                    gap: '20px',
-                                                    alignSelf: 'stretch',
-                                                }}
-                                            >
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                <img src={logo} alt="logo" style={{ width: '146px', height: '26px' }} />
-                                                {/* Add more SVGs here if needed */}
                                             </div>
                                         </div>
                                     </div>

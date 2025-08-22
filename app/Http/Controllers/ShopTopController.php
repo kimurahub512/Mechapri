@@ -209,8 +209,13 @@ class ShopTopController extends Controller
 
     private function formatProductBatch($batch)
     {
-        $mainImage = $batch->files->first();
-        $additionalImages = $batch->files->skip(1)->take(3)->pluck('url')->toArray();
+        $currentUser = Auth::user();
+        $isPurchased = $currentUser ? $batch->isPurchasedBy($currentUser) : false;
+        
+        // Get watermarked images for unpurchased products
+        $watermarkedImages = $batch->getWatermarkedImages($currentUser);
+        $mainImage = $watermarkedImages[0] ?? null;
+        $additionalImages = array_slice($watermarkedImages, 1, 3);
         
         // Calculate time duration from registration
         $createdAt = \Carbon\Carbon::parse($batch->created_at)->startOfDay();
@@ -233,8 +238,8 @@ class ShopTopController extends Controller
             'id' => $batch->id,
             'user_id' => $batch->user_id,
             'title' => $batch->title,
-            'image' => $mainImage ? $mainImage->url : null,
-            'badges' => $additionalImages,
+            'image' => $mainImage ? $mainImage['url'] : null,
+            'badges' => array_map(function($img) { return $img['url']; }, $additionalImages),
             'badgeText' => $batch->image_cnt . '枚セット',
             'price' => $batch->price == 0 ? '無料' : number_format($batch->price) . '円',
             'like' => 0, // Mock data for now

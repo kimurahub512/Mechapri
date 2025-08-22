@@ -21,7 +21,8 @@ class ShopNewCategoryController extends Controller
             }])
             ->findOrFail($categoryId);
         // Format the product batches
-        $productBatches = $category->productBatches->map(function($batch) {
+        $currentUser = auth()->user();
+        $productBatches = $category->productBatches->map(function($batch) use ($currentUser) {
             // Calculate time duration from registration
             $createdAt = Carbon::parse($batch->created_at)->startOfDay();
             $now = Carbon::now()->startOfDay();
@@ -38,6 +39,9 @@ class ShopNewCategoryController extends Controller
             } else {
                 $badge1 = $totalDays . '日';
             }
+
+            // Get watermarked images for unpurchased products
+            $watermarkedImages = $batch->getWatermarkedImages($currentUser);
 
             return [
                 'id' => $batch->id,
@@ -57,15 +61,7 @@ class ShopNewCategoryController extends Controller
                     'image' => $batch->user->image,
                     'shop_title' => $batch->user->shop_title,
                 ],
-                'files' => $batch->files->map(function($file) {
-                    return [
-                        'id' => $file->id,
-                        'filename' => $file->filename,
-                        'url' => $file->url,
-                        'file_type' => $file->file_type,
-                        'sort_order' => $file->sort_order,
-                    ];
-                }),
+                'files' => $watermarkedImages,
             ];
         });
         return Inertia::render('ShopNewCategory', [

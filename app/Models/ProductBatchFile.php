@@ -36,7 +36,7 @@ class ProductBatchFile extends Model
      */
     public function getUrlAttribute(): string
     {
-        return Storage::url($this->file_path);
+        return url(Storage::url($this->file_path));
     }
 
     /**
