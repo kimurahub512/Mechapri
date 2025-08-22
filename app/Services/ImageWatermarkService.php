@@ -161,8 +161,8 @@ class ImageWatermarkService
         }
 
         // For unpurchased products, return the watermark route URL
-        $encodedPath = urlencode($originalPath);
-        return url('/api/watermarked-image/' . $encodedPath);
+        // Use the unencoded path since our route now handles both formats
+        return url('/api/watermarked-image/' . $originalPath);
     }
 
     /**
