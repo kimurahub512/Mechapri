@@ -30,8 +30,17 @@ Route::get('/api/watermarked-image/{path}', function($path) {
     }
     
     try {
+        // Check if original file exists
+        if (!Storage::disk('public')->exists($decodedPath)) {
+            Log::error('Original image file not found: ' . $decodedPath);
+            return response('Original image not found: ' . $decodedPath, 404);
+        }
+        
+        Log::info('Original image exists, creating watermarked version');
         $watermarkService = app(\App\Services\ImageWatermarkService::class);
         $watermarkedPath = $watermarkService->createWatermarkedImage($decodedPath);
+        
+        Log::info('Watermark service returned path: ' . ($watermarkedPath ?: 'null'));
         
         if ($watermarkedPath && Storage::disk('public')->exists($watermarkedPath)) {
             $fullPath = Storage::disk('public')->path($watermarkedPath);
