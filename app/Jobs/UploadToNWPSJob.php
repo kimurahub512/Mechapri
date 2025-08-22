@@ -35,15 +35,26 @@ class UploadToNWPSJob implements ShouldQueue
         
         $purchase = UserPurchasedProduct::find($this->purchaseId);
         if (!$purchase) {
-            // \Illuminate\Support\Facades\Log::error('Purchase not found', ['purchase_id' => $this->purchaseId]);
+            file_put_contents(storage_path('nwps_debug.log'), 
+                date('Y-m-d H:i:s') . " - Purchase not found: {$this->purchaseId}\n", 
+                FILE_APPEND
+            );
             return;
         }
 
         $product = ProductBatch::with('files')->find($purchase->batch_id);
         if (!$product) {
-            // \Illuminate\Support\Facades\Log::error('Product not found', ['batch_id' => $purchase->batch_id]);
+            file_put_contents(storage_path('nwps_debug.log'), 
+                date('Y-m-d H:i:s') . " - Product not found: {$purchase->batch_id}\n", 
+                FILE_APPEND
+            );
             return;
         }
+        
+        file_put_contents(storage_path('nwps_debug.log'), 
+            date('Y-m-d H:i:s') . " - Found purchase {$purchase->id} and product {$product->id} with {$product->files->count()} files\n", 
+            FILE_APPEND
+        );
         
         // \Illuminate\Support\Facades\Log::info('Found product and purchase', [
         //     'product_id' => $product->id,
@@ -64,10 +75,18 @@ class UploadToNWPSJob implements ShouldQueue
 
             $token = $login['token'] ?? ($login['access_token'] ?? null);
             if (!$token) {
-                // \Illuminate\Support\Facades\Log::error('No token received from NWPS login');
+                file_put_contents(storage_path('nwps_debug.log'), 
+                    date('Y-m-d H:i:s') . " - No token received from NWPS login. Response: " . json_encode($login) . "\n", 
+                    FILE_APPEND
+                );
                 $purchase->update(['nwps_upload_status' => 'failed']);
                 return;
             }
+            
+            file_put_contents(storage_path('nwps_debug.log'), 
+                date('Y-m-d H:i:s') . " - NWPS login successful, token received\n", 
+                FILE_APPEND
+            );
             
             // \Illuminate\Support\Facades\Log::info('Token received, updating purchase', ['token' => $token]);
             $purchase->update([
@@ -97,10 +116,18 @@ class UploadToNWPSJob implements ShouldQueue
             }
 
             if (!$fileId) {
-                // \Illuminate\Support\Facades\Log::error('No file ID received from NWPS registration');
+                file_put_contents(storage_path('nwps_debug.log'), 
+                    date('Y-m-d H:i:s') . " - No file ID received from NWPS registration\n", 
+                    FILE_APPEND
+                );
                 $purchase->update(['nwps_upload_status' => 'failed']);
                 return;
             }
+            
+            file_put_contents(storage_path('nwps_debug.log'), 
+                date('Y-m-d H:i:s') . " - File registration successful, file_id: {$fileId}\n", 
+                FILE_APPEND
+            );
 
             $purchase->update([
                 'nwps_file_id' => $fileId,
