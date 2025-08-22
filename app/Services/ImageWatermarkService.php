@@ -161,9 +161,9 @@ class ImageWatermarkService
         }
 
         // For unpurchased products, return the watermark route URL
-        // Use the encoded path route which should handle URL-encoded paths better
-        $encodedPath = urlencode($originalPath);
-        return url('/api/watermarked-image-encoded/' . $encodedPath);
+        // Use base64 encoding to avoid web server issues with URL-encoded paths
+        $base64Path = base64_encode($originalPath);
+        return url('/api/watermarked-image-b64/' . $base64Path);
     }
 
     /**

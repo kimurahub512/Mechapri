@@ -83,13 +83,13 @@ Route::get('/api/watermarked-image/{path}', function($path) {
     }
 })->where('path', '.*')->name('watermarked.image');
 
-// Catch-all route for watermarked images with encoded paths
-Route::get('/api/watermarked-image-encoded/{path}', function($path) {
-    Log::info('Catch-all encoded watermark route called with path: ' . $path);
+// Catch-all route for watermarked images with base64 encoded paths
+Route::get('/api/watermarked-image-b64/{path}', function($path) {
+    Log::info('Base64 watermark route called with path: ' . $path);
     
-    // Force decode the path
-    $decodedPath = urldecode($path);
-    Log::info('Force decoded path: ' . $decodedPath);
+    // Decode base64 path
+    $decodedPath = base64_decode($path);
+    Log::info('Base64 decoded path: ' . $decodedPath);
     
     // Validate the path to prevent directory traversal
     if (str_contains($decodedPath, '..') || !str_starts_with($decodedPath, 'product-batches/')) {
@@ -212,6 +212,12 @@ Route::get('/api/test-encoded/{path}', function($path) {
     Log::info('Test encoded route called with path: ' . $path);
     return response('Test encoded route working! Path: ' . $path);
 })->where('path', '.*');
+
+// Simple test without path parameters
+Route::get('/api/test-encoded-simple', function() {
+    Log::info('Simple encoded test route called');
+    return response('Simple encoded test route working!');
+});
 
 
 
