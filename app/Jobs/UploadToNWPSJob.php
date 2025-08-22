@@ -25,13 +25,19 @@ class UploadToNWPSJob implements ShouldQueue
 
     public function handle(NWPSService $nwps): void
     {
-        // Temporarily disable logging to avoid permission issues
-        // \Illuminate\Support\Facades\Log::info('NWPS Job started', [
-        //     'purchase_id' => $this->purchaseId,
-        //     'job_id' => $this->job->getJobId(),
-        //     'queue' => $this->queue,
-        //     'attempt' => $this->attempts()
-        // ]);
+        // Very early debug logging to see if job starts
+        try {
+            file_put_contents(storage_path('nwps_debug.log'), 
+                date('Y-m-d H:i:s') . " - NWPS Job started for purchase_id: {$this->purchaseId}\n", 
+                FILE_APPEND
+            );
+        } catch (\Exception $e) {
+            // If we can't write to the log, at least try to write to a different location
+            file_put_contents('/tmp/nwps_debug.log', 
+                date('Y-m-d H:i:s') . " - NWPS Job started for purchase_id: {$this->purchaseId} (storage write failed)\n", 
+                FILE_APPEND
+            );
+        }
         
         $purchase = UserPurchasedProduct::find($this->purchaseId);
         if (!$purchase) {
