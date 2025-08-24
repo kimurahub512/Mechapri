@@ -15,7 +15,11 @@ import ShopMobileTopBlocks from '@/Components/ShopMobileTopBlocks';
 import { vwd, vw, responsiveTextD, responsiveMetricD, responsiveText, responsiveMetric, responsivePosition, responsivePositionD } from '@/lib/utils';
 import { router } from '@inertiajs/react';
 
-const ShopManagement = () => {
+const ShopManagement = ({ statistics }) => {
+  const formatNumber = (num) => {
+    return num.toLocaleString('ja-JP');
+  };
+
   return (
     <>
       <Header />
@@ -72,10 +76,10 @@ const ShopManagement = () => {
                 <div className="flex flex-col items-start" style={{ gap: vw(8) }}>
                   <span style={{ ...responsiveText(18, 23, null, 'medium', 'noto', '#363636') }}>収益残高</span>
                   <div className="flex items-baseline" style={{ gap: vw(2) }}>
-                    <span style={{ ...responsiveText(24, 26, null, 'bold', 'noto', '#363636') }}>0</span>
+                    <span style={{ ...responsiveText(24, 26, null, 'bold', 'noto', '#363636') }}>{formatNumber(statistics.total.balance)}</span>
                     <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#363636') }}>円</span>
                   </div>
-                  <div style={{ ...responsiveText(12, 19, null, 'normal', 'noto', '#272B2B') }}>販売手数料：15％ を差し引いた金額です。<br />合計金額が5000円以上（お支払い基準額）の場合に、毎月支払いが行われます。</div>
+                  <div style={{ ...responsiveText(12, 19, null, 'normal', 'noto', '#272B2B') }}>販売手数料：{statistics.commission_rate}％ を差し引いた金額です。<br />合計金額が{statistics.payment_threshold}円以上（お支払い基準額）の場合に、毎月支払いが行われます。</div>
                 </div>
                 {/* container 2122 */}
                 <div className="flex flex-col items-start w-full" style={{ gap: vw(16), paddingBottom: vw(16) }}>
@@ -88,7 +92,7 @@ const ShopManagement = () => {
                           <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>販売売上</span>
                         </div>
                         <div className="flex items-baseline" style={{ gap: vw(2) }}>
-                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>0</span>
+                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>{formatNumber(statistics.current_month.sales_revenue)}</span>
                           <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>円</span>
                         </div>
                       </div>
@@ -98,7 +102,7 @@ const ShopManagement = () => {
                           <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
                         </div>
                         <div className="flex items-baseline" style={{ gap: vw(2) }}>
-                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>0</span>
+                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>{formatNumber(statistics.current_month.print_count)}</span>
                           <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>枚</span>
                         </div>
                       </div>
@@ -113,7 +117,7 @@ const ShopManagement = () => {
                           <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>販売売上</span>
                         </div>
                         <div className="flex items-baseline" style={{ gap: vw(2) }}>
-                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>0</span>
+                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>{formatNumber(statistics.total.sales_revenue)}</span>
                           <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>円</span>
                         </div>
                       </div>
@@ -123,7 +127,7 @@ const ShopManagement = () => {
                           <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
                         </div>
                         <div className="flex items-baseline" style={{ gap: vw(2) }}>
-                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>0</span>
+                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>{formatNumber(statistics.total.print_count)}</span>
                           <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>枚</span>
                         </div>
                       </div>
@@ -183,11 +187,11 @@ const ShopManagement = () => {
               <div className="flex flex-col items-start" style={{ gap: vwd(8) }}>
                 <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>収益残高</span>
                 <div className="flex items-baseline" style={{ gap: vwd(2) }}>
-                  <span style={{ ...responsiveTextD(46, 40, null, 'bold', 'noto', '#363636') }}>0</span>
+                  <span style={{ ...responsiveTextD(46, 40, null, 'bold', 'noto', '#363636') }}>{formatNumber(statistics.total.balance)}</span>
                   <span style={{ ...responsiveTextD(18, 30, null, 'normal', 'noto', '#363636') }}>円</span>
                 </div>
                 <div className="flex flex-col" style={{ gap: vwd(8) }}>
-                  <div style={{ ...responsiveTextD(12, 19, null, 'normal', 'noto', '#272B2B') }}>販売手数料：15％ を差し引いた金額です。<br />合計金額が5000円以上（お支払い基準額）の場合に、毎月支払いが行われます。</div>
+                  <div style={{ ...responsiveTextD(12, 19, null, 'normal', 'noto', '#272B2B') }}>販売手数料：{statistics.commission_rate}％ を差し引いた金額です。<br />合計金額が{statistics.payment_threshold}円以上（お支払い基準額）の場合に、毎月支払いが行われます。</div>
                 </div>
               </div>
               {/* container 2122 */}
@@ -201,7 +205,7 @@ const ShopManagement = () => {
                         <span style={{ ...responsiveTextD(16, 32, null, 'bold', 'noto', '#272B2B') }}>販売売上</span>
                       </div>
                       <div className="flex items-baseline" style={{ gap: vwd(2) }}>
-                        <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>0</span>
+                        <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>{formatNumber(statistics.current_month.sales_revenue)}</span>
                         <span style={{ ...responsiveTextD(14, 21, 0.7, 'normal', 'noto', '#222') }}>円</span>
                       </div>
                     </div>
@@ -211,7 +215,7 @@ const ShopManagement = () => {
                         <span style={{ ...responsiveTextD(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
                       </div>
                       <div className="flex items-baseline" style={{ gap: vwd(2) }}>
-                        <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>0</span>
+                        <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>{formatNumber(statistics.current_month.print_count)}</span>
                         <span style={{ ...responsiveTextD(14, 21, 0.7, 'normal', 'noto', '#222') }}>枚</span>
                       </div>
                     </div>
@@ -226,7 +230,7 @@ const ShopManagement = () => {
                         <span style={{ ...responsiveTextD(16, 32, null, 'bold', 'noto', '#272B2B') }}>販売売上</span>
                       </div>
                       <div className="flex items-baseline" style={{ gap: vwd(2) }}>
-                        <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>0</span>
+                        <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>{formatNumber(statistics.total.sales_revenue)}</span>
                         <span style={{ ...responsiveTextD(14, 21, 0.7, 'normal', 'noto', '#222') }}>円</span>
                       </div>
                     </div>
@@ -236,7 +240,7 @@ const ShopManagement = () => {
                         <span style={{ ...responsiveTextD(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
                       </div>
                       <div className="flex items-baseline" style={{ gap: vwd(2) }}>
-                        <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>0</span>
+                        <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>{formatNumber(statistics.total.print_count)}</span>
                         <span style={{ ...responsiveTextD(14, 21, 0.7, 'normal', 'noto', '#222') }}>枚</span>
                       </div>
                     </div>
