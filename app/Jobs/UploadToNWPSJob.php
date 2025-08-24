@@ -141,19 +141,42 @@ class UploadToNWPSJob implements ShouldQueue
             ]);
 
             // 3) Poll file info until printable and reservation number is available
+            file_put_contents(storage_path('nwps_debug.log'), 
+                date('Y-m-d H:i:s') . " - Starting polling loop for file_id: {$fileId}\n", 
+                FILE_APPEND
+            );
+            
             $reservationNo = null;
             $maxAttempts = 24; // ~2 minutes at 5s interval
             for ($i = 0; $i < $maxAttempts; $i++) {
+                file_put_contents(storage_path('nwps_debug.log'), 
+                    date('Y-m-d H:i:s') . " - Polling attempt " . ($i + 1) . "/{$maxAttempts}\n", 
+                    FILE_APPEND
+                );
+                
                 $info = $nwps->getFileInfo($token, $fileId);
                 // Spec mentions create_status becomes PRINTABLE when ready
                 $createStatus = $info['create_status'] ?? null;
                 $reservationNo = $info['user_number'] ?? null; // user_number is the print number
 
+                file_put_contents(storage_path('nwps_debug.log'), 
+                    date('Y-m-d H:i:s') . " - Poll result: create_status={$createStatus}, user_number={$reservationNo}\n", 
+                    FILE_APPEND
+                );
+
                 if ($createStatus === 'PRINTABLE' && $reservationNo) {
+                    file_put_contents(storage_path('nwps_debug.log'), 
+                        date('Y-m-d H:i:s') . " - File is ready! Breaking polling loop\n", 
+                        FILE_APPEND
+                    );
                     break;
                 }
 
                 if ($createStatus === 'FAILED') {
+                    file_put_contents(storage_path('nwps_debug.log'), 
+                        date('Y-m-d H:i:s') . " - File creation failed, stopping\n", 
+                        FILE_APPEND
+                    );
                     $purchase->update(['nwps_upload_status' => 'failed']);
                     return;
                 }
@@ -204,6 +227,10 @@ class UploadToNWPSJob implements ShouldQueue
             }
         } catch (\Throwable $e) {
             // \Illuminate\Support\Facades\Log::error('NWPS upload failed: ' . $e->getMessage());
+            file_put_contents(storage_path('nwps_debug.log'), 
+                date('Y-m-d H:i:s') . " - NWPS upload failed for purchase {$purchase->id}: " . $e->getMessage() . "\n", 
+                FILE_APPEND
+            );
             $purchase->update(['nwps_upload_status' => 'failed']);
         }
     }
