@@ -8,6 +8,7 @@ import shop2 from '@/assets/images/productdetails/lawson.svg';
 import shop3 from '@/assets/images/productdetails/ministop.svg';
 import eleven from '@/assets/images/productdetails/eleven.png';
 import question_circle from '@/assets/images/question_circle.svg';
+import default_user from '@/assets/images/default-user.png';
 import complex_white from '@/assets/images/complex_white.svg';
 import close from '@/assets/images/close_gray.svg';
 
@@ -56,7 +57,11 @@ const QrCodeModal = ({ onClose, purchase }) => {
                 <div className="flex pt-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[226px] mt-[32px] relative">
                     {/* <div className="flex items-center gap-[16px]"> */}
                     <div className="flex w-[112px] h-[112px] p-[2.205px_19.843px_1.323px_19.843px] justify-center items-center rounded-[4.409px] bg-[#F6F6F6]">
-                        <img src={photo1} alt="notification" />
+                        <img 
+                            src={purchase?.product?.files?.[0]?.url || photo1} 
+                            alt="product" 
+                            className="w-full h-full object-cover rounded-[4.409px]"
+                        />
                     </div>
                     {/* Info Block */}
                     <div className="flex flex-col justify-between items-start gap-y-2">
@@ -68,7 +73,7 @@ const QrCodeModal = ({ onClose, purchase }) => {
                             </div>
                             {/* 12121: User Info */}
                             <div className="inline-flex h-[32px] p-[6px_0] flex-row items-center flex-shrink-0 rounded-[3px]">
-                                <img src={purchase?.product?.user?.image || girl} alt="user" className="w-[24px] h-[24px] flex-shrink-0 rounded-full object-cover bg-gray-200" />
+                                <img src={purchase?.product?.user?.image || default_user} alt="default_user" className="w-[24px] h-[24px] flex-shrink-0 rounded-full object-cover bg-gray-200" />
                                 <span className="ml-2 text-[#222] font-noto text-[16px] leading-[22px] font-normal">{purchase?.product?.user?.name || ''}</span>
                             </div>
                             {/* 12122: User Info */}
@@ -76,7 +81,7 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                 <div className="text-[#363636] font-medium text-[14px] leading-[25px] font-noto">
                                     <span className="block">枚数：{purchase?.cnt ?? 1}</span>
                                     <span className="block">購入金額： {purchase?.price ?? ''}円</span>
-                                    <span className="block">印刷番号：{purchase?.nwps_reservation_no || '発行中...'}</span>
+                                    <span className="block">印刷番号：{purchase?.product?.sn || '発行中...'}</span>
                                     <span className="block">印刷期限：{purchase?.print_expires_at || ''}まで</span>
                                 </div>
                             </div>
@@ -106,7 +111,7 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                         className="absolute top-0 left-0 w-[150px] h-[150px] " 
                                     />
                                     <span className="absolute top-[44.5px] left-[226px] text-[#000] font-noto text-[14px] font-normal leading-[21px]">印刷番号</span>
-                                    <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">{purchase?.nwps_reservation_no || '発行中...'}</span>
+                                                                            <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">{purchase?.product?.sn || '発行中...'}</span>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +146,11 @@ const QrCodeModal = ({ onClose, purchase }) => {
                 <div className="flex flex-row pt-[16px] pb-[40px] pl-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[14px] mt-[16px] relative">
                     {/* photo1 */}
                     <div className="flex w-[64px] h-[64px] p-[1.26px_11.339px_0.756px_11.339px] justify-center items-center rounded-[2.52px] bg-[#F6F6F6]">
-                        <img src={photo1} alt="notification" />
+                        <img 
+                            src={purchase?.product?.files?.[0]?.url || photo1} 
+                            alt="product" 
+                            className="w-full h-full object-cover rounded-[2.52px]"
+                        />
                     </div>
                     {/* 1211 */}
                     <div className="flex flex-col justify-between items-start">
@@ -149,13 +158,13 @@ const QrCodeModal = ({ onClose, purchase }) => {
                         <div className="flex flex-col items-start gap-[2px] w-full">
                             <span className="text-[#363636] font-medium text-[14px] leading-[21px]">{purchase?.product?.title || '商品'}</span>
                             <div className="flex items-center gap-[5px] m-[4px]">
-                                <img src={purchase?.product?.user?.image || girl} alt="girl" className="w-[20px] h-[20px] rounded-full object-cover bg-gray-200" />
+                                <img src={purchase?.product?.user?.image || default_user} alt="default_user" className="w-[20px] h-[20px] rounded-full object-cover bg-gray-200" />
                                 <span className="text-[#222] font-noto text-[13px] leading-[20px] font-normal">{purchase?.product?.user?.name || ''}</span>
                             </div>
                             <span className="text-[#363636] font-noto font-medium text-[14px] leading-[25px] mb-[4px]">{purchase?.purchase_time || ''}に購入</span>
                             <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">枚数：{purchase?.cnt ?? 1}</span>
                             <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">購入金額： {purchase?.price ?? ''}円</span>
-                            <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷番号：{purchase?.nwps_reservation_no || '発行中...'}</span>
+                            <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷番号：{purchase?.product?.sn || '発行中...'}</span>
                             <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷期限：{purchase?.print_expires_at || ''}まで</span>
                         </div>
                     </div>
@@ -194,7 +203,7 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                             className="absolute top-0 left-0 w-[100px] h-[100px]" 
                                         />
                                         <span className="absolute top-[30px] left-[150px] text-[#000] font-noto text-[12px] font-normal leading-[16px]">印刷番号</span>
-                                        <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">{purchase?.nwps_reservation_no || '発行中...'}</span>
+                                        <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">{purchase?.product?.sn || '発行中...'}</span>
                                     </div>
                                 </div>
                             </div>
