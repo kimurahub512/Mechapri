@@ -99,16 +99,6 @@ class NWPSService
         $res = $this->http->get($uri, ['headers' => $headers]);
         $responseBody = (string) $res->getBody();
         
-        // Debug logging
-        file_put_contents(storage_path('nwps_debug.log'), 
-            date('Y-m-d H:i:s') . " - NWPS GET response status: " . $res->getStatusCode() . "\n", 
-            FILE_APPEND
-        );
-        file_put_contents(storage_path('nwps_debug.log'), 
-            date('Y-m-d H:i:s') . " - NWPS GET response body: " . $responseBody . "\n", 
-            FILE_APPEND
-        );
-        
         // Log::info('NWPS GET response', ['uri' => $uri, 'status' => $res->getStatusCode(), 'body_length' => strlen($responseBody)]);
         return json_decode($responseBody, true) ?: [];
     }
