@@ -59,7 +59,22 @@ class NWPSService
     public function getFileInfo(string $token, string $fileId): array
     {
         // Get file information
-        return $this->get("/nwpsapi/v2/files/{$fileId}", $token);
+        $result = $this->get("/nwpsapi/v2/files/{$fileId}", $token);
+        
+        // Debug logging to see what we're getting
+        try {
+            file_put_contents(storage_path('nwps_debug.log'), 
+                date('Y-m-d H:i:s') . " - NWPS getFileInfo raw result: " . json_encode($result, JSON_PRETTY_PRINT) . "\n", 
+                FILE_APPEND
+            );
+        } catch (\Exception $e) {
+            file_put_contents(storage_path('nwps_debug.log'), 
+                date('Y-m-d H:i:s') . " - NWPS getFileInfo encoding error: " . $e->getMessage() . "\n", 
+                FILE_APPEND
+            );
+        }
+        
+        return $result;
     }
 
     public function deleteFile(string $token, string $fileId): array
