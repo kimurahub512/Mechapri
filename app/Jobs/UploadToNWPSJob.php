@@ -157,11 +157,23 @@ class UploadToNWPSJob implements ShouldQueue
                     
                     $info = $nwps->getFileInfo($token, $fileId);
                     
-                    // Log the raw response first
-                    file_put_contents(storage_path('nwps_debug.log'), 
-                        date('Y-m-d H:i:s') . " - Raw API response: " . json_encode($info, JSON_PRETTY_PRINT) . "\n", 
-                        FILE_APPEND
-                    );
+                    // Log the raw response first - with error handling
+                    try {
+                        $jsonResponse = json_encode($info, JSON_PRETTY_PRINT);
+                        file_put_contents(storage_path('nwps_debug.log'), 
+                            date('Y-m-d H:i:s') . " - Raw API response: " . $jsonResponse . "\n", 
+                            FILE_APPEND
+                        );
+                    } catch (\Exception $jsonError) {
+                        file_put_contents(storage_path('nwps_debug.log'), 
+                            date('Y-m-d H:i:s') . " - Failed to encode API response: " . $jsonError->getMessage() . "\n", 
+                            FILE_APPEND
+                        );
+                        file_put_contents(storage_path('nwps_debug.log'), 
+                            date('Y-m-d H:i:s') . " - API response type: " . gettype($info) . "\n", 
+                            FILE_APPEND
+                        );
+                    }
                     
                     // Spec mentions create_status becomes PRINTABLE when ready
                     $createStatus = $info['create_status'] ?? $info['status'] ?? null;
