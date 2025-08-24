@@ -47,7 +47,7 @@ const QrCodeModal = ({ onClose, purchase }) => {
                 <div className="flex w-[960px] h-[98px] p-[20px_0_1px_0] flex-col items-center flex-shrink-0 border-b border-[#D1D1D1] bg-white rounded-t-[40px]">
                     <h1 className="text-[#363636] text-center font-noto text-[36px] font-bold leading-[54px]">QRコード発行完了</h1>
                 </div>
-                <button 
+                <button
                     onClick={handleCloseClick}
                     className="absolute top-[34px] right-[32px] w-[40px] h-[40px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-gray-100 hover:bg-gray-200 rounded-full z-50"
                 >
@@ -57,9 +57,9 @@ const QrCodeModal = ({ onClose, purchase }) => {
                 <div className="flex pt-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[226px] mt-[32px] relative">
                     {/* <div className="flex items-center gap-[16px]"> */}
                     <div className="flex w-[112px] h-[112px] p-[2.205px_19.843px_1.323px_19.843px] justify-center items-center rounded-[4.409px] bg-[#F6F6F6]">
-                        <img 
-                            src={purchase?.product?.files?.[0]?.url || photo1} 
-                            alt="product" 
+                        <img
+                            src={purchase?.product?.files?.[0]?.url || photo1}
+                            alt="product"
                             className="w-full h-full object-cover rounded-[4.409px]"
                         />
                     </div>
@@ -105,13 +105,15 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                 </div>
                                 {/*12122112*/}
                                 <div className="relative w-[358px] h-[150px] mt-[12px]">
-                                    <img 
-                                        src={purchase?.nwps_qr_code_url || qr} 
-                                        alt="qr" 
-                                        className="absolute top-0 left-0 w-[150px] h-[150px] " 
+                                    <img
+                                        src={purchase?.nwps_qr_code_url || qr}
+                                        alt="qr"
+                                        className="absolute top-0 left-0 w-[150px] h-[150px] "
                                     />
-                                    <span className="absolute top-[44.5px] left-[226px] text-[#000] font-noto text-[14px] font-normal leading-[21px]">印刷番号</span>
-                                                                            <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">{purchase?.product?.sn || '発行中...'}</span>
+                                    <div className="absolute top-[44.5px] left-[226px]  flex flex-col items-center">
+                                        <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">印刷番号</span>
+                                        <span className="text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">{purchase?.product?.sn || '発行中...'}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -137,7 +139,7 @@ const QrCodeModal = ({ onClose, purchase }) => {
                 <div className="flex w-full p-[20px_0_20px_0] flex-col items-center flex-shrink-0 border-b border-[#D1D1D1] bg-white rounded-t-[40px]">
                     <h1 className="text-[#363636] text-center font-noto text-[24px] font-bold leading-[24px]">QRコード発行完了</h1>
                 </div>
-                <button 
+                <button
                     onClick={handleCloseClick}
                     className="absolute top-[22px] right-[16px] w-[20px] h-[20px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-gray-100 hover:bg-gray-200 rounded-full z-50"
                 >
@@ -146,9 +148,9 @@ const QrCodeModal = ({ onClose, purchase }) => {
                 <div className="flex flex-row pt-[16px] pb-[40px] pl-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[14px] mt-[16px] relative">
                     {/* photo1 */}
                     <div className="flex w-[64px] h-[64px] p-[1.26px_11.339px_0.756px_11.339px] justify-center items-center rounded-[2.52px] bg-[#F6F6F6]">
-                        <img 
-                            src={purchase?.product?.files?.[0]?.url || photo1} 
-                            alt="product" 
+                        <img
+                            src={purchase?.product?.files?.[0]?.url || photo1}
+                            alt="product"
                             className="w-full h-full object-cover rounded-[2.52px]"
                         />
                     </div>
@@ -197,13 +199,15 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                     </div>
                                     {/*12122112*/}
                                     <div className="relative w-[240px] h-[100px] mt-[8px]">
-                                        <img 
-                                            src={purchase?.nwps_qr_code_url || qr} 
-                                            alt="qr" 
-                                            className="absolute top-0 left-0 w-[100px] h-[100px]" 
+                                        <img
+                                            src={purchase?.nwps_qr_code_url || qr}
+                                            alt="qr"
+                                            className="absolute top-0 left-0 w-[100px] h-[100px]"
                                         />
-                                        <span className="absolute top-[30px] left-[150px] text-[#000] font-noto text-[12px] font-normal leading-[16px]">印刷番号</span>
-                                        <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">{purchase?.product?.sn || '発行中...'}</span>
+                                        <div className="absolute top-[30px] left-[150px] flex flex-col items-center">
+                                            <span className="text-[#000] font-noto text-[12px] font-normal leading-[16px]">印刷番号</span>
+                                            <span className="text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">{purchase?.product?.sn || '発行中...'}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -138,7 +138,7 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                                                 <div className="text-[#363636] font-medium text-[14px] leading-[25px] font-noto">
                                                     <span className="block">枚数：{p.cnt}</span>
                                                     <span className="block">購入金額： {p.price}円</span>
-                                                    <span className="block">印刷番号：{p.nwps_reservation_no || '発行中...'}</span>
+                                                    <span className="block">印刷番号：{p.product.sn || '発行中...'}</span>
                                                     <span className="block">印刷期限：{p.print_expires_at || ''}まで</span>
                                                 </div>
                                             </div>
@@ -189,7 +189,7 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                                         <span className="text-[#363636] font-noto font-medium text-[14px] leading-[25px] mb-[4px]">{p.purchase_time}に購入</span>
                                         <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">枚数：{p.cnt}</span>
                                         <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">購入金額： {p.price}円</span>
-                                        <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷番号：{p.nwps_reservation_no || '発行中...'}</span>
+                                        <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷番号：{p.product.sn || '発行中...'}</span>
                                         <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷期限：{p.print_expires_at || ''}まで</span>
                                     </div>
                                 </div>
@@ -269,7 +269,7 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                             <circle 
                                 cx="60" 
                                 cy="10" 
-                                r="10" 
+                                r="8" 
                                 fill="white" 
                                 style={{
                                     animation: 'dot3 1.2s ease-in-out infinite'
