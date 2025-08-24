@@ -225,10 +225,56 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                     <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex flex-col items-center z-40 gap-6 md:pt-[200px] pt-[150px]">
                         <span className="text-white text-[22px] md:text-[46px] font-bold font-noto">購入が完了しました！</span>
                         <span className="text-white text-[16px] md:text-[24px] font-normal font-noto">QRコード発行していますのでお待ち下さい</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="70" height="20" viewBox="0 0 70 20" fill="none">
-                            <circle cx="8" cy="10" r="8" fill="white" />
-                            <circle cx="34" cy="10" r="8" fill="white" />
-                            <circle cx="60" cy="10" r="10" fill="white" />
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            width="70" 
+                            height="20" 
+                            viewBox="0 0 70 20" 
+                            fill="none"
+                        >
+                            <style>
+                                {`
+                                    @keyframes dot1 {
+                                        0%, 33%, 100% { opacity: 0.3; }
+                                        16.5% { opacity: 1; }
+                                    }
+                                    @keyframes dot2 {
+                                        0%, 33%, 100% { opacity: 0.3; }
+                                        50% { opacity: 1; }
+                                    }
+                                    @keyframes dot3 {
+                                        0%, 33%, 100% { opacity: 0.3; }
+                                        83.5% { opacity: 1; }
+                                    }
+                                `}
+                            </style>
+                            <circle 
+                                cx="8" 
+                                cy="10" 
+                                r="8" 
+                                fill="white" 
+                                style={{
+                                    animation: 'dot1 1.2s ease-in-out infinite'
+                                }}
+                            />
+                            <circle 
+                                cx="34" 
+                                cy="10" 
+                                r="8" 
+                                fill="white" 
+                                style={{
+                                    animation: 'dot2 1.2s ease-in-out infinite'
+                                }}
+                            />
+                            <circle 
+                                cx="60" 
+                                cy="10" 
+                                r="10" 
+                                fill="white" 
+                                style={{
+                                    animation: 'dot3 1.2s ease-in-out infinite'
+                                }}
+                            />
                         </svg>
                     </div>
                 )}
