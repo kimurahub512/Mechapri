@@ -28,7 +28,17 @@ class PurchaseHistoryController extends Controller
                     'product' => [
                         'id' => $p->productBatch->id,
                         'title' => $p->productBatch->title,
+                        'sn' => $p->productBatch->sn,
                         'image' => optional($p->productBatch->files->first())->url,
+                        'files' => $p->productBatch->files->map(function($file) {
+                            return [
+                                'id' => $file->id,
+                                'url' => $file->url,
+                                'filename' => $file->filename,
+                                'original_name' => $file->original_name,
+                                'sort_order' => $file->sort_order
+                            ];
+                        }),
                         'user' => [
                             'id' => $p->productBatch->user->id,
                             'name' => $p->productBatch->user->name,
@@ -69,7 +79,17 @@ class PurchaseHistoryController extends Controller
             'product' => [
                 'id' => $p->productBatch->id,
                 'title' => $p->productBatch->title,
+                'sn' => $p->productBatch->sn,
                 'image' => optional($p->productBatch->files->first())->url,
+                'files' => $p->productBatch->files->map(function($file) {
+                    return [
+                        'id' => $file->id,
+                        'url' => $file->url,
+                        'filename' => $file->filename,
+                        'original_name' => $file->original_name,
+                        'sort_order' => $file->sort_order
+                    ];
+                }),
                 'user' => [
                     'id' => $p->productBatch->user->id,
                     'name' => $p->productBatch->user->name,
