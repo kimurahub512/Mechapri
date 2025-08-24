@@ -140,81 +140,32 @@ class UploadToNWPSJob implements ShouldQueue
                 'nwps_upload_status' => 'uploaded',
             ]);
 
-            // 3) Poll file info until printable and reservation number is available
+            // 3) Get QR code for convenience store login
             file_put_contents(storage_path('nwps_debug.log'), 
-                date('Y-m-d H:i:s') . " - Starting polling loop for file_id: {$fileId}\n", 
+                date('Y-m-d H:i:s') . " - Getting QR code for login\n", 
                 FILE_APPEND
             );
             
-            $reservationNo = null;
-            $maxAttempts = 24; // ~2 minutes at 5s interval
-            for ($i = 0; $i < $maxAttempts; $i++) {
-                try {
-                    file_put_contents(storage_path('nwps_debug.log'), 
-                        date('Y-m-d H:i:s') . " - Polling attempt " . ($i + 1) . "/{$maxAttempts}\n", 
-                        FILE_APPEND
-                    );
-                    
-                    // Just call getFileInfo and see what happens
-                    $info = $nwps->getFileInfo($token, $fileId);
-                    
-                    file_put_contents(storage_path('nwps_debug.log'), 
-                        date('Y-m-d H:i:s') . " - getFileInfo completed successfully\n", 
-                        FILE_APPEND
-                    );
-                    
-                    // For now, just break out of the loop to avoid the error
-                    break;
-                    
-                } catch (\Exception $e) {
-                    file_put_contents(storage_path('nwps_debug.log'), 
-                        date('Y-m-d H:i:s') . " - Error in polling loop: " . $e->getMessage() . "\n", 
-                        FILE_APPEND
-                    );
-                    throw $e; // Re-throw to be caught by the outer catch block
-                }
-            }
-
-            if ($reservationNo) {
-                // 4) Get QR code for convenience store login
-                try {
-                    $qrCodeData = $nwps->getLoginQrCode($token);
-                    $qrCodeUrl = $qrCodeData['qr_code_url'] ?? null;
-                    
-                    $purchase->update([
-                        'nwps_reservation_no' => $reservationNo,
-                        'nwps_upload_status' => 'ready',
-                        'nwps_qr_code_url' => $qrCodeUrl,
-                    ]);
-                    
-                    // Temporary debug logging
-                    file_put_contents(storage_path('nwps_debug.log'), 
-                        date('Y-m-d H:i:s') . " - Purchase {$purchase->id} updated with reservation_no: {$reservationNo} and QR code\n", 
-                        FILE_APPEND
-                    );
-                } catch (\Exception $e) {
-                    // \Illuminate\Support\Facades\Log::error('Failed to get QR code: ' . $e->getMessage());
-                    // Still update with reservation number even if QR code fails
-                    $purchase->update([
-                        'nwps_reservation_no' => $reservationNo,
-                        'nwps_upload_status' => 'ready',
-                    ]);
-                    
-                    // Temporary debug logging
-                    file_put_contents(storage_path('nwps_debug.log'), 
-                        date('Y-m-d H:i:s') . " - Purchase {$purchase->id} updated with reservation_no: {$reservationNo} (QR code failed)\n", 
-                        FILE_APPEND
-                    );
-                }
-            } else {
-                // Timed out waiting for ready
-                $purchase->update(['nwps_upload_status' => 'processing']);
+            try {
+                $qrCodeData = $nwps->getLoginQrCode($token);
+                $qrCodeUrl = $qrCodeData['qr_code_url'] ?? null;
+                
+                $purchase->update([
+                    'nwps_upload_status' => 'ready',
+                    'nwps_qr_code_url' => $qrCodeUrl,
+                ]);
                 
                 // Temporary debug logging
                 file_put_contents(storage_path('nwps_debug.log'), 
-                    date('Y-m-d H:i:s') . " - Purchase {$purchase->id} timed out, status set to processing\n", 
+                    date('Y-m-d H:i:s') . " - Purchase {$purchase->id} updated with QR code\n", 
                     FILE_APPEND
                 );
+            } catch (\Exception $e) {
+                file_put_contents(storage_path('nwps_debug.log'), 
+                    date('Y-m-d H:i:s') . " - Failed to get QR code: " . $e->getMessage() . "\n", 
+                    FILE_APPEND
+                );
+                $purchase->update(['nwps_upload_status' => 'failed']);
             }
         } catch (\Throwable $e) {
             // \Illuminate\Support\Facades\Log::error('NWPS upload failed: ' . $e->getMessage());
