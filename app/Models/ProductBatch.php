@@ -36,6 +36,10 @@ class ProductBatch extends Model
         'is_public',
         'password',
         'sales_cnt',
+        'nwps_token',
+        'nwps_token_expires_at',
+        'nwps_file_id',
+        'nwps_qr_code_url',
     ];
 
     /**
@@ -50,6 +54,7 @@ class ProductBatch extends Model
         'image_cnt' => 'integer',
         'sales_limit' => 'integer',
         'sales_cnt' => 'integer',
+        'nwps_token_expires_at' => 'datetime',
     ];
 
     /**

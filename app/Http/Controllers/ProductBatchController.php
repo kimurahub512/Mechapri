@@ -44,6 +44,11 @@ class ProductBatchController extends Controller
             
             $productBatch = $this->productBatchService->create($request->validated(), auth()->user(), $files);
 
+            // If this is a free product, trigger NWPS processing immediately
+            if ($productBatch->price == 0) {
+                \App\Jobs\ProcessFreeProductNWPSJob::dispatch($productBatch->id);
+            }
+
             return response()->json([
                 'success' => true,
                 'message' => '商品が正常に登録されました。',

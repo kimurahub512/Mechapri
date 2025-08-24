@@ -78,12 +78,12 @@ const UnpurchasedProductExpand = ({ product }) => {
                                 {/* 11211 */}
                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
                                     {/* 112111 */}
-                                                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
+                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
                                                     <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                </div>
-                                            </div>
-                                            {/* 11212 */}
-                                            <div className="flex flex-col items-start">
+                                    </div>
+                                </div>
+                                {/* 11212 */}
+                                <div className="flex flex-col items-start">
                                                 <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 </div>
                             </div>
@@ -173,7 +173,7 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                     : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
                                             }`}
                                         >
-                                            <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
+                                        <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
                                             <span className={`font-noto text-[14px] font-bold leading-[21px] ${
                                                 product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
                                             }`}>
@@ -263,8 +263,8 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                                 <img src={lock} alt="lock" className="w-[42px] h-[42px]" />
                                                                 <span className="text-[#CDD9EC] text-[15px] font-bold">パスワード</span>
                                                                 <span className="text-[#CDD9EC] text-[13px]">PWを入れて印刷しよう</span>
-                                                            </div>
-                                                        </div>
+                                            </div>
+                                        </div>
                                                     ) : product.display_mode === 'password' && isUnlocked ? (
                                                         <div className="relative h-full w-full">
                                                             <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
@@ -279,9 +279,9 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                                         <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
                                                                         <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                                     ) : product.display_mode === 'cushion' ? (
                                                         <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
                                                             <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px]" />
@@ -321,17 +321,17 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                                         <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
                                                                         <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
                                                                         <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                    </div>
-                                                                </div>
+                                            </div>
+                                        </div>
                                                                 <div className="absolute inset-0 flex items-center justify-center">
                                                                     <div className="bg-black bg-opacity-30 rounded-lg px-4 py-2">
                                                                         <span className="text-white text-sm font-bold">めちゃプリ</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                            </div>
                                                     )}
-                                                                                                </div>
+                                        </div>
                                             </div>
                                         </div>
                                     ))}

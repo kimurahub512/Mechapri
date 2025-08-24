@@ -114,8 +114,12 @@ class UploadToNWPSJob implements ShouldQueue
                     'file_url' => $file->url,
                     'file_name' => $file->original_name ?? basename($file->file_path),
                     'expire' => (int) config('nwps.guest_token_days', 30), // days
-                    'printing_limit' => 3,
                 ];
+                
+                // Only add printing_limit for paid products (free products don't have this limit)
+                if ($product->price > 0) {
+                    $data['printing_limit'] = 3;
+                }
                 $registered = $nwps->registerFileFromUrl($token, $data);
                 // \Illuminate\Support\Facades\Log::info('File registration response', ['registered' => $registered]);
                 $fileId = $registered['file_id'] ?? $fileId;

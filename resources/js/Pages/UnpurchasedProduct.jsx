@@ -252,9 +252,9 @@ const UnpurchasedProduct = ({ product }) => {
                                                             <img src={bubble} alt="bubble" className="w-[42px] h-[42px]" />
                                                             <span className="text-white text-[15px] font-bold">ガチャ</span>
                                                             <span className="text-white text-[13px]">ランダムで1枚選定されます</span>
-                                                        </div>
+                                        </div>
 
-                                                    </div>
+                                            </div>
                                                 ) : product.display_mode === 'blur' ? (
                                                     <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
                                                         <img src={product.image} alt="ぼかしフィルター" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
@@ -263,9 +263,9 @@ const UnpurchasedProduct = ({ product }) => {
                                                             <img src={question} alt="question" className="w-[42px] h-[42px]" />
                                                             <span className="text-white text-[15px] font-bold">ぼかしフィルター</span>
                                                             <span className="text-white text-[13px]">印刷して確認しよう！</span>
-                                                        </div>
+                                            </div>
 
-                                                    </div>
+                                            </div>
                                                 ) : product.display_mode === 'password' && !isUnlocked ? (
                                                     <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
                                                         <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[8px]" />
@@ -291,14 +291,14 @@ const UnpurchasedProduct = ({ product }) => {
                                                                     確認
                                                                 </button>
                                                             </form>
-                                                        </div>
+                                            </div>
 
-                                                    </div>
+                                            </div>
                                                 ) : product.display_mode === 'password' && isUnlocked ? (
                                                     <div className="relative h-full w-full">
                                                         <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
 
-                                                    </div>
+                                        </div>
                                                 ) : product.display_mode === 'cushion' ? (
                                                     <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
                                                         <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px]" />
@@ -306,7 +306,7 @@ const UnpurchasedProduct = ({ product }) => {
                                                             <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
                                                             <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
                                                             <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
-                                                        </div>
+                                    </div>
 
                                                     </div>
                                                 ) : (
