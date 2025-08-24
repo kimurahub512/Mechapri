@@ -149,49 +149,58 @@ class UploadToNWPSJob implements ShouldQueue
             $reservationNo = null;
             $maxAttempts = 24; // ~2 minutes at 5s interval
             for ($i = 0; $i < $maxAttempts; $i++) {
-                file_put_contents(storage_path('nwps_debug.log'), 
-                    date('Y-m-d H:i:s') . " - Polling attempt " . ($i + 1) . "/{$maxAttempts}\n", 
-                    FILE_APPEND
-                );
-                
-                $info = $nwps->getFileInfo($token, $fileId);
-                // Spec mentions create_status becomes PRINTABLE when ready
-                $createStatus = $info['create_status'] ?? $info['status'] ?? null;
-                $reservationNo = $info['user_number'] ?? $info['reservation_number'] ?? $info['print_code'] ?? null; // user_number is the print number
-
-                // Ensure values are strings for logging
-                $createStatusStr = is_array($createStatus) ? json_encode($createStatus) : (string) $createStatus;
-                $reservationNoStr = is_array($reservationNo) ? json_encode($reservationNo) : (string) $reservationNo;
-
-                file_put_contents(storage_path('nwps_debug.log'), 
-                    date('Y-m-d H:i:s') . " - Poll result: create_status={$createStatusStr}, user_number={$reservationNoStr}\n", 
-                    FILE_APPEND
-                );
-                
-                // Log the full response for debugging
-                file_put_contents(storage_path('nwps_debug.log'), 
-                    date('Y-m-d H:i:s') . " - Full API response: " . json_encode($info, JSON_PRETTY_PRINT) . "\n", 
-                    FILE_APPEND
-                );
-
-                if ($createStatus === 'PRINTABLE' && $reservationNo) {
+                try {
                     file_put_contents(storage_path('nwps_debug.log'), 
-                        date('Y-m-d H:i:s') . " - File is ready! Breaking polling loop\n", 
+                        date('Y-m-d H:i:s') . " - Polling attempt " . ($i + 1) . "/{$maxAttempts}\n", 
                         FILE_APPEND
                     );
-                    break;
-                }
-
-                if ($createStatus === 'FAILED') {
+                    
+                    $info = $nwps->getFileInfo($token, $fileId);
+                    
+                    // Log the raw response first
                     file_put_contents(storage_path('nwps_debug.log'), 
-                        date('Y-m-d H:i:s') . " - File creation failed, stopping\n", 
+                        date('Y-m-d H:i:s') . " - Raw API response: " . json_encode($info, JSON_PRETTY_PRINT) . "\n", 
                         FILE_APPEND
                     );
-                    $purchase->update(['nwps_upload_status' => 'failed']);
-                    return;
-                }
+                    
+                    // Spec mentions create_status becomes PRINTABLE when ready
+                    $createStatus = $info['create_status'] ?? $info['status'] ?? null;
+                    $reservationNo = $info['user_number'] ?? $info['reservation_number'] ?? $info['print_code'] ?? null; // user_number is the print number
 
-                sleep(5);
+                    // Ensure values are strings for logging
+                    $createStatusStr = is_array($createStatus) ? json_encode($createStatus) : (string) $createStatus;
+                    $reservationNoStr = is_array($reservationNo) ? json_encode($reservationNo) : (string) $reservationNo;
+
+                    file_put_contents(storage_path('nwps_debug.log'), 
+                        date('Y-m-d H:i:s') . " - Poll result: create_status={$createStatusStr}, user_number={$reservationNoStr}\n", 
+                        FILE_APPEND
+                    );
+
+                    if ($createStatus === 'PRINTABLE' && $reservationNo) {
+                        file_put_contents(storage_path('nwps_debug.log'), 
+                            date('Y-m-d H:i:s') . " - File is ready! Breaking polling loop\n", 
+                            FILE_APPEND
+                        );
+                        break;
+                    }
+
+                    if ($createStatus === 'FAILED') {
+                        file_put_contents(storage_path('nwps_debug.log'), 
+                            date('Y-m-d H:i:s') . " - File creation failed, stopping\n", 
+                            FILE_APPEND
+                        );
+                        $purchase->update(['nwps_upload_status' => 'failed']);
+                        return;
+                    }
+
+                    sleep(5);
+                } catch (\Exception $e) {
+                    file_put_contents(storage_path('nwps_debug.log'), 
+                        date('Y-m-d H:i:s') . " - Error in polling loop: " . $e->getMessage() . "\n", 
+                        FILE_APPEND
+                    );
+                    throw $e; // Re-throw to be caught by the outer catch block
+                }
             }
 
             if ($reservationNo) {
