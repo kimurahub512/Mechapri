@@ -159,14 +159,18 @@ class UploadToNWPSJob implements ShouldQueue
                 $createStatus = $info['create_status'] ?? $info['status'] ?? null;
                 $reservationNo = $info['user_number'] ?? $info['reservation_number'] ?? $info['print_code'] ?? null; // user_number is the print number
 
+                // Ensure values are strings for logging
+                $createStatusStr = is_array($createStatus) ? json_encode($createStatus) : (string) $createStatus;
+                $reservationNoStr = is_array($reservationNo) ? json_encode($reservationNo) : (string) $reservationNo;
+
                 file_put_contents(storage_path('nwps_debug.log'), 
-                    date('Y-m-d H:i:s') . " - Poll result: create_status={$createStatus}, user_number={$reservationNo}\n", 
+                    date('Y-m-d H:i:s') . " - Poll result: create_status={$createStatusStr}, user_number={$reservationNoStr}\n", 
                     FILE_APPEND
                 );
                 
                 // Log the full response for debugging
                 file_put_contents(storage_path('nwps_debug.log'), 
-                    date('Y-m-d H:i:s') . " - Full API response: " . json_encode($info) . "\n", 
+                    date('Y-m-d H:i:s') . " - Full API response: " . json_encode($info, JSON_PRETTY_PRINT) . "\n", 
                     FILE_APPEND
                 );
 
