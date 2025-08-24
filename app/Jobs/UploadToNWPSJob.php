@@ -156,11 +156,17 @@ class UploadToNWPSJob implements ShouldQueue
                 
                 $info = $nwps->getFileInfo($token, $fileId);
                 // Spec mentions create_status becomes PRINTABLE when ready
-                $createStatus = $info['create_status'] ?? null;
-                $reservationNo = $info['user_number'] ?? null; // user_number is the print number
+                $createStatus = $info['create_status'] ?? $info['status'] ?? null;
+                $reservationNo = $info['user_number'] ?? $info['reservation_number'] ?? $info['print_code'] ?? null; // user_number is the print number
 
                 file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - Poll result: create_status={$createStatus}, user_number={$reservationNo}\n", 
+                    FILE_APPEND
+                );
+                
+                // Log the full response for debugging
+                file_put_contents(storage_path('nwps_debug.log'), 
+                    date('Y-m-d H:i:s') . " - Full API response: " . json_encode($info) . "\n", 
                     FILE_APPEND
                 );
 
