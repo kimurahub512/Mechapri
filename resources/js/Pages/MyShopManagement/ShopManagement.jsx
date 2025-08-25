@@ -14,8 +14,33 @@ import ShopSidebar from '@/Components/ShopSidebar';
 import ShopMobileTopBlocks from '@/Components/ShopMobileTopBlocks';
 import { vwd, vw, responsiveTextD, responsiveMetricD, responsiveText, responsiveMetric, responsivePosition, responsivePositionD } from '@/lib/utils';
 import { router } from '@inertiajs/react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const ShopManagement = ({ statistics }) => {
+const ShopManagement = ({ statistics: initialStatistics }) => {
+  const [statistics, setStatistics] = useState(initialStatistics);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // Fetch real print counts from NWPS API after initial load
+    const fetchRealPrintCounts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('/api/shop-statistics');
+        setStatistics(response.data);
+      } catch (error) {
+        console.error('Error fetching shop statistics:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Only fetch if initial print counts are 0 (indicating we need real data)
+    if (initialStatistics.current_month.print_count === 0 && initialStatistics.total.print_count === 0) {
+      fetchRealPrintCounts();
+    }
+  }, [initialStatistics]);
+
   const formatNumber = (num) => {
     return num.toLocaleString('ja-JP');
   };
@@ -102,7 +127,7 @@ const ShopManagement = ({ statistics }) => {
                           <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
                         </div>
                         <div className="flex items-baseline" style={{ gap: vw(2) }}>
-                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>{formatNumber(statistics.current_month.print_count)}</span>
+                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>{loading ? '...' : formatNumber(statistics.current_month.print_count)}</span>
                           <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>枚</span>
                         </div>
                       </div>
@@ -127,7 +152,7 @@ const ShopManagement = ({ statistics }) => {
                           <span style={{ ...responsiveText(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
                         </div>
                         <div className="flex items-baseline" style={{ gap: vw(2) }}>
-                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>{formatNumber(statistics.total.print_count)}</span>
+                          <span style={{ ...responsiveText(18, 40, null, 'bold', 'noto', '#222') }}>{loading ? '...' : formatNumber(statistics.total.print_count)}</span>
                           <span style={{ ...responsiveText(12, 32, null, 'bold', 'noto', '#222') }}>枚</span>
                         </div>
                       </div>
@@ -180,7 +205,7 @@ const ShopManagement = ({ statistics }) => {
                 <img src={list_unordered} alt="List" style={{ ...responsiveMetricD(16, 16) }} />
                 <span style={{ ...responsiveTextD(14, 10, null, 'medium', 'noto', '#222') }}>詳細を見る</span>
                 <img src={arrow_right} alt="Arrow Right" style={{ ...responsiveMetricD(20, 15) }} />
-              </a>
+                </a>
             </div>
             {/* frame 212 */}
             <div className="flex flex-col items-start w-full" style={{ gap: vwd(32) }}>
@@ -215,7 +240,7 @@ const ShopManagement = ({ statistics }) => {
                         <span style={{ ...responsiveTextD(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
                       </div>
                       <div className="flex items-baseline" style={{ gap: vwd(2) }}>
-                        <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>{formatNumber(statistics.current_month.print_count)}</span>
+                        <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>{loading ? '...' : formatNumber(statistics.current_month.print_count)}</span>
                         <span style={{ ...responsiveTextD(14, 21, 0.7, 'normal', 'noto', '#222') }}>枚</span>
                       </div>
                     </div>
@@ -240,7 +265,7 @@ const ShopManagement = ({ statistics }) => {
                         <span style={{ ...responsiveTextD(16, 32, null, 'bold', 'noto', '#272B2B') }}>印刷枚数</span>
                       </div>
                       <div className="flex items-baseline" style={{ gap: vwd(2) }}>
-                        <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>{formatNumber(statistics.total.print_count)}</span>
+                        <span style={{ ...responsiveTextD(30, 26, null, 'bold', 'noto', '#222') }}>{loading ? '...' : formatNumber(statistics.total.print_count)}</span>
                         <span style={{ ...responsiveTextD(14, 21, 0.7, 'normal', 'noto', '#222') }}>枚</span>
                       </div>
                     </div>

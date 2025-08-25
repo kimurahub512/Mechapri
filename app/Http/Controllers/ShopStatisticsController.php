@@ -6,10 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserPurchasedProduct;
 use App\Models\ProductBatch;
+use App\Services\NWPSService;
 use Carbon\Carbon;
 
 class ShopStatisticsController extends Controller
 {
+    protected NWPSService $nwpsService;
+
+    public function __construct(NWPSService $nwpsService)
+    {
+        $this->nwpsService = $nwpsService;
+    }
+
     public function getShopStatistics()
     {
         $user = Auth::user();
@@ -36,16 +44,14 @@ class ShopStatisticsController extends Controller
             return $purchase->price * $purchase->cnt;
         });
         
-        // Calculate current month print count (total quantity sold)
-        $currentMonthPrintCount = $currentMonthPurchases->sum('cnt');
-        
         // Calculate total sales revenue (all time)
         $totalSalesRevenue = $allPurchases->sum(function($purchase) {
             return $purchase->price * $purchase->cnt;
         });
         
-        // Calculate total print count (all time)
-        $totalPrintCount = $allPurchases->sum('cnt');
+        // Fetch print counts from NWPS API
+        $currentMonthPrintCount = $this->getPrintCountFromNWPS($currentMonthPurchases);
+        $totalPrintCount = $this->getPrintCountFromNWPS($allPurchases);
         
         // Calculate balance (after 15% commission)
         $commissionRate = 0.15; // 15%
@@ -66,5 +72,50 @@ class ShopStatisticsController extends Controller
             'commission_rate' => $commissionRate * 100, // 15%
             'payment_threshold' => 5000, // 5000円
         ]);
+    }
+
+    /**
+     * Get print count from NWPS API for a collection of purchases
+     */
+    private function getPrintCountFromNWPS($purchases)
+    {
+        $totalPrintCount = 0;
+        
+        foreach ($purchases as $purchase) {
+            // Skip if no NWPS file ID
+            if (!$purchase->nwps_file_id) {
+                continue;
+            }
+            
+            try {
+                // Get NWPS token - try purchase token first, then product token
+                $token = $purchase->nwps_token;
+                if (!$token) {
+                    $token = $purchase->productBatch->nwps_token;
+                }
+                
+                if (!$token) {
+                    continue; // Skip if no token available
+                }
+                
+                // Fetch file info from NWPS API
+                $fileInfo = $this->nwpsService->getFileInfo($token, $purchase->nwps_file_id);
+                
+                // Extract printed count from response
+                if (isset($fileInfo['status']['printed_count'])) {
+                    $totalPrintCount += (int)$fileInfo['status']['printed_count'];
+                }
+                
+            } catch (\Exception $e) {
+                // Log error but continue processing other purchases
+                \Illuminate\Support\Facades\Log::error('Failed to fetch NWPS print count', [
+                    'purchase_id' => $purchase->id,
+                    'file_id' => $purchase->nwps_file_id,
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
+        
+        return $totalPrintCount;
     }
 }

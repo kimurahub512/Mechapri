@@ -230,16 +230,15 @@ Route::middleware('auth')->group(function () {
             return $purchase->price * $purchase->cnt;
         });
         
-        // Calculate current month print count (total quantity sold)
-        $currentMonthPrintCount = $currentMonthPurchases->sum('cnt');
-        
         // Calculate total sales revenue (all time)
         $totalSalesRevenue = $allPurchases->sum(function($purchase) {
             return $purchase->price * $purchase->cnt;
         });
         
-        // Calculate total print count (all time)
-        $totalPrintCount = $allPurchases->sum('cnt');
+        // For initial load, we'll set print counts to 0 and let the API handle the real data
+        // This prevents slow page loads due to multiple NWPS API calls
+        $currentMonthPrintCount = 0;
+        $totalPrintCount = 0;
         
         // Calculate balance (after 15% commission)
         $commissionRate = 0.15; // 15%

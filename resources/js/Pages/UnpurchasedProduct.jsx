@@ -523,11 +523,11 @@ const UnpurchasedProduct = ({ product }) => {
                 <div className="flex w-[1248px] justify-between items-start">
                     {/* Left: 21 */}
                     <div className="flex w-[400px] max-w-[1248px] items-start flex-shrink-0">
-                        <img src={girl} alt="girl" className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
+                        <img src={product.user.image || default_user} alt="user" className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
                         {/* 211 */}
                         <div className="flex flex-col pl-[16px] items-start">
                             <div className="flex flex-col items-start gap-[12px]">
-                                <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy2005</span>
+                                <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 <div className="flex pt-[10px] gap-[4px]">
                                     <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
                                     <img src={instagram} alt="instagram" className="w-[46.429px] h-[46.429px] opacity-100" />
@@ -539,7 +539,7 @@ const UnpurchasedProduct = ({ product }) => {
                     <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
                         <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
                             <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
-                                こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
+                                {product.user.description}
                             </span>
                         </div>
                     </div>
@@ -1010,16 +1010,16 @@ const UnpurchasedProduct = ({ product }) => {
                     </section>
                 </section>
                 {/* Mobile Section 2 */}
-                <section className="flex md:hidden flex-col items-center py-[24px] px-[16px] gap-[24px] bg-[#F6F8FA] mx-auto">
+                <section className="flex md:hidden flex-col items-start py-[24px] px-[16px] gap-[24px] bg-[#F6F8FA] w-full">
                     <div className="flex flex-col items-start gap-[24px]">
                         {/* Left: 21 */}
                         <div className="flex items-start flex-shrink-0 ">
-                            <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
+                            <img src={product.user.image || default_user} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
                             {/* 211 */}
-                            <div className="flex flex-col pl-[16px] items-start">
+                            <div className="flex flex-col pl-[16px] items-start ">
                                 <div className="flex flex-col items-start gap-[12px]">
-                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-18px]">anchiy1005</span>
-                                    <div className="flex pt-[10px] gap-[4px]">
+                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[18px]">{product.user.name}</span>
+                                    <div className="flex gap-[4px]">
                                         <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
                                         <img src={instagram} alt="instagram" className="w-[40px] h-[40px] opacity-100" />
                                     </div>
@@ -1030,7 +1030,7 @@ const UnpurchasedProduct = ({ product }) => {
                         <div className="flex flex-col items-start flex-shrink-0 ">
                             <div className="flex flex-col items-start flex-shrink-0">
                                 <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">
-                                    こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
+                                    {product.user.description}
                                 </span>
                             </div>
                         </div>

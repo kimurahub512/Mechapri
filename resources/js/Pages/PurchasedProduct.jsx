@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { router, usePage } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
@@ -32,6 +32,60 @@ import BadgeDisplay from '@/Components/BadgeDisplay';
 
 const PurchasedProduct = ({ product }) => {
     const { auth } = usePage().props;
+    const [isUnlocked, setIsUnlocked] = useState(false);
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState(false);
+
+    useEffect(() => {
+        const checkPassword = async () => {
+            try {
+                const response = await fetch(route('product.check.password.status'), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    },
+                    body: JSON.stringify({ product_id: product.id }),
+                });
+                const data = await response.json();
+                setIsUnlocked(data.isUnlocked);
+            } catch (error) {
+                console.error('Error checking password status:', error);
+            }
+        };
+
+        if (product.display_mode === 'password') {
+            checkPassword();
+        }
+    }, [product.id, product.display_mode]);
+
+    const handlePasswordSubmit = async (e) => {
+        e.preventDefault();
+        setPasswordError(false);
+        try {
+            const response = await fetch(route('product.verify.password'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                },
+                body: JSON.stringify({ 
+                    product_id: product.id,
+                    password: password 
+                }),
+            });
+            const data = await response.json();
+            if (data.success) {
+                setIsUnlocked(true);
+                setPassword('');
+            } else {
+                setPasswordError(true);
+            }
+        } catch (error) {
+            console.error('Error checking password:', error);
+            setPasswordError(true);
+        }
+    };
     return (
         <div className='product-details-no-footer-gap bg-[#FFF]'>
             <Header />
@@ -218,15 +272,35 @@ const PurchasedProduct = ({ product }) => {
                                                     <span className="text-white text-[13px]">印刷して確認しよう！</span>
                                                 </div>
                                             </div>
-                                        ) : product.display_mode === 'password' ? (
+                                        ) : product.display_mode === 'password' && !isUnlocked ? (
                                             <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
                                                 <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[8px]" />
                                                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
                                                     <img src={lock} alt="lock" className="w-[42px] h-[42px]" />
                                                     <span className="text-[#CDD9EC] text-[15px] font-bold">パスワード</span>
                                                     <span className="text-[#CDD9EC] text-[13px]">PWを入れて印刷しよう</span>
+                                                    <form onSubmit={handlePasswordSubmit} className="mt-4 flex flex-col items-center gap-2">
+                                                        <input
+                                                            type="password"
+                                                            value={password}
+                                                            onChange={(e) => setPassword(e.target.value)}
+                                                            className={`w-[200px] px-4 py-2 rounded-md border ${passwordError ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#586B88]`}
+                                                            placeholder="パスワードを入力"
+                                                        />
+                                                        {passwordError && (
+                                                            <span className="text-red-500 text-[12px]">パスワードが正しくありません</span>
+                                                        )}
+                                                        <button
+                                                            type="submit"
+                                                            className="mt-2 px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-opacity-90 transition-all"
+                                                        >
+                                                            確認
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
+                                        ) : product.display_mode === 'password' && isUnlocked ? (
+                                            <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
                                         ) : product.display_mode === 'cushion' ? (
                                             <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
                                                 <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px]" />
@@ -240,7 +314,7 @@ const PurchasedProduct = ({ product }) => {
                                             <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
                                         )}
                                     </div>
-                                    {product.images.length > 0 && (
+                                    {product.images.length > 0 && (product.display_mode !== 'password' || isUnlocked) && (
                                         <BadgeDisplay
                                             buttonClassName="px-[16px] py-[8px] gap-[4px] rounded-[10px] border-[1px] border-solid border-[#FF2AA1]"
                                             textClassName="text-[#FF2AA1] text-[18px] font-medium leading-[18px]"
@@ -615,15 +689,35 @@ const PurchasedProduct = ({ product }) => {
                                                     <span className="text-white text-[8px]">印刷して確認しよう！</span>
                                                 </div>
                                             </div>
-                                        ) : product.display_mode === 'password' ? (
+                                        ) : product.display_mode === 'password' && !isUnlocked ? (
                                             <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
                                                 <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[6px]" />
                                                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
                                                     <img src={lock} alt="lock" className="w-[24px] h-[24px]" />
                                                     <span className="text-[#CDD9EC] text-[10px] font-bold">パスワード</span>
                                                     <span className="text-[#CDD9EC] text-[8px]">PWを入れて印刷しよう</span>
+                                                    <form onSubmit={handlePasswordSubmit} className="mt-2 flex flex-col items-center gap-1">
+                                                        <input
+                                                            type="password"
+                                                            value={password}
+                                                            onChange={(e) => setPassword(e.target.value)}
+                                                            className={`w-[120px] px-2 py-1 rounded-md border text-[10px] ${passwordError ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#586B88]`}
+                                                            placeholder="パスワードを入力"
+                                                        />
+                                                        {passwordError && (
+                                                            <span className="text-red-500 text-[8px]">パスワードが正しくありません</span>
+                                                        )}
+                                                        <button
+                                                            type="submit"
+                                                            className="mt-1 px-2 py-1 bg-blue-700 text-white rounded-md hover:bg-opacity-90 transition-all text-[10px]"
+                                                        >
+                                                            確認
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
+                                        ) : product.display_mode === 'password' && isUnlocked ? (
+                                            <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
                                         ) : product.display_mode === 'cushion' ? (
                                             <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
                                                 <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px]" />
@@ -637,7 +731,7 @@ const PurchasedProduct = ({ product }) => {
                                             <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
                                         )}
                                     </div>
-                                    {product.images.length > 0 && (
+                                    {product.images.length > 0 && (product.display_mode !== 'password' || isUnlocked) && (
                                         <BadgeDisplay
                                             buttonClassName="px-[12px] py-[6px] gap-[3px] rounded-[10px] border-[1px] border-solid border-[#E862CB]"
                                             textClassName="text-[#E862CB] text-[18px] font-medium leading-[18px]"
