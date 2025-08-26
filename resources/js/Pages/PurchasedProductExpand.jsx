@@ -192,10 +192,10 @@ const PurchasedProductExpand = ({ product }) => {
                     {/* Section 12 */}
                     <section className="flex flex-col items-start gap-[32px] w-[960px] mt-[60px]">
                         {/* 121 */}
-                        <div className="flex flex-col h-[1070px] w-full rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] p-0">
+                        <div className="flex flex-col w-full rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] p-0 pb-[60px]">
                             {/* 1211: Image carousel */}
                             <div className="flex flex-col items-center gap-[24px] p-[70px_70px_92.5px_70px]">
-                                <div className="grid grid-cols-3 gap-6 w-full justify-center">
+                                <div className="flex flex-wrap justify-center gap-6 w-full max-w-[744px]">
                                     {product.images.map((image, index) => (
                                         <div key={index} className="flex justify-center items-center rounded-[14px] bg-[#F6F6F6] relative">
                                             <div className="flex h-[348px] w-[232px] flex-col justify-center items-center relative">
@@ -529,7 +529,7 @@ const PurchasedProductExpand = ({ product }) => {
                         {/* 121 */}
                         <div className="flex flex-col w-full rounded-[10px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] px-4 pb-5">
                             {/* 1211: Mobile image carousel */}
-                            <div className="grid grid-cols-2 gap-4 py-[16px]">
+                            <div className="flex flex-wrap justify-center gap-4 py-[16px]">
                                 {product.images.map((image, index) => (
                                     <div key={index} className="flex justify-center items-center rounded-[6px] bg-[#F6F6F6] relative">
                                         <div className="flex h-[147px] w-[98px] flex-col justify-center items-center flex-shrink-0 relative">

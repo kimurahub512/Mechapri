@@ -12,8 +12,13 @@ class ShopTopController extends Controller
 {
     public function index()
     {
-        // For now, let's get the first user with products as the featured shop
-        // In a real app, this would be based on shop ID from URL or other logic
+        // Get the authenticated user's shop
+        $currentUser = Auth::user();
+        
+        if (!$currentUser) {
+            abort(401, 'Authentication required');
+        }
+
         $featuredUser = User::with(['productBatches' => function($query) {
                 $query
                 // ->where('is_public', true)
@@ -22,14 +27,10 @@ class ShopTopController extends Controller
                       }])
                       ->orderBy('created_at', 'desc');
             }])
-            ->whereHas('productBatches', function($query) {
-                // $query->where('is_public', true);
-            })
-            ->first();
+            ->find($currentUser->id);
 
         if (!$featuredUser) {
-            // Fallback to any user if no featured user found
-            $featuredUser = User::first();
+            abort(404, 'User not found');
         }
 
         $shopData = null;
@@ -37,13 +38,8 @@ class ShopTopController extends Controller
         $categoryProducts = [];
 
         if ($featuredUser) {
-            // Get current user if authenticated
-            $currentUser = Auth::user();
+            // Since featuredUser is the current user, they can't favorite their own shop
             $isFavoritedByCurrentUser = false;
-            
-            if ($currentUser && $currentUser->id !== $featuredUser->id) {
-                $isFavoritedByCurrentUser = $currentUser->hasFavoritedShop($featuredUser->id);
-            }
             
             // Get shop information
             $shopData = [

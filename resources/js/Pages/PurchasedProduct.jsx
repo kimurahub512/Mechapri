@@ -244,7 +244,7 @@ const PurchasedProduct = ({ product }) => {
                     {/* Section 12 */}
                     <section className="flex flex-col items-start gap-[32px] w-[960px] mt-[60px]">
                         {/* 121 */}
-                        <div className="flex flex-col h-[1070px] w-full rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] p-0">
+                        <div className="flex flex-col w-full rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] p-0 pb-[60px]">
                             {/* 1211: Blurred image with overlay */}
                             <div className="flex w-[500px] px-[90px] py-[10px] justify-center items-center rounded-[16px] bg-[#F6F6F6] mx-auto mt-[40px] relative">
                                 {/* Blurred image */}
