@@ -294,9 +294,8 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
     Route::get('/myshop/categoryedit', function(){  
         return Inertia::render('MyShopManagement/CategoryEdit');
     });
-    Route::get('/myshop/settransferaccount', function(){
-        return Inertia::render('MyShopManagement/SetTransferAccount');
-    });
+    Route::get('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccountController::class, 'index'])->name('myshop.settransferaccount');
+Route::post('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccountController::class, 'store'])->name('myshop.settransferaccount.store');
     
     Route::get('/notification', [App\Http\Controllers\NotificationController::class, 'index'])->name('notification.index');
     

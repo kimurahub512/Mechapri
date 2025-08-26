@@ -66,12 +66,16 @@ class TransactionController extends Controller
             ];
         }
         
-        // Bank account information (mock data for now)
-        $bankAccount = [
-            'account_type' => '普通',
-            'account_number' => '****84',
-            'bank_name' => 'ｵｰﾊﾞｰｴｯｸｽ(ｶ',
-        ];
+        // Get bank account information
+        $bankAccount = $user->bankAccount()->first();
+        
+        if (!$bankAccount) {
+            $bankAccount = [
+                'account_type' => '未設定',
+                'account_number' => '未設定',
+                'bank_name' => '未設定',
+            ];
+        }
         
         return Inertia::render('MyShopManagement/Transaction', [
             'currentBalance' => (int)$currentBalance,

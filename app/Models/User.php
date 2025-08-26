@@ -155,6 +155,14 @@ class User extends Authenticatable //implements MustVerifyEmail
     }
 
     /**
+     * Get the bank account for this user.
+     */
+    public function bankAccount(): HasMany
+    {
+        return $this->hasMany(BankAccount::class);
+    }
+
+    /**
      * Send the password reset notification.
      *
      * @param  string  $token

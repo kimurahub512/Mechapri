@@ -211,7 +211,7 @@ const UnpurchasedProductExpand = ({ product }) => {
                         {/* 121 */}
                         <div className="flex flex-col w-full rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] p-[70px_70px_92.5px_70px] ">
                             <div className="flex flex-col items-center gap-[24px]">
-                                <div className="flex flex-wrap justify-center gap-6 w-full max-w-[496px]">
+                                <div className="grid grid-cols-2 gap-6 w-full max-w-[496px] justify-items-center">
                                     {product.images.map((image, index) => (
                                         <div key={index} className="flex justify-center items-center rounded-[14px] bg-[#F6F6F6] relative">
                                             <div className="flex h-[348px] w-[232px] flex-col justify-center items-center relative">

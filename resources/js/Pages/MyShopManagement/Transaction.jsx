@@ -14,8 +14,14 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
     const [selectedPeriod, setSelectedPeriod] = useState('all');
     const [showAllMonths, setShowAllMonths] = useState(false);
     
-    // Show only 3 months initially, or all months if showAllMonths is true
-    const displayedMonths = showAllMonths ? monthlyData : monthlyData.slice(0, 3);
+    // Filter data based on active filter
+    const getFilteredData = (data) => {
+        return data; // Keep original data structure, filtering will be done in rendering
+    };
+
+    // Show only 3 months initially, or all months if showAllMonths is true, and apply filter
+    const filteredData = getFilteredData(monthlyData);
+    const displayedMonths = showAllMonths ? filteredData : filteredData.slice(0, 3);
 
     // Format number with commas for Japanese currency display
     const formatCurrency = (amount) => {
@@ -76,7 +82,10 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     className={`flex w-[120px] h-[48px] justify-center items-center rounded-[70px] cursor-pointer ${
                                         activeFilter === 'all' ? 'bg-white shadow-[0_2px_8px_0_rgba(0,0,0,0.25)]' : ''
                                     }`}
-                                    onClick={() => setActiveFilter('all')}
+                                    onClick={() => {
+                                        setActiveFilter('all');
+                                        setShowAllMonths(false);
+                                    }}
                                 >
                                     <span className={`text-center font-bold text-[16px] leading-[16.1px] font-['Noto Sans JP'] ${
                                         activeFilter === 'all' ? 'text-[#FF2AA1]' : 'text-[#767676]'
@@ -87,7 +96,10 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     className={`flex w-[120px] h-[48px] justify-center items-center rounded-[70px] cursor-pointer ${
                                         activeFilter === 'sales' ? 'bg-white shadow-[0_2px_8px_0_rgba(0,0,0,0.25)]' : ''
                                     }`}
-                                    onClick={() => setActiveFilter('sales')}
+                                    onClick={() => {
+                                        setActiveFilter('sales');
+                                        setShowAllMonths(false);
+                                    }}
                                 >
                                     <span className={`text-center font-medium text-[13px] leading-[24px] font-['Noto Sans JP'] ${
                                         activeFilter === 'sales' ? 'text-[#FF2AA1]' : 'text-[#767676]'
@@ -98,7 +110,10 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     className={`flex w-[120px] h-[48px] justify-center items-center rounded-[70px] cursor-pointer ${
                                         activeFilter === 'withdrawal' ? 'bg-white shadow-[0_2px_8px_0_rgba(0,0,0,0.25)]' : ''
                                     }`}
-                                    onClick={() => setActiveFilter('withdrawal')}
+                                    onClick={() => {
+                                        setActiveFilter('withdrawal');
+                                        setShowAllMonths(false);
+                                    }}
                                 >
                                     <span className={`text-center font-medium text-[13px] leading-[24px] font-['Noto Sans JP'] ${
                                         activeFilter === 'withdrawal' ? 'text-[#FF2AA1]' : 'text-[#767676]'
@@ -123,90 +138,100 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                         <span className="text-[#363636] font-medium text-[14px] leading-[25.2px] font-['Noto Sans JP']">(概算値 {monthData.estimate_date})</span>
                                     </div>
                                     {/* 12212: 最終残高 */}
-                                    <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
-                                        <div className="flex items-start gap-[30px]">
-                                            <img src={three_money} alt="最終残高" className="w-[35.088px] h-[40px]" />
-                                            <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">最終残高</span>
+                                    {(activeFilter === 'all') && (
+                                        <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
+                                            <div className="flex items-start gap-[30px]">
+                                                <img src={three_money} alt="最終残高" className="w-[35.088px] h-[40px]" />
+                                                <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">最終残高</span>
+                                            </div>
+                                            <div className="flex items-center gap-[10px] ml-auto">
+                                                <span className="flex items-center">
+                                                    <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.final_balance)}</span>
+                                                    <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
+                                                </span>
+                                                <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-[10px] ml-auto">
-                                            <span className="flex items-center">
-                                                <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.final_balance)}</span>
-                                                <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
-                                            </span>
-                                            <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    )}
                                     {/* 12213: 販売売上 */}
-                                    <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
-                                        <div className="flex items-start gap-[30px]">
-                                            <img src={money_hand} alt="販売売上" className="w-[35.088px] h-[40px]" />
-                                            <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">販売売上</span>
+                                    {(activeFilter === 'all' || activeFilter === 'sales') && (
+                                        <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
+                                            <div className="flex items-start gap-[30px]">
+                                                <img src={money_hand} alt="販売売上" className="w-[35.088px] h-[40px]" />
+                                                <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">販売売上</span>
+                                            </div>
+                                            <div className="flex items-center gap-[10px] ml-auto">
+                                                <span className="flex items-center">
+                                                    <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.sales_revenue)}</span>
+                                                    <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
+                                                </span>
+                                                <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-[10px] ml-auto">
-                                            <span className="flex items-center">
-                                                <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.sales_revenue)}</span>
-                                                <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
-                                            </span>
-                                            <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    )}
                                     {/* 12214: 販売手数料 */}
-                                    <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
-                                        <div className="flex items-start gap-[30px]">
-                                            <img src={money_out} alt="販売手数料" className="w-[35.088px] h-[40px]" />
-                                            <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">販売手数料</span>
+                                    {(activeFilter === 'all') && (
+                                        <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
+                                            <div className="flex items-start gap-[30px]">
+                                                <img src={money_out} alt="販売手数料" className="w-[35.088px] h-[40px]" />
+                                                <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">販売手数料</span>
+                                            </div>
+                                            <div className="flex items-center gap-[10px] ml-auto">
+                                                <span className="flex items-center">
+                                                    <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-{formatCurrency(monthData.commission)}</span>
+                                                    <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
+                                                </span>
+                                                <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-[10px] ml-auto">
-                                            <span className="flex items-center">
-                                                <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-{formatCurrency(monthData.commission)}</span>
-                                                <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
-                                            </span>
-                                            <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    )}
                                     {/* 12215: 出金 */}
-                                    <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
-                                        <div className="flex items-start gap-[30px]">
-                                            <img src={money_out} alt="出金" className="w-[35.088px] h-[40px]" />
-                                            <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">出金</span>
+                                    {(activeFilter === 'all' || activeFilter === 'withdrawal') && (
+                                        <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
+                                            <div className="flex items-start gap-[30px]">
+                                                <img src={money_out} alt="出金" className="w-[35.088px] h-[40px]" />
+                                                <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">出金</span>
+                                            </div>
+                                            <div className="flex items-center gap-[10px] ml-auto">
+                                                <span className="flex items-center">
+                                                    <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-{formatCurrency(monthData.withdrawal)}</span>
+                                                    <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
+                                                </span>
+                                                <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-[10px] ml-auto">
-                                            <span className="flex items-center">
-                                                <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-{formatCurrency(monthData.withdrawal)}</span>
-                                                <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
-                                            </span>
-                                            <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    )}
                                     {/* 12216: 開始残高 */}
-                                    <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
-                                        <div className="flex items-start gap-[30px]">
-                                            <img src={three_money} alt="開始残高" className="w-[35.088px] h-[40px]" />
-                                            <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">開始残高</span>
+                                    {(activeFilter === 'all') && (
+                                        <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
+                                            <div className="flex items-start gap-[30px]">
+                                                <img src={three_money} alt="開始残高" className="w-[35.088px] h-[40px]" />
+                                                <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">開始残高</span>
+                                            </div>
+                                            <div className="flex items-center gap-[10px] ml-auto">
+                                                <span className="flex items-center">
+                                                    <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.starting_balance)}</span>
+                                                    <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
+                                                </span>
+                                                <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-[10px] ml-auto">
-                                            <span className="flex items-center">
-                                                <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.starting_balance)}</span>
-                                                <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
-                                            </span>
-                                            <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    )}
                                 </div>
                             ))}
                             
                             {/* Show More Button */}
-                            {monthlyData.length > 3 && (
+                            {filteredData.length > 3 && (
                                 <div className="flex justify-center w-full mt-4">
                                     <button 
                                         onClick={() => setShowAllMonths(!showAllMonths)}
@@ -258,7 +283,10 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     className={`flex w-[64px] h-[36px] px-6 justify-center items-center rounded-[70px] cursor-pointer ${
                                         activeFilter === 'all' ? 'bg-white shadow-[0_2px_8px_0_rgba(0,0,0,0.25)]' : ''
                                     }`}
-                                    onClick={() => setActiveFilter('all')}
+                                    onClick={() => {
+                                        setActiveFilter('all');
+                                        setShowAllMonths(false);
+                                    }}
                                 >
                                     <span className={`text-center font-bold text-[13px] leading-[16.1px] font-['Noto Sans JP'] whitespace-nowrap ${
                                         activeFilter === 'all' ? 'text-[#FF2AA1]' : 'text-[#767676]'
@@ -269,7 +297,10 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     className={`flex w-[64px] h-[36px] justify-center items-center rounded-[70px] cursor-pointer ${
                                         activeFilter === 'sales' ? 'bg-white shadow-[0_2px_8px_0_rgba(0,0,0,0.25)]' : ''
                                     }`}
-                                    onClick={() => setActiveFilter('sales')}
+                                    onClick={() => {
+                                        setActiveFilter('sales');
+                                        setShowAllMonths(false);
+                                    }}
                                 >
                                     <span className={`text-center font-medium text-[13px] leading-[24px] font-['Noto Sans JP'] whitespace-nowrap ${
                                         activeFilter === 'sales' ? 'text-[#FF2AA1]' : 'text-[#767676]'
@@ -280,7 +311,10 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     className={`flex w-[64px] h-[36px] justify-center items-center rounded-[70px] cursor-pointer ${
                                         activeFilter === 'withdrawal' ? 'bg-white shadow-[0_2px_8px_0_rgba(0,0,0,0.25)]' : ''
                                     }`}
-                                    onClick={() => setActiveFilter('withdrawal')}
+                                    onClick={() => {
+                                        setActiveFilter('withdrawal');
+                                        setShowAllMonths(false);
+                                    }}
                                 >
                                     <span className={`text-center font-medium text-[13px] leading-[24px] font-['Noto Sans JP'] whitespace-nowrap ${
                                         activeFilter === 'withdrawal' ? 'text-[#FF2AA1]' : 'text-[#767676]'
@@ -306,90 +340,100 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                         <span className="text-[#363636] font-bold text-[14px] leading-[14px] font-['Noto Sans JP']">{monthData.month}</span>
                                     </div>
                                     {/* 12212: 最終残高 */}
-                                    <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px] border-b border-[#E9E9E9]">
-                                        <div className="flex items-start gap-2">
-                                            <img src={three_money} alt="最終残高" className="w-[35px] h-[30px]" />
-                                            <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">最終残高</span>
+                                    {(activeFilter === 'all') && (
+                                        <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px] border-b border-[#E9E9E9]">
+                                            <div className="flex items-start gap-2">
+                                                <img src={three_money} alt="最終残高" className="w-[35px] h-[30px]" />
+                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">最終残高</span>
+                                            </div>
+                                            <div className="flex items-center ml-auto">
+                                                <span className="flex items-center">
+                                                    <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.final_balance)}</span>
+                                                    <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
+                                                </span>
+                                                <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center ml-auto">
-                                            <span className="flex items-center">
-                                                <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.final_balance)}</span>
-                                                <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
-                                            </span>
-                                            <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    )}
                                     {/* 12213: 販売売上 */}
-                                    <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px] border-b border-[#E9E9E9]">
-                                        <div className="flex items-start gap-2">
-                                            <img src={money_hand} alt="販売売上" className="w-[35px] h-[30px]" />
-                                            <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">販売売上</span>
+                                    {(activeFilter === 'all' || activeFilter === 'sales') && (
+                                        <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px] border-b border-[#E9E9E9]">
+                                            <div className="flex items-start gap-2">
+                                                <img src={money_hand} alt="販売売上" className="w-[35px] h-[30px]" />
+                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">販売売上</span>
+                                            </div>
+                                            <div className="flex items-center ml-auto">
+                                                <span className="flex items-center">
+                                                    <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.sales_revenue)}</span>
+                                                    <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
+                                                </span>
+                                                <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center ml-auto">
-                                            <span className="flex items-center">
-                                                <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.sales_revenue)}</span>
-                                                <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
-                                            </span>
-                                            <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    )}
                                     {/* 12214: 販売手数料 */}
-                                    <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px] border-b border-[#E9E9E9]">
-                                        <div className="flex items-start gap-2">
-                                            <img src={money_out} alt="販売手数料" className="w-[35px] h-[30px]" />
-                                            <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">販売手数料</span>
+                                    {(activeFilter === 'all') && (
+                                        <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px] border-b border-[#E9E9E9]">
+                                            <div className="flex items-start gap-2">
+                                                <img src={money_out} alt="販売手数料" className="w-[35px] h-[30px]" />
+                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">販売手数料</span>
+                                            </div>
+                                            <div className="flex items-center ml-auto">
+                                                <span className="flex items-center">
+                                                    <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-{formatCurrency(monthData.commission)}</span>
+                                                    <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
+                                                </span>
+                                                <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center ml-auto">
-                                            <span className="flex items-center">
-                                                <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-{formatCurrency(monthData.commission)}</span>
-                                                <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
-                                            </span>
-                                            <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    )}
                                     {/* 12215: 出金 */}
-                                    <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px] border-b border-[#E9E9E9]">
-                                        <div className="flex items-start gap-2">
-                                            <img src={money_out} alt="出金" className="w-[35px] h-[30px]" />
-                                            <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">出金</span>
+                                    {(activeFilter === 'all' || activeFilter === 'withdrawal') && (
+                                        <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px] border-b border-[#E9E9E9]">
+                                            <div className="flex items-start gap-2">
+                                                <img src={money_out} alt="出金" className="w-[35px] h-[30px]" />
+                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">出金</span>
+                                            </div>
+                                            <div className="flex items-center ml-auto">
+                                                <span className="flex items-center">
+                                                    <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-{formatCurrency(monthData.withdrawal)}</span>
+                                                    <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
+                                                </span>
+                                                <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center ml-auto">
-                                            <span className="flex items-center">
-                                                <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-{formatCurrency(monthData.withdrawal)}</span>
-                                                <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
-                                            </span>
-                                            <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    )}
                                     {/* 12216: 開始残高 */}
-                                    <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px]">
-                                        <div className="flex items-start gap-2">
-                                            <img src={three_money} alt="開始残高" className="w-[35px] h-[30px]" />
-                                            <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">開始残高</span>
+                                    {(activeFilter === 'all') && (
+                                        <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px]">
+                                            <div className="flex items-start gap-2">
+                                                <img src={three_money} alt="開始残高" className="w-[35px] h-[30px]" />
+                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">開始残高</span>
+                                            </div>
+                                            <div className="flex items-center ml-auto">
+                                                <span className="flex items-center">
+                                                    <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.starting_balance)}</span>
+                                                    <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
+                                                </span>
+                                                <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center ml-auto">
-                                            <span className="flex items-center">
-                                                <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.starting_balance)}</span>
-                                                <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
-                                            </span>
-                                            <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    )}
                                 </div>
                             ))}
                             
                             {/* Show More Button - Mobile */}
-                            {monthlyData.length > 3 && (
+                            {filteredData.length > 3 && (
                                 <div className="flex justify-center w-full mt-4">
                                     <button 
                                         onClick={() => setShowAllMonths(!showAllMonths)}

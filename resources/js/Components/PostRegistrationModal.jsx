@@ -2,7 +2,7 @@ import {React, useState} from 'react';
 
 import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 import qr from '@/assets/images/productdetails/qr.jpg';
-import girl from '@/assets/images/favoriteproducts/girl.svg';
+import default_user from '@/assets/images/default-user.png';
 import shop1 from '@/assets/images/productdetails/printshop.svg';
 import shop2 from '@/assets/images/productdetails/lawson.svg';
 import shop3 from '@/assets/images/productdetails/ministop.svg';
@@ -160,11 +160,11 @@ ${productData.title}
                             {/* 12121: User Info */}
                             <div className="inline-flex h-[32px] p-[6px_0] flex-row items-center flex-shrink-0 rounded-[3px]">
                                 <img 
-                                    src={productData?.user?.profile_photo_url || girl} 
+                                    src={productData?.user?.profile_photo_url || default_user} 
                                     alt="user" 
                                     className="w-[24px] h-[24px] flex-shrink-0 rounded-full object-cover bg-gray-200"
                                     onError={(e) => {
-                                        e.target.src = girl;
+                                        e.target.src = default_user;
                                         e.target.onerror = null;
                                     }}
                                 />
@@ -314,11 +314,11 @@ ${productData.title}
                             <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[11px] leading-[15px]">{productData?.files_count ? `${productData.files_count}枚セット` : '1枚セット'}</span>
                             <div className="flex items-center gap-[5px] m-[4px]">
                                 <img 
-                                    src={productData?.user?.profile_photo_url || girl} 
+                                    src={productData?.user?.profile_photo_url || default_user} 
                                     alt="user" 
                                     className="w-[20px] h-[20px] rounded-full object-cover bg-gray-200"
                                     onError={(e) => {
-                                        e.target.src = girl;
+                                        e.target.src = default_user;
                                         e.target.onerror = null;
                                     }}
                                 />

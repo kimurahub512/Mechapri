@@ -14,9 +14,21 @@ import x from '@/assets/images/x_black.svg';
 import instagram from '@/assets/images/instagram_black.svg';
 import close from '@/assets/images/close_gray.svg';
 
-const TransferAccountConfirmModal = ({ isOpen, onClose }) => {
+const TransferAccountConfirmModal = ({ isOpen, onClose, formData, onConfirm, isSubmitting = false, submitStatus = null }) => {
 
     if (!isOpen) return null;
+
+    const handleConfirm = () => {
+        if (onConfirm && !isSubmitting) {
+            onConfirm();
+        }
+    };
+
+    const handleCancel = () => {
+        if (!isSubmitting) {
+            onClose();
+        }
+    };
 
     return (
         <>
@@ -26,42 +38,64 @@ const TransferAccountConfirmModal = ({ isOpen, onClose }) => {
                 <div className="flex h-[98px] p-[20px_0_1px_0] flex-col items-center flex-shrink-0 border-b border-[#D1D1D1] bg-white rounded-t-[40px] w-full">
                     <h1 className="text-[#363636] text-center font-noto text-[36px] font-bold leading-[54px]">登録内容の確認</h1>
                 </div>
-                <img src={close} alt="close" className="absolute top-[34px] right-[32px] w-[40px] h-[40px] cursor-pointer" onClick={onClose} />
+                <img src={close} alt="close" className="absolute top-[34px] right-[32px] w-[40px] h-[40px] cursor-pointer" onClick={handleCancel} />
 
                 <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">こちらの振込先で登録してよろしいですか？</span>
                 <div className="flex flex-col items-start gap-[4px] w-[271px]">
                     <div className="flex flex-row items-center gap-[21px]">
                         <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px] w-[160px]">銀行:</span>
-                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px]">みずほ銀行</span>
+                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px] whitespace-nowrap">{formData?.bank_name || '未入力'}</span>
                     </div>
                     <div className="flex flex-row items-center gap-[21px]">
                         <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px] w-[160px]">口座種別：</span>
-                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px]">普通預金</span>
+                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px]">{formData?.account_type || '未選択'}</span>
                     </div>
                     <div className="flex flex-row items-center gap-[21px]">
-                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px] w-[160px]">支店コード：</span>
-                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px]">200</span>
+                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px] w-[160px] whitespace-nowrap">支店コード：</span>
+                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px]">{formData?.branch_code || '未入力'}</span>
                     </div>
                     <div className="flex flex-row items-center gap-[21px]">
-                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px] w-[160px]">口座番号：</span>
-                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px]">1860170</span>
+                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px] w-[160px] whitespace-nowrap">口座番号：</span>
+                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px]">{formData?.account_number || '未入力'}</span>
                     </div>
                     <div className="flex flex-row items-center gap-[21px]">
-                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px] w-[160px]">口座名義 (セイ) ：</span>
-                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px]">リ</span>
+                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px] w-[160px] whitespace-nowrap">口座名義 (セイ) ：</span>
+                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px]">{formData?.account_holder_sei || '未入力'}</span>
                     </div>
                     <div className="flex flex-row items-center gap-[21px]">
-                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px] w-[160px]">口座名義 (セイ) ：</span>
-                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px]">クワンヒヨ</span>
+                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px] w-[160px] whitespace-nowrap">口座名義 (メイ) ：</span>
+                        <span className="text-[#000] text-left font-noto text-[18px] font-normal leading-[24px]">{formData?.account_holder_mei || '未入力'}</span>
                     </div>
                 </div>
                 <div className="flex flex-row items-center gap-[16px]">
-                    <button className="flex items-center justify-center w-[240px] h-[48px] rounded-[6px] bg-[#FF2AA1]">
-                        <span className="text-[#363636] font-noto text-[18px] font-bold leading-[21px]">登録する</span>
-                    </button>
-                    <button className="flex items-center justify-center w-[240px] h-[48px] rounded-[6px] border border-[#FF2AA1]">
-                        <span className="text-[#FF2AA1] font-noto text-[18px] font-bold leading-[21px]">修正</span>
-                    </button>
+                    {submitStatus === 'success' ? (
+                        <div className="flex items-center justify-center w-[240px] h-[48px] rounded-[6px] bg-green-500">
+                            <span className="text-white font-noto text-[18px] font-bold leading-[21px]">登録完了！</span>
+                        </div>
+                    ) : (
+                        <button 
+                            className={`flex items-center justify-center w-[240px] h-[48px] rounded-[6px] ${
+                                isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#FF2AA1] cursor-pointer hover:bg-[#E61E8F]'
+                            } transition-colors`}
+                            onClick={handleConfirm}
+                            disabled={isSubmitting}
+                        >
+                            <span className="text-white font-noto text-[18px] font-bold leading-[21px]">
+                                {isSubmitting ? '登録中...' : '登録する'}
+                            </span>
+                        </button>
+                    )}
+                    {submitStatus !== 'success' && (
+                        <button 
+                            className={`flex items-center justify-center w-[240px] h-[48px] rounded-[6px] border border-[#FF2AA1] ${
+                                isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:bg-[#FFF5F9]'
+                            } transition-colors`}
+                            onClick={handleCancel}
+                            disabled={isSubmitting}
+                        >
+                            <span className="text-[#FF2AA1] font-noto text-[18px] font-bold leading-[21px]">修正</span>
+                        </button>
+                    )}
                 </div>
             </section>
             {/* mobile version */}
@@ -71,42 +105,64 @@ const TransferAccountConfirmModal = ({ isOpen, onClose }) => {
                 <div className="flex p-[20px_0_20px_0] flex-col items-center flex-shrink-0 border-b border-[#D1D1D1] bg-white rounded-t-[40px] w-full">
                     <h1 className="text-[#363636] text-center font-noto text-[24px] font-bold leading-[24px]">登録内容の確認</h1>
                 </div>
-                <img src={close} alt="close" className="absolute top-[16px] right-[12px] w-[22px] h-[22px] cursor-pointer" onClick={onClose} />
+                <img src={close} alt="close" className="absolute top-[16px] right-[12px] w-[22px] h-[22px] cursor-pointer" onClick={handleCancel} />
 
                 <span className="text-center text-[#363636] font-noto text-[18px] font-bold leading-[27px] mt-[16px]">こちらの振込先で登録して<br/>よろしいですか？</span>
                 <div className="flex flex-col items-start gap-[4px] w-[271px] mt-[24px]">
                     <div className="flex flex-row items-center gap-[21px]">
                         <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px] w-[160px]">銀行:</span>
-                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px]">みずほ銀行</span>
+                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px] whitespace-nowrap">{formData?.bank_name || '未入力'}</span>
                     </div>
                     <div className="flex flex-row items-center gap-[21px]">
                         <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px] w-[160px]">口座種別：</span>
-                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px]">普通預金</span>
+                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px]">{formData?.account_type || '未選択'}</span>
                     </div>
                     <div className="flex flex-row items-center gap-[21px]">
-                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px] w-[160px]">支店コード：</span>
-                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px]">200</span>
+                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px] w-[160px] whitespace-nowrap">支店コード：</span>
+                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px]">{formData?.branch_code || '未入力'}</span>
                     </div>
                     <div className="flex flex-row items-center gap-[21px]">
-                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px] w-[160px]">口座番号：</span>
-                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px]">1860170</span>
+                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px] w-[160px] whitespace-nowrap">口座番号：</span>
+                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px]">{formData?.account_number || '未入力'}</span>
                     </div>
                     <div className="flex flex-row items-center gap-[21px]">
-                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px] w-[160px]">口座名義 (セイ) ：</span>
-                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px]">リ</span>
+                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px] w-[160px] whitespace-nowrap">口座名義 (セイ) ：</span>
+                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px]">{formData?.account_holder_sei || '未入力'}</span>
                     </div>
                     <div className="flex flex-row items-center gap-[21px]">
-                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px] w-[160px]">口座名義 (セイ) ：</span>
-                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px]">クワンヒヨ</span>
+                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px] w-[160px] whitespace-nowrap">口座名義 (メイ) ：</span>
+                        <span className="text-[#000] text-left font-noto text-[16px] font-normal leading-[24px]">{formData?.account_holder_mei || '未入力'}</span>
                     </div>
                 </div>
                 <div className="flex flex-row items-center gap-[16px] mt-[32px]">
-                    <button className="flex items-center justify-center w-[144px] h-[48px] rounded-[8px] bg-[#FF2AA1]">
-                        <span className="text-[#363636] font-noto text-[16px] font-bold leading-[21px]">登録する</span>
-                    </button>
-                    <button className="flex items-center justify-center w-[144px] h-[48px] rounded-[8px] border border-[#FF2AA1]">
-                        <span className="text-[#FF2AA1] font-noto text-[16px] font-bold leading-[21px]">修正</span>
-                    </button>
+                    {submitStatus === 'success' ? (
+                        <div className="flex items-center justify-center w-[144px] h-[48px] rounded-[8px] bg-green-500">
+                            <span className="text-white font-noto text-[16px] font-bold leading-[21px]">登録完了！</span>
+                        </div>
+                    ) : (
+                        <button 
+                            className={`flex items-center justify-center w-[144px] h-[48px] rounded-[8px] ${
+                                isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#FF2AA1] cursor-pointer hover:bg-[#E61E8F]'
+                            } transition-colors`}
+                            onClick={handleConfirm}
+                            disabled={isSubmitting}
+                        >
+                            <span className="text-white font-noto text-[16px] font-bold leading-[21px]">
+                                {isSubmitting ? '登録中...' : '登録する'}
+                            </span>
+                        </button>
+                    )}
+                    {submitStatus !== 'success' && (
+                        <button 
+                            className={`flex items-center justify-center w-[144px] h-[48px] rounded-[8px] border border-[#FF2AA1] ${
+                                isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:bg-[#FFF5F9]'
+                            } transition-colors`}
+                            onClick={handleCancel}
+                            disabled={isSubmitting}
+                        >
+                            <span className="text-[#FF2AA1] font-noto text-[16px] font-bold leading-[21px]">修正</span>
+                        </button>
+                    )}
                 </div>
             </section>
         </>
