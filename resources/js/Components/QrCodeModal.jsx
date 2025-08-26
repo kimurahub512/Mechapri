@@ -13,6 +13,10 @@ import complex_white from '@/assets/images/complex_white.svg';
 import close from '@/assets/images/close_gray.svg';
 
 const QrCodeModal = ({ onClose, purchase }) => {
+    // Debug logging to see what data we're getting
+    console.log('QrCodeModal purchase data:', purchase);
+    console.log('QR Code URL:', purchase?.nwps_qr_code_url);
+    console.log('Product NWPS QR Code URL:', purchase?.product?.nwps_qr_code_url);
 
     // Handle escape key to close
     React.useEffect(() => {
@@ -106,7 +110,7 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                 {/*12122112*/}
                                 <div className="relative w-[358px] h-[150px] mt-[12px]">
                                     <img
-                                        src={purchase?.nwps_qr_code_url || qr}
+                                        src={purchase?.nwps_qr_code_url || purchase?.product?.nwps_qr_code_url || qr}
                                         alt="qr"
                                         className="absolute top-0 left-0 w-[150px] h-[150px] "
                                     />
@@ -200,7 +204,7 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                     {/*12122112*/}
                                     <div className="relative w-[240px] h-[100px] mt-[8px]">
                                         <img
-                                            src={purchase?.nwps_qr_code_url || qr}
+                                            src={purchase?.nwps_qr_code_url || purchase?.product?.nwps_qr_code_url || qr}
                                             alt="qr"
                                             className="absolute top-0 left-0 w-[100px] h-[100px]"
                                         />

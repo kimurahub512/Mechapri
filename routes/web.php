@@ -280,16 +280,6 @@ Route::delete('/myshop/category/{category}', [App\Http\Controllers\CategoryContr
 Route::patch('/myshop/category/{category}/toggle-public', [App\Http\Controllers\CategoryController::class, 'togglePublic'])->name('myshop.category.toggle-public');
 Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController::class, 'reorder'])->name('myshop.category.reorder');
     Route::get('/myshop/transaction', [App\Http\Controllers\TransactionController::class, 'index'])->name('myshop.transaction');
-    
-    // Transaction API routes
-    Route::post('/api/transaction/withdrawal-request', [App\Http\Controllers\TransactionController::class, 'requestWithdrawal'])->name('transaction.withdrawal-request');
-    Route::get('/api/transaction/details/{monthKey}', [App\Http\Controllers\TransactionController::class, 'getTransactionDetails'])->name('transaction.details');
-    
-    // Admin routes
-    Route::prefix('admin')->group(function () {
-        Route::get('/withdrawals', [App\Http\Controllers\Admin\WithdrawalController::class, 'index'])->name('admin.withdrawals');
-        Route::put('/withdrawals/{withdrawal}/status', [App\Http\Controllers\Admin\WithdrawalController::class, 'updateStatus'])->name('admin.withdrawals.update-status');
-    });
     Route::get('/myshop/saleshistory', [App\Http\Controllers\SalesHistoryController::class, 'index'])->name('myshop.saleshistory');
     Route::get('/myshop/registerproduct', function(){
         $user = auth()->user();

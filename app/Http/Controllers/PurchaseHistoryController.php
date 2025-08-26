@@ -29,6 +29,7 @@ class PurchaseHistoryController extends Controller
                         'id' => $p->productBatch->id,
                         'title' => $p->productBatch->title,
                         'sn' => $p->productBatch->sn,
+                        'nwps_qr_code_url' => $p->productBatch->nwps_qr_code_url,
                         'image' => optional($p->productBatch->files->first())->url,
                         'files' => $p->productBatch->files->map(function($file) {
                             return [
@@ -55,6 +56,17 @@ class PurchaseHistoryController extends Controller
             'purchase_ids' => $purchases->pluck('id')->toArray()
         ]);
         
+        // Debug: Log QR code URLs for the first purchase
+        if ($purchases->count() > 0) {
+            $firstPurchase = $purchases->first();
+            \Illuminate\Support\Facades\Log::info('First purchase QR code data', [
+                'purchase_id' => $firstPurchase['id'],
+                'nwps_qr_code_url' => $firstPurchase['nwps_qr_code_url'],
+                'product_nwps_qr_code_url' => $firstPurchase['product']['nwps_qr_code_url'],
+                'product_id' => $firstPurchase['product']['id']
+            ]);
+        }
+        
         return Inertia::render('PurchaseHistory', [
             'purchases' => $purchases,
             'focusPurchaseId' => $focusPurchaseId,
@@ -80,6 +92,7 @@ class PurchaseHistoryController extends Controller
                 'id' => $p->productBatch->id,
                 'title' => $p->productBatch->title,
                 'sn' => $p->productBatch->sn,
+                'nwps_qr_code_url' => $p->productBatch->nwps_qr_code_url,
                 'image' => optional($p->productBatch->files->first())->url,
                 'files' => $p->productBatch->files->map(function($file) {
                     return [
