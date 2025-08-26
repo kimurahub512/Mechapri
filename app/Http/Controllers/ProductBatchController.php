@@ -350,6 +350,11 @@ class ProductBatchController extends Controller
             return redirect()->route('product.unpurchased', ['id' => $product->id]);
         }
 
+        // Get the purchase record for this user and product to include NWPS data
+        $purchase = UserPurchasedProduct::where('user_id', auth()->id())
+            ->where('batch_id', $product->id)
+            ->first();
+
         return Inertia::render('PurchasedProduct', [
             'product' => [
                 'id' => $product->id,
@@ -371,6 +376,10 @@ class ProductBatchController extends Controller
                 'is_favorited' => $product->isFavoritedBy(auth()->user()),
                 'favorite_count' => $product->favorite_count,
                 'print_deadline' => now()->addDays(30)->format('Y/m/d'),
+                // NWPS data - prioritize purchase record over product batch for free products
+                'nwps_qr_code_url' => $purchase ? $purchase->nwps_qr_code_url : $product->nwps_qr_code_url,
+                'nwps_user_code' => $purchase ? $purchase->nwps_user_code : $product->nwps_user_code,
+                'nwps_upload_status' => $purchase ? $purchase->nwps_upload_status : null,
                 'top_buyers' => UserPurchasedProduct::getTopBuyersForProduct($product->id)->map(function($purchase) {
                     return [
                         'user' => [
@@ -522,6 +531,11 @@ class ProductBatchController extends Controller
             return redirect()->route('product.unpurchased.expand', ['id' => $product->id]);
         }
 
+        // Get the purchase record for this user and product to include NWPS data
+        $purchase = UserPurchasedProduct::where('user_id', auth()->id())
+            ->where('batch_id', $product->id)
+            ->first();
+
         return Inertia::render('PurchasedProductExpand', [
             'product' => [
                 'id' => $product->id,
@@ -542,6 +556,10 @@ class ProductBatchController extends Controller
                 'is_favorited' => $product->isFavoritedBy(auth()->user()),
                 'favorite_count' => $product->favorite_count,
                 'print_deadline' => now()->addDays(30)->format('Y/m/d'),
+                // NWPS data - prioritize purchase record over product batch for free products
+                'nwps_qr_code_url' => $purchase ? $purchase->nwps_qr_code_url : $product->nwps_qr_code_url,
+                'nwps_user_code' => $purchase ? $purchase->nwps_user_code : $product->nwps_user_code,
+                'nwps_upload_status' => $purchase ? $purchase->nwps_upload_status : null,
                 'top_buyers' => UserPurchasedProduct::getTopBuyersForProduct($product->id)->map(function($purchase) {
                     return [
                         'user' => [

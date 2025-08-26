@@ -374,9 +374,15 @@ const PurchasedProduct = ({ product }) => {
                                             </div>
                                             {/*12122112*/}
                                             <div className="relative w-[358px] h-[150px] mt-[12px]">
-                                                <img src={qr} alt="qr" className="absolute top-0 left-0 w-[150px] h-[150px] " />
+                                                <img 
+                                                    src={product?.nwps_qr_code_url || qr} 
+                                                    alt="qr" 
+                                                    className="absolute top-0 left-0 w-[150px] h-[150px] " 
+                                                />
                                                 <span className="absolute top-[44.5px] left-[226px] text-[#000] font-noto text-[14px] font-normal leading-[21px]">印刷番号</span>
-                                                <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">2CNM9FX279</span>
+                                                <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">
+                                                    {product?.nwps_user_code || '発行中...'}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -789,9 +795,15 @@ const PurchasedProduct = ({ product }) => {
                                             </div>
                                             {/*12122112*/}
                                             <div className="relative w-[240px] h-[100px] mt-[8px]">
-                                                <img src={qr} alt="qr" className="absolute top-0 left-0 w-[100px] h-[100px]" />
+                                                <img 
+                                                    src={product?.nwps_qr_code_url || qr} 
+                                                    alt="qr" 
+                                                    className="absolute top-0 left-0 w-[100px] h-[100px]" 
+                                                />
                                                 <span className="absolute top-[30px] left-[150px] text-[#000] font-noto text-[12px] font-normal leading-[16px]">印刷番号</span>
-                                                <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">2CNM9FX279</span>
+                                                <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">
+                                                    {product?.nwps_user_code || '発行中...'}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>

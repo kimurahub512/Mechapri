@@ -110,13 +110,13 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                 {/*12122112*/}
                                 <div className="relative w-[358px] h-[150px] mt-[12px]">
                                     <img
-                                        src={purchase?.nwps_qr_code_url || purchase?.product?.nwps_qr_code_url || qr}
+                                        src={purchase?.nwps_qr_code_url || purchase?.product?.nwps_qr_code_url}
                                         alt="qr"
                                         className="absolute top-0 left-0 w-[150px] h-[150px] "
                                     />
                                     <div className="absolute top-[44.5px] left-[226px]  flex flex-col items-center">
                                         <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">印刷番号</span>
-                                        <span className="text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">{purchase?.product?.sn || '発行中...'}</span>
+                                        <span className="text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">{purchase?.nwps_user_code || purchase?.product?.nwps_user_code}</span>
                                     </div>
                                 </div>
                             </div>
@@ -204,13 +204,13 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                     {/*12122112*/}
                                     <div className="relative w-[240px] h-[100px] mt-[8px]">
                                         <img
-                                            src={purchase?.nwps_qr_code_url || purchase?.product?.nwps_qr_code_url || qr}
+                                            src={purchase?.nwps_qr_code_url || purchase?.product?.nwps_qr_code_url}
                                             alt="qr"
                                             className="absolute top-0 left-0 w-[100px] h-[100px]"
                                         />
                                         <div className="absolute top-[30px] left-[150px] flex flex-col items-center">
                                             <span className="text-[#000] font-noto text-[12px] font-normal leading-[16px]">印刷番号</span>
-                                            <span className="text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">{purchase?.product?.sn || '発行中...'}</span>
+                                            <span className="text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">{purchase?.nwps_user_code || purchase?.product?.nwps_user_code}</span>
                                         </div>
                                     </div>
                                 </div>
