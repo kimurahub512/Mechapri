@@ -164,6 +164,14 @@ class UploadToNWPSJob implements ShouldQueue
                     date('Y-m-d H:i:s') . " - Purchase {$purchase->id} updated with QR code\n", 
                     FILE_APPEND
                 );
+                file_put_contents(storage_path('nwps_debug.log'), 
+                    date('Y-m-d H:i:s') . " - QR Code URL: " . ($qrCodeUrl ?? 'NULL') . "\n", 
+                    FILE_APPEND
+                );
+                file_put_contents(storage_path('nwps_debug.log'), 
+                    date('Y-m-d H:i:s') . " - Full QR Code Data: " . json_encode($qrCodeData) . "\n", 
+                    FILE_APPEND
+                );
             } catch (\Exception $e) {
                 file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - Failed to get QR code: " . $e->getMessage() . "\n", 

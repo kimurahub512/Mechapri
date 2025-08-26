@@ -65,6 +65,16 @@ class PurchaseHistoryController extends Controller
                 'product_nwps_qr_code_url' => $firstPurchase['product']['nwps_qr_code_url'],
                 'product_id' => $firstPurchase['product']['id']
             ]);
+            
+            // Also log the raw database values
+            $rawPurchase = \App\Models\UserPurchasedProduct::with('productBatch')->find($firstPurchase['id']);
+            \Illuminate\Support\Facades\Log::info('Raw database values', [
+                'purchase_id' => $rawPurchase->id,
+                'nwps_qr_code_url' => $rawPurchase->nwps_qr_code_url,
+                'nwps_upload_status' => $rawPurchase->nwps_upload_status,
+                'product_nwps_qr_code_url' => $rawPurchase->productBatch->nwps_qr_code_url,
+                'product_id' => $rawPurchase->productBatch->id
+            ]);
         }
         
         return Inertia::render('PurchaseHistory', [
