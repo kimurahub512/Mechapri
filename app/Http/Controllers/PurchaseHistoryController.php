@@ -24,6 +24,7 @@ class PurchaseHistoryController extends Controller
                     'nwps_reservation_no' => $p->nwps_reservation_no,
                     'nwps_upload_status' => $p->nwps_upload_status,
                     'nwps_qr_code_url' => $p->nwps_qr_code_url ?? $p->productBatch->nwps_qr_code_url,
+                    'nwps_user_code' => $p->nwps_user_code ?? $p->productBatch->nwps_user_code,
                     'print_expires_at' => optional($p->print_expires_at)->format('Y/m/d'),
                     'product' => [
                         'id' => $p->productBatch->id,
@@ -97,6 +98,7 @@ class PurchaseHistoryController extends Controller
             'nwps_reservation_no' => $p->nwps_reservation_no,
             'nwps_upload_status' => $p->nwps_upload_status,
             'nwps_qr_code_url' => $p->nwps_qr_code_url ?? $p->productBatch->nwps_qr_code_url,
+            'nwps_user_code' => $p->nwps_user_code ?? $p->productBatch->nwps_user_code,
             'print_expires_at' => optional($p->print_expires_at)->format('Y/m/d'),
             'product' => [
                 'id' => $p->productBatch->id,

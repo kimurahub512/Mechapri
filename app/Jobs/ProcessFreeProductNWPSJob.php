@@ -69,6 +69,7 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
             ], $days);
 
             $token = $login['token'] ?? ($login['access_token'] ?? null);
+            $userCode = $login['user_code'] ?? null;
             if (!$token) {
                 file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - No token received from NWPS login for free product. Response: " . json_encode($login) . "\n", 
@@ -123,6 +124,7 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
                     // Store the QR code URL and token in the product batch for free products
                     $product->update([
                         'nwps_token' => $token,
+                        'nwps_user_code' => $userCode,
                         'nwps_token_expires_at' => now()->addDays($days),
                         'nwps_file_id' => $fileId,
                         'nwps_qr_code_url' => $qrCodeUrl,

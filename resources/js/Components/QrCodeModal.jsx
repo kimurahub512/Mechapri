@@ -85,7 +85,7 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                 <div className="text-[#363636] font-medium text-[14px] leading-[25px] font-noto">
                                     <span className="block">枚数：{purchase?.cnt ?? 1}</span>
                                     <span className="block">購入金額： {purchase?.price ?? ''}円</span>
-                                    <span className="block">印刷番号：{purchase?.product?.sn || '発行中...'}</span>
+                                    <span className="block">印刷番号：{purchase?.nwps_user_code || purchase?.product?.nwps_user_code || '発行中...'}</span>
                                     <span className="block">印刷期限：{purchase?.print_expires_at || ''}まで</span>
                                 </div>
                             </div>
@@ -170,7 +170,7 @@ const QrCodeModal = ({ onClose, purchase }) => {
                             <span className="text-[#363636] font-noto font-medium text-[14px] leading-[25px] mb-[4px]">{purchase?.purchase_time || ''}に購入</span>
                             <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">枚数：{purchase?.cnt ?? 1}</span>
                             <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">購入金額： {purchase?.price ?? ''}円</span>
-                            <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷番号：{purchase?.product?.sn || '発行中...'}</span>
+                                                                <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷番号：{purchase?.nwps_user_code || purchase?.product?.nwps_user_code || '発行中...'}</span>
                             <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷期限：{purchase?.print_expires_at || ''}まで</span>
                         </div>
                     </div>

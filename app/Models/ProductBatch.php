@@ -37,6 +37,7 @@ class ProductBatch extends Model
         'password',
         'sales_cnt',
         'nwps_token',
+        'nwps_user_code',
         'nwps_token_expires_at',
         'nwps_file_id',
         'nwps_qr_code_url',

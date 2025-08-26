@@ -80,6 +80,7 @@ class UploadToNWPSJob implements ShouldQueue
             // \Illuminate\Support\Facades\Log::info('NWPS guest login response', ['login' => $login]);
 
             $token = $login['token'] ?? ($login['access_token'] ?? null);
+            $userCode = $login['user_code'] ?? null;
             if (!$token) {
                 file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - No token received from NWPS login. Response: " . json_encode($login) . "\n", 
@@ -97,6 +98,7 @@ class UploadToNWPSJob implements ShouldQueue
             // \Illuminate\Support\Facades\Log::info('Token received, updating purchase', ['token' => $token]);
             $purchase->update([
                 'nwps_token' => $token,
+                'nwps_user_code' => $userCode,
                 'nwps_token_expires_at' => now()->addDays($days),
             ]);
 
