@@ -89,7 +89,49 @@ class NWPSService
         if ($couponCode) {
             $uri .= '?coupon_code=' . urlencode($couponCode);
         }
-        return $this->get($uri, $token);
+        
+        // This endpoint returns the QR code image directly, not JSON
+        $headers = $this->authHeaders($token);
+        $res = $this->http->get($uri, ['headers' => $headers]);
+        
+        if ($res->getStatusCode() === 200) {
+            $imageData = (string) $res->getBody();
+            $contentType = $res->getHeaderLine('Content-Type');
+            
+            // Determine file extension based on content type
+            $extension = 'png'; // default
+            if (strpos($contentType, 'image/jpeg') !== false) {
+                $extension = 'jpg';
+            } elseif (strpos($contentType, 'image/gif') !== false) {
+                $extension = 'gif';
+            }
+            
+            // Generate unique filename
+            $filename = 'nwps_qr_' . uniqid() . '.' . $extension;
+            $path = 'nwps/qrcodes/' . $filename;
+            
+            // Ensure the directory exists
+            \Illuminate\Support\Facades\Storage::makeDirectory('nwps/qrcodes');
+            
+            // Save the image to storage
+            \Illuminate\Support\Facades\Storage::put($path, $imageData);
+            
+            // Return the URL to access this image
+            $url = \Illuminate\Support\Facades\Storage::url($path);
+            
+            return [
+                'success' => true,
+                'qr_code_url' => $url,
+                'filename' => $filename,
+                'path' => $path
+            ];
+        }
+        
+        return [
+            'success' => false,
+            'error' => 'Failed to get QR code',
+            'status_code' => $res->getStatusCode()
+        ];
     }
 
     private function get(string $uri, ?string $token = null): array

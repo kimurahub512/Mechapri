@@ -152,26 +152,35 @@ class UploadToNWPSJob implements ShouldQueue
             
             try {
                 $qrCodeData = $nwps->getLoginQrCode($token);
-                $qrCodeUrl = $qrCodeData['qr_code_url'] ?? null;
                 
-                $purchase->update([
-                    'nwps_upload_status' => 'ready',
-                    'nwps_qr_code_url' => $qrCodeUrl,
-                ]);
-                
-                // Temporary debug logging
-                file_put_contents(storage_path('nwps_debug.log'), 
-                    date('Y-m-d H:i:s') . " - Purchase {$purchase->id} updated with QR code\n", 
-                    FILE_APPEND
-                );
-                file_put_contents(storage_path('nwps_debug.log'), 
-                    date('Y-m-d H:i:s') . " - QR Code URL: " . ($qrCodeUrl ?? 'NULL') . "\n", 
-                    FILE_APPEND
-                );
-                file_put_contents(storage_path('nwps_debug.log'), 
-                    date('Y-m-d H:i:s') . " - Full QR Code Data: " . json_encode($qrCodeData) . "\n", 
-                    FILE_APPEND
-                );
+                if ($qrCodeData['success'] ?? false) {
+                    $qrCodeUrl = $qrCodeData['qr_code_url'];
+                    
+                    $purchase->update([
+                        'nwps_upload_status' => 'ready',
+                        'nwps_qr_code_url' => $qrCodeUrl,
+                    ]);
+                    
+                    // Temporary debug logging
+                    file_put_contents(storage_path('nwps_debug.log'), 
+                        date('Y-m-d H:i:s') . " - Purchase {$purchase->id} updated with QR code\n", 
+                        FILE_APPEND
+                    );
+                    file_put_contents(storage_path('nwps_debug.log'), 
+                        date('Y-m-d H:i:s') . " - QR Code URL: " . ($qrCodeUrl ?? 'NULL') . "\n", 
+                        FILE_APPEND
+                    );
+                    file_put_contents(storage_path('nwps_debug.log'), 
+                        date('Y-m-d H:i:s') . " - Full QR Code Data: " . json_encode($qrCodeData) . "\n", 
+                        FILE_APPEND
+                    );
+                } else {
+                    file_put_contents(storage_path('nwps_debug.log'), 
+                        date('Y-m-d H:i:s') . " - Failed to get QR code: " . json_encode($qrCodeData) . "\n", 
+                        FILE_APPEND
+                    );
+                    $purchase->update(['nwps_upload_status' => 'failed']);
+                }
             } catch (\Exception $e) {
                 file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - Failed to get QR code: " . $e->getMessage() . "\n", 

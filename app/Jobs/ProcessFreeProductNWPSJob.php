@@ -116,20 +116,32 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
             
             try {
                 $qrCodeData = $nwps->getLoginQrCode($token);
-                $qrCodeUrl = $qrCodeData['qr_code_url'] ?? null;
                 
-                // Store the QR code URL and token in the product batch for free products
-                $product->update([
-                    'nwps_token' => $token,
-                    'nwps_token_expires_at' => now()->addDays($days),
-                    'nwps_file_id' => $fileId,
-                    'nwps_qr_code_url' => $qrCodeUrl,
-                ]);
-                
-                file_put_contents(storage_path('nwps_debug.log'), 
-                    date('Y-m-d H:i:s') . " - Free product {$product->id} updated with QR code\n", 
-                    FILE_APPEND
-                );
+                if ($qrCodeData['success'] ?? false) {
+                    $qrCodeUrl = $qrCodeData['qr_code_url'];
+                    
+                    // Store the QR code URL and token in the product batch for free products
+                    $product->update([
+                        'nwps_token' => $token,
+                        'nwps_token_expires_at' => now()->addDays($days),
+                        'nwps_file_id' => $fileId,
+                        'nwps_qr_code_url' => $qrCodeUrl,
+                    ]);
+                    
+                    file_put_contents(storage_path('nwps_debug.log'), 
+                        date('Y-m-d H:i:s') . " - Free product {$product->id} updated with QR code\n", 
+                        FILE_APPEND
+                    );
+                    file_put_contents(storage_path('nwps_debug.log'), 
+                        date('Y-m-d H:i:s') . " - QR Code URL: " . ($qrCodeUrl ?? 'NULL') . "\n", 
+                        FILE_APPEND
+                    );
+                } else {
+                    file_put_contents(storage_path('nwps_debug.log'), 
+                        date('Y-m-d H:i:s') . " - Failed to get QR code for free product: " . json_encode($qrCodeData) . "\n", 
+                        FILE_APPEND
+                    );
+                }
             } catch (\Exception $e) {
                 file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - Failed to get QR code for free product: " . $e->getMessage() . "\n", 
