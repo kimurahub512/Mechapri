@@ -13,56 +13,7 @@ import { vw, vwd, responsiveText, responsiveTextD, responsiveMetric, responsiveM
 
 import '@/../../resources/css/footer.css';
 
-// Reusable modal component
-const showDocumentModal = (title, documentUrl) => {
-  const modal = document.createElement('div');
-  modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
-  modal.style.position = 'fixed';
-  modal.style.top = '0';
-  modal.style.left = '0';
-  modal.style.right = '0';
-  modal.style.bottom = '0';
-  modal.style.display = 'flex';
-  modal.style.alignItems = 'center';
-  modal.style.justifyContent = 'center';
-  modal.style.zIndex = '9999';
-  
-  modal.innerHTML = `
-    <div class="bg-white rounded-lg w-full h-full max-w-6xl max-h-[90vh] flex flex-col overflow-hidden">
-      <div class="flex justify-between items-center p-4 border-b">
-        <h2 class="text-lg font-bold">${title}</h2>
-        <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700 text-xl">&times;</button>
-      </div>
-      <div class="flex-1 overflow-hidden">
-        <iframe 
-          src="${documentUrl}" 
-          class="w-full h-full border-0"
-          title="${title}"
-        ></iframe>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-  
-  // Focus management
-  const closeButton = modal.querySelector('button');
-  closeButton.focus();
-  
-  // Close on escape key
-  const handleEscape = (e) => {
-    if (e.key === 'Escape') modal.remove();
-  };
-  document.addEventListener('keydown', handleEscape);
-  
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.remove();
-  });
-  
-  // Cleanup event listener when modal is removed
-  modal.addEventListener('remove', () => {
-    document.removeEventListener('keydown', handleEscape);
-  });
-};
+
 
 const Footer = () => {
   const { cartCount } = usePage().props;
@@ -72,28 +23,25 @@ const Footer = () => {
       {/* Desktop Section */}
       <div className="hidden md:block w-full" style={{height: vwd(443), paddingTop: vwd(99), paddingRight: vwd(141), paddingBottom: vwd(16), paddingLeft: vwd(99)}}>
         <div className="w-full h-full relative">
-          <img
-            src={logo}
-            alt="Mechapuri Logo"
-            className='invert'
-            style={{...responsiveMetricD(202, 36), ...responsivePositionD(0, 0, null)}}
-          />
+          <a href='/' className='flex items-center'>
+            <img
+              src={logo}
+              alt="Mechapuri Logo"
+              className='invert'
+              style={{...responsiveMetricD(202, 36), ...responsivePositionD(0, 0, null)}}
+            />
+          </a>
           <div className="flex flex-row" style={{...responsivePositionD(52, 42), gap: vwd(6)}}>
-            <img
-              src={xLogo}
-              alt="X Logo"
-              style={{...responsiveMetricD(28, 28)}}
-            />
-            <img
-              src={footerSvg2}
-              alt="Footer SVG"
-              style={{...responsiveMetricD(28, 28)}}
-            />
+            <a href='https://x.com/mechapri_jp' className='flex items-center'>
+              <img
+                src={xLogo}
+                alt="X Logo"
+                style={{...responsiveMetricD(28, 28)}}
+              />
+            </a>
           </div>
           <div className="flex flex-col items-start" style={{...responsivePositionD(0, 813), gap: vwd(32)}}>
             <a href='/beginner' style={{...responsiveTextD(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>出品をはじめる</a>
-            <div style={{...responsiveTextD(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>おすすめショップ</div>
-            <div style={{...responsiveTextD(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>プライベート印刷</div>
           </div>
           <div className="flex flex-col items-start" style={{...responsivePositionD(0, 1018), gap: vwd(32)}}>
             <div style={{...responsiveTextD(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>
@@ -106,7 +54,7 @@ const Footer = () => {
               <div className='whitespace-nowrap' style={{...responsiveTextD(13, 20, null, 'semibold', 'noto', '#FFF')}}>
                 X連携の権限について
               </div>
-              <div className="flex flex-row items-center gap-[2px]">
+              <a href='https://www.over-x.tech/#contact' target="_blank" className="flex flex-row items-center gap-[2px]">
                 <img
                   src={copy}
                   alt="Copy"
@@ -116,7 +64,7 @@ const Footer = () => {
                 <div style={{...responsiveTextD(13, 20, null, 'semibold', 'noto', '#FFF')}}>
                   お問い合わせ
                 </div>
-              </div>
+              </a>
             </div>
           </div>
           {/* Divider */}
@@ -124,7 +72,7 @@ const Footer = () => {
           {/* List Frame */}
           <div className="flex flex-row w-full" style={{...responsivePositionD(268, 0, null), gap: vwd(25), paddingTop: vwd(10), paddingBottom: vwd(31)}}>
             {/* First item */}
-              <div className="flex flex-row items-center gap-[8px]">
+              <a href='https://www.over-x.tech/' target="_blank" className="flex flex-row items-center gap-[8px]">
                 <img
                   src={copy}
                   alt="Copy"
@@ -134,39 +82,43 @@ const Footer = () => {
                 <div className='whitespace-nowrap' style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}>
                   運営企業
                 </div>
-              </div>
+              </a>
               {/* Second item */}
-              <div className="flex flex-row items-center gap-[2px]">
+              <a href='/tokushoho' className="flex flex-row items-center gap-[2px] hover:opacity-80 transition-opacity">
                 <img
                   src={copy}
                   alt="Copy"
                   className='invert'
                   style={{...responsiveMetricD(10, 10)}}
                 />
-                <button 
-                  onClick={() => showDocumentModal('特定商取引法に基づく表示', 'https://docs.google.com/document/d/1NyyD2l-rxopttri62aqZ1Ux83WfLozT03O1Ysp4SV0E/preview')}
-                  className='whitespace-nowrap hover:opacity-80 transition-opacity cursor-pointer' 
-                  style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}
-                >
+                <div className='whitespace-nowrap' style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}>
                   特定商取引法に基づく表示
-                </button>
-              </div>
+                </div>
+              </a>
               {/* Third item */}
-              <button 
-                onClick={() => showDocumentModal('プライバシーポリシー', 'https://docs.google.com/document/d/16azwWycB-utKgf7qeKc9ONklHXu5gxn2qlqoGS2nDsU/preview')}
-                className='whitespace-nowrap hover:opacity-80 transition-opacity cursor-pointer' 
-                style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}
-              >
-                プライバシーポリシー
-              </button>
+              <a href='/privacy' className="flex flex-row items-center gap-[2px] hover:opacity-80 transition-opacity">
+                <img
+                  src={copy}
+                  alt="Copy"
+                  className='invert'
+                  style={{...responsiveMetricD(10, 10)}}
+                />
+                <div className='whitespace-nowrap' style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}>
+                  プライバシーポリシー
+                </div>
+              </a>
               {/* Fourth item */}
-              <button 
-                onClick={() => showDocumentModal('利用規約', 'https://docs.google.com/document/d/11uB9cboiC-aYAgrsF_i4Qu6W4HGMfLaAahlS5_m0hco/preview')}
-                className='whitespace-nowrap hover:opacity-80 transition-opacity cursor-pointer' 
-                style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}
-              >
-                利用規約
-              </button>
+              <a href='/terms' className="flex flex-row items-center gap-[2px] hover:opacity-80 transition-opacity">
+                <img
+                  src={copy}
+                  alt="Copy"
+                  className='invert'
+                  style={{...responsiveMetricD(10, 10)}}
+                />
+                <div className='whitespace-nowrap' style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}>
+                  利用規約
+                </div>
+              </a>
             {/* Fifth item */}
             <div className='whitespace-nowrap' style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}>
               ガイドライン
@@ -182,28 +134,25 @@ const Footer = () => {
       {/* Mobile Section */}
       <div className="md:hidden w-full" style={{height: vw(518), paddingTop: vw(32), paddingRight: vw(16), paddingBottom: vw(120), paddingLeft: vw(16)}}>
         <div className="w-full h-full relative">
+          <a href='/' className='flex items-center'>
           <img
             src={logo}
             alt="Mechapuri Logo"
             className='invert'
             style={{...responsiveMetric(202, 36), ...responsivePosition(0, 0, null)}}
           />
+          </a>
           <div className="flex flex-row" style={{...responsivePosition(52, 0), gap: vw(6)}}>
+          <a href='https://x.com/mechapri_jp' className='flex items-center'>
             <img
               src={xLogo}
               alt="X Logo"
               style={{...responsiveMetric(28, 28)}}
             />
-            <img
-              src={footerSvg2}
-              alt="Footer SVG"
-              style={{...responsiveMetric(28, 28)}}
-            />
+            </a>
           </div>
           <div className="flex flex-col items-start" style={{...responsivePosition(96, 9), gap: vw(32)}}>
             <a href='/beginner' style={{...responsiveText(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>出品をはじめる</a>
-            <div style={{...responsiveText(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>おすすめショップ</div>
-            <div style={{...responsiveText(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>プライベート印刷</div>
           </div>
           <div className="flex flex-col items-start" style={{...responsivePosition(96, 183), gap: vw(32), width: vw(152)}}>
             <div style={{...responsiveText(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>
@@ -216,7 +165,7 @@ const Footer = () => {
               <div className='whitespace-nowrap' style={{...responsiveText(13, 20, null, 'medium', 'noto', '#FFF')}}>
                  X連携の権限について
               </div>
-              <div className="flex flex-row items-center gap-[2px]">
+              <a href='https://www.over-x.tech/#contact' target="_blank" className="flex flex-row items-center gap-[2px]">
                 <img
                   src={copy}
                   alt="Copy"
@@ -226,7 +175,7 @@ const Footer = () => {
                 <div style={{...responsiveText(13, 20, null, 'medium', 'noto', '#FFF')}}>
                   お問い合わせ
                 </div>
-              </div>
+              </a>
             </div>
           </div>
           {/* Divider */}
@@ -235,7 +184,7 @@ const Footer = () => {
           <div className="flex flex-col" style={{...responsivePosition(296, 0, null), gap: vw(20), paddingTop: vw(10)}}>
             {/* First item */}
             <div className="flex flex-row items-center" style={{gap: vw(25)}}>
-              <div className="flex flex-row items-center gap-[8px]">
+              <a href='https://www.over-x.tech/' target="_blank" className="flex flex-row items-center gap-[8px]">
                 <img
                   src={copy}
                   alt="Copy"
@@ -245,41 +194,45 @@ const Footer = () => {
                 <div style={{...responsiveText(12, 18, null, 'normal', 'noto', '#FFF')}}>
                   運営企業
                 </div>
-              </div>
+              </a>
               {/* Second item */}
-              <div className="flex flex-row items-center gap-[2px]">
+              <a href='/tokushoho' className="flex flex-row items-center gap-[2px] hover:opacity-80 transition-opacity">
                 <img
                   src={copy}
                   alt="Copy"
                   className='invert'
                   style={{...responsiveMetric(10, 10)}}
                 />
-                <button 
-                  onClick={() => showDocumentModal('特定商取引法に基づく表示', 'https://docs.google.com/document/d/1NyyD2l-rxopttri62aqZ1Ux83WfLozT03O1Ysp4SV0E/preview')}
-                  className='whitespace-nowrap hover:opacity-80 transition-opacity cursor-pointer' 
-                  style={{...responsiveText(12, 18, null, 'normal', 'noto', '#FFF')}}
-                >
+                <div className='whitespace-nowrap' style={{...responsiveText(12, 18, null, 'normal', 'noto', '#FFF')}}>
                   特定商取引法に基づく表示
-                </button>
-              </div>
+                </div>
+              </a>
             </div>
             <div className="flex flex-row" style={{gap: vw(20)}}>
               {/* Third item */}
-              <button 
-                onClick={() => showDocumentModal('プライバシーポリシー', 'https://docs.google.com/document/d/16azwWycB-utKgf7qeKc9ONklHXu5gxn2qlqoGS2nDsU/preview')}
-                className='whitespace-nowrap hover:opacity-80 transition-opacity cursor-pointer' 
-                style={{...responsiveText(12, 18, null, 'normal', 'noto', '#FFF')}}
-              >
-                プライバシーポリシー
-              </button>
+              <a href='/privacy' className="flex flex-row items-center gap-[2px] hover:opacity-80 transition-opacity">
+                <img
+                  src={copy}
+                  alt="Copy"
+                  className='invert'
+                  style={{...responsiveMetric(10, 10)}}
+                />
+                <div className='whitespace-nowrap' style={{...responsiveText(12, 18, null, 'normal', 'noto', '#FFF')}}>
+                  プライバシーポリシー
+                </div>
+              </a>
               {/* Fourth item */}
-              <button 
-                onClick={() => showDocumentModal('利用規約', 'https://docs.google.com/document/d/11uB9cboiC-aYAgrsF_i4Qu6W4HGMfLaAahlS5_m0hco/preview')}
-                className='whitespace-nowrap hover:opacity-80 transition-opacity cursor-pointer' 
-                style={{...responsiveText(12, 18, null, 'normal', 'noto', '#FFF')}}
-              >
-                利用規約
-              </button>
+              <a href='/terms' className="flex flex-row items-center gap-[2px] hover:opacity-80 transition-opacity">
+                <img
+                  src={copy}
+                  alt="Copy"
+                  className='invert'
+                  style={{...responsiveMetric(10, 10)}}
+                />
+                <div className='whitespace-nowrap' style={{...responsiveText(12, 18, null, 'normal', 'noto', '#FFF')}}>
+                  利用規約
+                </div>
+              </a>
             </div>
             {/* Fifth item */}
             <div className='whitespace-nowrap' style={{...responsiveText(12, 18, null, 'normal', 'noto', '#FFF')}}>

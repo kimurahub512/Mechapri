@@ -1,0 +1,343 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use App\Models\Payment;
+use App\Models\ProductBatch;
+use App\Models\ProductBatchFile;
+use App\Models\UserPurchasedProduct;
+use App\Services\NWPSService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Inertia\Inertia;
+
+class DashboardController extends Controller
+{
+    protected NWPSService $nwpsService;
+
+    public function __construct(NWPSService $nwpsService)
+    {
+        $this->nwpsService = $nwpsService;
+    }
+
+    public function index()
+    {
+        $metrics = $this->getDashboardMetrics();
+        
+        return Inertia::render('Dashboard', [
+            'metrics' => $metrics
+        ]);
+    }
+
+    private function getDashboardMetrics()
+    {
+        $now = Carbon::now();
+        $startOfMonth = $now->copy()->startOfMonth();
+        $startOfLastMonth = $now->copy()->subMonth()->startOfMonth();
+        $endOfLastMonth = $now->copy()->subMonth()->endOfMonth();
+
+        // Total counts
+        $totalUsers = User::count();
+        $totalProducts = ProductBatch::count();
+        
+        // Use both Payment and UserPurchasedProduct for comprehensive sales data
+        $totalPayments = Payment::where('status', 'succeeded')->count();
+        $totalPurchases = UserPurchasedProduct::count();
+        $totalSales = $totalPayments + $totalPurchases;
+        
+        // Total revenue from both sources
+        $totalRevenueFromPayments = Payment::where('status', 'succeeded')->sum('amount');
+        $totalRevenueFromPurchases = UserPurchasedProduct::sum('price');
+        $totalRevenue = $totalRevenueFromPayments + $totalRevenueFromPurchases;
+
+        // Print count from NWPS API (actual prints, not just files)
+        $totalPrintCount = $this->getTotalPrintCountFromNWPS();
+
+        // Monthly counts
+        $monthlyUserRegistration = User::where('created_at', '>=', $startOfMonth)->count();
+        $monthlyProductRegistration = ProductBatch::where('created_at', '>=', $startOfMonth)->count();
+        
+        // Monthly sales from both sources
+        $monthlySalesFromPayments = Payment::where('status', 'succeeded')
+            ->where('paid_at', '>=', $startOfMonth)
+            ->count();
+        $monthlySalesFromPurchases = UserPurchasedProduct::where('purchase_time', '>=', $startOfMonth)
+            ->count();
+        $monthlySales = $monthlySalesFromPayments + $monthlySalesFromPurchases;
+
+        // Monthly revenue from both sources
+        $monthlyRevenueFromPayments = Payment::where('status', 'succeeded')
+            ->where('paid_at', '>=', $startOfMonth)
+            ->sum('amount');
+        $monthlyRevenueFromPurchases = UserPurchasedProduct::where('purchase_time', '>=', $startOfMonth)
+            ->sum('price');
+        $monthlyRevenue = $monthlyRevenueFromPayments + $monthlyRevenueFromPurchases;
+
+        // Previous month for comparison
+        $lastMonthUserRegistration = User::whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])->count();
+        $lastMonthProductRegistration = ProductBatch::whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])->count();
+        
+        $lastMonthSalesFromPayments = Payment::where('status', 'succeeded')
+            ->whereBetween('paid_at', [$startOfLastMonth, $endOfLastMonth])
+            ->count();
+        $lastMonthSalesFromPurchases = UserPurchasedProduct::whereBetween('purchase_time', [$startOfLastMonth, $endOfLastMonth])
+            ->count();
+        $lastMonthSales = $lastMonthSalesFromPayments + $lastMonthSalesFromPurchases;
+        
+        $lastMonthRevenueFromPayments = Payment::where('status', 'succeeded')
+            ->whereBetween('paid_at', [$startOfLastMonth, $endOfLastMonth])
+            ->sum('amount');
+        $lastMonthRevenueFromPurchases = UserPurchasedProduct::whereBetween('purchase_time', [$startOfLastMonth, $endOfLastMonth])
+            ->sum('price');
+        $lastMonthRevenue = $lastMonthRevenueFromPayments + $lastMonthRevenueFromPurchases;
+
+        // Calculate percentage changes
+        $userRegistrationChange = $this->calculatePercentageChange($lastMonthUserRegistration, $monthlyUserRegistration);
+        $productRegistrationChange = $this->calculatePercentageChange($lastMonthProductRegistration, $monthlyProductRegistration);
+        $salesChange = $this->calculatePercentageChange($lastMonthSales, $monthlySales);
+        $revenueChange = $this->calculatePercentageChange($lastMonthRevenue, $monthlyRevenue);
+
+        // Additional stats - use created_at for active users since there's no last_login_at field
+        $activeUsers = User::where('created_at', '>=', $now->subDays(30))->count();
+        $pendingOrders = Payment::where('status', 'pending')->count();
+        $completedOrders = Payment::where('status', 'succeeded')->count() + UserPurchasedProduct::count();
+
+        // User growth trend (last 6 months)
+        $userGrowthTrend = $this->getUserGrowthTrend();
+
+        // Recent activity data
+        $recentActivity = $this->getRecentActivity();
+
+        return [
+            'totalUsers' => $totalUsers,
+            'totalSales' => $totalSales,
+            'totalPrintCount' => $totalPrintCount,
+            'totalRevenue' => $totalRevenue,
+            'monthlyUserRegistration' => $monthlyUserRegistration,
+            'monthlySales' => $monthlySales,
+            'monthlyProductRegistration' => $monthlyProductRegistration,
+            'monthlyRevenue' => $monthlyRevenue,
+            'activeUsers' => $activeUsers,
+            'pendingOrders' => $pendingOrders,
+            'completedOrders' => $completedOrders,
+            'changes' => [
+                'userRegistration' => $userRegistrationChange,
+                'productRegistration' => $productRegistrationChange,
+                'sales' => $salesChange,
+                'revenue' => $revenueChange,
+            ],
+            'userGrowthTrend' => $userGrowthTrend,
+            'recentActivity' => $recentActivity,
+        ];
+    }
+
+    /**
+     * Get total print count from NWPS API for all purchases
+     */
+    private function getTotalPrintCountFromNWPS()
+    {
+        $totalPrintCount = 0;
+        
+        // Get all purchases that have NWPS file IDs
+        $purchases = UserPurchasedProduct::whereNotNull('nwps_file_id')
+            ->with(['productBatch'])
+            ->get();
+        
+        foreach ($purchases as $purchase) {
+            try {
+                // Get NWPS token - try purchase token first, then product token
+                $token = $purchase->nwps_token;
+                if (!$token) {
+                    $token = $purchase->productBatch->nwps_token;
+                }
+                
+                if (!$token) {
+                    continue; // Skip if no token available
+                }
+                
+                // Fetch file info from NWPS API
+                $fileInfo = $this->nwpsService->getFileInfo($token, $purchase->nwps_file_id);
+                
+                // Extract printed count from response
+                if (isset($fileInfo['status']['printed_count'])) {
+                    $totalPrintCount += (int)$fileInfo['status']['printed_count'];
+                }
+                
+            } catch (\Exception $e) {
+                // Log error but continue processing other purchases
+                \Illuminate\Support\Facades\Log::error('Failed to fetch NWPS print count for dashboard', [
+                    'purchase_id' => $purchase->id,
+                    'file_id' => $purchase->nwps_file_id,
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
+        
+        return $totalPrintCount;
+    }
+
+    /**
+     * Get recent activity data for the dashboard
+     */
+    private function getRecentActivity()
+    {
+        $activities = collect();
+        $now = Carbon::now();
+
+        // Recent user registrations
+        $recentUsers = User::orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
+        
+        foreach ($recentUsers as $user) {
+            $timeAgo = $this->getTimeAgo($user->created_at);
+            $activities->push([
+                'type' => 'user_registration',
+                'title' => 'New user registered',
+                'description' => $user->name ? $user->name . ' joined the platform' : 'New user joined the platform',
+                'timeAgo' => $timeAgo,
+                'icon' => 'user',
+                'color' => 'green',
+                'timestamp' => $user->created_at
+            ]);
+        }
+
+        // Recent product registrations
+        $recentProducts = ProductBatch::orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
+        
+        foreach ($recentProducts as $product) {
+            $timeAgo = $this->getTimeAgo($product->created_at);
+            $activities->push([
+                'type' => 'product_registration',
+                'title' => 'New product added',
+                'description' => 'Product "' . $product->title . '" added',
+                'timeAgo' => $timeAgo,
+                'icon' => 'product',
+                'color' => 'purple',
+                'timestamp' => $product->created_at
+            ]);
+        }
+
+        // Recent successful payments
+        $recentPayments = Payment::where('status', 'succeeded')
+            ->orderBy('paid_at', 'desc')
+            ->limit(3)
+            ->get();
+        
+        foreach ($recentPayments as $payment) {
+            $timeAgo = $this->getTimeAgo($payment->paid_at);
+            $activities->push([
+                'type' => 'payment_success',
+                'title' => 'Payment received',
+                'description' => 'Payment of ¥' . number_format($payment->amount) . ' received',
+                'timeAgo' => $timeAgo,
+                'icon' => 'payment',
+                'color' => 'blue',
+                'timestamp' => $payment->paid_at
+            ]);
+        }
+
+        // Recent purchases
+        $recentPurchases = UserPurchasedProduct::orderBy('purchase_time', 'desc')
+            ->limit(3)
+            ->get();
+        
+        foreach ($recentPurchases as $purchase) {
+            $timeAgo = $this->getTimeAgo($purchase->purchase_time);
+            $activities->push([
+                'type' => 'purchase',
+                'title' => 'New order placed',
+                'description' => 'Order for ¥' . number_format($purchase->price) . ' placed',
+                'timeAgo' => $timeAgo,
+                'icon' => 'order',
+                'color' => 'blue',
+                'timestamp' => $purchase->purchase_time
+            ]);
+        }
+
+        // Sort all activities by timestamp (most recent first) and take top 6
+        return $activities->sortByDesc('timestamp')->take(6)->values();
+    }
+
+    /**
+     * Get human-readable time ago string
+     */
+    private function getTimeAgo($timestamp)
+    {
+        $now = Carbon::now();
+        $diff = $now->diff($timestamp);
+        
+        if ($diff->y > 0) {
+            return $diff->y . ' year' . ($diff->y > 1 ? 's' : '') . ' ago';
+        } elseif ($diff->m > 0) {
+            return $diff->m . ' month' . ($diff->m > 1 ? 's' : '') . ' ago';
+        } elseif ($diff->d > 0) {
+            return $diff->d . ' day' . ($diff->d > 1 ? 's' : '') . ' ago';
+        } elseif ($diff->h > 0) {
+            return $diff->h . ' hour' . ($diff->h > 1 ? 's' : '') . ' ago';
+        } elseif ($diff->i > 0) {
+            return $diff->i . ' minute' . ($diff->i > 1 ? 's' : '') . ' ago';
+        } else {
+            return 'Just now';
+        }
+    }
+
+    private function calculatePercentageChange($oldValue, $newValue)
+    {
+        if ($oldValue == 0) {
+            return $newValue > 0 ? 100 : 0;
+        }
+        
+        $change = (($newValue - $oldValue) / $oldValue) * 100;
+        return round($change, 1);
+    }
+
+    private function getUserGrowthTrend()
+    {
+        $months = collect();
+        for ($i = 5; $i >= 0; $i--) {
+            $date = Carbon::now()->subMonths($i);
+            $startOfMonth = $date->copy()->startOfMonth();
+            $endOfMonth = $date->copy()->endOfMonth();
+            
+            $userCount = User::whereBetween('created_at', [$startOfMonth, $endOfMonth])->count();
+            
+            $months->push([
+                'month' => $date->format('M Y'),
+                'users' => $userCount,
+                'date' => $date->format('Y-m')
+            ]);
+        }
+        
+        return $months;
+    }
+
+    public function users()
+    {
+        return Inertia::render('Dashboard/UserManagement');
+    }
+
+    public function finance()
+    {
+        return Inertia::render('Dashboard/Finance');
+    }
+
+    public function products()
+    {
+        return Inertia::render('Dashboard/Products');
+    }
+
+    public function sales()
+    {
+        return Inertia::render('Dashboard/Sales');
+    }
+
+    public function reports()
+    {
+        return Inertia::render('Dashboard/Reports');
+    }
+}

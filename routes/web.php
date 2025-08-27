@@ -376,6 +376,19 @@ Route::post('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccou
         return Inertia::render('HowToPrint');
     });
 
+    // Legal Document Routes
+    Route::get('/tokushoho', function(){
+        return Inertia::render('Legal/Tokushoho');
+    });
+
+    Route::get('/privacy', function(){
+        return Inertia::render('Legal/Privacy');
+    });
+
+    Route::get('/terms', function(){
+        return Inertia::render('Legal/Terms');
+    });
+
     Route::get('/homelogin', [App\Http\Controllers\HomeLoginController::class, 'index'])->name('homelogin');
 
     Route::get('/verify-email', function () {
@@ -420,30 +433,14 @@ Route::post('/api/verify-email-code', [ProfileController::class, 'verifyEmailCod
 // Protected Routes
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-    
-    // Dashboard sub-routes
-    Route::get('/dashboard/users', function () {
-        return Inertia::render('Dashboard/UserManagement');
-    })->name('dashboard.users');
-    
-    Route::get('/dashboard/finance', function () {
-        return Inertia::render('Dashboard/Finance');
-    })->name('dashboard.finance');
-    
-    Route::get('/dashboard/products', function () {
-        return Inertia::render('Dashboard/Products');
-    })->name('dashboard.products');
-    
-    Route::get('/dashboard/sales', function () {
-        return Inertia::render('Dashboard/Sales');
-    })->name('dashboard.sales');
-    
-    Route::get('/dashboard/reports', function () {
-        return Inertia::render('Dashboard/Reports');
-    })->name('dashboard.reports');
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
+// Dashboard sub-routes
+Route::get('/dashboard/users', [App\Http\Controllers\DashboardController::class, 'users'])->name('dashboard.users');
+Route::get('/dashboard/finance', [App\Http\Controllers\DashboardController::class, 'finance'])->name('dashboard.finance');
+Route::get('/dashboard/products', [App\Http\Controllers\DashboardController::class, 'products'])->name('dashboard.products');
+Route::get('/dashboard/sales', [App\Http\Controllers\DashboardController::class, 'sales'])->name('dashboard.sales');
+Route::get('/dashboard/reports', [App\Http\Controllers\DashboardController::class, 'reports'])->name('dashboard.reports');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

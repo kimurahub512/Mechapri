@@ -45,7 +45,7 @@ const HowToPrint = () => {
                     <span className="text-center text-[#363636] font-noto text-[18px] font-normal leading-[32px]">ご利用のコンビニエンスストアを選択してください</span>
                 </div>
                 <div className="flex flex-row items-center gap-[10px] w-full">
-                    <div className="flex flex-col items-center px-[24px] w-full shadow-[0_2px_8px_0_rgba(0,0,0,0.25)] rounded-[10px]">
+                    <a href='https://networkprint.ne.jp/info/howto/qrcode_login.html' target="_blank" className="flex flex-col items-center px-[24px] w-full shadow-[0_2px_8px_0_rgba(0,0,0,0.25)] rounded-[10px]">
                         <div className="flex py-[30px] justify-between items-center self-stretch">
                             <img src={familymart} alt="familymart" className="w-[120px] h-[120px]" />
                             <img src={lawson} alt="familymart" className="w-[120px] h-[120px]" />
@@ -58,8 +58,8 @@ const HowToPrint = () => {
                                 印刷する
                             </span>
                         </div>
-                    </div>
-                    <div className="flex flex-col items-center px-[24px] w-full shadow-[0_2px_8px_0_rgba(0,0,0,0.25)] rounded-[10px]">
+                    </a>
+                    <a href='https://www.printing.ne.jp/support/lite/guide/step2.html' target="_blank" className="flex flex-col items-center px-[24px] w-full shadow-[0_2px_8px_0_rgba(0,0,0,0.25)] rounded-[10px]">
                         <div className="flex py-[30px] justify-center items-center self-stretch">
                             <img src={eleven} alt="familymart" className="w-[120px] h-[120px]" />
                         </div>
@@ -68,7 +68,7 @@ const HowToPrint = () => {
                                 セブンイレブンで印刷する
                             </span>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </main>
             {/* Mobile Main Section */}
@@ -87,7 +87,7 @@ const HowToPrint = () => {
                 </div>
                 
                 <div className="flex flex-col items-center gap-[10px] w-full mb-[48px]">
-                    <div className="flex flex-col items-center px-[24px] w-full shadow-[0_2px_8px_0_rgba(0,0,0,0.25)] rounded-[10px]">
+                    <a href='https://networkprint.ne.jp/info/howto/qrcode_login.html' target="_blank" className="flex flex-col items-center px-[24px] w-full shadow-[0_2px_8px_0_rgba(0,0,0,0.25)] rounded-[10px]">
                         <div className="flex py-[30px] justify-between items-center self-stretch">
                             <img src={familymart} alt="familymart" className="w-[90px] h-[90px]" />
                             <img src={lawson} alt="familymart" className="w-[90px] h-[90px]" />
@@ -100,8 +100,8 @@ const HowToPrint = () => {
                                 印刷する
                             </span>
                         </div>
-                    </div>
-                    <div className="flex flex-col items-center px-[24px] w-full shadow-[0_2px_8px_0_rgba(0,0,0,0.25)] rounded-[10px]">
+                    </a>
+                    <a href='https://www.printing.ne.jp/support/lite/guide/step2.html' target="_blank" className="flex flex-col items-center px-[24px] w-full shadow-[0_2px_8px_0_rgba(0,0,0,0.25)] rounded-[10px]">
                         <div className="flex py-[30px] justify-center items-center self-stretch">
                             <img src={eleven} alt="familymart" className="w-[90px] h-[90px]" />
                         </div>
@@ -110,7 +110,7 @@ const HowToPrint = () => {
                                 セブンイレブンで印刷する
                             </span>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </main>
             <Footer />

@@ -199,7 +199,7 @@ const UnpurchasedProductExpand = ({ product }) => {
                                         <div className="flex items-center justify-end w-full">
                                             <img src={complex_black} alt="complex" className="w-[20px] h-[20px]" />
                                             <span className="text-[#767676] font-['Hiragino Sans'] text-[14px] font-medium leading-[14px] ml-[4px]">プリント実績</span>
-                                            <span className="text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
+                                            <span className="text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">{product?.printed_count || 0}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -580,7 +580,7 @@ const UnpurchasedProductExpand = ({ product }) => {
                                     <div className="flex items-center justify-end w-full">
                                         <img src={complex_black} alt="complex" className="w-[20px] h-[20px]" />
                                         <span className="text-[#767676] font-['Hiragino Sans'] text-[14px] font-medium leading-[14px] ml-[4px]">プリント実績</span>
-                                        <span className="w-[12px] text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
+                                        <span className="w-[12px] text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">{product?.printed_count || 0}</span>
                                     </div>
                                 </div>
                             </div>

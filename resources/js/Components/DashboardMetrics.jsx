@@ -1,41 +1,30 @@
-import { useState, useEffect } from 'react';
+import { usePage } from '@inertiajs/react';
 
 export default function DashboardMetrics() {
-    const [metrics, setMetrics] = useState({
-        totalUsers: 0,
-        totalSales: 0,
-        totalPrintCount: 0,
-        totalRevenue: 0,
-        monthlyUserRegistration: 0,
-        monthlySales: 0,
-        monthlyProductRegistration: 0,
-        activeUsers: 0,
-        pendingOrders: 0,
-        completedOrders: 0
-    });
-
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        // Simulate loading metrics data
-        // In a real app, this would be an API call
-        setTimeout(() => {
-            setMetrics({
-                totalUsers: 1247,
-                totalSales: 892,
-                totalPrintCount: 3456,
-                totalRevenue: 1250000,
-                monthlyUserRegistration: 89,
-                monthlySales: 156,
-                monthlyProductRegistration: 234,
-                activeUsers: 456,
-                pendingOrders: 23,
-                completedOrders: 869
-            });
-            setLoading(false);
-        }, 1000);
-    }, []);
-
+    const { metrics } = usePage().props;
+    
+    // Handle case where metrics might not be available yet
+    if (!metrics) {
+        return (
+            <div className="space-y-4 lg:space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+                    {[...Array(6)].map((_, index) => (
+                        <div key={index} className="bg-white rounded-lg shadow-sm border p-4 lg:p-6 animate-pulse">
+                            <div className="flex items-center justify-between">
+                                <div className="w-32 h-4 bg-gray-200 rounded"></div>
+                                <div className="w-8 h-8 bg-gray-200 rounded"></div>
+                            </div>
+                            <div className="mt-4">
+                                <div className="w-24 h-8 bg-gray-200 rounded"></div>
+                                <div className="w-16 h-4 bg-gray-200 rounded mt-2"></div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+    
     const formatCurrency = (amount) => {
         return new Intl.NumberFormat('ja-JP', {
             style: 'currency',
@@ -51,8 +40,8 @@ export default function DashboardMetrics() {
         {
             title: 'Total Users',
             value: formatNumber(metrics.totalUsers),
-            change: '+12%',
-            changeType: 'positive',
+            change: `${metrics.changes.userRegistration >= 0 ? '+' : ''}${metrics.changes.userRegistration}%`,
+            changeType: metrics.changes.userRegistration >= 0 ? 'positive' : 'negative',
             icon: (
                 <svg className="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
@@ -64,8 +53,8 @@ export default function DashboardMetrics() {
         {
             title: 'Total Sales',
             value: formatNumber(metrics.totalSales),
-            change: '+8%',
-            changeType: 'positive',
+            change: `${metrics.changes.sales >= 0 ? '+' : ''}${metrics.changes.sales}%`,
+            changeType: metrics.changes.sales >= 0 ? 'positive' : 'negative',
             icon: (
                 <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -77,7 +66,7 @@ export default function DashboardMetrics() {
         {
             title: 'Total Print Count',
             value: formatNumber(metrics.totalPrintCount),
-            change: '+15%',
+            change: '+15%', // This could be calculated if we track historical print data
             changeType: 'positive',
             icon: (
                 <svg className="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,8 +79,8 @@ export default function DashboardMetrics() {
         {
             title: 'Total Revenue',
             value: formatCurrency(metrics.totalRevenue),
-            change: '+18%',
-            changeType: 'positive',
+            change: `${metrics.changes.revenue >= 0 ? '+' : ''}${metrics.changes.revenue}%`,
+            changeType: metrics.changes.revenue >= 0 ? 'positive' : 'negative',
             icon: (
                 <svg className="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
@@ -103,8 +92,8 @@ export default function DashboardMetrics() {
         {
             title: 'Monthly User Registration',
             value: formatNumber(metrics.monthlyUserRegistration),
-            change: '+5%',
-            changeType: 'positive',
+            change: `${metrics.changes.userRegistration >= 0 ? '+' : ''}${metrics.changes.userRegistration}%`,
+            changeType: metrics.changes.userRegistration >= 0 ? 'positive' : 'negative',
             icon: (
                 <svg className="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
@@ -116,8 +105,8 @@ export default function DashboardMetrics() {
         {
             title: 'Monthly Sales',
             value: formatNumber(metrics.monthlySales),
-            change: '+22%',
-            changeType: 'positive',
+            change: `${metrics.changes.sales >= 0 ? '+' : ''}${metrics.changes.sales}%`,
+            changeType: metrics.changes.sales >= 0 ? 'positive' : 'negative',
             icon: (
                 <svg className="w-8 h-8 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -127,25 +116,6 @@ export default function DashboardMetrics() {
             borderColor: 'border-pink-200'
         }
     ];
-
-    if (loading) {
-        return (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-                {[...Array(6)].map((_, index) => (
-                    <div key={index} className="bg-white rounded-lg shadow-sm border p-4 lg:p-6 animate-pulse">
-                        <div className="flex items-center justify-between">
-                            <div className="w-32 h-4 bg-gray-200 rounded"></div>
-                            <div className="w-8 h-8 bg-gray-200 rounded"></div>
-                        </div>
-                        <div className="mt-4">
-                            <div className="w-24 h-8 bg-gray-200 rounded"></div>
-                            <div className="w-16 h-4 bg-gray-200 rounded mt-2"></div>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        );
-    }
 
     return (
         <div className="space-y-4 lg:space-y-6">
@@ -198,15 +168,21 @@ export default function DashboardMetrics() {
                     <div className="space-y-4">
                         <div className="flex justify-between items-center">
                             <span className="text-gray-600">User Registration</span>
-                            <span className="font-semibold text-green-600">+{metrics.monthlyUserRegistration}</span>
+                            <span className={`font-semibold ${metrics.changes.userRegistration >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                {metrics.changes.userRegistration >= 0 ? '+' : ''}{metrics.changes.userRegistration}%
+                            </span>
                         </div>
                         <div className="flex justify-between items-center">
                             <span className="text-gray-600">Product Registration</span>
-                            <span className="font-semibold text-blue-600">+{formatNumber(metrics.monthlyProductRegistration)}</span>
+                            <span className={`font-semibold ${metrics.changes.productRegistration >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
+                                {metrics.changes.productRegistration >= 0 ? '+' : ''}{metrics.changes.productRegistration}%
+                            </span>
                         </div>
                         <div className="flex justify-between items-center">
                             <span className="text-gray-600">Sales Growth</span>
-                            <span className="font-semibold text-green-600">+{formatNumber(metrics.monthlySales)}</span>
+                            <span className={`font-semibold ${metrics.changes.sales >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                {metrics.changes.sales >= 0 ? '+' : ''}{metrics.changes.sales}%
+                            </span>
                         </div>
                     </div>
                 </div>

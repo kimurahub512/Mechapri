@@ -103,7 +103,7 @@ export default function UserManagement() {
         <DashboardLayout activeTab="users">
             <Head title="User Management" />
 
-            <div className="space-y-6">
+            <div className="space-y-6 mr-6">
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProductBatchRequest;
 use App\Models\ProductBatch;
 use App\Models\UserPurchasedProduct;
 use App\Services\ProductBatchService;
+use App\Services\NWPSService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -17,10 +18,45 @@ use Inertia\Inertia;
 class ProductBatchController extends Controller
 {
     protected ProductBatchService $productBatchService;
+    protected NWPSService $nwpsService;
 
-    public function __construct(ProductBatchService $productBatchService)
+    public function __construct(ProductBatchService $productBatchService, NWPSService $nwpsService)
     {
         $this->productBatchService = $productBatchService;
+        $this->nwpsService = $nwpsService;
+    }
+
+    /**
+     * Get printed count from NWPS for a product
+     */
+    private function getPrintedCount($product, $purchase = null)
+    {
+        try {
+            // For purchased products, use the purchase record's NWPS data
+            if ($purchase && $purchase->nwps_token && $purchase->nwps_file_id) {
+                $fileInfo = $this->nwpsService->getFileInfo($purchase->nwps_token, $purchase->nwps_file_id);
+                if (isset($fileInfo['status']['printed_count'])) {
+                    return (int)$fileInfo['status']['printed_count'];
+                }
+            }
+            
+            // For free products, use the product's NWPS data
+            if ($product->nwps_token && $product->nwps_file_id) {
+                $fileInfo = $this->nwpsService->getFileInfo($product->nwps_token, $product->nwps_file_id);
+                if (isset($fileInfo['status']['printed_count'])) {
+                    return (int)$fileInfo['status']['printed_count'];
+                }
+            }
+            
+            return 0;
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch printed count from NWPS', [
+                'product_id' => $product->id,
+                'purchase_id' => $purchase ? $purchase->id : null,
+                'error' => $e->getMessage()
+            ]);
+            return 0;
+        }
     }
 
     /**
@@ -355,6 +391,9 @@ class ProductBatchController extends Controller
             ->where('batch_id', $product->id)
             ->first();
 
+        // Get printed count from NWPS
+        $printedCount = $this->getPrintedCount($product, $purchase);
+
         return Inertia::render('PurchasedProduct', [
             'product' => [
                 'id' => $product->id,
@@ -445,6 +484,9 @@ class ProductBatchController extends Controller
             return redirect()->route('product.purchased', ['id' => $product->id]);
         }
 
+        // Get printed count from NWPS for unpurchased products
+        $printedCount = $this->getPrintedCount($product);
+
         return Inertia::render('UnpurchasedProduct', [
             'product' => [
                 'id' => $product->id,
@@ -466,6 +508,7 @@ class ProductBatchController extends Controller
                 'is_favorited' => $product->isFavoritedBy(auth()->user()),
                 'favorite_count' => $product->favorite_count,
                 'print_deadline' => now()->addDays(30)->format('Y/m/d'),
+                'printed_count' => $printedCount,
                 'top_buyers' => UserPurchasedProduct::getTopBuyersForProduct($product->id)->map(function($purchase) {
                     return [
                         'user' => [
@@ -535,6 +578,9 @@ class ProductBatchController extends Controller
         $purchase = UserPurchasedProduct::where('user_id', auth()->id())
             ->where('batch_id', $product->id)
             ->first();
+
+        // Get printed count from NWPS
+        $printedCount = $this->getPrintedCount($product, $purchase);
 
         return Inertia::render('PurchasedProductExpand', [
             'product' => [
@@ -624,6 +670,9 @@ class ProductBatchController extends Controller
             // Otherwise, redirect to direct purchased
             return redirect()->route('product.purchased.expand', ['id' => $product->id]);
         }
+
+        // Get printed count from NWPS for unpurchased products
+        $printedCount = $this->getPrintedCount($product);
 
         return Inertia::render('UnpurchasedProductExpand', [
             'product' => [

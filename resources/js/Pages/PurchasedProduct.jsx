@@ -234,7 +234,7 @@ const PurchasedProduct = ({ product }) => {
                                         <div className="flex items-center justify-end w-full">
                                             <img src={complex} alt="complex" className="w-[20px] h-[20px]" />
                                             <span className="text-[#767676] font-['Hiragino Sans'] text-[14px] font-medium leading-[14px] ml-[4px]">プリント実績</span>
-                                            <span className="text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
+                                            <span className="text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">{product?.printed_count || 0}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -399,7 +399,7 @@ const PurchasedProduct = ({ product }) => {
                             <div className="flex flex-col items-center w-[386px] h-[20px] mt-[24px] ml-[287px]">
                                 <div className="flex items-center gap-[8px]">
                                     <img src={question_circle} alt="question_circle" className="w-[20px] h-[20px]" />
-                                    <span className="text-[#767676] font-noto text-[14px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</span>
+                                    <a href='/howtoprint' className="text-[#767676] font-noto text-[14px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</a>
                                 </div>
                             </div>
                         </div>
@@ -658,7 +658,7 @@ const PurchasedProduct = ({ product }) => {
                                     <div className="flex items-center justify-end w-full">
                                         <img src={complex} alt="complex" className="w-[20px] h-[20px]" />
                                         <span className="text-[#767676] font-['Hiragino Sans'] text-[14px] font-medium leading-[14px] ml-[4px]">プリント実績</span>
-                                        <span className="w-[12px] text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
+                                        <span className="w-[12px] text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">{product?.printed_count || 0}</span>
                                     </div>
                                 </div>
                             </div>
@@ -820,7 +820,7 @@ const PurchasedProduct = ({ product }) => {
                             <div className="flex flex-col items-center w-full h-[20px] mt-[32px] px-[16px]">
                                 <div className="flex items-center gap-[6px]">
                                     <img src={question_circle} alt="question_circle" className="w-[16px] h-[16px]" />
-                                    <span className="text-[#767676] font-noto text-[12px] font-normal leading-[16px] underline cursor-pointer">プリントの方法が分からない時は</span>
+                                    <a href='/howtoprint' className="text-[#767676] font-noto text-[12px] font-normal leading-[16px] underline cursor-pointer">プリントの方法が分からない時は</a>
                                 </div>
                             </div>
                         </div>
