@@ -165,6 +165,14 @@ class ProductBatch extends Model
     }
 
     /**
+     * Get the payments for this product batch.
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
      * Check if the product batch is purchased by a specific user.
      */
     public function isPurchasedBy(User $user): bool

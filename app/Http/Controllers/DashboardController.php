@@ -7,6 +7,7 @@ use App\Models\Payment;
 use App\Models\ProductBatch;
 use App\Models\ProductBatchFile;
 use App\Models\UserPurchasedProduct;
+use App\Models\Withdrawal;
 use App\Services\NWPSService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -341,7 +342,161 @@ class DashboardController extends Controller
 
     public function finance()
     {
-        return Inertia::render('Dashboard/Finance');
+        // Get all users who have sold products (have successful payments for their products)
+        $sellers = User::whereHas('productBatches', function ($query) {
+            $query->whereHas('payments', function ($paymentQuery) {
+                $paymentQuery->where('status', 'succeeded');
+            });
+        })->get();
+        
+        $sellers = $sellers->map(function ($seller) {
+            // Calculate total earned from successful payments for products sold by this user
+            $totalEarned = Payment::where('status', 'succeeded')
+                ->whereHas('productBatch', function ($query) use ($seller) {
+                    $query->where('user_id', $seller->id);
+                })
+                ->sum('amount');
+
+            // Calculate total withdrawn
+            $totalWithdrawn = Withdrawal::where('seller_id', $seller->id)
+                ->sum('amount');
+
+            // Calculate commission (15%)
+            $commission = $totalEarned * 0.15;
+
+            // Calculate remaining balance after commission
+            $remainingBalance = $totalEarned - $commission;
+
+            // Calculate available withdrawal (remaining balance minus already withdrawn)
+            $availableWithdrawal = $remainingBalance - $totalWithdrawn;
+
+            return [
+                'id' => $seller->id,
+                'name' => $seller->name,
+                'email' => $seller->email,
+                'user_type' => $seller->user_type,
+                'total_earned' => $totalEarned,
+                'commission' => $commission,
+                'total_withdrawn' => $totalWithdrawn,
+                'remaining_balance' => $remainingBalance,
+                'available_withdrawal' => $availableWithdrawal,
+                'registered' => $seller->created_at->format('Y-m-d H:i:s'),
+            ];
+        });
+
+        // Get recent withdrawals
+        $recentWithdrawals = Withdrawal::with(['seller', 'manager'])
+            ->orderBy('withdrawal_date', 'desc')
+            ->limit(10)
+            ->get()
+            ->map(function ($withdrawal) {
+                return [
+                    'id' => $withdrawal->id,
+                    'seller_name' => $withdrawal->seller->name,
+                    'amount' => $withdrawal->amount,
+                    'withdrawal_date' => $withdrawal->withdrawal_date->format('Y-m-d'),
+                    'notes' => $withdrawal->notes,
+                    'manager_name' => $withdrawal->manager->name,
+                    'created_at' => $withdrawal->created_at->format('Y-m-d H:i:s'),
+                ];
+            });
+
+        return Inertia::render('Dashboard/Finance', [
+            'sellers' => $sellers,
+            'recentWithdrawals' => $recentWithdrawals,
+        ]);
+    }
+
+    /**
+     * Create a new withdrawal record
+     */
+    public function createWithdrawal(Request $request)
+    {
+        $request->validate([
+            'seller_id' => 'required|exists:users,id',
+            'amount' => 'required|numeric|min:0.01',
+            'withdrawal_date' => 'required|date',
+            'notes' => 'nullable|string|max:1000',
+        ]);
+
+        // Verify the user has sold products (has successful payments for their products)
+        $user = User::findOrFail($request->seller_id);
+        $hasSoldProducts = Payment::where('status', 'succeeded')
+            ->whereHas('productBatch', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->exists();
+
+        if (!$hasSoldProducts) {
+            return redirect()->back()->with('error', '指定されたユーザーは商品を販売していません。');
+        }
+
+        // Calculate user's total earnings, commission, and current withdrawals
+        $totalEarned = Payment::where('status', 'succeeded')
+            ->whereHas('productBatch', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->sum('amount');
+
+        $commission = $totalEarned * 0.15; // 15% commission
+        $remainingBalance = $totalEarned - $commission;
+
+        $totalWithdrawn = Withdrawal::where('seller_id', $user->id)
+            ->sum('amount');
+
+        $availableWithdrawal = $remainingBalance - $totalWithdrawn;
+
+        // Check if withdrawal amount is valid
+        if ($request->amount > $availableWithdrawal) {
+            return redirect()->back()->with('error', '引き出し金額が利用可能残高を超えています。利用可能残高: ¥' . number_format($availableWithdrawal));
+        }
+
+        // Create the withdrawal record
+        Withdrawal::create([
+            'seller_id' => $request->seller_id,
+            'amount' => $request->amount,
+            'withdrawal_date' => $request->withdrawal_date,
+            'notes' => $request->notes,
+            'created_by' => auth()->id(),
+        ]);
+
+        return redirect()->back()->with('success', '引き出し記録が正常に作成されました。');
+    }
+
+    /**
+     * Get withdrawal history for a specific seller
+     */
+    public function getSellerWithdrawals($sellerId)
+    {
+        $user = User::findOrFail($sellerId);
+        
+        // Check if user has sold products
+        $hasSoldProducts = Payment::where('status', 'succeeded')
+            ->whereHas('productBatch', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->exists();
+        
+        if (!$hasSoldProducts) {
+            return response()->json(['error' => '指定されたユーザーは商品を販売していません。'], 400);
+        }
+
+        $withdrawals = Withdrawal::where('seller_id', $sellerId)
+            ->with(['manager'])
+            ->orderBy('withdrawal_date', 'desc')
+            ->get()
+            ->map(function ($withdrawal) {
+                return [
+                    'id' => $withdrawal->id,
+                    'amount' => $withdrawal->amount,
+                    'withdrawal_date' => $withdrawal->withdrawal_date->format('Y-m-d'),
+                    'notes' => $withdrawal->notes,
+                    'manager_name' => $withdrawal->manager->name,
+                    'created_at' => $withdrawal->created_at->format('Y-m-d H:i:s'),
+                ];
+            });
+
+        return response()->json($withdrawals);
     }
 
     public function products()

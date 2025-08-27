@@ -519,7 +519,7 @@ const RegisterProduct = () => {
                                 {/* Frame 1221 */}
                                 <div className="flex items-center self-stretch" style={{ gap: vwd(12), paddingTop: vwd(25), paddingBottom: vwd(6) }}>
                                     <span style={{ ...responsiveTextD(21, 27, null, 'bold', 'noto', '#363636') }}>タイトル</span>
-                                    <span style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#ACACAC') }}>{title.length}/30</span>
+                                    <span style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#ACACAC') }}>{(title || '').length}/30</span>
                                 </div>
                                 {/* Frame 1222 */}
                                 <div className="flex flex-col items-start self-stretch w-full">
@@ -542,7 +542,7 @@ const RegisterProduct = () => {
                                 {/* Frame 12311 */}
                                 <div className="flex items-center self-stretch" style={{ height: vwd(58), gap: vwd(12) }}>
                                     <span style={{ ...responsiveTextD(21, 27, null, 'bold', 'noto', '#363636') }}>説明文</span>
-                                    <span style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#ACACAC') }}>{description.length}/200</span>
+                                    <span style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#ACACAC') }}>{(description || '').length}/200</span>
                                 </div>
                                 {/* Frame 12312 */}
                                 <div className="flex flex-col items-start self-stretch w-full" style={{ paddingBottom: vwd(12.85) }}>
@@ -1065,7 +1065,7 @@ const RegisterProduct = () => {
                             <div className="flex flex-col items-start self-stretch" style={{ gap: vw(4), marginTop: vw(8) }}>
                                 <div className="flex items-center self-stretch" style={{ gap: vw(12), paddingTop: vw(12) }}>
                                     <span style={{ ...responsiveText(14, 14, null, 'bold', 'noto', '#363636') }}>タイトル</span>
-                                    <span style={{ ...responsiveText(14, 21, 0.7, 'normal', 'noto', '#ACACAC') }}>{title.length}/30</span>
+                                                                            <span style={{ ...responsiveText(14, 21, 0.7, 'normal', 'noto', '#ACACAC') }}>{(title || '').length}/30</span>
                                 </div>
                                 <div className="flex flex-col items-start self-stretch w-full" style={{ paddingBottom: vw(6.57) }}>
                                     <input
@@ -1087,7 +1087,7 @@ const RegisterProduct = () => {
                                     {/* 12311 */}
                                     <div className="flex items-center self-stretch" style={{ gap: vw(12), paddingTop: vw(12), paddingBottom: vw(6) }}>
                                         <span style={{ ...responsiveText(14, 14, null, 'bold', 'noto', '#363636') }}>説明文</span>
-                                        <span style={{ ...responsiveText(14, 21, 0.7, 'normal', 'noto', '#ACACAC') }}>{description.length}/200</span>
+                                        <span style={{ ...responsiveText(14, 21, 0.7, 'normal', 'noto', '#ACACAC') }}>{(description || '').length}/200</span>
                                     </div>
                                     {/* 12312 */}
                                     <div className="flex flex-col items-start self-stretch" style={{ paddingBottom: vw(12.85) }}>

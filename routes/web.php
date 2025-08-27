@@ -441,6 +441,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/dashboard/users/{user}', [App\Http\Controllers\DashboardController::class, 'updateUser'])->name('dashboard.users.update');
     Route::delete('/dashboard/users/{user}', [App\Http\Controllers\DashboardController::class, 'deleteUser'])->name('dashboard.users.delete');
     Route::get('/dashboard/finance', [App\Http\Controllers\DashboardController::class, 'finance'])->name('dashboard.finance');
+    Route::post('/dashboard/withdrawals', [App\Http\Controllers\DashboardController::class, 'createWithdrawal'])->name('dashboard.withdrawals.create');
+    Route::get('/dashboard/withdrawals/{seller}', [App\Http\Controllers\DashboardController::class, 'getSellerWithdrawals'])->name('dashboard.withdrawals.seller');
     Route::get('/dashboard/products', [App\Http\Controllers\DashboardController::class, 'products'])->name('dashboard.products');
     Route::get('/dashboard/sales', [App\Http\Controllers\DashboardController::class, 'sales'])->name('dashboard.sales');
     Route::get('/dashboard/reports', [App\Http\Controllers\DashboardController::class, 'reports'])->name('dashboard.reports');

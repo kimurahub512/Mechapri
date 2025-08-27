@@ -14,11 +14,24 @@ export default defineConfig({
         }),
         react(),
     ],
-    
+
     server: {
         host: '172.16.5.41',
         port: 5173,
         strictPort: true,
-        cors: true, 
+        cors: true,
+        hmr: {
+            host: '172.16.5.41',
+        },
+        fs: {
+            strict: false,
+        },
     },
+
+    optimizeDeps: {
+        include: ['react', 'react-dom'],
+    },
+
+    clearScreen: false,
+    logLevel: 'info',
 });
