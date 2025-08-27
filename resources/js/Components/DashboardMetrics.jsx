@@ -38,7 +38,7 @@ export default function DashboardMetrics() {
 
     const metricCards = [
         {
-            title: 'Total Users',
+            title: '総ユーザー数',
             value: formatNumber(metrics.totalUsers),
             change: `${metrics.changes.userRegistration >= 0 ? '+' : ''}${metrics.changes.userRegistration}%`,
             changeType: metrics.changes.userRegistration >= 0 ? 'positive' : 'negative',
@@ -51,7 +51,7 @@ export default function DashboardMetrics() {
             borderColor: 'border-blue-200'
         },
         {
-            title: 'Total Sales',
+            title: '総販売数',
             value: formatNumber(metrics.totalSales),
             change: `${metrics.changes.sales >= 0 ? '+' : ''}${metrics.changes.sales}%`,
             changeType: metrics.changes.sales >= 0 ? 'positive' : 'negative',
@@ -64,10 +64,10 @@ export default function DashboardMetrics() {
             borderColor: 'border-green-200'
         },
         {
-            title: 'Total Print Count',
+            title: '総プリント数',
             value: formatNumber(metrics.totalPrintCount),
-            change: '+15%', // This could be calculated if we track historical print data
-            changeType: 'positive',
+            change: `${metrics.changes.printCount >= 0 ? '+' : ''}${metrics.changes.printCount}%`,
+            changeType: metrics.changes.printCount >= 0 ? 'positive' : 'negative',
             icon: (
                 <svg className="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
@@ -77,7 +77,7 @@ export default function DashboardMetrics() {
             borderColor: 'border-purple-200'
         },
         {
-            title: 'Total Revenue',
+            title: '総売上',
             value: formatCurrency(metrics.totalRevenue),
             change: `${metrics.changes.revenue >= 0 ? '+' : ''}${metrics.changes.revenue}%`,
             changeType: metrics.changes.revenue >= 0 ? 'positive' : 'negative',
@@ -90,10 +90,10 @@ export default function DashboardMetrics() {
             borderColor: 'border-yellow-200'
         },
         {
-            title: 'Monthly User Registration',
+            title: '月間ユーザー登録',
             value: formatNumber(metrics.monthlyUserRegistration),
-            change: `${metrics.changes.userRegistration >= 0 ? '+' : ''}${metrics.changes.userRegistration}%`,
-            changeType: metrics.changes.userRegistration >= 0 ? 'positive' : 'negative',
+            change: `${metrics.changes.monthlyUserRegistration >= 0 ? '+' : ''}${metrics.changes.monthlyUserRegistration}%`,
+            changeType: metrics.changes.monthlyUserRegistration >= 0 ? 'positive' : 'negative',
             icon: (
                 <svg className="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
@@ -103,19 +103,54 @@ export default function DashboardMetrics() {
             borderColor: 'border-indigo-200'
         },
         {
-            title: 'Monthly Sales',
-            value: formatNumber(metrics.monthlySales),
-            change: `${metrics.changes.sales >= 0 ? '+' : ''}${metrics.changes.sales}%`,
-            changeType: metrics.changes.sales >= 0 ? 'positive' : 'negative',
+            title: '月間商品登録',
+            value: formatNumber(metrics.monthlyProductRegistration),
+            change: `${metrics.changes.monthlyProductRegistration >= 0 ? '+' : ''}${metrics.changes.monthlyProductRegistration}%`,
+            changeType: metrics.changes.monthlyProductRegistration >= 0 ? 'positive' : 'negative',
             icon: (
                 <svg className="w-8 h-8 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
             ),
             bgColor: 'bg-pink-50',
             borderColor: 'border-pink-200'
         }
     ];
+
+    const getActivityIcon = (type, color) => {
+        switch (type) {
+            case 'user_registration':
+                return (
+                    <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                );
+            case 'product_registration':
+                return (
+                    <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                );
+            case 'order_completed':
+                return (
+                    <svg className="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                    </svg>
+                );
+            case 'order_pending':
+                return (
+                    <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                    </svg>
+                );
+            default:
+                return (
+                    <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                );
+        }
+    };
 
     return (
         <div className="space-y-4 lg:space-y-6">
@@ -136,7 +171,7 @@ export default function DashboardMetrics() {
                                 }`}>
                                     {card.change}
                                 </span>
-                                <span className="text-sm text-gray-500 ml-1">from last month</span>
+                                <span className="text-sm text-gray-500 ml-1">先月比</span>
                             </div>
                         </div>
                     </div>
@@ -146,61 +181,58 @@ export default function DashboardMetrics() {
             {/* Additional Stats */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
                 <div className="bg-white rounded-lg shadow-sm border p-4 lg:p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">クイック統計</h3>
                     <div className="space-y-4">
                         <div className="flex justify-between items-center">
-                            <span className="text-gray-600">Active Users</span>
+                            <span className="text-gray-600">アクティブユーザー</span>
                             <span className="font-semibold">{formatNumber(metrics.activeUsers)}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-gray-600">Pending Orders</span>
+                            <span className="text-gray-600">保留中の注文</span>
                             <span className="font-semibold text-orange-600">{formatNumber(metrics.pendingOrders)}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-gray-600">Completed Orders</span>
+                            <span className="text-gray-600">完了した注文</span>
                             <span className="font-semibold text-green-600">{formatNumber(metrics.completedOrders)}</span>
                         </div>
                     </div>
                 </div>
 
                 <div className="bg-white rounded-lg shadow-sm border p-4 lg:p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Monthly Growth</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">最近のアクティビティ</h3>
                     <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                            <span className="text-gray-600">User Registration</span>
-                            <span className={`font-semibold ${metrics.changes.userRegistration >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                {metrics.changes.userRegistration >= 0 ? '+' : ''}{metrics.changes.userRegistration}%
-                            </span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <span className="text-gray-600">Product Registration</span>
-                            <span className={`font-semibold ${metrics.changes.productRegistration >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
-                                {metrics.changes.productRegistration >= 0 ? '+' : ''}{metrics.changes.productRegistration}%
-                            </span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <span className="text-gray-600">Sales Growth</span>
-                            <span className={`font-semibold ${metrics.changes.sales >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                {metrics.changes.sales >= 0 ? '+' : ''}{metrics.changes.sales}%
-                            </span>
-                        </div>
+                        {metrics.recentActivity && metrics.recentActivity.length > 0 ? (
+                            metrics.recentActivity.slice(0, 5).map((activity, index) => (
+                                <div key={index} className="flex items-center space-x-3">
+                                    <div className="flex-shrink-0">
+                                        {getActivityIcon(activity.type, activity.color)}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm text-gray-900 truncate">{activity.description}</p>
+                                        <p className="text-xs text-gray-500">{activity.time}</p>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-sm text-gray-500">最近のアクティビティはありません</p>
+                        )}
                     </div>
                 </div>
 
                 <div className="bg-white rounded-lg shadow-sm border p-4 lg:p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">System Status</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">システム状況</h3>
                     <div className="space-y-4">
                         <div className="flex items-center">
                             <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                            <span className="text-gray-600">System Online</span>
+                            <span className="text-gray-600">システムオンライン</span>
                         </div>
                         <div className="flex items-center">
                             <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                            <span className="text-gray-600">Database Connected</span>
+                            <span className="text-gray-600">データベース接続済み</span>
                         </div>
                         <div className="flex items-center">
                             <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                            <span className="text-gray-600">API Services</span>
+                            <span className="text-gray-600">APIサービス</span>
                         </div>
                     </div>
                 </div>

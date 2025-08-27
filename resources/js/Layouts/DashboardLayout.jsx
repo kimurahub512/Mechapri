@@ -2,6 +2,7 @@ import DashboardSidebar from '@/Components/DashboardSidebar';
 import Dropdown from '@/Components/Dropdown';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
+import logo from '@/assets/images/mechapuri_logo.png';
 
 export default function DashboardLayout({ children, activeTab = 'dashboard' }) {
     const user = usePage().props.auth.user;
@@ -25,7 +26,7 @@ export default function DashboardLayout({ children, activeTab = 'dashboard' }) {
                             </button>
                             
                             <Link href="/" className="flex items-center">
-                                <span className="text-xl font-bold text-gray-800">Mechapri Admin</span>
+                                <img src={logo} alt="logo" className="w-[180px] h-[40px]" />
                             </Link>
                         </div>
 
@@ -71,17 +72,17 @@ export default function DashboardLayout({ children, activeTab = 'dashboard' }) {
 
                                     <Dropdown.Content>
                                         <Dropdown.Link href={route('profile.edit')}>
-                                            Profile Settings
+                                            プロフィール設定
                                         </Dropdown.Link>
                                         <Dropdown.Link href="/">
-                                            Back to Site
+                                            サイトに戻る
                                         </Dropdown.Link>
                                         <Dropdown.Link
                                             href={route('logout')}
                                             method="post"
                                             as="button"
                                         >
-                                            Log Out
+                                            ログアウト
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>

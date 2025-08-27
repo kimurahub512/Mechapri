@@ -106,7 +106,7 @@ export default function Finance() {
     };
 
     return (
-        <DashboardLayout>
+        <DashboardLayout activeTab="finance">
             <div className="p-6">
                 <div className="mb-6">
                     <h1 className="text-2xl font-bold text-gray-900">財務管理</h1>

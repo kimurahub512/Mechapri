@@ -12,16 +12,24 @@ import three_money from '@/assets/images/three_money.svg';
 const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, paymentThreshold = 5000 }) => {
     const [activeFilter, setActiveFilter] = useState('all');
     const [selectedPeriod, setSelectedPeriod] = useState('all');
-    const [showAllMonths, setShowAllMonths] = useState(false);
+    const [displayedMonthCount, setDisplayedMonthCount] = useState(3);
     
     // Filter data based on active filter
     const getFilteredData = (data) => {
         return data; // Keep original data structure, filtering will be done in rendering
     };
 
-    // Show only 3 months initially, or all months if showAllMonths is true, and apply filter
+    // Show months based on displayedMonthCount
     const filteredData = getFilteredData(monthlyData);
-    const displayedMonths = showAllMonths ? filteredData : filteredData.slice(0, 3);
+    const displayedMonths = filteredData.slice(0, displayedMonthCount);
+
+    // Handle showing more months
+    const handleShowMoreMonths = () => {
+        setDisplayedMonthCount(prev => Math.min(prev + 3, filteredData.length));
+    };
+
+    // Calculate remaining months
+    const remainingMonths = filteredData.length - displayedMonthCount;
 
     // Format number with commas for Japanese currency display
     const formatCurrency = (amount) => {
@@ -84,7 +92,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     }`}
                                     onClick={() => {
                                         setActiveFilter('all');
-                                        setShowAllMonths(false);
+                                        setDisplayedMonthCount(3); // Reset to 3 when filter changes
                                     }}
                                 >
                                     <span className={`text-center font-bold text-[16px] leading-[16.1px] font-['Noto Sans JP'] ${
@@ -98,7 +106,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     }`}
                                     onClick={() => {
                                         setActiveFilter('sales');
-                                        setShowAllMonths(false);
+                                        setDisplayedMonthCount(3); // Reset to 3 when filter changes
                                     }}
                                 >
                                     <span className={`text-center font-medium text-[13px] leading-[24px] font-['Noto Sans JP'] ${
@@ -112,7 +120,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     }`}
                                     onClick={() => {
                                         setActiveFilter('withdrawal');
-                                        setShowAllMonths(false);
+                                        setDisplayedMonthCount(3); // Reset to 3 when filter changes
                                     }}
                                 >
                                     <span className={`text-center font-medium text-[13px] leading-[24px] font-['Noto Sans JP'] ${
@@ -231,13 +239,13 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                             ))}
                             
                             {/* Show More Button */}
-                            {filteredData.length > 3 && (
+                            {displayedMonthCount < filteredData.length && (
                                 <div className="flex justify-center w-full mt-4">
                                     <button 
-                                        onClick={() => setShowAllMonths(!showAllMonths)}
+                                        onClick={handleShowMoreMonths}
                                         className="px-6 py-3 bg-[#FF2AA1] text-white rounded-[70px] font-medium text-[16px] leading-[24px] font-['Noto Sans JP'] hover:bg-[#E61E8F] transition-colors"
                                     >
-                                        {showAllMonths ? '過去3ヶ月を表示' : 'さらに3ヶ月表示'}
+                                        さらに{Math.min(3, remainingMonths)}ヶ月表示
                                     </button>
                                 </div>
                             )}
@@ -285,7 +293,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     }`}
                                     onClick={() => {
                                         setActiveFilter('all');
-                                        setShowAllMonths(false);
+                                        setDisplayedMonthCount(3); // Reset to 3 when filter changes
                                     }}
                                 >
                                     <span className={`text-center font-bold text-[13px] leading-[16.1px] font-['Noto Sans JP'] whitespace-nowrap ${
@@ -299,7 +307,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     }`}
                                     onClick={() => {
                                         setActiveFilter('sales');
-                                        setShowAllMonths(false);
+                                        setDisplayedMonthCount(3); // Reset to 3 when filter changes
                                     }}
                                 >
                                     <span className={`text-center font-medium text-[13px] leading-[24px] font-['Noto Sans JP'] whitespace-nowrap ${
@@ -313,7 +321,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     }`}
                                     onClick={() => {
                                         setActiveFilter('withdrawal');
-                                        setShowAllMonths(false);
+                                        setDisplayedMonthCount(3); // Reset to 3 when filter changes
                                     }}
                                 >
                                     <span className={`text-center font-medium text-[13px] leading-[24px] font-['Noto Sans JP'] whitespace-nowrap ${
@@ -433,13 +441,13 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                             ))}
                             
                             {/* Show More Button - Mobile */}
-                            {filteredData.length > 3 && (
+                            {displayedMonthCount < filteredData.length && (
                                 <div className="flex justify-center w-full mt-4">
                                     <button 
-                                        onClick={() => setShowAllMonths(!showAllMonths)}
+                                        onClick={handleShowMoreMonths}
                                         className="px-4 py-2 bg-[#FF2AA1] text-white rounded-[70px] font-medium text-[14px] leading-[20px] font-['Noto Sans JP'] hover:bg-[#E61E8F] transition-colors"
                                     >
-                                        {showAllMonths ? '過去3ヶ月を表示' : 'さらに3ヶ月表示'}
+                                        さらに{Math.min(3, remainingMonths)}ヶ月表示
                                     </button>
                                 </div>
                             )}

@@ -44,6 +44,11 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        // Check if user is admin and redirect to dashboard
+        if ($user->user_type === 'admin') {
+            return redirect('/dashboard');
+        }
+
         // return redirect()->route('verification.notice');
         return redirect()->route('homelogin');
     }

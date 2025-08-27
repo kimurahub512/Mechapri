@@ -36,6 +36,11 @@ class ConfirmablePasswordController extends Controller
 
         $request->session()->put('auth.password_confirmed_at', time());
 
+        // Check if user is admin and redirect to dashboard
+        if (auth()->user()->user_type === 'admin') {
+            return redirect('/dashboard');
+        }
+
         return redirect('/homelogin');
     }
 }

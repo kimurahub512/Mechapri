@@ -25,7 +25,7 @@ export default function DashboardSidebar({ activeTab = 'dashboard', isMobileExpa
 
     const menuItems = [
         {
-            name: 'Dashboard',
+            name: 'ダッシュボード',
             icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
@@ -36,7 +36,7 @@ export default function DashboardSidebar({ activeTab = 'dashboard', isMobileExpa
             tab: 'dashboard'
         },
         {
-            name: 'User Management',
+            name: 'ユーザー管理',
             icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
@@ -46,7 +46,7 @@ export default function DashboardSidebar({ activeTab = 'dashboard', isMobileExpa
             tab: 'users'
         },
         {
-            name: 'Finance',
+            name: '財務管理',
             icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
@@ -56,7 +56,7 @@ export default function DashboardSidebar({ activeTab = 'dashboard', isMobileExpa
             tab: 'finance'
         },
         {
-            name: 'Products',
+            name: '商品管理',
             icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
@@ -66,7 +66,7 @@ export default function DashboardSidebar({ activeTab = 'dashboard', isMobileExpa
             tab: 'products'
         },
         {
-            name: 'Sales',
+            name: '販売管理',
             icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -76,7 +76,7 @@ export default function DashboardSidebar({ activeTab = 'dashboard', isMobileExpa
             tab: 'sales'
         },
         {
-            name: 'Reports',
+            name: 'レポート',
             icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -95,7 +95,7 @@ export default function DashboardSidebar({ activeTab = 'dashboard', isMobileExpa
         `}>
             <div className="flex items-center justify-between p-4 border-b">
                 {shouldShowText && (
-                    <h2 className="text-lg font-semibold text-gray-800">Admin Panel</h2>
+                    <h2 className="text-lg font-semibold text-gray-800">管理パネル</h2>
                 )}
                 <button
                     onClick={() => setIsCollapsed(!isCollapsed)}

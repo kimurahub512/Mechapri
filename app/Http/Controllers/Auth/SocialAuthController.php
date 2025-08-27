@@ -44,6 +44,12 @@ class SocialAuthController extends Controller
             }
 
             Auth::login($user); 
+            
+            // Check if user is admin and redirect to dashboard
+            if ($user->user_type === 'admin') {
+                return redirect('/dashboard');
+            }
+            
             return redirect()->intended('/homelogin');
         } catch (\Exception $e) {
             Log::error('Google OAuth error: ' . $e->getMessage(), [
@@ -106,6 +112,12 @@ class SocialAuthController extends Controller
 
             Auth::login($user);
             Log::info('User logged in successfully', ['user_id' => $user->id]);
+            
+            // Check if user is admin and redirect to dashboard
+            if ($user->user_type === 'admin') {
+                return redirect('/dashboard');
+            }
+            
             return redirect()->intended('/homelogin');
         } catch (\Exception $e) {
             Log::error('LINE OAuth error: ' . $e->getMessage(), [

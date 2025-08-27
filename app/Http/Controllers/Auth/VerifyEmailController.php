@@ -15,13 +15,13 @@ class VerifyEmailController extends Controller
     public function __invoke(EmailVerificationRequest $request): RedirectResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect('/homelogin?verified=1');
+            return auth()->user()->user_type === 'admin' ? redirect('/dashboard?verified=1') : redirect('/homelogin?verified=1');
         }
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
 
-        return redirect('/homelogin?verified=1');
+        return auth()->user()->user_type === 'admin' ? redirect('/dashboard?verified=1') : redirect('/homelogin?verified=1');
     }
 }

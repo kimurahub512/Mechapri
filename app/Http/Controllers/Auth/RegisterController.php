@@ -67,6 +67,11 @@ class RegisterController extends Controller
             auth()->login($user);
             Log::info('User registered successfully', ['user_id' => $user->id]);
 
+            // Check if user is admin and redirect to dashboard
+            if ($user->user_type === 'admin') {
+                return redirect('/dashboard');
+            }
+
             return redirect('/homelogin');
         } catch (\Exception $e) {
             Log::error('Registration failed', [

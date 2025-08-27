@@ -27,6 +27,12 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
+            
+            // Check if user is admin and redirect to dashboard
+            if (auth()->user()->user_type === 'admin') {
+                return redirect('/dashboard');
+            }
+            
             return redirect('/homelogin');
         }
 
