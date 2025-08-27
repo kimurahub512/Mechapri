@@ -423,6 +423,27 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+    
+    // Dashboard sub-routes
+    Route::get('/dashboard/users', function () {
+        return Inertia::render('Dashboard/UserManagement');
+    })->name('dashboard.users');
+    
+    Route::get('/dashboard/finance', function () {
+        return Inertia::render('Dashboard/Finance');
+    })->name('dashboard.finance');
+    
+    Route::get('/dashboard/products', function () {
+        return Inertia::render('Dashboard/Products');
+    })->name('dashboard.products');
+    
+    Route::get('/dashboard/sales', function () {
+        return Inertia::render('Dashboard/Sales');
+    })->name('dashboard.sales');
+    
+    Route::get('/dashboard/reports', function () {
+        return Inertia::render('Dashboard/Reports');
+    })->name('dashboard.reports');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

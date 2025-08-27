@@ -212,10 +212,10 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                 {/* QR Code Modal Overlay */}
                 {showQrModal && selectedPurchase && (
                     <div
-                        className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-50 pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto "
+                        className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center z-[9999] p-4 overflow-y-auto"
                         onClick={handleBackdropClick}
                     >
-                        <div onClick={(e) => e.stopPropagation()} className="flex justify-center px-[16px] mr-[16px]">
+                        <div onClick={(e) => e.stopPropagation()} className="flex justify-center my-8">
                             <QrCodeModal onClose={handleCloseModal} purchase={selectedPurchase} />
                         </div>
                     </div>

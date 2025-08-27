@@ -174,7 +174,7 @@ const Footer = () => {
             <div style={{...responsiveMetricD(480)}}></div>
             {/* Copyright */}
             <div className='whitespace-nowrap' style={{...responsiveTextD(10, 16, null, 'normal', 'noto', '#FFF')}}>
-              © 2025 Companey Inc.
+              © 2025 Company Inc.
             </div>
           </div>
         </div>
@@ -287,7 +287,7 @@ const Footer = () => {
             </div>
             {/* Copyright */}
             <div className='whitespace-nowrap' style={{...responsiveText(10, 16, null, 'normal', 'noto', '#FFF')}}>
-              © 2025 Companey Inc.
+              © 2025 Company Inc.
             </div>
           </div>
         </div>
