@@ -435,12 +435,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
-// Dashboard sub-routes
-Route::get('/dashboard/users', [App\Http\Controllers\DashboardController::class, 'users'])->name('dashboard.users');
-Route::get('/dashboard/finance', [App\Http\Controllers\DashboardController::class, 'finance'])->name('dashboard.finance');
-Route::get('/dashboard/products', [App\Http\Controllers\DashboardController::class, 'products'])->name('dashboard.products');
-Route::get('/dashboard/sales', [App\Http\Controllers\DashboardController::class, 'sales'])->name('dashboard.sales');
-Route::get('/dashboard/reports', [App\Http\Controllers\DashboardController::class, 'reports'])->name('dashboard.reports');
+    // Dashboard sub-routes
+    Route::get('/dashboard/users', [App\Http\Controllers\DashboardController::class, 'users'])->name('dashboard.users');
+    Route::post('/dashboard/users', [App\Http\Controllers\DashboardController::class, 'createUser'])->name('dashboard.users.create');
+    Route::put('/dashboard/users/{user}', [App\Http\Controllers\DashboardController::class, 'updateUser'])->name('dashboard.users.update');
+    Route::delete('/dashboard/users/{user}', [App\Http\Controllers\DashboardController::class, 'deleteUser'])->name('dashboard.users.delete');
+    Route::get('/dashboard/finance', [App\Http\Controllers\DashboardController::class, 'finance'])->name('dashboard.finance');
+    Route::get('/dashboard/products', [App\Http\Controllers\DashboardController::class, 'products'])->name('dashboard.products');
+    Route::get('/dashboard/sales', [App\Http\Controllers\DashboardController::class, 'sales'])->name('dashboard.sales');
+    Route::get('/dashboard/reports', [App\Http\Controllers\DashboardController::class, 'reports'])->name('dashboard.reports');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

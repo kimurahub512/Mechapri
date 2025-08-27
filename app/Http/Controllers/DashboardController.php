@@ -10,6 +10,7 @@ use App\Models\UserPurchasedProduct;
 use App\Services\NWPSService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Inertia\Inertia;
 
@@ -316,9 +317,69 @@ class DashboardController extends Controller
         return $months;
     }
 
-    public function users()
+    public function users(Request $request)
     {
-        return Inertia::render('Dashboard/UserManagement');
+        $perPage = $request->get('per_page', 10);
+        $search = $request->get('search', '');
+        $userType = $request->get('user_type', 'all');
+
+        $query = User::query();
+
+        // Apply search filter
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // Apply user type filter
+        if ($userType !== 'all') {
+            $query->where('user_type', $userType);
+        }
+
+        $users = $query->orderBy('created_at', 'desc')
+            ->paginate($perPage)
+            ->through(function ($user) {
+                // Calculate total earned (as a seller) - from payments for products sold by this user
+                $totalEarned = Payment::where('status', 'succeeded')
+                    ->whereHas('productBatch', function ($query) use ($user) {
+                        $query->where('user_id', $user->id);
+                    })
+                    ->sum('amount');
+
+                // Calculate total spent (as a buyer) - from user's purchases
+                $totalSpent = UserPurchasedProduct::where('user_id', $user->id)
+                    ->sum('price');
+
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'user_type' => $user->user_type,
+                    'total_earned' => $totalEarned,
+                    'total_spent' => $totalSpent,
+                    'registered' => $user->created_at->format('Y-m-d H:i:s'),
+                    'email_verified_at' => $user->email_verified_at,
+                    'source' => $user->source,
+                ];
+            });
+
+        return Inertia::render('Dashboard/UserManagement', [
+            'users' => $users->items(),
+            'pagination' => [
+                'current_page' => $users->currentPage(),
+                'last_page' => $users->lastPage(),
+                'per_page' => $users->perPage(),
+                'total' => $users->total(),
+                'from' => $users->firstItem(),
+                'to' => $users->lastItem(),
+            ],
+            'filters' => [
+                'search' => $search,
+                'user_type' => $userType,
+            ]
+        ]);
     }
 
     public function finance()
@@ -339,5 +400,61 @@ class DashboardController extends Controller
     public function reports()
     {
         return Inertia::render('Dashboard/Reports');
+    }
+
+    public function updateUser(Request $request, User $user)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'user_type' => 'required|in:admin,buyer,seller',
+        ]);
+
+        $user->update([
+            'email' => $request->email,
+            'user_type' => $request->user_type,
+        ]);
+
+        return redirect()->back()->with('success', 'ユーザーが正常に更新されました');
+    }
+
+    public function deleteUser(User $user)
+    {
+        // Prevent deleting the current user
+        if ($user->id === auth()->id()) {
+            return redirect()->back()->with('error', '自分のアカウントは削除できません。');
+        }
+
+        // Delete the user
+        $user->delete();
+
+        return redirect()->back()->with('success', 'ユーザーが正常に削除されました');
+    }
+
+    public function createUser(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+            'name' => 'nullable|string|max:255',
+            'user_type' => 'required|in:admin,buyer,seller',
+        ]);
+
+        // Generate default name if not provided
+        $name = $request->name;
+        if (!$name) {
+            // Get the next user ID to create a unique default name
+            $nextId = User::max('id') + 1;
+            $name = 'mechapri' . $nextId;
+        }
+
+        // Create the user
+        $user = User::create([
+            'name' => $name,
+            'email' => $request->email,
+            'user_type' => $request->user_type,
+            'password' => bcrypt(Str::random(16)), // Generate random password
+            'source' => 'web',
+        ]);
+
+        return redirect()->back()->with('success', 'ユーザーが正常に作成されました');
     }
 }

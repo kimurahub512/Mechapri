@@ -35,7 +35,7 @@ return new class extends Migration
             $table->boolean('notification_medi_panel')->default(true);
 
             $table->enum('source', ['web', 'google', 'line'])->default('web');
-            $table->enum('user_type', ['admin', 'buyer', 'seller'])->default('seller');
+            $table->enum('user_type', ['admin', 'buyer', 'seller'])->default('buyer');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
