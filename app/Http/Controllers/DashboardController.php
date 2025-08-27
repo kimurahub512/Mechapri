@@ -43,15 +43,11 @@ class DashboardController extends Controller
         $totalUsers = User::count();
         $totalProducts = ProductBatch::count();
         
-        // Use both Payment and UserPurchasedProduct for comprehensive sales data
-        $totalPayments = Payment::where('status', 'succeeded')->count();
-        $totalPurchases = UserPurchasedProduct::count();
-        $totalSales = $totalPayments + $totalPurchases;
+        // Use only UserPurchasedProduct for sales data (Payment creates UserPurchasedProduct after success)
+        $totalSales = UserPurchasedProduct::count();
         
-        // Total revenue from both sources
-        $totalRevenueFromPayments = Payment::where('status', 'succeeded')->sum('amount');
-        $totalRevenueFromPurchases = UserPurchasedProduct::sum('price');
-        $totalRevenue = $totalRevenueFromPayments + $totalRevenueFromPurchases;
+        // Total revenue from purchases only
+        $totalRevenue = UserPurchasedProduct::sum('price');
 
         // Print count from NWPS API (actual prints, not just files)
         $totalPrintCount = $this->getTotalPrintCountFromNWPS();
@@ -60,39 +56,19 @@ class DashboardController extends Controller
         $monthlyUserRegistration = User::where('created_at', '>=', $startOfMonth)->count();
         $monthlyProductRegistration = ProductBatch::where('created_at', '>=', $startOfMonth)->count();
         
-        // Monthly sales from both sources
-        $monthlySalesFromPayments = Payment::where('status', 'succeeded')
-            ->where('paid_at', '>=', $startOfMonth)
-            ->count();
-        $monthlySalesFromPurchases = UserPurchasedProduct::where('purchase_time', '>=', $startOfMonth)
-            ->count();
-        $monthlySales = $monthlySalesFromPayments + $monthlySalesFromPurchases;
+        // Monthly sales from purchases only
+        $monthlySales = UserPurchasedProduct::where('purchase_time', '>=', $startOfMonth)->count();
 
-        // Monthly revenue from both sources
-        $monthlyRevenueFromPayments = Payment::where('status', 'succeeded')
-            ->where('paid_at', '>=', $startOfMonth)
-            ->sum('amount');
-        $monthlyRevenueFromPurchases = UserPurchasedProduct::where('purchase_time', '>=', $startOfMonth)
-            ->sum('price');
-        $monthlyRevenue = $monthlyRevenueFromPayments + $monthlyRevenueFromPurchases;
+        // Monthly revenue from purchases only
+        $monthlyRevenue = UserPurchasedProduct::where('purchase_time', '>=', $startOfMonth)->sum('price');
 
         // Previous month for comparison
         $lastMonthUserRegistration = User::whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])->count();
         $lastMonthProductRegistration = ProductBatch::whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])->count();
         
-        $lastMonthSalesFromPayments = Payment::where('status', 'succeeded')
-            ->whereBetween('paid_at', [$startOfLastMonth, $endOfLastMonth])
-            ->count();
-        $lastMonthSalesFromPurchases = UserPurchasedProduct::whereBetween('purchase_time', [$startOfLastMonth, $endOfLastMonth])
-            ->count();
-        $lastMonthSales = $lastMonthSalesFromPayments + $lastMonthSalesFromPurchases;
+        $lastMonthSales = UserPurchasedProduct::whereBetween('purchase_time', [$startOfLastMonth, $endOfLastMonth])->count();
         
-        $lastMonthRevenueFromPayments = Payment::where('status', 'succeeded')
-            ->whereBetween('paid_at', [$startOfLastMonth, $endOfLastMonth])
-            ->sum('amount');
-        $lastMonthRevenueFromPurchases = UserPurchasedProduct::whereBetween('purchase_time', [$startOfLastMonth, $endOfLastMonth])
-            ->sum('price');
-        $lastMonthRevenue = $lastMonthRevenueFromPayments + $lastMonthRevenueFromPurchases;
+        $lastMonthRevenue = UserPurchasedProduct::whereBetween('purchase_time', [$startOfLastMonth, $endOfLastMonth])->sum('price');
 
         // Calculate percentage changes
         $userRegistrationChange = $this->calculatePercentageChange($lastMonthUserRegistration, $monthlyUserRegistration);
@@ -103,7 +79,7 @@ class DashboardController extends Controller
         // Additional stats - use created_at for active users since there's no last_login_at field
         $activeUsers = User::where('created_at', '>=', $now->subDays(30))->count();
         $pendingOrders = Payment::where('status', 'pending')->count();
-        $completedOrders = Payment::where('status', 'succeeded')->count() + UserPurchasedProduct::count();
+        $completedOrders = UserPurchasedProduct::count();
 
         // User growth trend (last 6 months)
         $userGrowthTrend = $this->getUserGrowthTrend();
@@ -196,8 +172,8 @@ class DashboardController extends Controller
             $timeAgo = $this->getTimeAgo($user->created_at);
             $activities->push([
                 'type' => 'user_registration',
-                'title' => 'New user registered',
-                'description' => $user->name ? $user->name . ' joined the platform' : 'New user joined the platform',
+                'title' => '新規ユーザー登録',
+                'description' => $user->name ? $user->name . ' がプラットフォームに参加しました' : '新規ユーザーがプラットフォームに参加しました',
                 'timeAgo' => $timeAgo,
                 'icon' => 'user',
                 'color' => 'green',
@@ -214,8 +190,8 @@ class DashboardController extends Controller
             $timeAgo = $this->getTimeAgo($product->created_at);
             $activities->push([
                 'type' => 'product_registration',
-                'title' => 'New product added',
-                'description' => 'Product "' . $product->title . '" added',
+                'title' => '新規商品追加',
+                'description' => '商品 "' . $product->title . '" が追加されました',
                 'timeAgo' => $timeAgo,
                 'icon' => 'product',
                 'color' => 'purple',
@@ -223,36 +199,17 @@ class DashboardController extends Controller
             ]);
         }
 
-        // Recent successful payments
-        $recentPayments = Payment::where('status', 'succeeded')
-            ->orderBy('paid_at', 'desc')
-            ->limit(3)
-            ->get();
-        
-        foreach ($recentPayments as $payment) {
-            $timeAgo = $this->getTimeAgo($payment->paid_at);
-            $activities->push([
-                'type' => 'payment_success',
-                'title' => 'Payment received',
-                'description' => 'Payment of ¥' . number_format($payment->amount) . ' received',
-                'timeAgo' => $timeAgo,
-                'icon' => 'payment',
-                'color' => 'blue',
-                'timestamp' => $payment->paid_at
-            ]);
-        }
-
-        // Recent purchases
+        // Recent purchases (only UserPurchasedProduct, not Payment)
         $recentPurchases = UserPurchasedProduct::orderBy('purchase_time', 'desc')
-            ->limit(3)
+            ->limit(6)
             ->get();
         
         foreach ($recentPurchases as $purchase) {
             $timeAgo = $this->getTimeAgo($purchase->purchase_time);
             $activities->push([
                 'type' => 'purchase',
-                'title' => 'New order placed',
-                'description' => 'Order for ¥' . number_format($purchase->price) . ' placed',
+                'title' => '新規注文',
+                'description' => '¥' . number_format($purchase->price) . ' の注文が完了しました',
                 'timeAgo' => $timeAgo,
                 'icon' => 'order',
                 'color' => 'blue',
