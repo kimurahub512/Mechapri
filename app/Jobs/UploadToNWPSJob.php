@@ -105,26 +105,60 @@ class UploadToNWPSJob implements ShouldQueue
             // 2) Register image(s) by URL (filesfromurl/image)
             // \Illuminate\Support\Facades\Log::info('Starting file registration', ['files_count' => $product->files->count()]);
             $fileId = null;
-            foreach ($product->files as $index => $file) {
-                // \Illuminate\Support\Facades\Log::info('Registering file', [
-                //     'file_index' => $index,
-                //     'file_url' => $file->url,
-                //     'file_name' => $file->original_name ?? basename($file->file_path)
-                // ]);
+            
+            // Handle gacha products - randomly select one image
+            if ($product->display_mode === 'gacha') {
+                $files = $product->files->shuffle();
+                $selectedFile = $files->first();
                 
-                $data = [
-                    'file_url' => $file->url,
-                    'file_name' => $file->original_name ?? basename($file->file_path),
-                    'expire' => (int) config('nwps.guest_token_days', 30), // days
-                ];
-                
-                // Only add printing_limit for paid products (free products don't have this limit)
-                if ($product->price > 0) {
-                    $data['printing_limit'] = 3;
+                if ($selectedFile) {
+                    file_put_contents(storage_path('nwps_debug.log'), 
+                        date('Y-m-d H:i:s') . " - Gacha product: randomly selected file {$selectedFile->id}\n", 
+                        FILE_APPEND
+                    );
+                    
+                    $data = [
+                        'file_url' => $selectedFile->url,
+                        'file_name' => $selectedFile->original_name ?? basename($selectedFile->file_path),
+                        'expire' => (int) config('nwps.guest_token_days', 30), // days
+                    ];
+                    
+                    // Only add printing_limit for paid products (free products don't have this limit)
+                    if ($product->price > 0) {
+                        $data['printing_limit'] = 3;
+                    }
+                    
+                    $registered = $nwps->registerFileFromUrl($token, $data);
+                    $fileId = $registered['file_id'] ?? null;
+                    
+                    file_put_contents(storage_path('nwps_debug.log'), 
+                        date('Y-m-d H:i:s') . " - Gacha file registration response: " . json_encode($registered) . "\n", 
+                        FILE_APPEND
+                    );
                 }
-                $registered = $nwps->registerFileFromUrl($token, $data);
-                // \Illuminate\Support\Facades\Log::info('File registration response', ['registered' => $registered]);
-                $fileId = $registered['file_id'] ?? $fileId;
+            } else {
+                // Regular products - upload all images
+                foreach ($product->files as $index => $file) {
+                    // \Illuminate\Support\Facades\Log::info('Registering file', [
+                    //     'file_index' => $index,
+                    //     'file_url' => $file->url,
+                    //     'file_name' => $file->original_name ?? basename($file->file_path)
+                    // ]);
+                    
+                    $data = [
+                        'file_url' => $file->url,
+                        'file_name' => $file->original_name ?? basename($file->file_path),
+                        'expire' => (int) config('nwps.guest_token_days', 30), // days
+                    ];
+                    
+                    // Only add printing_limit for paid products (free products don't have this limit)
+                    if ($product->price > 0) {
+                        $data['printing_limit'] = 3;
+                    }
+                    $registered = $nwps->registerFileFromUrl($token, $data);
+                    // \Illuminate\Support\Facades\Log::info('File registration response', ['registered' => $registered]);
+                    $fileId = $registered['file_id'] ?? $fileId;
+                }
             }
 
             if (!$fileId) {

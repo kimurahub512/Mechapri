@@ -14,6 +14,7 @@ const ShopMobileTopBlocks = () => {
   const isTransaction = window.location.pathname === '/myshop/transaction';
   const isSalesHistory = window.location.pathname === '/myshop/saleshistory';
   const isCategory = window.location.pathname === '/myshop/category';
+  const isRegisterProduct = window.location.pathname === '/myshop/registerproduct';
   return (
     <>
       {/* Mobile Header */}
@@ -177,7 +178,7 @@ const ShopMobileTopBlocks = () => {
             <a href="/myshop/registerproduct" style={{ textDecoration: 'none' }}>
               <div 
                 className="shopmanagement-mobile-nav-item-content"
-                style={isEditPage ? {
+                style={isRegisterProduct ? {
                   display: 'flex',
                   height: '48px',
                   padding: '12px 4px',

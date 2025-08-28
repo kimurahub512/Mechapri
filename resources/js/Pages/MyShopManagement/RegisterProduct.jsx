@@ -49,18 +49,18 @@ const RegisterProduct = () => {
     const [productData, setProductData] = useState(null);
     const fileInputRef = useRef(null);
 
+    // Calculate max date (180 days from today)
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 180);
+    const maxDateString = maxDate.toISOString().split('T')[0];
+
     // Form state
     const [title, setTitle] = useState(editMode && productBatch ? productBatch.title : '');
     const [description, setDescription] = useState(editMode && productBatch ? productBatch.description : '');
     const [price, setPrice] = useState(editMode && productBatch ? parseFloat(productBatch.price) : 0);
     const [salesLimit, setSalesLimit] = useState(editMode && productBatch ? (productBatch.sales_limit ? productBatch.sales_limit.toString() : '') : '');
-    const [salesDeadline, setSalesDeadline] = useState(editMode && productBatch ? (productBatch.sales_deadline ? productBatch.sales_deadline : '') : '');
+    const [salesDeadline, setSalesDeadline] = useState(editMode && productBatch ? (productBatch.sales_deadline ? productBatch.sales_deadline : '') : maxDateString);
     const [password, setPassword] = useState(editMode && productBatch ? (productBatch.password || '') : '');
-
-    // Calculate max date (180 days from today)
-    const maxDate = new Date();
-    maxDate.setDate(maxDate.getDate() + 180);
-    const maxDateString = maxDate.toISOString().split('T')[0];
 
     // Radio button states
     const [isPaid, setIsPaid] = useState(editMode && productBatch ? productBatch.price > 0 : true); // true for 有料, false for 無料
@@ -538,8 +538,8 @@ const RegisterProduct = () => {
                                 <div className="flex flex-col items-start self-stretch w-full">
                                     <input
                                         type="text"
-                                        className="border border-[#FF2AA1] bg-[#FFEFF8] shadow-[0_4px_4px_0_rgba(255,42,161,0.10)]] focus:outline-none"
-                                        placeholder="郊外のカフェにて"
+                                        className="border border-[#E9E9E9] bg-white focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                        placeholder="商品のタイトル"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                         maxLength={30}
@@ -562,12 +562,12 @@ const RegisterProduct = () => {
                                     {/* Frame 123121 */}
                                     <div className="flex flex-col items-start" style={{ ...responsiveMetricD('full', 90) }}>
                                         <textarea
-                                            className="flex min-h-[90px] w-full bg-white shadow-[0_0_0_1.143px_#E9E9E9_inset] resize-none"
+                                            className="flex min-h-[90px] w-full bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 resize-none"
                                             placeholder="商品の説明文"
                                             value={description}
                                             onChange={(e) => setDescription(e.target.value)}
                                             maxLength={200}
-                                            style={{ ...responsiveMetricD('full', 90), paddingTop: vwd(10.37), paddingRight: vwd(11.99), paddingBottom: vwd(53.21), paddingLeft: vwd(11.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto', '#ACACAC') }}
+                                            style={{ ...responsiveMetricD('full', 90), paddingTop: vwd(10.37), paddingRight: vwd(11.99), paddingBottom: vwd(53.21), paddingLeft: vwd(11.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto', '#C9177A') }}
                                         />
                                     </div>
                                 </div>
@@ -583,13 +583,13 @@ const RegisterProduct = () => {
                                 <div className="flex flex-col items-start self-stretch w-full" style={{ paddingBottom: vwd(8) }}>
                                     <input
                                         type="date"
-                                        className="flex bg-white shadow-[0_0_0_1.143px_#E9E9E9_inset] focus:outline-none"
+                                        className="flex bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
                                         placeholder="2025/11/24"
                                         value={salesDeadline}
                                         onChange={(e) => setSalesDeadline(e.target.value)}
                                                                                                 min={new Date().toISOString().split('T')[0]}
                                                         max={maxDateString}
-                                                        style={{ ...responsiveMetricD('full', 45.99), paddingLeft: vwd(12.5), paddingRight: vwd(11.99), paddingTop: vwd(12.49), paddingBottom: vwd(11.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto', '#ACACAC') }}
+                                                        style={{ ...responsiveMetricD('full', 45.99), paddingLeft: vwd(12.5), paddingRight: vwd(11.99), paddingTop: vwd(12.49), paddingBottom: vwd(11.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto', '#C9177A') }}
                                     />
                                 </div>
                             </div>
@@ -613,7 +613,7 @@ const RegisterProduct = () => {
                                 <div className="inline-flex items-center" style={{ paddingLeft: vwd(30), marginBottom: vwd(21), opacity: isPaid ? 1 : 0.5 }}>
                                     <input
                                         type="number"
-                                        className="flex h-[48px] w-[159px] pr-[5px] text-right rounded-[5.71px] border border-[#E9E9E9] focus:outline-none"
+                                        className="flex h-[48px] w-[159px] pr-[5px] text-right rounded-[5.71px] border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
                                         placeholder="1000"
                                         value={price}
                                         onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
@@ -652,16 +652,17 @@ const RegisterProduct = () => {
                                 <div className="flex items-center flex-shrink-0" style={{ paddingLeft: vwd(30), marginBottom: vwd(21), opacity: isPaid ? 1 : 0.5 }}>
                                     <input
                                         type="number"
-                                        className="flex text-right rounded-[5.71px] border border-[#E9E9E9] focus:outline-none"
-                                        placeholder="1000"
+                                        className="flex text-right rounded-[5.71px] border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                        placeholder="0"
                                         value={salesLimit}
                                         onChange={(e) => setSalesLimit(e.target.value)}
                                         onWheel={(e) => e.target.blur()}
                                         min="1"
                                         max="999999"
-                                        style={{ ...responsiveMetricD(159, 48), paddingRight: vwd(5), ...responsiveTextD(20, 20, null, 'normal', 'noto', '#363636') }}
+                                        style={{ ...responsiveMetricD(159, 48), paddingRight: vwd(5), ...responsiveTextD(20, 20, null, 'normal', 'noto', '#C9177A') }}
                                         disabled={!isPaid || isUnlimited}
                                     />
+                                    <span className="whitespace-nowrap" style={{ ...responsiveTextD(17, 20, null, 'normal', 'noto', '#87969F'), marginLeft: vwd(18) }}>1~999999まで</span>
                                 </div>
                                 {/* Frame 12338: Circle + 無料 */}
                                 <div className="flex items-start cursor-pointer" style={{ paddingBottom: vwd(8), marginBottom: vwd(21) }} onClick={() => setIsPaid(false)}>
@@ -772,7 +773,7 @@ const RegisterProduct = () => {
                                         {displayMode === 'password' && (
                                             <input
                                                 type="text"
-                                                className="flex h-[45.99px] w-full rounded-[5.71px] bg-white border border-[#E9E9E9] focus:outline-none"
+                                                className="flex h-[45.99px] w-full rounded-[5.71px] bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
                                                 placeholder="半角英数16文字まで"
                                                 value={password}
                                                 onChange={(e) => setPassword(e.target.value)}
@@ -1086,8 +1087,8 @@ const RegisterProduct = () => {
                                 <div className="flex flex-col items-start self-stretch w-full" style={{ paddingBottom: vw(6.57) }}>
                                     <input
                                         type="text"
-                                        className="border border-[#FF2AA1] bg-[#FFEFF8] focus:outline-none"
-                                        placeholder="郊外のカフェにて"
+                                        className="border border-[#E9E9E9] bg-white focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                        placeholder="商品のタイトル"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                         maxLength={30}
@@ -1110,12 +1111,12 @@ const RegisterProduct = () => {
                                         {/* 123121 */}
                                         <div className="flex flex-col items-start" style={{ ...responsiveMetric(311, 128) }}>
                                             <textarea
-                                                className="flex w-full h-full bg-white border border-[#E9E9E9] resize-none"
+                                                className="flex w-full h-full bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 resize-none"
                                                 placeholder="商品の説明文"
                                                 value={description}
                                                 onChange={(e) => setDescription(e.target.value)}
                                                 maxLength={200}
-                                                style={{ paddingTop: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49), borderRadius: vw(5.71), ...responsiveText(14, 25.66, null, 'normal', 'noto', '#ACACAC') }}
+                                                style={{ paddingTop: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49), borderRadius: vw(5.71), ...responsiveText(14, 25.66, null, 'normal', 'noto', '#C9177A') }}
                                             />
                                         </div>
                                     </div>
@@ -1131,13 +1132,13 @@ const RegisterProduct = () => {
                                     <div className="flex flex-col items-start self-stretch" style={{ paddingBottom: vw(8) }}>
                                         <input
                                             type="date"
-                                            className="flex bg-white border border-[#E9E9E9] focus:outline-none"
+                                            className="flex bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
                                             placeholder="2025/11/24"
                                             value={salesDeadline}
                                             onChange={(e) => setSalesDeadline(e.target.value)}
                                                                                                         min={new Date().toISOString().split('T')[0]}
                                                             max={maxDateString}
-                                                            style={{ ...responsiveMetric(311, 45.99), paddingTop: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49), borderRadius: vw(5.71), ...responsiveText(14, 14, null, 'normal', 'noto', '#ACACAC') }}
+                                                            style={{ ...responsiveMetric(311, 45.99), paddingTop: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49), borderRadius: vw(5.71), ...responsiveText(14, 14, null, 'normal', 'noto', '#C9177A') }}
                                         />
                                     </div>
                                 </div>
@@ -1161,14 +1162,14 @@ const RegisterProduct = () => {
                                     <div className="inline-flex items-center" style={{ gap: vw(8), marginLeft: vw(30), marginRight: vw(23), marginBottom: vw(8), opacity: isPaid ? 1 : 0.5 }}>
                                         <input
                                             type="number"
-                                            className="flex text-right border border-[#C6C6C6]"
-                                            placeholder="1000"
+                                            className="flex text-right border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                            placeholder="0"
                                             value={price}
                                             onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
                                             onWheel={(e) => e.target.blur()}
                                             min="100"
                                             max="100000"
-                                            style={{ ...responsiveMetric(120, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(4), ...responsiveText(20, 20, null, 'normal', 'noto', '#363636') }}
+                                            style={{ ...responsiveMetric(120, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(4), ...responsiveText(20, 20, null, 'normal', 'noto', '#C9177A') }}
                                             disabled={!isPaid}
                                         />
                                         <span style={{ ...responsiveText(14, 25, null, 'medium', 'noto', '#363636') }}>円</span>
@@ -1200,16 +1201,17 @@ const RegisterProduct = () => {
                                     <div className="inline-flex items-center" style={{ gap: vw(8), marginLeft: vw(30), marginBottom: vw(8), opacity: isPaid ? 1 : 0.5 }}>
                                         <input
                                             type="number"
-                                            className="flex text-right border border-[#C6C6C6]"
+                                            className="flex text-right border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
                                             placeholder="1000"
                                             value={salesLimit}
                                             onChange={(e) => setSalesLimit(e.target.value)}
                                             onWheel={(e) => e.target.blur()}
                                             min="1"
                                             max="999999"
-                                            style={{ ...responsiveMetric(120, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(4), ...responsiveText(20, 20, null, 'normal', 'noto', '#363636') }}
+                                            style={{ ...responsiveMetric(120, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(4), ...responsiveText(20, 20, null, 'normal', 'noto', '#C9177A') }}
                                             disabled={!isPaid || isUnlimited}
                                         />
+                                        <span style={{ ...responsiveText(12, 18, null, 'normal', 'noto', '#87969F') }}>1~999999まで</span>
                                     </div>
                                     {/* 12338: Circle + 無料 */}
                                     <div className="flex items-center cursor-pointer" style={{ ...responsiveMetric(311, 'auto') }} onClick={() => setIsPaid(false)}>
@@ -1320,7 +1322,7 @@ const RegisterProduct = () => {
                                                 {displayMode === 'password' && (
                                                     <input
                                                         type="text"
-                                                        className="flex w-full bg-white border border-[#E9E9E9] focus:outline-none"
+                                                        className="flex w-full bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
                                                         placeholder="半角英数16文字まで"
                                                         value={password}
                                                         onChange={(e) => setPassword(e.target.value)}
