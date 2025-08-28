@@ -301,7 +301,7 @@ const MyShopEdit = () => {
             </main>
 
             {/* Mobile Main Section */}
-            <main className="inline-flex md:hidden flex-col items-start" style={{width: vw(343), paddingTop: vw(240), marginRight: vw(16), marginLeft: vw(16), gap: vw(16)}}>
+            <main className="inline-flex md:hidden flex-col items-start" style={{width: vw(343), paddingTop: vw(240), paddingBottom: vw(80), marginRight: vw(16), marginLeft: vw(16), gap: vw(16)}}>
                 {/* First element: text ショップ情報編集 */}
                 <h1 className="text-left w-full" style={{...responsiveText(24, 24, null, 'bold', 'noto', '#363636')}}>
                     ショップ情報編集

@@ -17,7 +17,7 @@ const ShopMobileTopBlocks = () => {
   return (
     <>
       {/* Mobile Header */}
-      <div className="shopmanagement-mobile-header md:hidden fixed top-[64px] left-0 right-0 z-40 bg-white">
+      <div className="shopmanagement-mobile-header md:hidden fixed top-[64px] left-0 right-0 z-[10001] bg-white">
         <div className="shopmanagement-mobile-header-frame">
           <div className="shopmanagement-mobile-header-left">
             <img
@@ -31,7 +31,7 @@ const ShopMobileTopBlocks = () => {
         </div>
       </div>
       {/* Mobile Navigation Block */}
-      <div className="shopmanagement-mobile-nav md:hidden fixed top-[120px] left-0 right-0 z-40 bg-white">
+      <div className="shopmanagement-mobile-nav md:hidden fixed top-[120px] left-0 right-0 z-[10002] bg-white">
         <div className="shopmanagement-mobile-nav-list">
           <div className="shopmanagement-mobile-nav-item">
             <div

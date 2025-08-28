@@ -296,7 +296,7 @@ const CategoryEdit = () => {
                 
                 {/* Main Section */}
                 {/* MOBILE ONLY */}
-                <div className="flex flex-col items-start" style={{paddingRight: vwR(16, 15), paddingLeft: vwR(16, 15), paddingTop: vwR(240, 40), paddingBottom: vwR(16, 40), marginRight: vwR(0, 169), marginLeft: vwR(0, 109), gap: vwR(16, 22)}}>
+                <div className="flex flex-col items-start" style={{paddingRight: vwR(16, 15), paddingLeft: vwR(16, 15), paddingTop: vwR(240, 40), paddingBottom: vwR(80, 40), marginRight: vwR(0, 169), marginLeft: vwR(0, 109), gap: vwR(16, 22)}}>
                     <div className="flex flex-row items-center justify-between w-full">
                         <h1 style={{...responsiveTextR(24, 24, 'bold', 36, 54, 'bold', 'noto', '#363636')}}>
                             {editMode ? '商品カテゴリ編集' : '商品カテゴリ作成'}

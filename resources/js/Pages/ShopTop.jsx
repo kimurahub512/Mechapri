@@ -39,7 +39,7 @@ const ShopTop = () => {
                             </div>
                             {/* 11112 */}
                             <div className="flex flex-col justify-center items-start" style={{ width: vw(158), paddingRight: vw(62), gap: vw(4) }}>
-                                <span style={{ ...responsiveText(18, 18, null, 'bold', 'noto', '#000') }}>{shopData?.shop_title || 'Shop'}</span>
+                                <span style={{ ...responsiveText(18, 18, null, 'bold', 'noto', '#000'), whiteSpace: 'nowrap' }}>{shopData?.shop_title}</span>
                                 {/* 111121 */}
                                 <div className="flex flex-col items-start" style={{ gap: vw(4) }}>
                                     <span className='whitespace-nowrap' style={{ ...responsiveText(13, 21, null, 'normal', 'noto', '#000') }}>お気に入り登録者 {shopData?.follower_count || 0}人</span>
