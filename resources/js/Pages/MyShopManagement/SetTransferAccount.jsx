@@ -180,7 +180,7 @@ const SetTransferAccount = ({ bankAccount = null }) => {
                     </div>
                 </div>
                 <main
-                    className="hidden md:flex flex-col items-left gap-[22px] max-w-[928px] py-[40px] px-[15px] w-full ml-[109px] mr-[169px]"
+                    className="hidden md:flex flex-col items-left gap-[22px] max-w-[928px] py-[40px] px-[15px] w-full ml-[109px] mr-[169px] pt-[130px]"
                 >
                     {/* Title */}
                     <div className="flex flex-row items-center justify-between w-full">

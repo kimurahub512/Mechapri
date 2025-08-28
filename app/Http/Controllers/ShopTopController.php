@@ -21,11 +21,10 @@ class ShopTopController extends Controller
 
         $featuredUser = User::with(['productBatches' => function($query) {
                 $query
-                // ->where('is_public', true)
-                      ->with(['files' => function($fileQuery) {
-                          $fileQuery->orderBy('sort_order');
-                      }])
-                      ->orderBy('created_at', 'desc');
+                ->with(['files' => function($fileQuery) {
+                    $fileQuery->orderBy('sort_order');
+                }])
+                ->orderBy('created_at', 'desc');
             }])
             ->find($currentUser->id);
 
@@ -52,13 +51,12 @@ class ShopTopController extends Controller
                 'instagram' => $featuredUser->instagram,
                 'youtube' => $featuredUser->youtube,
                 'follower_count' => $featuredUser->favoritedBy()->count(),
-                'product_count' => $featuredUser->productBatches()->where('is_public', true)->count(),
+                'product_count' => $featuredUser->productBatches()->count(),
                 'is_favorited_by_current_user' => $isFavoritedByCurrentUser,
             ];
 
-            // Get latest products (最新の出品)
+            // Get latest products (最新の出品) - show all products to shop owner
             $latestProducts = $featuredUser->productBatches()
-                // ->where('is_public', true)
                 ->with(['files' => function($query) {
                     $query->orderBy('sort_order');
                 }])
@@ -69,17 +67,15 @@ class ShopTopController extends Controller
                     return $this->formatProductBatch($batch);
                 });
 
-            // Get category-based new list products (新しいリスト)
+            // Get category-based new list products (新しいリスト) - show all products to shop owner
             $categoryProducts = [];
             $categories = $featuredUser->categories()
-                // ->where('is_public', true)
                 ->orderBy('sort_order', 'asc')
                 ->orderBy('created_at', 'desc')
                 ->get();
 
             foreach ($categories as $category) {
                 $categoryBatches = $category->productBatches()
-                    // ->where('is_public', true)
                     ->with(['files' => function($query) {
                         $query->orderBy('sort_order');
                     }])
@@ -115,11 +111,10 @@ class ShopTopController extends Controller
         // Find the specific user
         $featuredUser = User::with(['productBatches' => function($query) {
                 $query
-                // ->where('is_public', true)
-                      ->with(['files' => function($fileQuery) {
-                          $fileQuery->orderBy('sort_order');
-                      }])
-                      ->orderBy('created_at', 'desc');
+                ->with(['files' => function($fileQuery) {
+                    $fileQuery->orderBy('sort_order');
+                }])
+                ->orderBy('created_at', 'desc');
             }])
             ->find($userId);
 
@@ -130,6 +125,7 @@ class ShopTopController extends Controller
         // Get current user if authenticated
         $currentUser = Auth::user();
         $isFavoritedByCurrentUser = false;
+        $isOwnShop = $currentUser && $currentUser->id === $featuredUser->id;
         
         if ($currentUser && $currentUser->id !== $featuredUser->id) {
             $isFavoritedByCurrentUser = $currentUser->hasFavoritedShop($featuredUser->id);
@@ -146,38 +142,47 @@ class ShopTopController extends Controller
             'instagram' => $featuredUser->instagram,
             'youtube' => $featuredUser->youtube,
             'follower_count' => $featuredUser->favoritedBy()->count(),
-            'product_count' => $featuredUser->productBatches()->where('is_public', true)->count(),
+            'product_count' => $featuredUser->productBatches()->count(),
             'is_favorited_by_current_user' => $isFavoritedByCurrentUser,
         ];
 
-        // Get latest products (最新の出品)
-        $latestProducts = $featuredUser->productBatches()
-            // ->where('is_public', true)
+        // Get latest products (最新の出品) - filter by public status for non-owners
+        $latestProductsQuery = $featuredUser->productBatches()
             ->with(['files' => function($query) {
                 $query->orderBy('sort_order');
             }])
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'desc');
+            
+        if (!$isOwnShop) {
+            $latestProductsQuery->where('is_public', true);
+        }
+        
+        $latestProducts = $latestProductsQuery
             ->limit(20)
             ->get()
             ->map(function($batch) {
                 return $this->formatProductBatch($batch);
             });
 
-        // Get category-based new list products (新しいリスト)
+        // Get category-based new list products (新しいリスト) - filter by public status for non-owners
         $categoryProducts = [];
         $categories = $featuredUser->categories()
-            // ->where('is_public', true)
             ->orderBy('sort_order', 'asc')
             ->orderBy('created_at', 'desc')
             ->get();
 
         foreach ($categories as $category) {
-            $categoryBatches = $category->productBatches()
-                // ->where('is_public', true)
+            $categoryBatchesQuery = $category->productBatches()
                 ->with(['files' => function($query) {
                     $query->orderBy('sort_order');
                 }])
-                ->orderBy('created_at', 'desc')
+                ->orderBy('created_at', 'desc');
+                
+            if (!$isOwnShop) {
+                $categoryBatchesQuery->where('is_public', true);
+            }
+            
+            $categoryBatches = $categoryBatchesQuery
                 ->limit(20)
                 ->get()
                 ->map(function($batch) {

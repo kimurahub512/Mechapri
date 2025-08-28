@@ -38,7 +38,7 @@ export default function Home() {
     <div className='product-details-no-footer-gap bg-[#FFF]'>
       <Header />
       {/*desktop version*/}
-      <div className='hidden md:flex flex-col items-center w-full gap-[32px]'>
+      <div className='hidden md:flex flex-col items-center w-full gap-[32px] pt-[98px]'>
         {/*hero section*/}
         <div className='flex flex-col items-center w-full relative px-[120px] pt-[66px] pb-[150px]'>
           <div className='flex flex-col items-start w-full gap-5'>

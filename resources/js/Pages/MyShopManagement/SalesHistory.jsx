@@ -21,7 +21,7 @@ const SalesHistory = () => {
                 </div>
                 <ShopMobileTopBlock />
                 {/* Desktop Main Section */}
-                <main className="hidden md:flex flex-col items-center max-w-[928px] p-[50px_0_40px_0] gap-[32px] bg-[#F1F3F4] self-stretch mx-auto">
+                <main className="hidden md:flex flex-col items-center max-w-[928px] p-[50px_0_40px_0] gap-[32px] bg-[#F1F3F4] self-stretch mx-auto pt-[130px]">
                     {/* Title */}
                     <h1 className="w-full text-left text-[#363636] font-bold text-[36px] leading-[54px] font-[\'Noto Sans JP\']">販売履歴</h1>
                     {/* Frame 1 */}

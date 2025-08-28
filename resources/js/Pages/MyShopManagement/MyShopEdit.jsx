@@ -108,7 +108,7 @@ const MyShopEdit = () => {
             <ShopMobileTopBlock/>
             
             {/* Desktop Main Section */}
-            <main className="hidden md:flex justify-center items-start flex-1 self-stretch" style={{gap: vwd(22), padding: vwd(32), paddingBottom: vwd(80)}}>
+            <main className="hidden md:flex justify-center items-start flex-1 self-stretch" style={{gap: vwd(22), padding: vwd(32), paddingBottom: vwd(80), paddingTop: vwd(130)}}>
                 {/* Frame 1 */}
                 <div className="flex flex-col items-center" style={{ width: vwd(874), gap: vwd(16) }}>
                     {/* Frame 11 */}

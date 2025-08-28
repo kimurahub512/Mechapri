@@ -20,7 +20,7 @@ const ShopSidebar = () => {
   const isSalesHistory = window.location.pathname === '/myshop/salpeshistory';
   const isCategory = window.location.pathname === '/myshop/category';
   return (
-    <aside className="hidden md:flex flex-col border-r border-[#E9E9E9]" style={{ width: vwd(300), paddingTop: vwd(80) }}>
+    <aside className="hidden md:flex flex-col border-r border-[#E9E9E9]" style={{ width: vwd(300), paddingTop: vwd(170) }}>
       <div className="flex flex-col rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)]" style={{ padding: vwd(32), width: vwd(232), marginLeft: vwd(68) }}>
         <div className="flex flex-col items-center border-b-[0.999px] border-[#E9E9E9]" style={{ gap: vwd(16), paddingBottom: vwd(16) }}>
           <img

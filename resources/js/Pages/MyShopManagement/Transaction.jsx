@@ -46,7 +46,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
             </div>
             <ShopMobileTopBlock />
             {/* Main Section - Desktop Only */}
-            <main className="hidden md:flex flex-col w-[880px] p-[80px_0_50px_0] gap-[22px] mx-20 bg-[#F1F3F4] min-h-screen">
+            <main className="hidden md:flex flex-col w-[880px] p-[80px_0_50px_0] gap-[22px] mx-20 bg-[#F1F3F4] min-h-screen pt-[130px]">
                 {/* Title Section */}
                 <h1 className="text-[#363636] font-bold text-[36px] leading-[54px] font-['Noto Sans JP']">出金・売上</h1>
                 {/* Frame 1 */}

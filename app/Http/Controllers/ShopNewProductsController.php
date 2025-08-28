@@ -18,7 +18,7 @@ class ShopNewProductsController extends Controller
         $productBatches = ProductBatch::with(['files' => function($query) {
                 $query->orderBy('sort_order');
             }])
-            // ->where('is_public', true)
+            ->where('is_public', true)
             ->orderBy('created_at', 'desc')
             ->get()
             ->map(function($batch) use ($currentUser) {

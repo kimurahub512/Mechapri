@@ -62,7 +62,7 @@ const FavoriteShops = ({ favoriteShops }) => {
         <div className="bg-white">
             <Header />
             {/* Desktop Main Section */}
-            <main className="hidden md:flex flex-col items-center self-stretch min-h-[1020px] pb-[60px] bg-white">
+            <main className="hidden md:flex flex-col items-center self-stretch min-h-[1020px] pb-[60px] bg-white pt-[98px]">
                 <div className="flex flex-col items-start w-[880px] min-w-[880px] max-w-[880px] gap-[32px]">
                     <div className="flex flex-col items-center h-[118px] p-[40px_0_1px_0] self-stretch border-b border-[#D1D1D1]">
                         <h1 className="text-[#363636] text-center font-bold text-[36px] leading-[54px] font-noto self-stretch">お気に入り</h1>

@@ -209,7 +209,7 @@ const MyContents = () => {
             </div>
           </div>
           {/* DESKTOP: keep original layout */}
-          <div className="hidden md:block">
+          <div className="hidden md:block pt-[90px]">
             {/* Title */}
             <h1 className="text-[#363636] font-['Noto_Sans_JP'] text-[36px] font-bold leading-[54px]">商品管理</h1>
             {/* Frame 1 */}

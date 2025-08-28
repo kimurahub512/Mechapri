@@ -259,7 +259,7 @@ const Category = () => {
 
                 </div>
                 <main
-                    className="hidden md:flex flex-col items-left" style={{marginLeft: vwd(79), gap: vwd(32), width: vwd(928), paddingTop: vwd(50), paddingBottom: vwd(40)}}
+                    className="hidden md:flex flex-col items-left" style={{marginLeft: vwd(79), gap: vwd(32), width: vwd(928), paddingTop: vwd(140), paddingBottom: vwd(40)}}
                 >
                     {/* DESKTOP: keep original layout */}
                     {/* Title */}

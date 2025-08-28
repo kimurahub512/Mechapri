@@ -16,7 +16,7 @@ const Header = ({ authButton }) => {
   return (
     <>
       {/* Desktop header (visible on lg and up) */}
-      <div className='hidden md:flex items-center border-b border-[#DCDCDC] bg-white' style={{...responsiveMetricD('full', 98)}}>
+      <div className='hidden md:flex fixed top-0 left-0 right-0 z-[10000] items-center border-b border-[#DCDCDC] bg-white' style={{...responsiveMetricD('full', 98)}}>
         <div className='flex flex-row items-center py-[16px]' style={{gap: vwd(467), marginLeft: vwd(110), marginRight: vwd(120)}}>
           <a href='/' className='flex items-center'>
             <img src={logo} alt='mechapuri Logo' style={{...responsiveMetricD(224, 58)}} />
@@ -117,7 +117,7 @@ const Header = ({ authButton }) => {
                 <img src={bell} alt='shop' style={{...responsiveMetric(21, 18)}} />
                 お知らせ
                 {unreadNotificationCount > 0 && (
-                  <div className='absolute -top-2 -right-2 flex items-center justify-center' style={{...responsiveMetric(16, 18), borderRadius: vw(3), background: '#FF2AA1'}}>
+                  <div className='absolute -top-1 -right-0 flex items-center justify-center' style={{...responsiveMetric(16, 18), borderRadius: vw(3), background: '#FF2AA1'}}>
                     <span style={{...responsiveText(13, 10, null, 'medium', 'noto', '#FFF')}}>{unreadNotificationCount}</span>
                   </div>
                 )}

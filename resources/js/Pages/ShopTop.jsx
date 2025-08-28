@@ -23,7 +23,7 @@ const ShopTop = () => {
         <div className="bg-white">
             <Header />
             {/* Section 1 (Mobile) */}
-            <section className="flex flex-col items-start w-full bg-white md:hidden" style={{ paddingTop: vw(120), paddingBottom: vw(32), paddingLeft: vw(16), paddingRight: vw(16) }}>
+            <section className="flex flex-col items-start w-full bg-white md:hidden" style={{ paddingTop: vw(40), paddingBottom: vw(32), paddingLeft: vw(16), paddingRight: vw(16) }}>
                 {/* Frame 11 */}
                 <div className="flex flex-col items-start self-stretch" style={{ paddingBottom: vw(32), gap: vw(24) }}>
                     {/* 111 */}
@@ -121,7 +121,7 @@ const ShopTop = () => {
                 )}
             </section>
             {/* Section 1 (Desktop) */}
-            <section className="hidden md:flex flex-col justify-center items-center bg-white" style={{ paddingTop: vwd(32), paddingBottom: vwd(32), marginTop: vwd(32) }}>
+            <section className="hidden md:flex flex-col justify-center items-center bg-white pt-[130px]" style={{ paddingTop: vwd(130), marginTop: vwd(32) }}>
                 {/* Frame 11 */}
                 <div className="relative w-full" style={{ height: vwd(254), maxWidth: vwd(1200) }}>
                     {/* 111: User Image */}
@@ -162,7 +162,7 @@ const ShopTop = () => {
                 </div>
             </section>
             {/* Section 2 (Desktop) */}
-            <section className="hidden md:flex flex-col items-start w-full bg-white" style={{ paddingTop: vwd(80), paddingBottom: vwd(80), paddingLeft: vwd(120), paddingRight: vwd(120) }}>
+            <section className="hidden md:flex flex-col items-start w-full bg-white pt-[130px]" style={{ paddingTop: vwd(80), paddingBottom: vwd(80), paddingLeft: vwd(120), paddingRight: vwd(120) }}>
                 <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                     {/* 211: 最新の出品 + arrow */}
                     <a href='/shop-newproducts' className="flex items-center" style={{ width: vwd(277), paddingTop: vwd(25), paddingRight: 0, paddingBottom: vwd(6), paddingLeft: 0, gap: vwd(12) }}>

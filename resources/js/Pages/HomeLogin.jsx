@@ -44,7 +44,7 @@ const HomeLogin = ({
         <div className='product-details-no-footer-gap bg-[#FFF]'>
             <Header />
             {/* Desktop Main Section */}
-            <main className="hidden md:flex flex-col items-center px-[120px] py-[32px] w-full">
+            <main className="hidden md:flex flex-col items-center px-[120px] py-[32px] w-full pt-[130px]">
                 {/* <div className="flex flex-row items-center justify-between p-[10px] w-full border-b border-solid border-[#DCDCDC]">
                     <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">
                         おすすめ写真

@@ -54,7 +54,7 @@ const ShopManagement = ({ statistics: initialStatistics }) => {
         {/* Mobile Header and Navigation */}
         <ShopMobileTopBlocks />
         {/* Mobile Main Section */}
-        <div className="md:hidden">
+        <div className="md:hidden pt-[32px]">
           <div className="flex flex-col items-start" style={{ gap: vw(32), paddingLeft: vw(16), paddingRight: vw(16) }}>
             <div className="flex flex-col items-start w-full" style={{ gap: vw(25) }}>
               <h1 style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>さっそくはじめよう！</h1>
@@ -164,7 +164,7 @@ const ShopManagement = ({ statistics: initialStatistics }) => {
           </div>
         </div>
         {/* Desktop Main Section */}
-        <main className="hidden md:flex flex-col items-start justify-center" style={{ paddingTop: vwd(50), paddingBottom: vwd(40), paddingLeft: vwd(40), paddingRight: vwd(40), gap: vwd(32), width: vwd(928), marginLeft: vwd(55) }}>
+        <main className="hidden md:flex flex-col items-start justify-center" style={{ paddingTop: vwd(140), paddingBottom: vwd(40), paddingLeft: vwd(40), paddingRight: vwd(40), gap: vwd(32), width: vwd(928), marginLeft: vwd(55), marginRight: vwd(55) }}>
           <div className="flex flex-col items-start w-full" style={{ gap: vwd(26.5) }}>
             <h1 style={{ ...responsiveTextD(36, 54, null, 'bold', 'noto', '#363636') }}>さっそくはじめよう！</h1>
             <div className="flex flex-row items-start justify-between w-full">

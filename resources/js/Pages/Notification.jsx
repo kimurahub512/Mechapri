@@ -110,7 +110,7 @@ const Notification = () => {
         <div className="bg-white">
             <Header />
             {/* Main Section */}
-            <main className="hidden md:flex flex-col items-center self-stretch h-[1020px] pb-[60px] bg-white">
+            <main className="hidden md:flex flex-col items-center self-stretch h-[1020px] pb-[60px] bg-white pt-[98px]">
                 {/* Frame 1 */}
                 <div className="flex flex-col items-start w-[880px] min-w-[880px] max-w-[880px] gap-[24px] ">
                     {/* Frame 11 */}

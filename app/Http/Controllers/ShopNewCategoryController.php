@@ -15,7 +15,8 @@ class ShopNewCategoryController extends Controller
     {
         // Get the category and its product batches
         $category = UserCategory::with(['productBatches' => function($query) {
-                $query->with(['files' => function($subQuery) {
+                $query->where('is_public', true)
+                ->with(['files' => function($subQuery) {
                     $subQuery->orderBy('sort_order');
                 }]);
             }])

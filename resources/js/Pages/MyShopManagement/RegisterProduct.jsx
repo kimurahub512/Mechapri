@@ -132,6 +132,13 @@ const RegisterProduct = () => {
                 return;
             }
 
+            if (isPaid && (price < 100 || price > 100000)) {
+                setError('価格は100円から100,000円の間で設定してください。');
+                setTimeout(() => scrollToTop(), 100);
+                setIsSubmitting(false);
+                return;
+            }
+
             if (displayMode === 'password' && !password.trim()) {
                 setError('パスワード設定を選択した場合、パスワードを入力してください。');
                 setTimeout(() => scrollToTop(), 100);
@@ -154,6 +161,13 @@ const RegisterProduct = () => {
 
             if (printSerial && !serialFormat) {
                 setError('シリアル番号印字を選択した場合、印字形式を選択してください。');
+                setTimeout(() => scrollToTop(), 100);
+                setIsSubmitting(false);
+                return;
+            }
+
+            if (!isUnlimited && salesLimit && (parseInt(salesLimit) < 1 || parseInt(salesLimit) > 999999)) {
+                setError('販売数は1から999,999の間で設定してください。');
                 setTimeout(() => scrollToTop(), 100);
                 setIsSubmitting(false);
                 return;
@@ -413,7 +427,7 @@ const RegisterProduct = () => {
                 </div>
                 <ShopMobileTopBlock />
                 {/* Desktop Main Section */}
-                <main className="hidden md:flex flex-col min-w-[640px] max-w-[880px] items-start" style={{ ...responsiveMetricD(880), gap: vwd(22), padding: vwd(40), paddingLeft: vwd(15), paddingRight: vwd(15), marginLeft: vwd(130) }}>
+                <main className="hidden md:flex flex-col min-w-[640px] max-w-[880px] items-start" style={{ ...responsiveMetricD(880), gap: vwd(22), padding: vwd(40), paddingLeft: vwd(15), paddingRight: vwd(15), marginLeft: vwd(130), paddingTop: vwd(140) }}>
                     {/* Title */}
                     <h1 className="text-left" style={{ ...responsiveTextD(36, 54, null, 'bold', 'noto', '#363636') }}>{editMode ? '商品編集' : '商品登録'}</h1>
                     {/* Error Message */}
@@ -603,6 +617,7 @@ const RegisterProduct = () => {
                                         placeholder="1000"
                                         value={price}
                                         onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
+                                        onWheel={(e) => e.target.blur()}
                                         min="100"
                                         max="100000"
                                         style={{ ...responsiveMetricD(159, 48), paddingRight: vwd(5) }}
@@ -641,7 +656,9 @@ const RegisterProduct = () => {
                                         placeholder="1000"
                                         value={salesLimit}
                                         onChange={(e) => setSalesLimit(e.target.value)}
+                                        onWheel={(e) => e.target.blur()}
                                         min="1"
+                                        max="999999"
                                         style={{ ...responsiveMetricD(159, 48), paddingRight: vwd(5), ...responsiveTextD(20, 20, null, 'normal', 'noto', '#363636') }}
                                         disabled={!isPaid || isUnlimited}
                                     />
@@ -969,7 +986,7 @@ const RegisterProduct = () => {
                 )}
 
                 {/* Mobile Main Section */}
-                <main className="flex md:hidden flex-col items-start w-full" style={{ gap: vw(16), paddingBottom: vw(80), paddingLeft: vw(16), paddingRight: vw(16) }}>
+                <main className="flex md:hidden flex-col items-start w-full" style={{ gap: vw(16), paddingTop: vw(32), paddingBottom: vw(80), paddingLeft: vw(16), paddingRight: vw(16) }}>
                     {/* Title */}
                     <h1 className="w-full text-left" style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>{editMode ? '商品編集' : '商品登録'}</h1>
                     {/* Error Message */}
@@ -1148,6 +1165,7 @@ const RegisterProduct = () => {
                                             placeholder="1000"
                                             value={price}
                                             onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
+                                            onWheel={(e) => e.target.blur()}
                                             min="100"
                                             max="100000"
                                             style={{ ...responsiveMetric(120, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(4), ...responsiveText(20, 20, null, 'normal', 'noto', '#363636') }}
@@ -1186,7 +1204,9 @@ const RegisterProduct = () => {
                                             placeholder="1000"
                                             value={salesLimit}
                                             onChange={(e) => setSalesLimit(e.target.value)}
+                                            onWheel={(e) => e.target.blur()}
                                             min="1"
+                                            max="999999"
                                             style={{ ...responsiveMetric(120, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(4), ...responsiveText(20, 20, null, 'normal', 'noto', '#363636') }}
                                             disabled={!isPaid || isUnlimited}
                                         />

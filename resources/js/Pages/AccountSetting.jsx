@@ -394,7 +394,7 @@ const AccountSetting = () => {
 
 
       {/* Main Section (Desktop) */}
-      <main className="hidden md:flex flex-col justify-center items-center gap-[32px] flex-1 self-stretch p-[32px_0_80px_0]">
+      <main className="hidden md:flex flex-col justify-center items-center gap-[32px] flex-1 self-stretch p-[32px_0_80px_0] pt-[130px]">
         {/* Frame 1 */}
         <div className="flex flex-col items-center gap-[16px]" style={{ maxWidth: vwd(874) }}>
           {/* Frame 11 */}

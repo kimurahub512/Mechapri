@@ -102,7 +102,7 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
             <Header />
             {/* Main Section */}
             <div className="flex flex-col w-full relative">
-                <main className="hidden md:flex flex-col items-center self-stretch pb-[60px] bg-white">
+                <main className="hidden md:flex flex-col items-center self-stretch pb-[60px] bg-white pt-[98px]">
                     {/* Frame 1 */}
                     <div className="flex flex-col items-start w-[880px] min-w-[880px] max-w-[880px] gap-[32px] ">
                         {/* Frame 11 */}
