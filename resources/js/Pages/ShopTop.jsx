@@ -23,7 +23,7 @@ const ShopTop = () => {
         <div className="bg-white">
             <Header />
             {/* Section 1 (Mobile) */}
-            <section className="flex flex-col items-start w-full bg-white md:hidden" style={{ paddingTop: vw(32), paddingBottom: vw(32), paddingLeft: vw(16), paddingRight: vw(16) }}>
+            <section className="flex flex-col items-start w-full bg-white md:hidden" style={{ paddingTop: vw(120), paddingBottom: vw(32), paddingLeft: vw(16), paddingRight: vw(16) }}>
                 {/* Frame 11 */}
                 <div className="flex flex-col items-start self-stretch" style={{ paddingBottom: vw(32), gap: vw(24) }}>
                     {/* 111 */}
@@ -51,12 +51,7 @@ const ShopTop = () => {
                                         <a href={`https://x.com/${shopData.xlink}`} target="_blank" rel="noopener noreferrer">
                                             <img src={x} alt="x" className="flex justify-center items-center aspect-square cursor-pointer hover:opacity-80 transition-opacity" style={{ width: vw(36), height: vw(36), padding: vw(2.571), paddingLeft: vw(1.286), paddingRight: vw(1.286), paddingBottom: vw(1.286) }} />
                                         </a>
-                                    )}
-                                    {shopData?.instagram && (
-                                        <a href={`https://instagram.com/${shopData.instagram}`} target="_blank" rel="noopener noreferrer">
-                                            <img src={instagram} alt="instagram" className="flex justify-center items-center aspect-square cursor-pointer hover:opacity-80 transition-opacity" style={{ width: vw(36), height: vw(36), padding: vw(2.571), paddingLeft: vw(1.286), paddingRight: vw(1.286), paddingBottom: vw(1.286) }} />
-                                        </a>
-                                    )}
+                                    )}                                    
                                 </div>
                             </div>
                         </div>
@@ -76,7 +71,7 @@ const ShopTop = () => {
                         {/* 112: Description */}
                         <div className="flex flex-col items-start self-stretch" style={{ maxWidth: vw(1248) }}>
                             <span style={{ ...responsiveText(14, 21, null, 'normal', 'noto', '#000') }}>
-                                {shopData?.shop_description || 'ショップの説明がありません。'}
+                                {shopData?.shop_description}
                             </span>
                         </div>
                     </div>
@@ -142,11 +137,6 @@ const ShopTop = () => {
                                 <img src={x} alt="x" className="flex justify-center items-center aspect-square opacity-100 cursor-pointer hover:opacity-80 transition-opacity" style={{ width: vwd(52), height: vwd(52), padding: vwd(3.714), paddingLeft: vwd(1.857), paddingRight: vwd(1.857), paddingBottom: vwd(1.857) }} />
                             </a>
                         )}
-                        {shopData?.instagram && (
-                            <a href={`https://instagram.com/${shopData.instagram}`} target="_blank" rel="noopener noreferrer">
-                                <img src={instagram} alt="instagram" className="flex justify-center items-center aspect-square opacity-100 cursor-pointer hover:opacity-80 transition-opacity" style={{ width: vwd(52), height: vwd(52), padding: vwd(3.714), paddingLeft: vwd(1.857), paddingRight: vwd(1.857), paddingBottom: vwd(1.857) }} />
-                            </a>
-                        )}
                     </div>
                     {/* 115: Follower count + 1151 */}
                     <div className="absolute inline-flex items-center" style={{ top: vwd(106), right: vwd(16), gap: vwd(8) }}>
@@ -165,7 +155,7 @@ const ShopTop = () => {
                     <div className="absolute flex flex-col items-start self-stretch" style={{ top: vwd(194), left: vwd(16), maxWidth: vwd(1248) }}>
                         <div className="flex flex-col items-start self-stretch" style={{ maxWidth: vwd(1248) }}>
                             <span className="text-[#000] font-noto font-normal" style={{ ...responsiveTextD(16, 27, null, 'normal', 'noto', '#000') }}>
-                                {shopData?.shop_description || 'ショップの説明がありません。'}
+                                {shopData?.shop_description}
                             </span>
                         </div>
                     </div>

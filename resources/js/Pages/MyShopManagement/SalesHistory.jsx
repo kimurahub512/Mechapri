@@ -60,7 +60,7 @@ const SalesHistory = () => {
                     </section>
                 </main>
                 {/* Mobile Main Section */}
-                <main className="md:hidden inline-flex flex-col items-start gap-4 mt-[32px] mx-4">
+                <main className="md:hidden inline-flex flex-col items-start gap-4 pt-[240px] mx-4">
                     {/* Title */}
                     <h1 className="w-full text-left font-bold text-[24px] leading-[24px] text-[#363636] font-[\'Noto Sans JP\']">販売履歴</h1>
                     {/* Frame 1 */}
@@ -90,9 +90,8 @@ const SalesHistory = () => {
                                         <div className="absolute top-[60px] left-[96px] flex items-center">
                                             <span className="text-[#363636] font-bold text-[18px] leading-[20px] font-[\'Noto Sans JP\']">{sale.price}</span>
                                             <span className="text-[#363636] mt-.5 font-bold text-[12px] leading-[32px] font-[\'Noto Sans JP\'] ml-[1px]">円</span>
+                                            <span className="text-[#363636] font-medium text-[12px] leading-[18px] font-[\'Noto Sans JP\'] ml-2">合計 {sale.total_amount}円</span>
                                         </div>
-                                        {/* 合計 100円 */}
-                                        <span className="absolute top-[67px] left-[149px] text-[#363636] font-medium text-[12px] leading-[18px] font-[\'Noto Sans JP\']">合計 {sale.total_amount}円</span>
                                     </div>
                                 ))
                             )}

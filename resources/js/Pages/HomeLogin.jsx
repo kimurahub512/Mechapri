@@ -8,10 +8,10 @@ import list from '@/assets/images/list_unordered.svg';
 import arrow from '@/assets/images/arrow_right.svg';
 
 
-const HomeLogin = ({ 
-    favoriteShopsNewProducts = [], 
-    purchaseHistory = [], 
-    recommendedProducts = [] 
+const HomeLogin = ({
+    favoriteShopsNewProducts = [],
+    purchaseHistory = [],
+    recommendedProducts = []
 }) => {
     // Debug logging to check if props are received
     console.log('HomeLogin props:', {
@@ -71,7 +71,7 @@ const HomeLogin = ({
                     <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">
                         お気に入りショップの新着写真
                     </span>
-                    <div 
+                    <div
                         className="flex flex-row items-center p-[12px] gap-[4px] cursor-pointer"
                         onClick={() => handleViewAll('favoriteShops')}
                     >
@@ -82,7 +82,7 @@ const HomeLogin = ({
                         <img src={arrow} alt="arrow" className="w-[16px] h-[16px] " />
                     </div>
                 </div>
-                <div className="flex p-[16px] items-center gap-[16px] self-stretch">
+                <div className="flex p-[16px] items-center justify-center gap-[16px] self-stretch">
                     <ProductCarousel
                         products={favoriteShopsNewProducts}
                         isMobile={false}
@@ -93,7 +93,7 @@ const HomeLogin = ({
                     <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">
                         購入履歴
                     </span>
-                    <div 
+                    <div
                         className="flex flex-row items-center p-[12px] gap-[4px] cursor-pointer"
                         onClick={() => handleViewAll('purchaseHistory')}
                     >
@@ -111,18 +111,18 @@ const HomeLogin = ({
                 ) : (
                     purchaseHistory.map((purchase) => (
                         <div key={purchase.id} className="flex p-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] relative">
-                            <div 
+                            <div
                                 className="flex w-[228px] h-[228px] p-[4.488px_40.394px_2.693px_40.394px] justify-center items-center rounded-[8.976px] bg-[#F6F6F6] cursor-pointer"
                                 onClick={() => handleProductClick(purchase)}
                             >
-                                <img 
-                                    src={purchase.files?.[0]?.url ? `/storage/${purchase.files[0].file_path}` : '/default-product-image.jpg'} 
+                                <img
+                                    src={purchase.files?.[0]?.url ? `/storage/${purchase.files[0].file_path}` : '/default-product-image.jpg'}
                                     alt={purchase.title}
                                     className="w-full h-full object-cover rounded-[8.976px]"
                                 />
                             </div>
                             {/* Info Block */}
-                            <div 
+                            <div
                                 className="flex flex-col h-[118px] pr-[32px] justify-between items-start flex-1 cursor-pointer"
                                 onClick={() => handleProductClick(purchase)}
                             >
@@ -168,12 +168,12 @@ const HomeLogin = ({
                         isMobile={true}
                     />
                 </div> */}
-                <div className="md:hidden flex flex-col items-start gap-[8px] w-full">
+                <div className="md:hidden flex flex-col items-start gap-[8px] w-full pt-[60px]">
                     <div className="flex flex-col items-left pt-[12px] gap-[6px] w-full border-b border-solid border-[#DCDCDC]">
                         <span className="text-[#363636] font-noto text-[14px] font-bold leading-[14px]">
                             お気に入りショップの新着写真
                         </span>
-                        <div 
+                        <div
                             className="flex flex-row items-center py-[12px] gap-[4px] cursor-pointer"
                             onClick={() => handleViewAll('favoriteShops')}
                         >
@@ -185,10 +185,12 @@ const HomeLogin = ({
                         </div>
                     </div>
                     {/* 212: Product List */}
-                    <ProductCarousel
-                        products={favoriteShopsNewProducts}
-                        isMobile={true}
-                    />
+                    <div className="flex items-center justify-center w-full">
+                        <ProductCarousel
+                            products={favoriteShopsNewProducts}
+                            isMobile={true}
+                        />
+                    </div>
                 </div>
 
                 <div className="md:hidden flex flex-col items-start gap-[8px] w-full">
@@ -196,7 +198,7 @@ const HomeLogin = ({
                         <span className="text-[#363636] font-noto text-[14px] font-bold leading-[14px]">
                             購入履歴
                         </span>
-                        <div 
+                        <div
                             className="flex flex-row items-center py-[12px] gap-[4px] cursor-pointer"
                             onClick={() => handleViewAll('purchaseHistory')}
                         >
@@ -215,18 +217,18 @@ const HomeLogin = ({
                         purchaseHistory.map((purchase) => (
                             <div key={purchase.id} className="flex p-[16px_16px_40px_0] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] relative">
                                 <div className="flex flex-row gap-[16px]">
-                                    <div 
+                                    <div
                                         className="flex w-[64px] h-[64px] p-[1.26px_11.339px_0.756px_11.339px] justify-center items-center rounded-[2.52px] bg-[#F6F6F6] cursor-pointer"
                                         onClick={() => handleProductClick(purchase)}
                                     >
-                                        <img 
-                                            src={purchase.files?.[0]?.url ? `/storage/${purchase.files[0].file_path}` : '/default-product-image.jpg'} 
+                                        <img
+                                            src={purchase.files?.[0]?.url ? `/storage/${purchase.files[0].file_path}` : '/default-product-image.jpg'}
                                             alt={purchase.title}
                                             className="w-full h-full object-cover rounded-[2.52px]"
                                         />
                                     </div>
                                     {/* Title & Badge */}
-                                    <div 
+                                    <div
                                         className="flex flex-col items-start gap-[2px] cursor-pointer"
                                         onClick={() => handleProductClick(purchase)}
                                     >

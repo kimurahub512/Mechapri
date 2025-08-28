@@ -255,7 +255,12 @@ export default function Register() {
                 <div className="flex flex-col w-full justify-center items-center bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.1)] relative" style={{ borderRadius: vwd(16), width: vwd(960), paddingBottom: vwd(30) }}>
                     {/* Close Button */}
                     <div className="flex justify-end w-full p-4">
-                        <img src={close} alt="close" style={{ width: '32px', height: '32px' }} />
+                        <button 
+                            onClick={() => router.visit('/')}
+                            className="cursor-pointer hover:opacity-80 transition-opacity"
+                        >
+                            <img src={close} alt="close" style={{ width: '32px', height: '32px' }} />
+                        </button>
                     </div>
                     {/* Registration Form */}
                     <div className="flex flex-col items-center w-[504px] pt-[64px]">
@@ -545,7 +550,12 @@ export default function Register() {
                 <div className="flex flex-col w-full justify-center items-center bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.1)] relative" style={{ borderRadius: vw(10), paddingBottom: vw(20), paddingTop: vw(20), paddingLeft: vw(16), paddingRight: vw(16) }}>
                     {/* Close Button */}
                     <div className="flex justify-end w-full">
-                        <img src={close} alt="close" style={{ width: '32px', height: '32px' }} />
+                        <button 
+                            onClick={() => router.visit('/')}
+                            className="cursor-pointer hover:opacity-80 transition-opacity"
+                        >
+                            <img src={close} alt="close" style={{ width: '32px', height: '32px' }} />
+                        </button>
                     </div>
                     {/* Registration Form */}
                     <div className="flex flex-col items-center w-full pt-[14px]">

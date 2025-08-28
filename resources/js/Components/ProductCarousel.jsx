@@ -9,7 +9,7 @@ const ProductCarousel = ({ products = [], isMobile = false, haveAccount = false,
     if (safeProducts.length === 0) {
         return (
             <div className="flex items-center justify-center py-8">
-                <p className="text-gray-500">商品がありません</p>
+                <p className="text-center text-gray-500">商品がありません</p>
             </div>
         );
     }
@@ -23,7 +23,7 @@ const ProductCarousel = ({ products = [], isMobile = false, haveAccount = false,
             return (
                 <div className="flex flex-col w-full p-[0px_0_17.416px_0] justify-end items-center">
                     {/* Product Cards (horizontal scroll) */}
-                    <div className="flex flex-nowrap gap-[23px] w-full rounded-[7.839px] py-[16px] overflow-x-auto scrollbar-hide" style={{ width: '100%' }}>
+                    <div className="flex flex-nowrap gap-[6px] w-full rounded-[7.839px] py-[16px] overflow-x-auto scrollbar-hide" style={{ width: '100%' }}>
                         {safeProducts.map((product) => (
                                                             <ProductCard 
                                 key={product.id} 

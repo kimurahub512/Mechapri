@@ -152,10 +152,6 @@ Route::get('/api/watermark-test', function() {
     return response('Watermark test route working!');
 });
 
-
-
-
-
 Route::get('/', function () {
     return inertia('Home');
 })->name('home');
@@ -201,9 +197,6 @@ Route::middleware('guest')->group(function () {
 // Email Verification Routes
 Route::middleware('auth')->group(function () {
 
-    Route::get('/beginner', function(){
-        return Inertia::render('Beginner');
-    });
     
     Route::get('/shop-management', function(){
         $user = auth()->user();
@@ -372,22 +365,7 @@ Route::post('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccou
         ->name('user.product.unpurchased.expand')
         ->where(['user_id' => '[0-9]+', 'id' => '[0-9]+']);
 
-    Route::get('/howtoprint', function(){
-        return Inertia::render('HowToPrint');
-    });
 
-    // Legal Document Routes
-    Route::get('/tokushoho', function(){
-        return Inertia::render('Legal/Tokushoho');
-    });
-
-    Route::get('/privacy', function(){
-        return Inertia::render('Legal/Privacy');
-    });
-
-    Route::get('/terms', function(){
-        return Inertia::render('Legal/Terms');
-    });
 
     Route::get('/homelogin', [App\Http\Controllers\HomeLoginController::class, 'index'])->name('homelogin');
 
@@ -425,6 +403,27 @@ Route::post('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccou
         return back()->with('status', 'verification-link-sent');
     })->middleware('throttle:6,1')->name('verification.send');
 });
+
+Route::get('/beginner', function(){
+    return Inertia::render('Beginner');
+});
+
+Route::get('/howtoprint', function(){
+    return Inertia::render('HowToPrint');
+});
+
+    // Legal Document Routes
+    Route::get('/tokushoho', function(){
+        return Inertia::render('Legal/Tokushoho');
+    });
+
+    Route::get('/privacy', function(){
+        return Inertia::render('Legal/Privacy');
+    });
+
+    Route::get('/terms', function(){
+        return Inertia::render('Legal/Terms');
+    });
 
 // Email verification routes (for registration - no auth required)
 Route::post('/api/send-verification-code', [ProfileController::class, 'sendVerificationCode'])->name('email.send-code');

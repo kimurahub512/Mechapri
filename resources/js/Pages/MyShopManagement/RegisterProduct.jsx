@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { router } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
@@ -970,7 +969,7 @@ const RegisterProduct = () => {
                 )}
 
                 {/* Mobile Main Section */}
-                <main className="flex md:hidden flex-col items-start w-full" style={{ gap: vw(16), marginTop: vw(32), paddingLeft: vw(16), paddingRight: vw(16) }}>
+                <main className="flex md:hidden flex-col items-start w-full" style={{ gap: vw(16), paddingTop: vw(240), paddingLeft: vw(16), paddingRight: vw(16) }}>
                     {/* Title */}
                     <h1 className="w-full text-left" style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>{editMode ? '商品編集' : '商品登録'}</h1>
                     {/* Error Message */}
@@ -1369,7 +1368,7 @@ const RegisterProduct = () => {
                                             </div>
                                         </div>
                                         {/* Frame 123434 */}
-                                        <div className="flex justify-center items-start flex-wrap" style={{ gap: vw(14) }}>
+                                        <div className="flex justify-center items-center flex-wrap w-full" style={{ gap: vw(14) }}>
                                             {categories && categories.length > 0 ? (
                                                 categories.map((category, index) => (
                                                     <div
@@ -1382,8 +1381,8 @@ const RegisterProduct = () => {
                                                     </div>
                                                 ))
                                             ) : (
-                                                <div className="flex items-center justify-center border border-[#E9E9E9] bg-white" style={{ ...responsiveMetric(148, 48), paddingLeft: vw(2), paddingRight: vw(2), borderRadius: vw(8) }}>
-                                                    <span className="text-center" style={{ ...responsiveText(16, 21, null, 'normal', 'noto', '#ACACAC') }}>カテゴリがありません</span>
+                                                <div className="flex items-center justify-center border border-[#E9E9E9] bg-white" style={{ ...responsiveMetric(168, 48), paddingLeft: vw(2), paddingRight: vw(2), borderRadius: vw(8) }}>
+                                                    <span className="text-center whitespace-nowrap" style={{ ...responsiveText(16, 21, null, 'normal', 'noto', '#ACACAC') }}>カテゴリがありません</span>
                                                 </div>
                                             )}
                                         </div>

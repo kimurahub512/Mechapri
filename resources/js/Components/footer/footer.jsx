@@ -44,9 +44,6 @@ const Footer = () => {
             <a href='/beginner' style={{...responsiveTextD(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>出品をはじめる</a>
           </div>
           <div className="flex flex-col items-start" style={{...responsivePositionD(0, 1018), gap: vwd(32)}}>
-            <div style={{...responsiveTextD(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>
-              ご利用について
-            </div>
             <div className="flex flex-col" style={{gap: vwd(12)}}>
               <a href='howtoprint' className='whitespace-nowrap' style={{...responsiveTextD(13, 20, null, 'semibold', 'noto', '#FFF')}}>
                 ネットワークプリントの使い方
@@ -118,11 +115,7 @@ const Footer = () => {
                 <div className='whitespace-nowrap' style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}>
                   利用規約
                 </div>
-              </a>
-            {/* Fifth item */}
-            <div className='whitespace-nowrap' style={{...responsiveTextD(12, 18, null, 'normal', 'noto', '#FFF')}}>
-              ガイドライン
-            </div>
+              </a>            
             <div style={{...responsiveMetricD(480)}}></div>
             {/* Copyright */}
             <div className='whitespace-nowrap' style={{...responsiveTextD(10, 16, null, 'normal', 'noto', '#FFF')}}>
@@ -154,10 +147,7 @@ const Footer = () => {
           <div className="flex flex-col items-start" style={{...responsivePosition(96, 9), gap: vw(32)}}>
             <a href='/beginner' style={{...responsiveText(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>出品をはじめる</a>
           </div>
-          <div className="flex flex-col items-start" style={{...responsivePosition(96, 183), gap: vw(32), width: vw(152)}}>
-            <div style={{...responsiveText(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>
-              ご利用について
-            </div>
+          <div className="flex flex-col items-start" style={{...responsivePosition(96, 183), gap: vw(32), width: vw(152)}}>            
             <div className="flex flex-col" style={{gap: vw(12)}}>
               <a href='/howtoprint' style={{...responsiveText(13, 20, null, 'medium', 'noto', '#FFF')}}>
                 ネットワークプリントの使い方
@@ -233,10 +223,6 @@ const Footer = () => {
                   利用規約
                 </div>
               </a>
-            </div>
-            {/* Fifth item */}
-            <div className='whitespace-nowrap' style={{...responsiveText(12, 18, null, 'normal', 'noto', '#FFF')}}>
-              ガイドライン
             </div>
             {/* Copyright */}
             <div className='whitespace-nowrap' style={{...responsiveText(10, 16, null, 'normal', 'noto', '#FFF')}}>

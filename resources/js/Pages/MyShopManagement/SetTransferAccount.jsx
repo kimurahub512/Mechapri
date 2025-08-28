@@ -77,7 +77,7 @@ const SetTransferAccount = ({ bankAccount = null }) => {
                 <ShopMobileTopBlock />
                 {/* Main Section */}
                 {/* MOBILE ONLY */}
-                <div className="block md:hidden px-[16px] mt-[62px] flex flex-col items-start gap-4">
+                <div className="block md:hidden px-[16px] pt-[240px] flex flex-col items-start gap-4">
 
                     {/* Title */}
                     <div className="flex flex-row items-center justify-between w-full">
@@ -86,7 +86,7 @@ const SetTransferAccount = ({ bankAccount = null }) => {
                     <div className="flex flex-col items-start py-[20px] px-[16px] gap-[10px] rounded-[16px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch">
                         <div className="flex flex-col items-start gap-[4px] w-full">
                             <span className="text-[#363636] font-['Noto_Sans_JP'] text-[14px] font-bold leading-[14px] mt-[12px] mb-[6px]">銀行</span>
-                            <div className="flex flex-row justify-between items-start py-[14px] w-full border-b border-[#E9E9E9]">
+                            <div className="flex flex-row justify-between items-center py-[14px] w-full border-b border-[#E9E9E9]">
                                 <input 
                                     type="text" 
                                     value={formData.bank_name}
@@ -190,7 +190,7 @@ const SetTransferAccount = ({ bankAccount = null }) => {
                         <div className="flex flex-col items-start gap-[22px] w-full">
                             <div className="flex flex-col items-start gap-[4px] w-full">
                                 <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[27px] mt-[25px] mb-[6px]">銀行</span>
-                                <div className="flex flex-row justify-between items-start py-[14px] w-full border-b border-[#E9E9E9]">
+                                <div className="flex flex-row justify-between items-center py-[14px] w-full border-b border-[#E9E9E9]">
                                     <input 
                                         type="text" 
                                         value={formData.bank_name}

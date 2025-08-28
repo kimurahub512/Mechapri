@@ -110,7 +110,7 @@ const Category = () => {
                 {/* Main Section */}
                 {/* MOBILE: custom layout, DESKTOP: keep as is */}
                 {/* MOBILE ONLY */}
-                <div className="block md:hidden flex flex-col items-start" style={{marginRight: vw(16), marginLeft: vw(16), marginTop: vw(32), gap: vw(8)}}>
+                <div className="block md:hidden flex flex-col items-start" style={{marginRight: vw(16), marginLeft: vw(16), paddingTop: vw(240), gap: vw(32)}}>
                     {/* Title */}
                     <div className="flex flex-row items-center justify-between w-full">
                         <h1 style={{...responsiveText(24, 24, null, 'bold', 'noto', '#363636')}}>商品のカテゴリ</h1>

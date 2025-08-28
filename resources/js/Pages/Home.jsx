@@ -327,7 +327,7 @@ export default function Home() {
         </div>
       </div>
       {/*mobile version*/}
-      <div className="md:hidden flex flex-col items-center w-full mt-[60px] gap-[40px]">
+      <div className="md:hidden flex flex-col items-center w-full pt-[120px] gap-[40px]">
         {/* section 1*/}
         <div className='flex flex-col items-center w-full  px-[32px] gap-[24px]'>
           {/*hero section*/}

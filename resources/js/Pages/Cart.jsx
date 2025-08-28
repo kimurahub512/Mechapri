@@ -187,7 +187,7 @@ const Cart = ({ cartItems = [] }) => {
             </main>
 
             {/* Mobile Main Section */}
-            <main className="flex md:hidden flex-col items-center self-stretch bg-white">
+            <main className="flex md:hidden flex-col items-center self-stretch bg-white pt-[80px]">
                 {/* Frame 11 */}
                 <div className="flex flex-col items-center p-[16px_0_16px_0] self-stretch border-b border-[#D1D1D1]">
                     <h1 className="w-full text-center text-[#363636] font-noto font-bold text-[24px] leading-[24px]">カート</h1>

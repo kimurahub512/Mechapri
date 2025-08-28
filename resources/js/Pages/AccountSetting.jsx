@@ -663,7 +663,7 @@ const AccountSetting = () => {
         </div>
       </main>
       {/* Mobile Main Section */}
-      <main className="inline-flex md:hidden flex-col items-start w-full" style={{ gap: vw(16) }}>
+      <main className="inline-flex md:hidden flex-col items-start w-full pt-[60px]" style={{ gap: vw(16) }}>
         {/* Frame 1 */}
         <div className="flex flex-row items-center w-full" style={{ gap: vw(16), paddingTop: vw(32), paddingLeft: vw(16), paddingRight: vw(16) }}>
           <span style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>アカウント</span>

@@ -102,7 +102,7 @@ const Header = ({ authButton }) => {
         </div>
       </div>
       {/* Mobile header (visible below lg) */}
-      <div className='md:hidden flex w-full px-2 items-center border-b border-[#DCDCDC] bg-white'>
+      <div className='md:hidden fixed top-0 left-0 right-0 z-50 flex w-full px-2 items-center border-b border-[#DCDCDC] bg-white'>
         {auth?.user ? (
           <div className='flex items-center pt-[7px] pb-[6px] items-center justify-between w-full'>
             <a href='/' className='flex items-center'>
@@ -123,7 +123,7 @@ const Header = ({ authButton }) => {
                 )}
               </a>
               <div className='flex flex-col items-start justify-center px-[6px] py-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] rounded-[5px]'>
-                <a href='/upload' className='flex flex-col items-center gap-[3px] whitespace-nowrap' style={{...responsiveText(10, 19.5, null, 'medium', 'noto', '#FFF')}}>
+                <a href='/myshop/registerproduct' className='flex flex-col items-center gap-[3px] whitespace-nowrap' style={{...responsiveText(10, 19.5, null, 'medium', 'noto', '#FFF')}}>
                   <img src={arrow} alt='shop' style={{...responsiveMetric(19, 19)}} />
                   写真を出品
                 </a>

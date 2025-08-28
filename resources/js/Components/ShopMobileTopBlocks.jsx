@@ -17,7 +17,7 @@ const ShopMobileTopBlocks = () => {
   return (
     <>
       {/* Mobile Header */}
-      <div className="shopmanagement-mobile-header">
+      <div className="shopmanagement-mobile-header md:hidden fixed top-[64px] left-0 right-0 z-40 bg-white">
         <div className="shopmanagement-mobile-header-frame">
           <div className="shopmanagement-mobile-header-left">
             <img
@@ -25,13 +25,13 @@ const ShopMobileTopBlocks = () => {
               src={auth?.user?.image || default_user}
               alt="Shop Hero"
             />
-            <span className="shopmanagement-mobile-title">{auth?.user?.name}’s SHOP</span>
+            <span className="shopmanagement-mobile-title">{auth?.user?.name}'s SHOP</span>
           </div>
-          <div className="shopmanagement-mobile-shop-btn">自分のショップ</div>
+          <a href='/shoptop' className="shopmanagement-mobile-shop-btn">自分のショップ</a>
         </div>
       </div>
       {/* Mobile Navigation Block */}
-      <div className="shopmanagement-mobile-nav">
+      <div className="shopmanagement-mobile-nav md:hidden fixed top-[120px] left-0 right-0 z-40 bg-white">
         <div className="shopmanagement-mobile-nav-list">
           <div className="shopmanagement-mobile-nav-item">
             <div

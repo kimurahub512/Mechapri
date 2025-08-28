@@ -55,7 +55,7 @@ const ShopManagement = ({ statistics: initialStatistics }) => {
         <ShopMobileTopBlocks />
         {/* Mobile Main Section */}
         <div className="md:hidden">
-          <div className="flex flex-col items-start" style={{ gap: vw(32), paddingTop: vw(50), paddingBottom: vw(40), paddingLeft: vw(16), paddingRight: vw(16) }}>
+          <div className="flex flex-col items-start" style={{ gap: vw(32), paddingTop: vw(240), paddingBottom: vw(40), paddingLeft: vw(16), paddingRight: vw(16) }}>
             <div className="flex flex-col items-start w-full" style={{ gap: vw(25) }}>
               <h1 style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>さっそくはじめよう！</h1>
               {/* First card */}

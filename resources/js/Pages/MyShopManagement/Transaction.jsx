@@ -254,7 +254,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                 </section>
             </main>
             {/* Mobile Main Section */}
-            <main className="md:hidden inline-flex flex-col items-start gap-4 mt-[32px] mx-4">
+            <main className="md:hidden inline-flex flex-col items-start gap-4 pt-[240px] mx-4">
                 {/* Title */}
                 <h1 className="w-full text-left font-bold text-[24px] leading-[24px] text-[#363636] font-['Noto Sans JP']">出金・売上</h1>
                 {/* Frame 1 */}
