@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>フォロー中のショップが新商品を出品しました</title>
+    <title>「{{ $notification->data['seller_name'] }}」から新しい写真が届きました！</title>
     <style>
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -14,7 +14,7 @@
             padding: 20px;
         }
         .header {
-            background-color: #F59E0B;
+            background-color: #4F46E5;
             color: white;
             padding: 20px;
             text-align: center;
@@ -41,7 +41,7 @@
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;
-            border-left: 4px solid #F59E0B;
+            border-left: 4px solid #4F46E5;
         }
         .detail-row {
             display: flex;
@@ -57,7 +57,7 @@
         }
         .button {
             display: inline-block;
-            background-color: #F59E0B;
+            background-color: #4F46E5;
             color: white;
             padding: 12px 24px;
             text-decoration: none;
@@ -75,14 +75,17 @@
 </head>
 <body>
     <div class="header">
-        <h1>🆕 新商品が出品されました</h1>
+        <h1>📸 「{{ $notification->data['seller_name'] }}」から新しい写真が届きました！</h1>
     </div>
     
     <div class="content">
-        <div class="notification-title">{{ $notification->title }}</div>
-        
         <div class="notification-message">
-            {{ $notification->message }}
+            <p>{{ $notification->user->name }}様</p>
+            
+            <p>フォロー中の「{{ $notification->data['seller_name'] }}」が新しい写真を出品しました。<br>
+            最新の写真はこちらからご覧いただけます：</p>
+            
+            <p>気になる写真はお早めにチェックしてみてください！</p>
         </div>
         
         <div class="details">
@@ -96,7 +99,7 @@
             </div>
         </div>
         
-        <a href="{{ url('/unpurchased-product/' . $notification->data['product_id']) }}" class="button">商品を確認</a>
+        <a href="{{ url('/product/' . $notification->data['product_id']) }}" class="button">商品ページを見る</a>
     </div>
     
     <div class="footer">

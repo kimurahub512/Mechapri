@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>商品が購入されました</title>
+    <title>あなたの商品が購入されました！</title>
     <style>
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -75,14 +75,21 @@
 </head>
 <body>
     <div class="header">
-        <h1>🎉 商品が購入されました</h1>
+        <h1>🎉 あなたの商品が購入されました！</h1>
     </div>
     
     <div class="content">
-        <div class="notification-title">{{ $notification->title }}</div>
-        
         <div class="notification-message">
-            {{ $notification->message }}
+            <p>{{ $notification->data['buyer_name'] }}様</p>
+            
+            <p>おめでとうございます！<br>
+            あなたが出品した「{{ $notification->data['product_title'] }}」が購入されました。</p>
+            
+            <p>売上状況はマイページの「販売履歴」からご確認いただけます。</p>
+            
+            <p>これからも、あなたの写真を楽しみにしているファンに向けて、ぜひ素敵な作品をお届けください。</p>
+            
+            <p>「めちゃプリ」運営チーム</p>
         </div>
         
         <div class="details">

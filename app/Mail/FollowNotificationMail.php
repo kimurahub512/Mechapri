@@ -30,7 +30,7 @@ class FollowNotificationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->notification->title,
+            subject: '新しいフォロワーが増えました！',
         );
     }
 

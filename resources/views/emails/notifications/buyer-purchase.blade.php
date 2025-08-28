@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>【めちゃプリ】運営からのお知らせ</title>
+    <title>ご購入ありがとうございます！</title>
     <style>
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -75,23 +75,35 @@
 </head>
 <body>
     <div class="header">
-        <h1>📢 【めちゃプリ】運営からのお知らせ</h1>
+        <h1>🎉 ご購入ありがとうございます！</h1>
     </div>
     
     <div class="content">
         <div class="notification-message">
             <p>{{ $notification->user->name }}様</p>
             
-            <p>いつも「めちゃプリ」をご利用いただきありがとうございます。<br>
-            本日は運営からのお知らせです。</p>
+            <p>この度は「{{ $notification->data['product_title'] }}」をご購入いただき、誠にありがとうございます。<br>
+            購入した写真はマイページからいつでもご確認いただけます。</p>
             
-            <div class="details">
-                <h3>{{ $notification->title }}</h3>
-                <p>{{ $notification->message }}</p>
+            <p>引き続き「めちゃプリ」でのお買い物をお楽しみください。</p>
+        </div>
+        
+        <div class="details">
+            <div class="detail-row">
+                <span class="detail-label">商品名:</span>
+                <span class="detail-value">{{ $notification->data['product_title'] }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">数量:</span>
+                <span class="detail-value">{{ $notification->data['quantity'] }}枚</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">価格:</span>
+                <span class="detail-value">¥{{ number_format($notification->data['price']) }}</span>
             </div>
         </div>
         
-        <a href="{{ url('/') }}" class="button">めちゃプリへ</a>
+        <a href="{{ url('/purchase-history') }}" class="button">購入履歴を確認</a>
     </div>
     
     <div class="footer">

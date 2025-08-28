@@ -7,6 +7,7 @@ use App\Models\Notification;
 use App\Models\ProductBatch;
 use App\Models\UserPurchasedProduct;
 use App\Mail\PurchaseNotificationMail;
+use App\Mail\BuyerPurchaseNotificationMail;
 use App\Mail\FollowNotificationMail;
 use App\Mail\NewItemNotificationMail;
 use App\Mail\RelistNotificationMail;
@@ -245,6 +246,42 @@ class NotificationService
                 } catch (\Exception $e) {
                     Log::error('Failed to send bulk notification email: ' . $e->getMessage());
                 }
+            }
+        }
+    }
+
+    /**
+     * Create a buyer purchase notification
+     */
+    public static function createBuyerPurchaseNotification(User $buyer, UserPurchasedProduct $purchase)
+    {
+        // Check if buyer has purchase notifications enabled
+        if (!$buyer->notification_purchase) {
+            return;
+        }
+
+        $product = $purchase->productBatch;
+
+        $notification = Notification::create([
+            'user_id' => $buyer->id,
+            'type' => 'buyer_purchase',
+            'title' => 'ご購入ありがとうございます！',
+            'message' => "「{$product->title}」をご購入いただき、誠にありがとうございます。",
+            'data' => [
+                'product_id' => $product->id,
+                'product_title' => $product->title,
+                'quantity' => $purchase->cnt,
+                'price' => $purchase->price,
+                'purchase_id' => $purchase->id,
+            ],
+        ]);
+
+        // Send email notification if enabled
+        if ($buyer->email_notification_purchase) {
+            try {
+                Mail::to($buyer->email)->send(new BuyerPurchaseNotificationMail($notification));
+            } catch (\Exception $e) {
+                Log::error('Failed to send buyer purchase notification email: ' . $e->getMessage());
             }
         }
     }

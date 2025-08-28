@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class PurchaseNotificationMail extends Mailable
+class BuyerPurchaseNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,7 +30,7 @@ class PurchaseNotificationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'あなたの商品が購入されました！',
+            subject: 'ご購入ありがとうございます！',
         );
     }
 
@@ -40,7 +40,7 @@ class PurchaseNotificationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.notifications.purchase',
+            view: 'emails.notifications.buyer-purchase',
         );
     }
 

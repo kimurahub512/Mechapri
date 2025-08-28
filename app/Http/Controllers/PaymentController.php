@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\ProductBatch;
 use App\Models\UserPurchasedProduct;
+use App\Models\User;
 use App\Services\NWPSService;
 use App\Services\NotificationService;
 use App\Jobs\UploadToNWPSJob;
@@ -138,6 +139,16 @@ class PaymentController extends Controller
                                 \Illuminate\Support\Facades\Log::error('Failed to create purchase notification: ' . $e->getMessage());
                             }
 
+                            // Create notification for the buyer
+                            try {
+                                $buyer = User::find($payment->user_id);
+                                if ($buyer) {
+                                    NotificationService::createBuyerPurchaseNotification($buyer, $purchase);
+                                }
+                            } catch (\Exception $e) {
+                                \Illuminate\Support\Facades\Log::error('Failed to create buyer purchase notification: ' . $e->getMessage());
+                            }
+
                             // Remove cart item if it exists
                             \Illuminate\Support\Facades\Log::info('Attempting to remove cart item', [
                                 'payment_cart_item_id' => $payment->cart_item_id,
@@ -262,6 +273,16 @@ class PaymentController extends Controller
                                     NotificationService::createPurchaseNotification($seller, $purchase);
                                 } catch (\Exception $e) {
                                     \Illuminate\Support\Facades\Log::error('Failed to create purchase notification: ' . $e->getMessage());
+                                }
+
+                                // Create notification for the buyer
+                                try {
+                                    $buyer = User::find($payment->user_id);
+                                    if ($buyer) {
+                                        NotificationService::createBuyerPurchaseNotification($buyer, $purchase);
+                                    }
+                                } catch (\Exception $e) {
+                                    \Illuminate\Support\Facades\Log::error('Failed to create buyer purchase notification: ' . $e->getMessage());
                                 }
 
                                 // Remove cart item if it exists

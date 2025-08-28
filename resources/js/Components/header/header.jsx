@@ -17,7 +17,7 @@ const Header = ({ authButton }) => {
     <>
       {/* Desktop header (visible on lg and up) */}
       <div className='hidden md:flex fixed top-0 left-0 right-0 z-[10000] items-center border-b border-[#DCDCDC] bg-white' style={{...responsiveMetricD('full', 98)}}>
-        <div className='flex flex-row items-center py-[16px]' style={{gap: vwd(467), marginLeft: vwd(110), marginRight: vwd(120)}}>
+        <div className='flex flex-row items-center justify-between py-[16px] w-full' style={{marginLeft: vwd(110), marginRight: vwd(120)}}>
           <a href='/' className='flex items-center'>
             <img src={logo} alt='mechapuri Logo' style={{...responsiveMetricD(224, 58)}} />
           </a>

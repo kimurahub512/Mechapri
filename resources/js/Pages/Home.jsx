@@ -78,11 +78,17 @@ export default function Home() {
                 <img src={logo_group} alt="logo_group" style={responsiveMetricD(303, 62)} />
               </div>
             </div>
-            <button className='flex flex-col items-center justify-center' style={responsiveMetricD(494, 64)}>
+            <button 
+              className='flex flex-col items-center justify-center bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer' 
+              style={{ 
+                ...responsiveMetricD(494, 64), 
+                borderRadius: vwd(4),
+              }}
+            >
               <span style={responsiveTextD(14, 21, null, 'bold', 'noto', '#FFF')}>
                 １分で無料
               </span>
-              <span style={responsiveTextD(18, 21, null, 'black', 'noto', '#FFF')}>
+              <span style={responsiveTextD(18, 21, null, 'bold', 'noto', '#FFF')}>
                 今すぐ出品する
               </span>
             </button>
@@ -114,13 +120,13 @@ export default function Home() {
         </div>
         {/*section3 シークレット販売でファンの*/}
         <div className='flex flex-col items-center w-full' style={{ paddingBottom: vwd(64) }}>
-          <div className='flex flex-col items-center w-[831.6px]'>
+          <div className='flex flex-col items-center'>
             <div className='flex flex-row items-center justify-center w-full gap-[8px]'>
               <span style={responsiveTextD(24, 32, null, 'bold', 'noto', '#222')}>
                 活用事例
               </span>
               <span className='bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent' style={responsiveTextD(16, 24, null, 'semibold', 'noto')}>
-                Use case
+                Use cases
               </span>
             </div>
             <div className='flex flex-col items-center w-full mt-[6px]'>
@@ -423,7 +429,7 @@ export default function Home() {
                 活用事例
               </span>
               <span className='bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent' style={{ ...responsiveText(14, 20, null, 'semibold', 'general') }}>
-                Use case
+                Use cases
               </span>
             </div>
             <div className='flex flex-col items-center w-full'>

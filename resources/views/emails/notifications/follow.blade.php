@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>新しいフォロワーがいます</title>
+    <title>新しいフォロワーが増えました！</title>
     <style>
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -14,7 +14,7 @@
             padding: 20px;
         }
         .header {
-            background-color: #10B981;
+            background-color: #4F46E5;
             color: white;
             padding: 20px;
             text-align: center;
@@ -41,7 +41,7 @@
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;
-            border-left: 4px solid #10B981;
+            border-left: 4px solid #4F46E5;
         }
         .detail-row {
             display: flex;
@@ -57,7 +57,7 @@
         }
         .button {
             display: inline-block;
-            background-color: #10B981;
+            background-color: #4F46E5;
             color: white;
             padding: 12px 24px;
             text-decoration: none;
@@ -75,14 +75,17 @@
 </head>
 <body>
     <div class="header">
-        <h1>👥 新しいフォロワーがいます</h1>
+        <h1>🎉 新しいフォロワーが増えました！</h1>
     </div>
     
     <div class="content">
-        <div class="notification-title">{{ $notification->title }}</div>
-        
         <div class="notification-message">
-            {{ $notification->message }}
+            <p>{{ $notification->user->name }}様</p>
+            
+            <p>「{{ $notification->data['follower_name'] }}」さんがあなたをフォローしました。<br>
+            フォロワーが増えると、出品や活動がより多くの人に届きやすくなります。</p>
+            
+            <p>これからも「めちゃプリ」でのご活躍を応援しています。</p>
         </div>
         
         <div class="details">
@@ -92,7 +95,7 @@
             </div>
         </div>
         
-        <a href="{{ url('/myshop') }}" class="button">ショップページを確認</a>
+        <a href="{{ url('/myshop') }}" class="button">マイページを確認</a>
     </div>
     
     <div class="footer">

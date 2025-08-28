@@ -30,7 +30,7 @@ class MediPanelNotificationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->notification->title,
+            subject: '【めちゃプリ】運営からのお知らせ',
         );
     }
 
