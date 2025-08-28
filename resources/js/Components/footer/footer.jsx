@@ -233,7 +233,7 @@ const Footer = () => {
       </div>
 
       {/* Mobile Navigation Section */}
-      <div className='md:hidden fixed bottom-0 left-0 right-0 z-[10003] flex flex-row justify-between p-[8px_16px_0px_16px] bg-[#FFF] border-t border-[#DCDCDC]'>
+      <div className='md:hidden fixed bottom-0 left-0 right-0 z-[10003] flex flex-row justify-between p-[8px_16px_4px_16px] bg-[#FFF] border-t border-[#DCDCDC]'>
         <div className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
           {/* Home */}
           <img

@@ -969,7 +969,7 @@ const RegisterProduct = () => {
                 )}
 
                 {/* Mobile Main Section */}
-                <main className="flex md:hidden flex-col items-start w-full" style={{ gap: vw(16), paddingTop: vw(240), paddingBottom: vw(80), paddingLeft: vw(16), paddingRight: vw(16) }}>
+                <main className="flex md:hidden flex-col items-start w-full" style={{ gap: vw(16), paddingBottom: vw(80), paddingLeft: vw(16), paddingRight: vw(16) }}>
                     {/* Title */}
                     <h1 className="w-full text-left" style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>{editMode ? '商品編集' : '商品登録'}</h1>
                     {/* Error Message */}

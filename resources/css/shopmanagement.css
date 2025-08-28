@@ -1,7 +1,7 @@
 .shopmanagement-root {
   display: flex;
   flex-direction: row;
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 .shopmanagement-sidebar-outer {
@@ -836,7 +836,7 @@
   /* Mobile Navigation Block */
   .shopmanagement-mobile-nav {
     display: flex;
-    padding: 2px 17px;
+    padding: 8px 17px;
     flex-direction: column;
     align-items: center;
     align-self: stretch;
