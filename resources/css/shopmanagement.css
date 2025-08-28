@@ -836,7 +836,7 @@
   /* Mobile Navigation Block */
   .shopmanagement-mobile-nav {
     display: flex;
-    padding: 8px 17px;
+    padding: 2px 17px;
     flex-direction: column;
     align-items: center;
     align-self: stretch;
@@ -852,7 +852,6 @@
     border-radius: 8px;
     box-sizing: border-box;
     background: #fff;
-    margin-top: 8px;
   }
 
   .shopmanagement-mobile-nav-item {

@@ -39,7 +39,7 @@ const ShopTop = () => {
                             </div>
                             {/* 11112 */}
                             <div className="flex flex-col justify-center items-start" style={{ width: vw(158), paddingRight: vw(62), gap: vw(4) }}>
-                                <span style={{ ...responsiveText(18, 18, null, 'bold', 'noto', '#000'), whiteSpace: 'nowrap' }}>{shopData?.shop_title}</span>
+                                <span style={{ ...responsiveText(18, 18, null, 'bold', 'noto', '#000'), whiteSpace: 'nowrap' }}>{shopData?.name}</span>
                                 {/* 111121 */}
                                 <div className="flex flex-col items-start" style={{ gap: vw(4) }}>
                                     <span className='whitespace-nowrap' style={{ ...responsiveText(13, 21, null, 'normal', 'noto', '#000') }}>お気に入り登録者 {shopData?.follower_count || 0}人</span>
@@ -127,7 +127,7 @@ const ShopTop = () => {
                     {/* 111: User Image */}
                     <div className="absolute top-0 left-0 flex justify-center items-center rounded-full bg-cover bg-center" style={{ width: vwd(162), height: vwd(162), left: vwd(16), backgroundImage: `url(${shopData?.image || default_user})` }} />
                     {/* 112: Shop Title */}
-                    <span className="absolute text-[#000] font-noto font-medium" style={{ ...responsiveTextD(24, 24, null, 'medium', 'noto', '#000'), top: vwd(34), left: vwd(191) }}>{shopData?.shop_title || 'Shop'}</span>
+                    <span className="absolute text-[#000] font-noto font-medium" style={{ ...responsiveTextD(24, 24, null, 'medium', 'noto', '#000'), top: vwd(34), left: vwd(191) }}>{shopData?.name}</span>
                     {/* 113: Follower count and item count */}
                     <span className="absolute text-[#000] font-noto font-normal" style={{ ...responsiveTextD(16, 16, null, 'normal', 'noto', '#000'), top: vwd(66), left: vwd(191) }}>お気に入り登録者 {shopData?.follower_count || 0}人&nbsp;&nbsp;アイテム数 {shopData?.product_count || 0}</span>
                     {/* 114: SNS */}
