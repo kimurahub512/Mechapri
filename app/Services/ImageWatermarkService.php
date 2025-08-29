@@ -44,10 +44,10 @@ class ImageWatermarkService
             // Try SVG-based watermarking first, fall back to text if it fails
             $svgSuccess = $this->addSvgWatermark($image, $width, $height);
             
-            // if (!$svgSuccess) {
-            //     // Fall back to text watermarking
-            //     $this->addTextWatermark($image, $watermarkText, $width, $height);
-            // }
+            if (!$svgSuccess) {
+                // Fall back to text watermarking
+                $this->addTextWatermark($image, $watermarkText, $width, $height);
+            }
 
             // Save the watermarked image
             $extension = strtolower($pathInfo['extension']);
