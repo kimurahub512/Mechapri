@@ -663,7 +663,7 @@ const AccountSetting = () => {
         </div>
       </main>
       {/* Mobile Main Section */}
-      <main className="inline-flex md:hidden flex-col items-start w-full pt-[10px]" style={{ gap: vw(16) }}>
+      <main className="inline-flex md:hidden flex-col items-start w-full pt-[60px]" style={{ gap: vw(16) }}>
         {/* Frame 1 */}
         <div className="flex flex-row items-center w-full" style={{ gap: vw(16), paddingTop: vw(32), paddingLeft: vw(16), paddingRight: vw(16) }}>
           <span style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>アカウント</span>
@@ -877,7 +877,7 @@ const AccountSetting = () => {
                 ].map((text, idx) => (
                   <div key={idx} className="flex flex-col p-[14px_0] gap-[10px] self-stretch border-b border-[#E9E9E9]" style={{ width: vw(311) }}>
                     <div className="flex justify-between items-center self-stretch">
-                      <div className="flex items-center flex-1" style={{ paddingRight: vw(25), paddingTop: vw(8) }}>
+                      <div className="flex items-center flex-1" style={{ paddingRight: vw(25), height: vw(32) }}>
                         <span className="whitespace-nowrap" style={{ ...responsiveText(13, 24, null, 'normal', 'noto', '#363636') }}>{text}</span>
                       </div>
                       <div className="flex items-center" style={{ height: vw(32), paddingRight: vw(16) }}>
@@ -885,15 +885,15 @@ const AccountSetting = () => {
                           onClick={() => handleToggle(text)}
                           className="rounded-full flex items-center transition-all duration-200 ease-in-out"
                           style={{
-                            ...responsiveMetric(62, 32),
+                            ...responsiveMetric(48, 24),
                             backgroundColor: userData.notificationSettings[text] ? '#AB31D3' : '#E9E9E9'
                           }}
                         >
                           <div
                             className="rounded-full bg-white transition-all duration-200 ease-in-out"
                             style={{
-                              ...responsiveMetric(28, 28),
-                              marginLeft: userData.notificationSettings[text] ? vw(2) : vw(32)
+                              ...responsiveMetric(20, 20),
+                              marginLeft: userData.notificationSettings[text] ? vw(2) : vw(26)
                             }}
                           ></div>
                         </button>

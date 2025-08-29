@@ -1,11 +1,11 @@
 import React from 'react';
 import default_user from '@/assets/images/default-user.png';
-import pen_paper from '@/assets/images/pen_paper.svg';
+import pen_paper from '@/assets/images/pen_paper.png';
 import shop from '@/assets/images/Slider_03.svg';
 import select_multiple from '@/assets/images/select_multiple.svg';
 import cart2 from '@/assets/images/cart2.svg';
-import p_circle from '@/assets/images/p_circle.svg';
-import clock_pink from '@/assets/images/clock_pink.svg';
+import p_circle from '@/assets/images/p_circle.png';
+import clock_pink from '@/assets/images/clock_pink.png';
 import file_add from '@/assets/images/file_add.svg';
 import { vwd, responsiveTextD, responsiveMetricD, responsivePositionD } from '@/lib/utils';
 import { usePage } from '@inertiajs/react';

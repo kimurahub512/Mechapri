@@ -185,24 +185,15 @@ class ProductBatch extends Model
      */
     public function getWatermarkedImages(?User $user = null): array
     {
-        // Show original images only to the owner; everyone else sees watermarked
-        $viewerIsOwner = $user && $user->id === $this->user_id;
-        if ($viewerIsOwner) {
-            return $this->files->map(function($file) {
-                return [
-                    'id' => $file->id,
-                    'url' => $file->url,
-                    'filename' => $file->filename,
-                    'sort_order' => $file->sort_order
-                ];
-            })->toArray();
-        }
-
-        // For non-owners, return watermarked HTML wrapper URLs
+        // Always return watermarked URLs (owner or not)
         $watermarkService = app(\App\Services\ImageWatermarkService::class);
         
         return $this->files->map(function($file) use ($watermarkService) {
             $watermarkedUrl = $watermarkService->getWatermarkedImageUrl($file->file_path);
+            // If display mode is blur, request blurred watermark
+            if ($this->display_mode === 'blur') {
+                $watermarkedUrl .= (str_contains($watermarkedUrl, '?') ? '&' : '?') . 'blur=1';
+            }
             return [
                 'id' => $file->id,
                 'url' => $watermarkedUrl,
@@ -217,21 +208,17 @@ class ProductBatch extends Model
      */
     public function getWatermarkedImageUrl(?User $user = null): string
     {
-        // Show original image only to the owner; everyone else gets watermarked
-        $viewerIsOwner = $user && $user->id === $this->user_id;
-        
-        if ($viewerIsOwner) {
-            return $this->files->first()?->url ?? '';
-        }
-
-        // For non-owners, return watermarked image
+        // Always return watermarked image (owner or not)
         $watermarkService = app(\App\Services\ImageWatermarkService::class);
         $firstFile = $this->files->first();
         
         if (!$firstFile) {
             return '';
         }
-
-        return $watermarkService->getWatermarkedImageUrl($firstFile->file_path);
+        $url = $watermarkService->getWatermarkedImageUrl($firstFile->file_path);
+        if ($this->display_mode === 'blur') {
+            $url .= (str_contains($url, '?') ? '&' : '?') . 'blur=1';
+        }
+        return $url;
     }
 }

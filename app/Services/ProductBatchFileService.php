@@ -156,16 +156,25 @@ class ProductBatchFileService
         try {
             $files = $productBatch->files;
 
+            // Best-effort delete of all known files
             foreach ($files as $file) {
                 if (Storage::disk('public')->exists($file->file_path)) {
                     Storage::disk('public')->delete($file->file_path);
                 }
             }
 
-            // Delete directory if empty
-            $userDir = "product-batches/user_{$productBatch->user_id}/batch_{$productBatch->id}";
-            if (Storage::disk('public')->exists($userDir)) {
-                Storage::disk('public')->deleteDirectory($userDir);
+            // Force delete the batch directory (recursive)
+            $batchDir = "product-batches/user_{$productBatch->user_id}/batch_{$productBatch->id}";
+            Storage::disk('public')->deleteDirectory($batchDir);
+
+            // If user's directory is now empty, remove it too to avoid clutter
+            $userBaseDir = "product-batches/user_{$productBatch->user_id}";
+            if (Storage::disk('public')->exists($userBaseDir)) {
+                $contents = Storage::disk('public')->allFiles($userBaseDir);
+                $dirs = Storage::disk('public')->allDirectories($userBaseDir);
+                if (empty($contents) && empty($dirs)) {
+                    Storage::disk('public')->deleteDirectory($userBaseDir);
+                }
             }
 
             return true;

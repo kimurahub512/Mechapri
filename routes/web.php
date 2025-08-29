@@ -107,7 +107,24 @@ Route::get('/api/watermarked-image-b64/{path}', function($path) {
         Log::info('Original image exists, creating watermarked version');
         $watermarkService = app(\App\Services\ImageWatermarkService::class);
         $watermarkedPath = $watermarkService->createWatermarkedImage($decodedPath);
-        
+
+        // Optionally blur the watermarked image when requested (for display_mode=blur)
+        if (request()->boolean('blur') && $watermarkedPath && Storage::disk('public')->exists($watermarkedPath)) {
+            try {
+                $fullBlurPath = Storage::disk('public')->path($watermarkedPath);
+                $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+                $img = $manager->read($fullBlurPath)->blur(10);
+                $ext = strtolower(pathinfo($fullBlurPath, PATHINFO_EXTENSION));
+                if ($ext === 'png') {
+                    Storage::disk('public')->put($watermarkedPath, (string) $img->toPng());
+                } else {
+                    Storage::disk('public')->put($watermarkedPath, (string) $img->toJpeg(90));
+                }
+            } catch (\Exception $e) {
+                Log::error('Failed to blur watermarked image: ' . $e->getMessage());
+            }
+        }
+
         Log::info('Watermark service returned path: ' . ($watermarkedPath ?: 'null'));
         
         if ($watermarkedPath && Storage::disk('public')->exists($watermarkedPath)) {

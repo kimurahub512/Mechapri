@@ -11,12 +11,12 @@ import x from '@/assets/images/x_logo.svg';
 import favoriteshop from '@/assets/images/favoriteshop.svg';
 import arrow_right from '@/assets/images/arrow_right.svg';
 import mountain from '@/assets/images/mountain_gray.svg';
-import {vwd, vw, responsiveTextD, responsiveText, vwR, responsiveMetricR, responsiveTextR} from '@/lib/utils';
+import { vwd, vw, responsiveTextD, responsiveText, vwR, responsiveMetricR, responsiveTextR } from '@/lib/utils';
 
 const ShopTop = () => {
     const { shopData, latestProducts, categoryProducts, auth } = usePage().props;
     console.log('categoryProducts', categoryProducts);
-    
+
     // Check if current user has favorited this shop
     const isFavorited = shopData?.is_favorited_by_current_user || false;
     return (
@@ -32,10 +32,10 @@ const ShopTop = () => {
                         <div className="flex items-start self-stretch" style={{ paddingRight: vw(103) }}>
                             {/* 11111 */}
                             <div className="flex flex-col items-start" style={{ width: vw(82), minWidth: vw(64), minHeight: vw(48), paddingRight: vw(16) }}>
-                                                            {/* 111111: User Image */}
-                            <div className="flex justify-center items-center" style={{ width: vw(64), height: vw(64) }}>
-                                <img src={shopData?.image || default_user} alt="user" className="rounded-full object-cover" style={{ width: vw(64), height: vw(64) }} />
-                            </div>
+                                {/* 111111: User Image */}
+                                <div className="flex justify-center items-center" style={{ width: vw(64), height: vw(64) }}>
+                                    <img src={shopData?.image || default_user} alt="user" className="rounded-full object-cover" style={{ width: vw(64), height: vw(64) }} />
+                                </div>
                             </div>
                             {/* 11112 */}
                             <div className="flex flex-col justify-center items-start" style={{ width: vw(158), paddingRight: vw(62), gap: vw(4) }}>
@@ -51,7 +51,7 @@ const ShopTop = () => {
                                         <a href={`https://x.com/${shopData.xlink}`} target="_blank" rel="noopener noreferrer">
                                             <img src={x} alt="x" className="flex justify-center items-center aspect-square cursor-pointer hover:opacity-80 transition-opacity" style={{ width: vw(36), height: vw(36), padding: vw(2.571), paddingLeft: vw(1.286), paddingRight: vw(1.286), paddingBottom: vw(1.286) }} />
                                         </a>
-                                    )}                                    
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -59,13 +59,13 @@ const ShopTop = () => {
                         <div className="flex justify-end items-center self-stretch" style={{ gap: vw(8) }}>
                             <span style={{ ...responsiveText(16, 16, null, 'normal', 'noto', '#000') }}>{shopData?.follower_count || 0}人が登録</span>
                             {/* 11121: Follow button */}
-                                <FavoriteShopButton 
-                                    shopUserId={shopData?.id}
-                                    initialIsFavorited={isFavorited}
-                                    isMobile={true}
-                                    refreshOnToggle={true}
-                                    disable={auth?.user && auth.user.id === shopData?.id}
-                                />
+                            <FavoriteShopButton
+                                shopUserId={shopData?.id}
+                                initialIsFavorited={isFavorited}
+                                isMobile={true}
+                                refreshOnToggle={true}
+                                disable={auth?.user && auth.user.id === shopData?.id}
+                            />
                         </div>
                         {/* 112: Description */}
                         <div className="flex flex-col items-start self-stretch" style={{ maxWidth: vw(1248) }}>
@@ -83,15 +83,15 @@ const ShopTop = () => {
                         <img src={arrow_right} alt="arrow right" style={{ width: vw(20), height: vw(20) }} />
                     </div>
                     {/* 212: Product List */}
-                    <ProductCarousel 
-                        products={latestProducts || []} 
+                    <ProductCarousel
+                        products={latestProducts || []}
                         isMobile={true}
                         horizontalScroll={true}
                         currentUserId={auth?.user?.id}
                     />
                 </div>
                 {/* Category Sections */}
-                {categoryProducts.length? (categoryProducts.map((categorySection, index) => (
+                {categoryProducts.length ? (categoryProducts.map((categorySection, index) => (
                     <div key={categorySection.category.id} className="flex flex-col items-start w-full" style={{ gap: vw(8) }}>
                         {/* 211: Category Title + arrow */}
                         <a href={`/shop-newcategory/${categorySection.category.id}`} className="flex items-center w-full cursor-pointer hover:opacity-80 transition-opacity" style={{ paddingTop: vw(12), paddingBottom: vw(6), gap: vw(12) }}>
@@ -99,21 +99,21 @@ const ShopTop = () => {
                             <img src={arrow_right} alt="arrow right" style={{ width: vw(20), height: vw(20) }} />
                         </a>
                         {/* 212: Product List */}
-                        <ProductCarousel 
-                            products={categorySection.products || []} 
+                        <ProductCarousel
+                            products={categorySection.products || []}
                             isMobile={true}
                             horizontalScroll={true}
                             currentUserId={auth?.user?.id}
                         />
                     </div>
-                ))):(
+                ))) : (
                     <div className="flex flex-col items-start self-stretch" style={{ gap: vwR(8, 8), paddingTop: vwR(12, 25) }}>
-                        <span style={{...responsiveTextR(16, 20, 'bold', 24, 37, 'bold', 'noto', '#000')}}>新しいリスト</span>
-                        <div className="flex flex-col items-center justify-center" style={{...responsiveMetricR(343, 320, 1200, 320)}}>
+                        <span style={{ ...responsiveTextR(16, 20, 'bold', 24, 37, 'bold', 'noto', '#000') }}>新しいリスト</span>
+                        <div className="flex flex-col items-center justify-center" style={{ ...responsiveMetricR(343, 320, 1200, 320) }}>
                             <div className="flex flex-col items-center justify-center ">
-                                <img src={mountain} alt="add" style={{...responsiveMetricR(24, 24, 24, 24)}} />
-                                <span style={{...responsiveTextR(16, 32, 'bold', 16, 32, 'bold', 'noto', '#767676')}}>リストはありません</span>
-                                <span style={{...responsiveTextR(12, 24, 'medium', 12, 24, 'medium', 'noto', '#767676')}}>商品をリストに追加しましょう</span>
+                                <img src={mountain} alt="add" style={{ ...responsiveMetricR(24, 24, 24, 24) }} />
+                                <span style={{ ...responsiveTextR(16, 32, 'bold', 16, 32, 'bold', 'noto', '#767676') }}>リストはありません</span>
+                                <span style={{ ...responsiveTextR(12, 24, 'medium', 12, 24, 'medium', 'noto', '#767676') }}>商品をリストに追加しましょう</span>
                             </div>
                         </div>
                     </div>
@@ -141,13 +141,13 @@ const ShopTop = () => {
                     <div className="absolute inline-flex items-center" style={{ top: vwd(106), right: vwd(16), gap: vwd(8) }}>
                         <span className="text-[#000] font-noto font-normal" style={{ ...responsiveTextD(16, 16, null, 'normal', 'noto', '#000') }}>{shopData?.follower_count || 0}人が登録</span>
                         {/* 1151: Follow button */}
-                            <FavoriteShopButton 
-                                shopUserId={shopData?.id}
-                                initialIsFavorited={isFavorited}
-                                isMobile={false}
-                                refreshOnToggle={true}
-                                disable={auth?.user && auth.user.id === shopData?.id}
-                            />
+                        <FavoriteShopButton
+                            shopUserId={shopData?.id}
+                            initialIsFavorited={isFavorited}
+                            isMobile={false}
+                            refreshOnToggle={true}
+                            disable={auth?.user && auth.user.id === shopData?.id}
+                        />
                     </div>
                     {/* 116: Description */}
                     <div className="absolute flex flex-col items-start self-stretch" style={{ top: vwd(194), left: vwd(16), maxWidth: vwd(1248) }}>
@@ -160,7 +160,7 @@ const ShopTop = () => {
                 </div>
             </section>
             {/* Section 2 (Desktop) */}
-            <section className="hidden md:flex flex-col items-start w-full bg-white pt-[130px]" style={{ paddingTop: vwd(80), paddingBottom: vwd(80), paddingLeft: vwd(120), paddingRight: vwd(120) }}>
+            <section className="hidden md:flex flex-col items-start w-full bg-white pt-[130px]" style={{ paddingTop: vwd(80), paddingBottom: vwd(80), paddingLeft: vwd(120)}}>
                 <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                     {/* 211: 最新の出品 + arrow */}
                     <a href='/shop-newproducts' className="flex items-center" style={{ width: vwd(277), paddingTop: vwd(25), paddingRight: 0, paddingBottom: vwd(6), paddingLeft: 0, gap: vwd(12) }}>
@@ -168,8 +168,8 @@ const ShopTop = () => {
                         <img src={arrow_right} alt="arrow right" style={{ width: vwd(24), height: vwd(24) }} />
                     </a>
                     {/* 212: Product List */}
-                    <ProductCarousel 
-                        products={latestProducts || []} 
+                    <ProductCarousel
+                        products={latestProducts || []}
                         isMobile={false}
                         horizontalScroll={true}
                         currentUserId={auth?.user?.id}
@@ -184,26 +184,26 @@ const ShopTop = () => {
                             <img src={arrow_right} alt="arrow right" style={{ width: vwd(24), height: vwd(24) }} />
                         </a>
                         {/* 212: Product List */}
-                        <ProductCarousel 
-                            products={categorySection.products || []} 
+                        <ProductCarousel
+                            products={categorySection.products || []}
                             isMobile={false}
                             horizontalScroll={true}
                             currentUserId={auth?.user?.id}
                         />
                     </div>
-                ))):
-                (
-                    <div className="flex flex-col items-start self-stretch" style={{ gap: vwR(8, 8), paddingTop: vwR(12, 25) }}>
-                        <span style={{...responsiveTextR(16, 20, 'bold', 24, 37, 'bold', 'noto', '#000')}}>新しいリスト</span>
-                        <div className="flex flex-col items-center justify-center" style={{...responsiveMetricR(343, 320, 1200, 320)}}>
-                            <div className="flex flex-col items-center justify-center">
-                                <img src={mountain} alt="add" style={{...responsiveMetricR(24, 24, 24, 24)}} />
-                                <span style={{...responsiveTextR(16, 32, 'bold', 16, 32, 'bold', 'noto', '#767676')}}>リストはありません</span>
-                                <span style={{...responsiveTextR(12, 24, 'medium', 12, 24, 'medium', 'noto', '#767676')}}>商品をリストに追加しましょう</span>
+                ))) :
+                    (
+                        <div className="flex flex-col items-start self-stretch" style={{ gap: vwR(8, 8), paddingTop: vwR(12, 25) }}>
+                            <span style={{ ...responsiveTextR(16, 20, 'bold', 24, 37, 'bold', 'noto', '#000') }}>新しいリスト</span>
+                            <div className="flex flex-col items-center justify-center" style={{ ...responsiveMetricR(343, 320, 1200, 320) }}>
+                                <div className="flex flex-col items-center justify-center">
+                                    <img src={mountain} alt="add" style={{ ...responsiveMetricR(24, 24, 24, 24) }} />
+                                    <span style={{ ...responsiveTextR(16, 32, 'bold', 16, 32, 'bold', 'noto', '#767676') }}>リストはありません</span>
+                                    <span style={{ ...responsiveTextR(12, 24, 'medium', 12, 24, 'medium', 'noto', '#767676') }}>商品をリストに追加しましょう</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
             </section>
 
             <Footer />

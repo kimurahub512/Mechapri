@@ -12,7 +12,7 @@ import girl from '@/assets/images/favoriteshops/girl.svg';
 import instagram from '@/assets/images/instagram.svg';
 import x from '@/assets/images/x_logo.svg';
 import favoriteshop from '@/assets/images/favoriteshop.svg';
-import heart from '@/assets/images/heart.svg';
+import heart from '@/assets/images/heart.png';
 import arrow_right from '@/assets/images/arrow_right.svg';
 import arrow_left from '@/assets/images/arrow_left.svg';
 

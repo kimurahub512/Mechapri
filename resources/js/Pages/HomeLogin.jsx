@@ -4,7 +4,7 @@ import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import ProductCarousel from '@/Components/ProductCarousel';
 import '@/../../resources/css/shopmanagement.css';
-import list from '@/assets/images/list_unordered.svg';
+import list from '@/assets/images/list_unordered.png';
 import arrow from '@/assets/images/arrow_right.svg';
 
 

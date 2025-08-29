@@ -35,6 +35,7 @@ const PurchasedProduct = ({ product }) => {
     const [isUnlocked, setIsUnlocked] = useState(false);
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
+    const [cushionRevealed, setCushionRevealed] = useState(false);
 
     useEffect(() => {
         const checkPassword = async () => {
@@ -303,18 +304,26 @@ const PurchasedProduct = ({ product }) => {
                                             <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
                                         ) : product.display_mode === 'cushion' ? (
                                             <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
-                                                <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                    <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
-                                                    <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
-                                                    <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
-                                                </div>
+                                                {!cushionRevealed ? (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setCushionRevealed(true)}
+                                                        className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px] cursor-pointer z-10"
+                                                    >
+                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                            <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
+                                                            <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
+                                                            <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
+                                                        </div>
+                                                    </button>
+                                                ) : null}
+                                                <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
                                             </div>
                                         ) : (
                                             <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
                                         )}
                                     </div>
-                                    {product.images.length > 0 && (product.display_mode !== 'password' || isUnlocked) && (
+                                    {product.images.length > 1 && (product.display_mode !== 'password' || isUnlocked) && (
                                         <BadgeDisplay
                                             buttonClassName="px-[16px] py-[8px] gap-[4px] rounded-[10px] border-[1px] border-solid border-[#FF2AA1]"
                                             textClassName="text-[#FF2AA1] text-[18px] font-medium leading-[18px]"
@@ -356,7 +365,7 @@ const PurchasedProduct = ({ product }) => {
                                         <span className="text-white font-noto text-[14px] font-bold leading-[14px] ">プリント期限</span>
                                     </div>
                                     <div className="flex flex-col items-start ml-[24px]">
-                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px]">{product.print_deadline}まで</span>
                                     </div>
                                 </div>
                                 {/* 12122: Print options */}
@@ -387,12 +396,12 @@ const PurchasedProduct = ({ product }) => {
                                         </div>
                                     </div>
                                     {/* 121222: Seven Eleven */}
-                                    <div className="flex w-[480px] h-[74px] px-[24px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50 ">
+                                    {/* <div className="flex w-[480px] h-[74px] px-[24px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50 ">
                                         <div className="flex items-center w-[425px] h-[74px] py-[30px] justify-between">
                                             <span className="font-noto text-[18px] font-bold leading-[20.7px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
                                             <img src={eleven} alt="eleven" className="w-[59px] h-[59px] rounded-full object-cover ml-[16px]" />
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                             {/* 1213: Help link */}
@@ -412,25 +421,25 @@ const PurchasedProduct = ({ product }) => {
                                 <div className="flex flex-col items-start gap-[24px] w-full">
                                     {product.top_buyers && product.top_buyers.map((buyer, index) => (
                                         <div key={index} className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                            <div className="flex items-center gap-[24px]">
-                                                <div className="flex flex-col items-center pb-[12px]">
+                                        <div className="flex items-center gap-[24px]">
+                                            <div className="flex flex-col items-center pb-[12px]">
                                                     <span className={`font-noto font-bold ${index === 0 ? 'text-[36px] leading-[54px]' : index <= 2 ? 'text-[28px] leading-[42px]' : 'text-[24px] leading-[24px]'} ${index <= 2 ? 'text-[#AB31D3]' : 'text-[#222]'}`}>{index + 1}</span>
-                                                </div>
-                                                <div className="flex items-center">
-                                                    <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                        <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                            <img src={buyer.user.image || default_user} alt={buyer.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                        <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{buyer.user.name}</span>
-                                                    </div>
-                                                </div>
                                             </div>
-                                            <div className="flex flex-col items-end">
-                                                <span className="text-[#767676] font-noto text-[14px] font-bold leading-[21px]">{buyer.total_quantity}点</span>
+                                            <div className="flex items-center">
+                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
+                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
+                                                            <img src={buyer.user.image || default_user} alt={buyer.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
+                                                    </div>
+                                                </div>
+                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
+                                                        <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{buyer.user.name}</span>
+                                                </div>
                                             </div>
                                         </div>
+                                            <div className="flex flex-col items-end">
+                                                <span className="text-[#767676] font-noto text-[14px] font-bold leading-[21px]">{buyer.total_quantity}点</span>
+                                    </div>
+                                            </div>
                                     ))}
                                 </div>
                             </div>
@@ -655,18 +664,26 @@ const PurchasedProduct = ({ product }) => {
                                             <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
                                         ) : product.display_mode === 'cushion' ? (
                                             <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
-                                                <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                    <img src={warning} alt="warning" className="w-[24px] h-[24px]" />
-                                                    <span className="text-[#464F5D] text-[10px] font-bold">WARNING</span>
-                                                    <span className="text-[#464F5D] text-[8px]">クリックして内容を確認</span>
-                                                </div>
+                                                {!cushionRevealed ? (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setCushionRevealed(true)}
+                                                        className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px] cursor-pointer z-10"
+                                                    >
+                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                            <img src={warning} alt="warning" className="w-[24px] h-[24px]" />
+                                                            <span className="text-[#464F5D] text-[10px] font-bold">WARNING</span>
+                                                            <span className="text-[#464F5D] text-[8px]">クリックして内容を確認</span>
+                                                        </div>
+                                                    </button>
+                                                ) : null}
+                                                <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
                                             </div>
                                         ) : (
                                             <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
                                         )}
                                     </div>
-                                    {product.images.length > 0 && (product.display_mode !== 'password' || isUnlocked) && (
+                                    {product.images.length > 1 && (product.display_mode !== 'password' || isUnlocked) && (
                                         <BadgeDisplay
                                             buttonClassName="px-[12px] py-[6px] gap-[3px] rounded-[10px] border-[1px] border-solid border-[#E862CB]"
                                             textClassName="text-[#E862CB] text-[18px] font-medium leading-[18px]"
@@ -706,7 +723,7 @@ const PurchasedProduct = ({ product }) => {
                                         <span className="text-white font-noto text-[14px] font-bold leading-[14px]">プリント期限</span>
                                     </div>
                                     <div className="flex flex-col items-start ml-[16px]">
-                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px]">{product.print_deadline}まで</span>
                                     </div>
                                 </div>
                                 {/* 12122: Print options */}
@@ -737,12 +754,12 @@ const PurchasedProduct = ({ product }) => {
                                         </div>
                                     </div>
                                     {/* 121222: Seven Eleven */}
-                                    <div className="flex w-full h-[60px] px-[16px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50">
+                                    {/* <div className="flex w-full h-[60px] px-[16px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50">
                                         <div className="flex items-center w-full h-[60px] py-[20px] justify-between">
                                             <span className="font-noto text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
                                             <img src={eleven} alt="eleven" className="w-[40px] h-[40px] rounded-full object-cover ml-[12px]" />
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                             {/* 1213: Help link */}
@@ -762,25 +779,25 @@ const PurchasedProduct = ({ product }) => {
                                 <div className="flex flex-col items-start gap-[16px] w-full">
                                     {product.top_buyers && product.top_buyers.map((buyer, index) => (
                                         <div key={index} className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                            <div className="flex items-center gap-[16px]">
-                                                <div className="flex flex-col items-center pb-[8px]">
+                                        <div className="flex items-center gap-[16px]">
+                                            <div className="flex flex-col items-center pb-[8px]">
                                                     <span className={`font-noto font-bold ${index === 0 ? 'text-[24px] leading-[32px] text-[#AB31D3]' : index <= 2 ? 'text-[20px] leading-[28px] text-[#AB31D3]' : 'text-[18px] leading-[24px] text-[#222]'}`}>{index + 1}</span>
-                                                </div>
-                                                <div className="flex items-center">
-                                                    <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                        <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                            <img src={buyer.user.image || default_user} alt={buyer.user.name} className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                        <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">{buyer.user.name}</span>
-                                                    </div>
-                                                </div>
                                             </div>
-                                            <div className="flex flex-col items-end">
-                                                <span className="text-[#767676] font-noto text-[14px] font-bold leading-[21px]">{buyer.total_quantity}点</span>
+                                            <div className="flex items-center">
+                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
+                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
+                                                            <img src={buyer.user.image || default_user} alt={buyer.user.name} className="w-[48px] h-[48px] rounded-full object-cover" />
+                                                    </div>
+                                                </div>
+                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
+                                                        <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">{buyer.user.name}</span>
+                                                </div>
                                             </div>
                                         </div>
+                                            <div className="flex flex-col items-end">
+                                                <span className="text-[#767676] font-noto text-[14px] font-bold leading-[21px]">{buyer.total_quantity}点</span>
+                                    </div>
+                                            </div>
                                     ))}
                                 </div>
                             </div>

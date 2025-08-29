@@ -2,7 +2,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import logo from '@/assets/images/mechapuri_logo.png';
 import arrow from '@/assets/images/icon-arrow.svg';
-import cart from '@/assets/images/icon-cart.svg';
+import cart from '@/assets/images/icon-cart.png';
 import man from '@/assets/images/icon-man.svg';
 import shop from '@/assets/images/Slider_03.svg'
 import bell from '@/assets/images/bell.svg'

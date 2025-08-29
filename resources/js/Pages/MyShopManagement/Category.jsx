@@ -8,7 +8,7 @@ import ConfirmationModal from '@/Components/ConfirmationModal';
 import CategoryReorderModal from '@/Components/CategoryReorderModal';
 import '@/../../resources/css/shopmanagement.css';
 import recyclebin from '@/assets/images/recyclebin.svg';
-import list from '@/assets/images/list_unordered.svg';
+import list from '@/assets/images/list_unordered.png';
 import arrow from '@/assets/images/arrow_right.svg';
 import file_add from '@/assets/images/file_add.svg';
 import {vw, vwd, responsiveText, responsiveTextD, responsiveMetric, responsiveMetricD} from '@/lib/utils';

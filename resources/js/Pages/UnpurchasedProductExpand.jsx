@@ -13,7 +13,7 @@ import x from '@/assets/images/x_logo.svg';
 import instagram from '@/assets/images/instagram.svg';
 import favoriteshops from '@/assets/images/favoriteshop.svg';
 import favoriteshops_follow from '@/assets/images/favoriteshop_white.svg';
-import cart from '@/assets/images/icon-cart.svg';
+import cart from '@/assets/images/icon-cart.png';
 import QuantityControl from '@/Components/QuantityControl';
 import purchase_qr from '@/assets/images/purchase_qr.svg';
 import print_qr from '@/assets/images/print_qr.svg';
@@ -26,6 +26,7 @@ import warning from '@/assets/images/warning.svg';
 const UnpurchasedProductExpand = ({ product }) => {
     const { auth } = usePage().props;
     const [isUnlocked, setIsUnlocked] = useState(false);
+    const [cushionRevealed, setCushionRevealed] = useState(false);
 
     useEffect(() => {
         const checkPassword = async () => {
@@ -306,12 +307,20 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                         </div>
                                                     ) : product.display_mode === 'cushion' ? (
                                                         <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
-                                                            <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px]" />
-                                                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                                <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
-                                                                <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
-                                                                <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
-                                                            </div>
+                                                            {!cushionRevealed ? (
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => setCushionRevealed(true)}
+                                                                    className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px] cursor-pointer z-10"
+                                                                >
+                                                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                                        <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
+                                                                        <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
+                                                                        <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
+                                                                    </div>
+                                                                </button>
+                                                            ) : null}
+                                                            <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
                                                         </div>
                                                     ) : (
                                                         <div className="relative h-full w-full">
@@ -700,12 +709,20 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                     <img src={image} alt={product.title} className="h-[147px] w-[98px] object-cover rounded-[6px]" />
                                                 ) : product.display_mode === 'cushion' ? (
                                                     <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
-                                                        <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px]" />
-                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                            <img src={warning} alt="warning" className="w-[32px] h-[32px]" />
-                                                            <span className="text-[#464F5D] text-[12px] font-bold">WARNING</span>
-                                                            <span className="text-[#464F5D] text-[10px]">クリックして内容を確認</span>
-                                                        </div>
+                                                        {!cushionRevealed ? (
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => setCushionRevealed(true)}
+                                                                className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px] cursor-pointer z-10"
+                                                            >
+                                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                                    <img src={warning} alt="warning" className="w-[32px] h-[32px]" />
+                                                                    <span className="text-[#464F5D] text-[12px] font-bold">WARNING</span>
+                                                                    <span className="text-[#464F5D] text-[10px]">クリックして内容を確認</span>
+                                                                </div>
+                                                            </button>
+                                                        ) : null}
+                                                        <img src={image} alt={product.title} className="h-[147px] w-[98px] object-cover rounded-[6px]" />
                                                     </div>
                                                 ) : (
                                                     <img src={image} alt={product.title} className="h-[147px] w-[98px] object-cover rounded-[6px]" />

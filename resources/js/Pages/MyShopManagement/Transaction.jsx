@@ -4,10 +4,10 @@ import Footer from '@/Components/footer/footer';
 import ShopSidebar from '@/Components/ShopSidebar';
 import ShopMobileTopBlock from '@/Components/ShopMobileTopBlocks';
 import '@/../../resources/css/shopmanagement.css';
-import list_unordered from '@/assets/images/list_unordered.svg';
-import money_out from '@/assets/images/money_out.svg';
-import money_hand from '@/assets/images/money_hand_filled.svg';
-import three_money from '@/assets/images/three_money.svg';
+import list_unordered from '@/assets/images/list_unordered.png';
+import money_out from '@/assets/images/money_out.png';
+import money_hand from '@/assets/images/money_hand_filled.png';
+import three_money from '@/assets/images/three_money.png';
 
 const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, paymentThreshold = 5000 }) => {
     const [activeFilter, setActiveFilter] = useState('all');
@@ -254,7 +254,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                 </section>
             </main>
             {/* Mobile Main Section */}
-            <main className="md:hidden inline-flex flex-col items-start gap-4 pb-[80px] mx-4 pt-[30px]">
+            <main className="md:hidden inline-flex flex-col items-start gap-4 pb-[80px] mx-4 pt-[24px]">
                 {/* Title */}
                 <h1 className="w-full text-left font-bold text-[24px] leading-[24px] text-[#363636] font-['Noto Sans JP']">出金・売上</h1>
                 {/* Frame 1 */}
@@ -344,15 +344,15 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                             {displayedMonths.map((monthData, index) => (
                                 <div key={index} className="flex flex-col p-[9px_1px_1px_1px] items-start rounded-[8px] bg-white w-full">
                                     {/* 12211: Header */}
-                                    <div className="flex w-[311px] px-4 py-[6px] justify-between items-center border-b border-[#E9E9E9]">
+                                    <div className="flex w-full px-4 py-[6px] justify-between items-center border-b border-[#E9E9E9]">
                                         <span className="text-[#363636] font-bold text-[14px] leading-[14px] font-['Noto Sans JP']">{monthData.month}</span>
                                     </div>
                                     {/* 12212: 最終残高 */}
                                     {(activeFilter === 'all') && (
-                                        <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px] border-b border-[#E9E9E9]">
-                                            <div className="flex items-start gap-2">
+                                        <div className="flex w-full h-[60px] px-4 py-[10px] justify-between items-start border-b border-[#E9E9E9]">
+                                            <div className="flex items-start justify-center gap-2">
                                                 <img src={three_money} alt="最終残高" className="w-[35px] h-[30px]" />
-                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">最終残高</span>
+                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] pt-[6px] pb-[12px] font-['Hiragino Sans'] whitespace-nowrap">最終残高</span>
                                             </div>
                                             <div className="flex items-center ml-auto">
                                                 <span className="flex items-center">
@@ -367,10 +367,10 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     )}
                                     {/* 12213: 販売売上 */}
                                     {(activeFilter === 'all' || activeFilter === 'sales') && (
-                                        <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px] border-b border-[#E9E9E9]">
-                                            <div className="flex items-start gap-2">
+                                        <div className="flex w-full h-[60px] px-4 py-[10px] justify-between items-start border-b border-[#E9E9E9]">
+                                            <div className="flex items-start justify-center gap-2">
                                                 <img src={money_hand} alt="販売売上" className="w-[35px] h-[30px]" />
-                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">販売売上</span>
+                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] pt-[6px] pb-[12px] font-['Hiragino Sans'] whitespace-nowrap">販売売上</span>
                                             </div>
                                             <div className="flex items-center ml-auto">
                                                 <span className="flex items-center">
@@ -385,10 +385,10 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     )}
                                     {/* 12214: 販売手数料 */}
                                     {(activeFilter === 'all') && (
-                                        <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px] border-b border-[#E9E9E9]">
-                                            <div className="flex items-start gap-2">
+                                        <div className="flex w-full h-[60px] px-4 py-[10px] justify-between items-start border-b border-[#E9E9E9]">
+                                            <div className="flex items-start justify-center gap-2">
                                                 <img src={money_out} alt="販売手数料" className="w-[35px] h-[30px]" />
-                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">販売手数料</span>
+                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] pt-[6px] pb-[12px] font-['Hiragino Sans'] whitespace-nowrap">販売手数料</span>
                                             </div>
                                             <div className="flex items-center ml-auto">
                                                 <span className="flex items-center">
@@ -403,10 +403,10 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     )}
                                     {/* 12215: 出金 */}
                                     {(activeFilter === 'all' || activeFilter === 'withdrawal') && (
-                                        <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px] border-b border-[#E9E9E9]">
-                                            <div className="flex items-start gap-2">
+                                        <div className="flex w-full h-[60px] px-4 py-[10px] justify-between items-start border-b border-[#E9E9E9]">
+                                            <div className="flex items-start justify-center gap-2">
                                                 <img src={money_out} alt="出金" className="w-[35px] h-[30px]" />
-                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">出金</span>
+                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] pt-[6px] pb-[12px] font-['Hiragino Sans'] whitespace-nowrap">出金</span>
                                             </div>
                                             <div className="flex items-center ml-auto">
                                                 <span className="flex items-center">
@@ -421,10 +421,10 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     )}
                                     {/* 12216: 開始残高 */}
                                     {(activeFilter === 'all') && (
-                                        <div className="flex w-[311px] h-[60px] px-4 py-[10px] justify-center items-start gap-[116px]">
-                                            <div className="flex items-start gap-2">
+                                        <div className="flex w-full h-[60px] px-4 py-[10px] justify-between items-start border-b border-[#E9E9E9]">
+                                            <div className="flex items-start justify-center gap-2">
                                                 <img src={three_money} alt="開始残高" className="w-[35px] h-[30px]" />
-                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] font-['Hiragino Sans']">開始残高</span>
+                                                <span className="text-[#363636] font-normal text-[16px] leading-[24px] pt-[6px] pb-[12px] font-['Hiragino Sans'] whitespace-nowrap">開始残高</span>
                                             </div>
                                             <div className="flex items-center ml-auto">
                                                 <span className="flex items-center">

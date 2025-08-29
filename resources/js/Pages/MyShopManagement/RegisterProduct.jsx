@@ -988,7 +988,7 @@ const RegisterProduct = () => {
                             </button>
                             {/* 12352: Note */}
                             <span style={{ ...responsiveTextD(12, 18, null, 'normal', 'noto', '#87969F') }}>
-                                ※ {editMode ? '保存後' : '登録後'}は商品ファイルの変更はできません。
+                                ※公開後は商品ファイルなどの変更はできません。
                             </span>
                         </div>
                     </section>
@@ -1007,7 +1007,7 @@ const RegisterProduct = () => {
                 )}
 
                 {/* Mobile Main Section */}
-                <main className="flex md:hidden flex-col items-start w-full" style={{ gap: vw(16), paddingTop: vw(32), paddingBottom: vw(80), paddingLeft: vw(16), paddingRight: vw(16) }}>
+                <main className="flex md:hidden flex-col items-start w-full" style={{ gap: vw(16), paddingTop: vw(32), paddingBottom: vw(0), paddingLeft: vw(16), paddingRight: vw(16) }}>
                     {/* Title */}
                     <h1 className="w-full text-left" style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>{editMode ? '商品編集' : '商品登録'}</h1>
                     {/* Error Message */}
@@ -1544,7 +1544,7 @@ const RegisterProduct = () => {
                                     </button>
                                     {/* 12352: Note */}
                                     <span className="self-stretch text-center" style={{ ...responsiveText(12, 18, null, 'normal', 'noto', '#87969F') }}>
-                                        ※ {editMode ? '保存後' : '登録後'}は商品ファイルの変更はできません。
+                                        ※公開後は商品ファイルなどの変更はできません。
                                     </span>
                                 </div>
                             </div>

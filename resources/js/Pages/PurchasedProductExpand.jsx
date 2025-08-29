@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { router, usePage, Head } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
@@ -32,6 +32,7 @@ import BadgeDisplay from '@/Components/BadgeDisplay';
 
 const PurchasedProductExpand = ({ product }) => {
     const { auth } = usePage().props;
+    const [cushionRevealed, setCushionRevealed] = useState(false);
 
     return (
         <div className='product-details-no-footer-gap bg-[#FFF]'>
@@ -216,7 +217,7 @@ const PurchasedProductExpand = ({ product }) => {
                                         <span className="text-white font-noto text-[14px] font-bold leading-[14px] ">プリント期限</span>
                                     </div>
                                     <div className="flex flex-col items-start ml-[24px]">
-                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px]">{product.print_deadline}まで</span>
                                     </div>
                                 </div>
                                 {/* 12122: Print options */}
@@ -247,12 +248,12 @@ const PurchasedProductExpand = ({ product }) => {
                                         </div>
                                     </div>
                                     {/* 121222: Seven Eleven */}
-                                    <div className="flex w-[480px] h-[74px] px-[24px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50 ">
+                                    {/* <div className="flex w-[480px] h-[74px] px-[24px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50 ">
                                         <div className="flex items-center w-[425px] h-[74px] py-[30px] justify-between">
                                             <span className="font-noto text-[18px] font-bold leading-[20.7px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
                                             <img src={eleven} alt="eleven" className="w-[59px] h-[59px] rounded-full object-cover ml-[16px]" />
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                             {/* 1213: Help link */}
@@ -475,7 +476,7 @@ const PurchasedProductExpand = ({ product }) => {
                                         <span className="text-white font-noto text-[14px] font-bold leading-[14px]">プリント期限</span>
                                     </div>
                                     <div className="flex flex-col items-start ml-[16px]">
-                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px]">{product.print_deadline}まで</span>
                                     </div>
                                 </div>
                                 {/* 12122: Print options */}
@@ -506,12 +507,12 @@ const PurchasedProductExpand = ({ product }) => {
                                         </div>
                                     </div>
                                     {/* 121222: Seven Eleven */}
-                                    <div className="flex w-full h-[60px] px-[16px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50">
+                                    {/* <div className="flex w-full h-[60px] px-[16px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50">
                                         <div className="flex items-center w-full h-[60px] py-[20px] justify-between">
                                             <span className="font-noto text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
                                             <img src={eleven} alt="eleven" className="w-[40px] h-[40px] rounded-full object-cover ml-[12px]" />
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                             {/* 1213: Help link */}

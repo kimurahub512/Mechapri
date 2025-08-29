@@ -5,11 +5,7 @@ import Footer from '@/Components/footer/footer';
 import { vw, vwd, responsiveText, responsivePosition, responsiveMetric, responsiveTextD, responsivePositionD, responsiveMetricD } from '@/lib/utils';
 import logo_group from '@/assets/images/homepage/logo_group.png';
 import header_image from '@/assets/images/homepage/hero.png';
-import hero_m1 from '@/assets/images/homepage/hero_m1.png';
-import hero_m2 from '@/assets/images/homepage/hero_m2.png';
-import m2_b from '@/assets/images/homepage/m2_b.png';
-import m2_f from '@/assets/images/homepage/m2_f.png';
-import header_image_3 from '@/assets/images/homepage/hero_3.png';
+import hero_m from '@/assets/images/homepage/hero_m.jpg';
 import section2_image from '@/assets/images/homepage/section2.png';
 import section2_image_m from '@/assets/images/homepage/section2_image_m.png';
 import section2_phones from '@/assets/images/homepage/section2_phones.png';
@@ -261,7 +257,7 @@ export default function Home() {
         </div>
         {/*section4*/}
         <div className='flex flex-col gap-[24px] py-[16px] items-center justify-center w-full'>
-          <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">全国のコンビニがであなたのグッズを販売しましょう！</span>
+          <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">全国のコンビニであなたのグッズを販売しましょう！</span>
           <div className='flex flex-col items-center justify-center w-[494px] h-[80px] rounded-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]'>
             <div className='flex flex-col items-center justify-center'>
               <span className="text-[#FFF] font-noto text-[16px] font-normal leading-[21px]">１分で無料</span>
@@ -308,7 +304,7 @@ export default function Home() {
         </div>
         {/*section7*/}
         <div className='flex flex-col gap-[24px] py-[16px] items-center justify-center w-full'>
-          <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">全国のコンビニがであなたのグッズを販売しましょう！</span>
+          <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">全国のコンビニであなたのグッズを販売しましょう！</span>
           <div className='flex flex-col items-center justify-center w-[494px] h-[80px] rounded-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]'>
             <div className='flex flex-col items-center justify-center'>
               <span className="text-[#FFF] font-noto text-[16px] font-normal leading-[21px]">１分で無料</span>
@@ -337,17 +333,7 @@ export default function Home() {
         {/* section 1*/}
         <div className='flex flex-col items-center w-full  px-[32px] gap-[24px]'>
           {/*hero section*/}
-          <div className='flex flex-col items-center relative' style={{ ...responsiveMetric('full', 350) }}>
-            <img src={hero_m2} alt="header_image" style={{ ...responsiveMetric(178, 291), ...responsivePosition(4, 86, null) }} />
-            <img src={hero_m1} alt="header_image" className='object-cover' style={{
-              maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
-              ...responsiveMetric(472, 394),
-              ...responsivePosition(0, -36, null)
-              }} />
-              <img src={header_image_3} alt="header_image" style={{ ...responsiveMetric(227, 238), ...responsivePosition(103, null, -14) }} />
-              
-          </div>
+          <img src={hero_m} alt="header_image" className='object-cover ml-[32px]' style={{ ...responsiveMetric('full', 350)}} />          
           <div className='flex flex-col items-center w-full relative'>
             <div className='flex flex-col items-start w-full gap-[8px]'>
               <div className='flex flex-col items-start text-center'>
@@ -573,7 +559,7 @@ export default function Home() {
         </div>
         {/*section4*/}
         <div className='flex flex-col gap-[16px] py-[16px] px-[32px] items-center justify-center w-full'>
-          <span className="text-[#363636] text-center font-noto text-[18px] font-bold leading-[27px]">全国のコンビニがであなたのグッズを販売しましょう！</span>
+          <span className="text-[#363636] text-center font-noto text-[18px] font-bold leading-[27px]">全国のコンビニであなたのグッズを販売しましょう！</span>
           <div className='flex flex-col items-center justify-center w-full rounded-[4] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]' style={{ height: vw(64), borderRadius: vw(4) }}>
             <div className='flex flex-col items-center justify-center'>
               <span className="text-[#FFF] font-noto text-[14px] font-normal leading-[21px]">１分で無料</span>
@@ -632,7 +618,7 @@ export default function Home() {
         </div>
         {/*section7*/}
         <div className='flex flex-col gap-[calc(100vw*16/375)] py-[calc(100vw*16/375)] px-[calc(100vw*32/375)] items-center justify-center w-full'>
-          <span className="text-center" style={{ ...responsiveText(18, 27, null, 'bold', 'noto', '#363636') }}>全国のコンビニがであなたのグッズを販売しましょう！</span>
+          <span className="text-center" style={{ ...responsiveText(18, 27, null, 'bold', 'noto', '#363636') }}>全国のコンビニであなたのグッズを販売しましょう！</span>
           <div className='flex flex-col items-center justify-center w-full rounded-[4] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]' style={{ ...responsiveMetric(null, 64), borderRadius: vw(4) }}>
             <div className='flex flex-col items-center justify-center'>
               <span style={{ ...responsiveText(14, 21, null, 'normal', 'noto', '#FFF') }}>１分で無料</span>

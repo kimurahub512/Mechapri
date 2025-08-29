@@ -37,11 +37,16 @@ class TransactionController extends Controller
         // Calculate current balance (remaining balance minus already withdrawn)
         $currentBalance = $remainingBalance - $totalWithdrawn;
         
-        // Get monthly transaction data for the last 12 months
+        // Get monthly transaction data starting from the user's registration month (up to last 12 months)
         $monthlyData = [];
+        $registrationMonthStart = Carbon::parse($user->created_at)->startOfMonth();
         for ($i = 0; $i < 12; $i++) {
             $monthStart = Carbon::now()->subMonths($i)->startOfMonth();
             $monthEnd = Carbon::now()->subMonths($i)->endOfMonth();
+            // Skip months before the user registration month
+            if ($monthEnd->lt($registrationMonthStart)) {
+                continue;
+            }
             $monthName = $monthStart->format('Y年n月分');
             $estimateDate = $monthStart->copy()->subMonth()->format('Y/m');
             
@@ -50,7 +55,7 @@ class TransactionController extends Controller
                 ->whereHas('productBatch', function ($query) use ($user) {
                     $query->where('user_id', $user->id);
                 })
-                ->whereBetween('paid_at', [$monthStart, $monthEnd])
+                ->whereBetween('paid_at', [$monthStart->copy(), $monthEnd->copy()])
                 ->get();
             
             // Calculate monthly statistics
@@ -59,7 +64,7 @@ class TransactionController extends Controller
             
             // Get withdrawals for this month
             $monthlyWithdrawal = Withdrawal::where('seller_id', $user->id)
-                ->whereBetween('withdrawal_date', [$monthStart, $monthEnd])
+                ->whereBetween('withdrawal_date', [$monthStart->copy(), $monthEnd->copy()])
                 ->sum('amount');
             
             // Calculate monthly balance
@@ -72,12 +77,12 @@ class TransactionController extends Controller
                 ->whereHas('productBatch', function ($query) use ($user) {
                     $query->where('user_id', $user->id);
                 })
-                ->where('paid_at', '<=', $previousMonthEnd)
+                ->whereBetween('paid_at', [$registrationMonthStart, $previousMonthEnd])
                 ->sum('amount');
             
             $previousCommission = $previousPayments * 0.15;
             $previousWithdrawals = Withdrawal::where('seller_id', $user->id)
-                ->where('withdrawal_date', '<=', $previousMonthEnd)
+                ->whereBetween('withdrawal_date', [$registrationMonthStart, $previousMonthEnd])
                 ->sum('amount');
             
             $startingBalance = $previousPayments - $previousCommission - $previousWithdrawals;
@@ -98,9 +103,9 @@ class TransactionController extends Controller
         
         if (!$bankAccount) {
             $bankAccount = [
-                'account_type' => '未設定',
+                'account_type' => '',
                 'account_number' => '未設定',
-                'bank_name' => '未設定',
+                'bank_name' => '',
             ];
         }
         

@@ -76,12 +76,13 @@ class MyContentsController extends Controller
     {
         $user = Auth::user();
         $productBatch = $user->productBatches()->findOrFail($id);
-        
-        // Delete the product batch (this will cascade delete files due to foreign key constraints)
-        $productBatch->delete();
-        
-        // Redirect back to the contents page with a success message
-        return redirect()->route('myshop.contents')->with('success', '商品が削除されました。');
+
+        // Use service to delete storage files/directories and the DB record
+        $service = app(\App\Services\ProductBatchService::class);
+        $deleted = $service->deleteProductBatch($productBatch);
+
+        return redirect()->route('myshop.contents')
+            ->with($deleted ? 'success' : 'error', $deleted ? '商品が削除されました。' : '商品の削除に失敗しました。');
     }
 
     /**

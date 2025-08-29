@@ -4,11 +4,11 @@ import logo from '@/assets/images/mechapuri-logo.svg';
 import footerSvg2 from '@/assets/images/instagram.svg';
 import xLogo from '@/assets/images/x_logo.svg';
 import copy from '@/assets/images/copy.svg';
-import home from '@/assets/images/home.svg';
-import heart from '@/assets/images/heart.svg';
-import clock from '@/assets/images/clock.svg';
-import man_mobile from '@/assets/images/man2.svg';
-import cart from '@/assets/images/icon-cart.svg';
+import home from '@/assets/images/home.png';
+import heart from '@/assets/images/heart.png';
+import clock from '@/assets/images/clock.png';
+import man_mobile from '@/assets/images/man2.png';
+import cart from '@/assets/images/icon-cart.png';
 import { vw, vwd, responsiveText, responsiveTextD, responsiveMetric, responsiveMetricD, responsivePosition, responsivePositionD } from '@/lib/utils';
 
 import '@/../../resources/css/footer.css';
@@ -48,9 +48,6 @@ const Footer = () => {
               <a href='howtoprint' className='whitespace-nowrap' style={{...responsiveTextD(13, 20, null, 'semibold', 'noto', '#FFF')}}>
                 ネットワークプリントの使い方
               </a>
-              <div className='whitespace-nowrap' style={{...responsiveTextD(13, 20, null, 'semibold', 'noto', '#FFF')}}>
-                X連携の権限について
-              </div>
               <a href='https://www.over-x.tech/#contact' target="_blank" className="flex flex-row items-center gap-[2px]">
                 <img
                   src={copy}
@@ -119,7 +116,7 @@ const Footer = () => {
             <div style={{...responsiveMetricD(480)}}></div>
             {/* Copyright */}
             <div className='whitespace-nowrap' style={{...responsiveTextD(10, 16, null, 'normal', 'noto', '#FFF')}}>
-              © 2025 Company Inc.
+              © 2025 OverX Inc.
             </div>
           </div>
         </div>
@@ -152,9 +149,6 @@ const Footer = () => {
               <a href='/howtoprint' style={{...responsiveText(13, 20, null, 'medium', 'noto', '#FFF')}}>
                 ネットワークプリントの使い方
               </a>
-              <div className='whitespace-nowrap' style={{...responsiveText(13, 20, null, 'medium', 'noto', '#FFF')}}>
-                 X連携の権限について
-              </div>
               <a href='https://www.over-x.tech/#contact' target="_blank" className="flex flex-row items-center gap-[2px]">
                 <img
                   src={copy}
@@ -226,7 +220,7 @@ const Footer = () => {
             </div>
             {/* Copyright */}
             <div className='whitespace-nowrap' style={{...responsiveText(10, 16, null, 'normal', 'noto', '#FFF')}}>
-              © 2025 Company Inc.
+              © 2025 OverX Inc.
             </div>
           </div>
         </div>
@@ -234,7 +228,7 @@ const Footer = () => {
 
       {/* Mobile Navigation Section */}
       <div className='md:hidden fixed bottom-0 left-0 right-0 z-[10003] flex flex-row justify-between p-[8px_16px_4px_16px] bg-[#FFF] border-t border-[#DCDCDC]'>
-        <div className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
+        <a href='/' className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
           {/* Home */}
           <img
             src={home}
@@ -242,26 +236,26 @@ const Footer = () => {
             style={{ ...responsiveMetric(20, 20) }}
           />
           <div className="text-center" style={{ height: vw(26), ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>ホーム</div>
-        </div>
+        </a>
         {/* Favorites */}
-        <div className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
+        <a href='/favoriteproducts' className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
           <img
             src={heart}
             alt="Favorites"
             style={{ ...responsiveMetric(20, 20) }}
           />
           <a href='/favoriteproducts' style={{ height: vw(26), ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>お気に入り</a>
-        </div>
+        </a>
 
         {/* Purchase History */}
-        <div className='flex flex-col items-center gap-[4px]'>
+        <a href='/purchasehistory' className='flex flex-col items-center gap-[4px]'>
           <img
             src={clock}
             alt="History"
             style={{ ...responsiveMetric(20, 20) }}
           />
           <a href='/purchasehistory' style={{ ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>購入履歴</a>
-        </div>
+        </a>
 
         {/* Cart */}
         <div className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
@@ -283,14 +277,14 @@ const Footer = () => {
         </div>
 
         {/* Account */}
-        <div className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
+        <a href='/accountsetting' className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
           <img
             src={man_mobile}
             alt="Account"
             style={{ ...responsiveMetric(20, 20) }}
           />
           <a href='/accountsetting' style={{ height: vw(26), ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>アカウント</a>
-        </div>
+        </a>
       </div>
     </footer>
   );

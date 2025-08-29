@@ -1,10 +1,10 @@
 import React from 'react';
 import default_user from '@/assets/images/default-user.png';
-import mountain from '@/assets/images/mountain.svg';
-import list_unordered from '@/assets/images/list_unordered.svg';
-import p_circle from '@/assets/images/p_circle.svg';
-import clock from '@/assets/images/clock_pink.svg';
-import pen_paper from '@/assets/images/pen_paper.svg';
+import mountain from '@/assets/images/mountain.png';
+import list_unordered from '@/assets/images/list_unordered.png';
+import p_circle from '@/assets/images/p_circle.png';
+import clock from '@/assets/images/clock_pink.png';
+import pen_paper from '@/assets/images/pen_paper.png';
 import { usePage } from '@inertiajs/react';
 
 const ShopMobileTopBlocks = () => {

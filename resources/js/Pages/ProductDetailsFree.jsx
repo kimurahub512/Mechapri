@@ -6,7 +6,7 @@ import photo1 from '@/assets/images/productdetails/photo1.jpg';
 import girl from '@/assets/images/favoriteshops/girl.svg';
 import pen from '@/assets/images/pencil_line_black.svg';
 import recyclebin from '@/assets/images/recyclebin.svg';
-import heart from '@/assets/images/heart.svg';
+import heart from '@/assets/images/heart.png';
 import share from '@/assets/images/share.svg';
 import complex from '@/assets/images/complex_black.svg';
 import complex_white from '@/assets/images/complex_white.svg';

@@ -1,12 +1,12 @@
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 
-import p_circle from '@/assets/images/p_circle.svg';
+import p_circle from '@/assets/images/p_circle.png';
 import arrow_right from '@/assets/images/arrow_right.svg';
 import sm_photo1 from '@/assets/images/sm_photo1.png';
 import sm_photo2 from '@/assets/images/sm_photo2.png';
 import sm_photo3 from '@/assets/images/sm_photo3.png';
-import list_unordered from '@/assets/images/list_unordered.svg';
+import list_unordered from '@/assets/images/list_unordered.png';
 import money_hand from '@/assets/images/money_hand.svg';
 import complex from '@/assets/images/complex.svg';
 import '@/../../resources/css/shopmanagement.css';
@@ -54,7 +54,7 @@ const ShopManagement = ({ statistics: initialStatistics }) => {
         {/* Mobile Header and Navigation */}
         <ShopMobileTopBlocks />
         {/* Mobile Main Section */}
-        <div className="md:hidden pt-[32px]">
+        <div className="md:hidden pt-[50px]">
           <div className="flex flex-col items-start" style={{ gap: vw(32), paddingLeft: vw(16), paddingRight: vw(16) }}>
             <div className="flex flex-col items-start w-full" style={{ gap: vw(25) }}>
               <h1 style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>さっそくはじめよう！</h1>

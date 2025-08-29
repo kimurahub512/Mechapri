@@ -21,7 +21,7 @@ import instagram from '@/assets/images/instagram.svg';
 import favoriteshops from '@/assets/images/favoriteshop.svg';
 import favoriteshops_follow from '@/assets/images/favoriteshop_white.svg';
 import logo from '@/assets/images/logo_white.svg';
-import cart from '@/assets/images/icon-cart.svg';
+import cart from '@/assets/images/icon-cart.png';
 import QuantityControl from '@/Components/QuantityControl';
 import photo2 from '@/assets/images/shoptop/photo1.png';
 import photo3 from '@/assets/images/shoptop/photo2.png';
@@ -40,6 +40,7 @@ const UnpurchasedProduct = ({ product }) => {
     const [password, setPassword] = useState('');
     const [isUnlocked, setIsUnlocked] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+    const [cushionRevealed, setCushionRevealed] = useState(false);
 
     const handlePasswordSubmit = async (e) => {
         e.preventDefault();
@@ -301,13 +302,20 @@ const UnpurchasedProduct = ({ product }) => {
                                         </div>
                                                 ) : product.display_mode === 'cushion' ? (
                                                     <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
-                                                        <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px]" />
-                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                            <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
-                                                            <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
-                                                            <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
-                                    </div>
-
+                                                        {!cushionRevealed ? (
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => setCushionRevealed(true)}
+                                                                className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px] cursor-pointer z-10"
+                                                            >
+                                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                                    <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
+                                                                    <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
+                                                                    <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
+                                                                </div>
+                                                            </button>
+                                                        ) : null}
+                                                        <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
                                                     </div>
                                                 ) : (
                                                     <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
@@ -315,7 +323,7 @@ const UnpurchasedProduct = ({ product }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    {product.images.length > 0 && (product.display_mode !== 'password' || isUnlocked) && (
+                                    {product.images.length > 1 && (product.display_mode !== 'password' || isUnlocked) && (
                                     <BadgeDisplay
                                         buttonClassName="px-[16px] py-[8px] gap-[4px] rounded-[10px] border-[1px] border-solid border-[#FF2AA1]"
                                         textClassName="text-[#FF2AA1] text-[18px] font-medium leading-[18px]"
@@ -543,7 +551,7 @@ const UnpurchasedProduct = ({ product }) => {
                 </div>
             </section>
             {/* Mobile Main Section */}
-            <div className="flex flex-col pt-[24px] gap-[45px]">
+            <div className="flex flex-col pt-[74px] gap-[45px]">
                 <section className="flex flex-col items-start gap-[24px] px-4 md:hidden w-full pt-[32px] bg-[#FFF] mt-[-12px]">
                     {/* Frame 11 */}
                     <div className="flex flex-col items-start gap-[24px] w-[343px]">
@@ -737,12 +745,20 @@ const UnpurchasedProduct = ({ product }) => {
                                             <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
                                         ) : product.display_mode === 'cushion' ? (
                                             <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
-                                                <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                    <img src={warning} alt="warning" className="w-[24px] h-[24px]" />
-                                                    <span className="text-[#464F5D] text-[10px] font-bold">WARNING</span>
-                                                    <span className="text-[#464F5D] text-[8px]">クリックして内容を確認</span>
-                                                </div>
+                                                {!cushionRevealed ? (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setCushionRevealed(true)}
+                                                        className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px] cursor-pointer z-10"
+                                                    >
+                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                            <img src={warning} alt="warning" className="w-[24px] h-[24px]" />
+                                                            <span className="text-[#464F5D] text-[10px] font-bold">WARNING</span>
+                                                            <span className="text-[#464F5D] text-[8px]">クリックして内容を確認</span>
+                                                        </div>
+                                                    </button>
+                                                ) : null}
+                                                <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
                                             </div>
                                         ) : (
                                             <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
@@ -825,7 +841,7 @@ const UnpurchasedProduct = ({ product }) => {
                             </div>
                             {/* 1212: Badge display */}
                             <div className="flex justify-center w-full mt-[16px]">
-                                {product.images.length > 0 && (product.display_mode !== 'password' || isUnlocked) && (
+                                {product.images.length > 1 && (product.display_mode !== 'password' || isUnlocked) && (
                                 <BadgeDisplay
                                     buttonClassName="px-[12px] py-[6px] gap-[3px] rounded-[10px] border-[1px] border-solid border-[#E862CB]"
                                     textClassName="text-[#E862CB] text-[18px] font-medium leading-[18px]"
