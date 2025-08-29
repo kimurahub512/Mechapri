@@ -62,13 +62,40 @@ const UnpurchasedProductExpand = ({ product }) => {
         }));
     };
 
+    const handleAddToCart = async () => {
+        try {
+            const response = await fetch(route('cart.add'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                },
+                body: JSON.stringify({
+                    product_batch_id: product.id,
+                    quantity: quantities.cart
+                }),
+            });
+            const data = await response.json();
+            if (data.success) {
+                // Show success message or redirect to cart
+                router.visit(route('cart.index'));
+            }
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+        }
+    };
+
+    const handleDirectPurchase = () => {
+        router.visit(route('payment.checkout', { product: product.id }));
+    };
+
     return (
         <div className='product-details-no-footer-gap bg-[#FFF]'>
             <Head title="めちゃプリ" />
             <Header />
-            <main className="hidden md:flex flex-col items-center px-[120px] pt-[44px] pb-[176px] w-full bg-[#FFF]">
+            <main className="hidden md:flex flex-col items-center px-[20px] sm:px-[40px] lg:px-[80px] xl:px-[60px] pt-[80px] sm:pt-[100px] lg:pt-[124px] pb-[36px] w-full bg-[#FFF]">
                 {/* Frame 1 */}
-                <div className="flex flex-col items-center gap-[41px] w-full max-w-[1200px]">
+                <div className="flex flex-col items-center gap-[41px] w-full">
                     {/* 11 */}
                     <div className="flex flex-col items-start gap-[24px] w-full relative">
                         {/* 112 */}
@@ -130,12 +157,12 @@ const UnpurchasedProductExpand = ({ product }) => {
                         {/* 113 */}
                         <div className="flex flex-col items-start gap-[8px] w-full">
                             {/* 1131: Title */}
-                            <div className="flex flex-col items-start w-[1200px]">
-                                <span className="text-[#363636] font-noto text-[36px] font-bold leading-[54px]">{product.title}</span>
+                            <div className="flex flex-col items-start w-full">
+                                <span className="text-[#363636] font-noto text-[24px] sm:text-[28px] lg:text-[32px] xl:text-[36px] font-bold leading-[32px] sm:leading-[40px] lg:leading-[48px] xl:leading-[54px]">{product.title}</span>
                             </div>
                             {/* 1132: Description and Date */}
                             <div className="flex flex-col items-start gap-[4px] w-full">
-                                <span className="text-[#363636] font-noto text-[18px] font-normal leading-[32.4px]">{product.description}</span>
+                                <span className="text-[#363636] font-noto text-[14px] sm:text-[16px] lg:text-[18px] font-normal leading-[24px] sm:leading-[28px] lg:leading-[32.4px]">{product.description}</span>
                             </div>
                         </div>
                         {/* 114 */}
@@ -207,15 +234,15 @@ const UnpurchasedProductExpand = ({ product }) => {
                         </div>
                     </div>
                     {/* Section 12 */}
-                    <section className="flex flex-col items-start gap-[32px] w-[1200px] mt-[60px]">
+                    <section className="flex flex-col items-start gap-[32px] mt-[60px] w-full">
                         {/* 121 */}
-                        <div className="flex flex-col w-full rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] p-[70px_70px_92.5px_70px] ">
-                            <div className="flex flex-col items-center gap-[24px]">
-                                <div className="grid grid-cols-2 gap-6 w-full max-w-[496px] justify-items-center">
+                        <div className="flex flex-col w-full rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] p-[70px_40px_20px_40px] lg:p-[70px_70px_20px_70px]">
+                            <div className="flex flex-col items-center gap-[24px] w-full">
+                                <div className={`flex flex-wrap justify-center gap-[16px] lg:gap-[20px] xl:gap-[24px] w-full ${product.images.length >= 3 ? 'max-w-none' : product.images.length === 1 ? 'max-w-[360px]' : 'max-w-[752px] xl:max-w-[800px]'}`}>
                                     {product.images.map((image, index) => (
-                                        <div key={index} className="flex justify-center items-center rounded-[14px] bg-[#F6F6F6] relative">
-                                            <div className="flex h-[348px] w-[232px] flex-col justify-center items-center relative">
-                                                <div className={`flex h-[348px] w-[232px] flex-col justify-center items-center flex-shrink-0 rounded-[8px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
+                                        <div key={index} className="flex w-[360px] h-[362.835px] box-border px-[63.78px] py-[7.087px] flex-col justify-center items-center rounded-[14.173px] bg-[#F6F6F6] relative">
+                                            <div className="flex w-[232.441px] h-[348.661px] flex-col justify-center items-center flex-shrink-0 relative">
+                                                <div className={`flex w-[232.441px] h-[348.661px] flex-col justify-center items-center flex-shrink-0 rounded-[8px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
                                                     {product.display_mode === 'normal' ? (
                                                         <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
                                                     ) : product.display_mode === 'gacha' ? (
@@ -332,53 +359,60 @@ const UnpurchasedProductExpand = ({ product }) => {
                                     ))}
                                 </div>
                                 <div className="flex flex-col items-center gap-[4px] mt-[36px]">
-                                    <span className="text-black font-noto text-[18px] leading-[32px] ">{product.sales_deadline} まで購入できます</span>
+                                    <span className="text-black font-noto text-[18px] leading-[32px] text-center px-4">
+                                        {product.sales_limit ? `${product.sales_limit}個限定` : ''} {product.sales_deadline} まで購入できます
+                                    </span>
                                     <div className="flex flex-row items-center">
                                         <span className="text-black font-noto font-bold text-[46px] leading-[54px]">{product.price}</span>
                                         <span className="text-black font-noto font-bold text-[24px] leading-[24px]">円</span>
                                     </div>
                                 </div>
-                                <div className="flex flex-col items-start gap-[24px] w-[504px]">
+                                <div className="flex flex-col items-start gap-[24px] w-full max-w-[504px] px-4">
                                     <div className="flex flex-col items-center gap-[16px] w-full">
-                                        <div className="flex flex-row items-center px-[24px] w-full">
-                                            <div className="mr-auto">
+                                        <div className="flex flex-col sm:flex-row items-center gap-[12px] px-[24px] w-full">
+                                            <div className="order-2 sm:order-1 sm:mr-auto">
                                                 <QuantityControl
                                                     quantity={quantities.cart}
                                                     onQuantityChange={(newQuantity) => handleQuantityChange('cart', newQuantity)}
                                                 />
                                             </div>
-                                            <button className="flex w-[240px] h-[74px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] ml-auto">
-                                                <img src={cart} alt="favoriteshop" style={{ filter: 'brightness(0) invert(1)' }} />
-                                                <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-noto">カートに入れる</span>
+                                            <button 
+                                                onClick={handleAddToCart}
+                                                className="flex w-[240px] h-[74px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] order-1 sm:order-2 sm:ml-auto hover:bg-[#E61E8A] transition-colors cursor-pointer"
+                                            >
+                                                <img src={cart} alt="cart" style={{ filter: 'brightness(0) invert(1)' }} className="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] lg:w-[20px] lg:h-[20px]" />
+                                                <span className="text-[#FFF] text-center font-bold text-[14px] sm:text-[16px] lg:text-[18px] leading-[16px] sm:leading-[18px] lg:leading-[20px] font-noto">カートに入れる</span>
                                             </button>
                                         </div>
-                                        <div className="flex flex-row items-center px-[24px] w-full">
-                                            <div className="mr-auto">
+                                        <div className="flex flex-col sm:flex-row items-center gap-[12px] px-[24px] w-full">
+                                            <div className="order-2 sm:order-1 sm:mr-auto">
                                                 <QuantityControl
                                                     quantity={quantities.direct}
                                                     onQuantityChange={(newQuantity) => handleQuantityChange('direct', newQuantity)}
                                                 />
                                             </div>
-                                            <button className="flex w-[240px] h-[74px] px-[24px] justify-center items-center rounded-[10px] bg-[#AB31D3] ml-auto">
+                                            <button 
+                                                onClick={handleDirectPurchase}
+                                                className="flex w-[240px] h-[74px] px-[24px] justify-center items-center rounded-[10px] bg-[#AB31D3] order-1 sm:order-2 sm:ml-auto hover:bg-[#9A2BC2] transition-colors cursor-pointer"
+                                            >
                                                 <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-noto whitespace-nowrap">すぐにプリントコード購入</span>
                                             </button>
                                         </div>
                                     </div>
                                     {/*explanation*/}
-                                    {/* 1211: Explanation Section */}
                                     <div
                                         className="flex flex-col justify-center items-center self-stretch border-t"
                                         style={{ borderTop: '1px solid #E9E9E9' }}
                                     >
                                         {/* 12111 */}
                                         <div
-                                            className="relative h-[243.5px] self-stretch flex"
-                                            style={{ borderRadius: '10px 10px 0 0' }}
+                                            className="relative w-full h-[243.5px] self-stretch flex"
+                                            style={{ borderRadius: '8px 8px 0 0' }}
                                         >
                                             {/* 121111 */}
                                             <div
-                                                className="absolute flex justify-center items-center"
-                                                style={{ top: 24, left: 127, width: 233 }}
+                                                className="absolute flex justify-center items-center w-full px-4"
+                                                style={{ top: '16px', left: '50%', transform: 'translateX(-50%)', width: 'auto', maxWidth: '233px' }}
                                             >
                                                 {/* 1211111 */}
                                                 <div className="flex flex-col items-center px-[18.5px] py-[7px] rounded-[40px] bg-[#363636]">
@@ -389,25 +423,25 @@ const UnpurchasedProductExpand = ({ product }) => {
                                             </div>
                                             {/* 121112 */}
                                             <div
-                                                className="absolute flex justify-between items-center"
-                                                style={{ top: 78, left: 68, width: 350 }}
+                                                className="absolute flex justify-between items-center w-full px-4"
+                                                style={{ top: '78px', left: '46%', transform: 'translateX(-50%)', width: 'auto', maxWidth: '350px' }}
                                             >
                                                 {/* 1211121 */}
-                                                <div className="flex flex-col items-center gap-[4px] w-[172px] flex-shrink-0">
-                                                    <img src={purchase_qr} alt="QR" />
-                                                    <span className="text-[#363636] text-center font-normal font-noto text-[14px] leading-[21px]">
+                                                <div className="flex flex-col items-center gap-[4px] flex-shrink-0 w-[172px]">
+                                                    <img src={purchase_qr} alt="QR" className="w-[80px] h-[80px]" />
+                                                    <span className="text-[#363636] text-center font-normal font-noto text-[14px]  leading-[21px] ">
                                                         QRや番号などの<br />コードをGET
                                                     </span>
                                                 </div>
                                                 {/* 1211122 */}
-                                                <div className="flex flex-col items-center gap-[4px] w-[172px] flex-shrink-0">
-                                                    <img src={print_qr} alt="Print QR" />
+                                                <div className="flex flex-col items-center gap-[4px] flex-shrink-0 w-[172px]">
+                                                    <img src={print_qr} alt="Print QR" className="w-[80px] h-[80px]" />
                                                     <span className="text-[#363636] text-center font-normal font-noto text-[14px] leading-[21px] whitespace-pre-line">
                                                         コンビニのマルチコピー機{`\n`}にかざしてプリント
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div className=" absolute flex items-center gap-[8px]" style={{ top: 222, left: 142 }}>
+                                            <div className="absolute flex items-center gap-[6px] w-full justify-center" style={{ top: '222px', left: '50%', transform: 'translateX(-50%)' }}>
                                                 <img src={question_circle} alt="question_circle" className="w-[20px] h-[20px]" />
                                                 <span className="text-[#767676] font-noto text-[13px] font-normal leading-[20px] underline cursor-pointer">プリントの方法が分からない時は</span>
                                             </div>
@@ -418,12 +452,12 @@ const UnpurchasedProductExpand = ({ product }) => {
                                             <div className="flex items-center gap-[12px]">
                                                 {/* 1211211 */}
                                                 <div className="flex items-center gap-[8px]">
-                                                    <img src={complex} alt="complex" />
-                                                    <span className="text-[#E862CB] font-noto text-[14px] font-bold leading-[14px]">プリント期限</span>
+                                                    <img src={complex_black} alt="complex" className="w-[24px] h-[24px]" />
+                                                    <span className="text-[#2D2D2D] font-noto text-[14px] font-bold leading-[14px]">プリント期限</span>
                                                 </div>
                                                 {/* 1211212 */}
                                                 <div className="flex flex-col items-start opacity-70">
-                                                    <span className="text-[#E862CB] font-noto text-[14px] font-bold leading-[14px]">{product.print_deadline}まで</span>
+                                                    <span className="text-[#2D2D2D] font-noto text-[14px] font-bold leading-[14px]">{product.print_deadline}まで</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -431,14 +465,52 @@ const UnpurchasedProductExpand = ({ product }) => {
                                 </div>
                             </div>
                         </div>
+                        {/* 122: Ranking */}
+                        <div className="flex flex-col items-start w-full px-[66px] py-[32px] gap-[10px] bg-white rounded-[24px] shadow-[0_2px_8px_0_rgba(0,0,0,0.10)]">
+                            {/* 1221: Ranking title and list */}
+                            <div className="flex flex-col items-start gap-[16px] w-full">
+                                <span className="text-[#000] font-noto text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">ランキング</span>
+                                {/* 12211: Ranking list */}
+                                <div className="flex flex-col items-start gap-[24px] w-full">
+                                    {product.top_buyers && product.top_buyers.map((buyer, index) => (
+                                        <div key={index} className="flex w-full pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
+                                            <div className="flex items-center gap-[24px]">
+                                                <div className="flex flex-col items-center pb-[12px]">
+                                                    <span className={`font-noto font-bold ${
+                                                        index === 0 ? 'text-[36px] leading-[54px]' :
+                                                        index <= 2 ? 'text-[28px] leading-[42px]' :
+                                                        'text-[24px] leading-[24px]'
+                                                    } ${index <= 2 ? 'text-[#AB31D3]' : 'text-[#222]'}`}>
+                                                        {index + 1}
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center">
+                                                    <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
+                                                        <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
+                                                            <img src={buyer.user.image || default_user} alt={buyer.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex flex-col items-start w-[158px] pr-[62px]">
+                                                        <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{buyer.user.name}</span>
+                                                    </div>
+                                                    <div className="flex flex-col items-end">
+                                                        <span className="text-[#767676] font-noto text-[14px] font-bold leading-[21px]">{buyer.total_quantity}点</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
                     </section>
                 </div>
             </main>
             {/* Personal Info Footer (Frame 2) */}
-            <section className="hidden md:flex flex-col items-center w-[1440px] pt-[48px] pb-[48px] px-[24px] gap-[24px] bg-[#F6F8FA] mx-auto">
-                <div className="flex w-[1248px] justify-between items-start">
+            <section className="hidden md:flex flex-col items-center py-[48px] px-[96px] w-full bg-[#F6F8FA]">
+                <div className="flex justify-between items-start w-full">
                     {/* Left: 21 */}
-                    <div className="flex w-[400px] max-w-[1248px] items-start flex-shrink-0">
+                    <div className="flex items-start flex-shrink-0">
                         <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
                         {/* 211 */}
                         <div className="flex flex-col pl-[16px] items-start">
@@ -446,23 +518,20 @@ const UnpurchasedProductExpand = ({ product }) => {
                                 <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 <div className="flex pt-[10px] gap-[4px]">
                                     <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
-                                    <img src={instagram} alt="instagram" className="w-[46.429px] h-[46.429px] opacity-100" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     {/* Right: 22 */}
-                    <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
-                        <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
+                    <div className="flex flex-col w-[55%] items-start flex-shrink-0">
                             <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
-                                こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
+                                {product.user.description}
                             </span>
-                        </div>
                     </div>
                 </div>
             </section>
             {/* Mobile Main Section */}
-            <div className="flex flex-col gap-[45px]">
+            <div className="flex flex-col pt-[84px] gap-[45px]">
                 <section className="flex flex-col items-start gap-[24px] px-4 md:hidden w-full pt-[32px] bg-[#FFF] mt-[-12px]">
                     {/* Frame 11 */}
                     <div className="flex flex-col items-start gap-[24px] w-[343px]">
@@ -591,13 +660,13 @@ const UnpurchasedProductExpand = ({ product }) => {
                         {/* 121 */}
                         <div className="flex flex-col w-full rounded-[10px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] px-4 py-4">
                             {/* 1211: Mobile image carousel */}
-                            <div className="flex flex-wrap justify-center gap-4 py-[16px]">
+                            <div className="flex flex-wrap justify-center gap-[7px] py-[16px]">
                                 {product.images.map((image, index) => (
-                                    <div key={index} className="flex justify-center items-center rounded-[6px] bg-[#F6F6F6] relative">
-                                        <div className="flex h-[147px] w-[98px] flex-col justify-center items-center flex-shrink-0 relative">
-                                            <div className={`flex h-[147px] w-[98px] flex-col justify-center items-center flex-shrink-0 rounded-[6px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
+                                    <div key={index} className="flex w-[152px] h-[153.197px] px-[26.93px] py-[2.992px] flex-col justify-center items-center rounded-[5.984px] bg-[#F6F6F6] relative">
+                                        <div className="flex w-[98.142px] h-[147.213px] flex-col justify-center items-center flex-shrink-0 relative">
+                                            <div className={`flex w-[98.142px] h-[147.213px] flex-col justify-center items-center flex-shrink-0 rounded-[6px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
                                                 {product.display_mode === 'normal' ? (
-                                                    <img src={image} alt={product.title} className="h-[147px] w-[98px] object-cover rounded-[6px]" />
+                                                    <img src={image} alt={product.title} className="w-[98.142px] h-[147.213px] object-cover rounded-[6px]" />
                                                 ) : product.display_mode === 'gacha' ? (
                                                     <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
                                                         <img src={image} alt="ガチャ" className="h-full w-full object-cover filter blur-[4px] rounded-[6px]" />
@@ -648,7 +717,9 @@ const UnpurchasedProductExpand = ({ product }) => {
                             </div>
                             {/* 1213: Price and purchase info */}
                             <div className="flex flex-col items-center gap-[4px] mt-[24px]">
-                                <span className="text-black font-noto text-[16px] leading-[27px]">{product.sales_deadline} まで購入できます</span>
+                                <span className="text-black font-noto text-[16px] leading-[27px]">
+                                    {product.sales_limit ? `${product.sales_limit}個限定` : ''} {product.sales_deadline} まで購入できます
+                                </span>
                                 <div className="flex flex-row items-center gap-[4px]">
                                     <span className="text-[#363636] font-noto font-bold text-[36px] leading-[48px]">{product.price}</span>
                                     <span className="text-[#363636] font-noto font-bold text-[20px] leading-[23px]">円</span>
@@ -663,7 +734,10 @@ const UnpurchasedProductExpand = ({ product }) => {
                                             onQuantityChange={(newQuantity) => handleQuantityChange('cart', newQuantity)}
                                         />
                                     </div>
-                                    <button className="flex w-[160px] h-[40px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] mr-auto">
+                                    <button 
+                                        onClick={handleAddToCart}
+                                        className="flex w-[160px] h-[40px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] mr-auto hover:bg-[#E61E8A] transition-colors cursor-pointer"
+                                    >
                                         <img src={cart} alt="cart" style={{ filter: 'brightness(0) invert(1)' }} className="w-[20px] h-[19px]" />
                                         <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-noto whitespace-nowrap">カートに入れる</span>
                                     </button>
@@ -675,7 +749,10 @@ const UnpurchasedProductExpand = ({ product }) => {
                                             onQuantityChange={(newQuantity) => handleQuantityChange('direct', newQuantity)}
                                         />
                                     </div>
-                                    <button className="flex w-[160px] h-[40px] px-[16px] justify-center items-center rounded-[10px] bg-[#AB31D3] mr-auto">
+                                    <button 
+                                        onClick={handleDirectPurchase}
+                                        className="flex w-[160px] h-[40px] px-[16px] justify-center items-center rounded-[10px] bg-[#AB31D3] mr-auto hover:bg-[#9A2BC2] transition-colors cursor-pointer"
+                                    >
                                         <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-noto whitespace-nowrap">すぐにプリントコード購入</span>
                                     </button>
                                 </div>
@@ -740,103 +817,37 @@ const UnpurchasedProductExpand = ({ product }) => {
                                 <span className="text-[#000] font-noto text-[18px] font-bold leading-[24px]">ランキング</span>
                                 {/* 12211: Ranking list */}
                                 <div className="flex flex-col items-start gap-[16px] w-full">
-                                    {/* 122111: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#AB31D3] font-noto text-[24px] font-bold leading-[32px]">1</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={product.user.image || default_user} alt={product.user.name} className="w-[48px] h-[48px] rounded-full object-cover" />
+                                    {product.top_buyers && product.top_buyers.map((buyer, index) => (
+                                        <div key={index} className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
+                                            <div className="flex items-center gap-[16px]">
+                                                <div className="flex flex-col items-center pb-[8px]">
+                                                    <span className={`font-noto font-bold ${index === 0 ? 'text-[24px] leading-[32px] text-[#AB31D3]' : index <= 2 ? 'text-[20px] leading-[28px] text-[#AB31D3]' : 'text-[18px] leading-[24px] text-[#222]'}`}>
+                                                        {index + 1}
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center">
+                                                    <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
+                                                        <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
+                                                            <img src={buyer.user.image || default_user} alt={buyer.user.name} className="w-[48px] h-[48px] rounded-full object-cover" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex flex-col items-start w-[120px] pr-[40px]">
+                                                        <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">{buyer.user.name}</span>
                                                     </div>
                                                 </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">{product.user.name}</span>
-                                                </div>
+                                            </div>
+                                            <div className="flex flex-col items-end">
+                                                <span className="text-[#767676] font-noto text-[14px] font-bold leading-[21px]">{buyer.total_quantity}点</span>
                                             </div>
                                         </div>
-                                    </div>
-                                    {/* 122112: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#AB31D3] font-noto text-[20px] font-bold leading-[28px]">2</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={product.user.image || default_user} alt={product.user.name} className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">{product.user.name}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122113: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#AB31D3] font-noto text-[20px] font-bold leading-[28px]">3</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={product.user.image || default_user} alt={product.user.name} className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">{product.user.name}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122114: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#222] font-noto text-[18px] font-bold leading-[24px]">4</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={product.user.image || default_user} alt={product.user.name} className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">{product.user.name}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122115: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#222] font-noto text-[18px] font-bold leading-[24px]">5</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={product.user.image || default_user} alt={product.user.name} className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">{product.user.name}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
                     </section>
                 </section>
                 {/* Mobile Section 2 */}
-                <section className="flex md:hidden flex-col items-center py-[24px] px-[16px] gap-[24px] bg-[#F6F8FA] mx-auto">
+                <section className="flex md:hidden flex-col items-start py-[24px] px-[16px] gap-[24px] bg-[#F6F8FA] w-full">
                     <div className="flex flex-col items-start gap-[24px]">
                         {/* Left: 21 */}
                         <div className="flex items-start flex-shrink-0 ">
@@ -847,7 +858,6 @@ const UnpurchasedProductExpand = ({ product }) => {
                                     <span className="text-[#000] font-noto text-[16px] font-bold leading-[18px]">{product.user.name}</span>
                                     <div className="flex pt-[10px] gap-[4px]">
                                         <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
-                                        <img src={instagram} alt="instagram" className="w-[40px] h-[40px] opacity-100" />
                                     </div>
                                 </div>
                             </div>
@@ -856,7 +866,7 @@ const UnpurchasedProductExpand = ({ product }) => {
                         <div className="flex flex-col items-start flex-shrink-0 ">
                             <div className="flex flex-col items-start flex-shrink-0">
                                 <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">
-                                    こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
+                                    {product.user.description}
                                 </span>
                             </div>
                         </div>

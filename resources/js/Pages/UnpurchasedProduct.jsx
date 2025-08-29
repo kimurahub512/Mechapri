@@ -84,7 +84,7 @@ const UnpurchasedProduct = ({ product }) => {
     return (
         <div className='product-details-no-footer-gap bg-[#FFF]'>
             <Header />
-            <main className="hidden md:flex flex-col items-center px-[120px] pt-[44px] pb-[176px] w-full bg-[#FFF]">
+            <main className="hidden md:flex flex-col items-center px-[120px] pt-[164px] pb-[176px] w-full bg-[#FFF]">
                 {/* Frame 1 */}
                 <div className="flex flex-col items-center gap-[41px] w-full max-w-[1200px]">
                     {/* 11 */}
@@ -519,34 +519,31 @@ const UnpurchasedProduct = ({ product }) => {
                 </div>
             </main>
             {/* Personal Info Footer (Frame 2) */}
-            <section className="hidden md:flex flex-col items-center w-[1440px] pt-[48px] pb-[48px] px-[24px] gap-[24px] bg-[#F6F8FA] mx-auto">
-                <div className="flex w-[1248px] justify-between items-start">
+            <section className="hidden md:flex flex-col items-center py-[48px] px-[96px] w-full bg-[#F6F8FA]">
+                <div className="flex justify-between items-start w-full">
                     {/* Left: 21 */}
-                    <div className="flex w-[400px] max-w-[1248px] items-start flex-shrink-0">
-                        <img src={product.user.image || default_user} alt="user" className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
+                    <div className="flex items-start flex-shrink-0">
+                        <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
                         {/* 211 */}
                         <div className="flex flex-col pl-[16px] items-start">
                             <div className="flex flex-col items-start gap-[12px]">
                                 <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 <div className="flex pt-[10px] gap-[4px]">
                                     <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
-                                    <img src={instagram} alt="instagram" className="w-[46.429px] h-[46.429px] opacity-100" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     {/* Right: 22 */}
-                    <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
-                        <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
+                    <div className="flex flex-col w-[55%] items-start flex-shrink-0">
                             <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
                                 {product.user.description}
                             </span>
-                        </div>
                     </div>
                 </div>
             </section>
             {/* Mobile Main Section */}
-            <div className="flex flex-col gap-[45px]">
+            <div className="flex flex-col pt-[24px] gap-[45px]">
                 <section className="flex flex-col items-start gap-[24px] px-4 md:hidden w-full pt-[32px] bg-[#FFF] mt-[-12px]">
                     {/* Frame 11 */}
                     <div className="flex flex-col items-start gap-[24px] w-[343px]">
@@ -1021,7 +1018,6 @@ const UnpurchasedProduct = ({ product }) => {
                                     <span className="text-[#000] font-noto text-[16px] font-bold leading-[18px]">{product.user.name}</span>
                                     <div className="flex gap-[4px]">
                                         <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
-                                        <img src={instagram} alt="instagram" className="w-[40px] h-[40px] opacity-100" />
                                     </div>
                                 </div>
                             </div>

@@ -59,14 +59,13 @@ const ShopTop = () => {
                         <div className="flex justify-end items-center self-stretch" style={{ gap: vw(8) }}>
                             <span style={{ ...responsiveText(16, 16, null, 'normal', 'noto', '#000') }}>{shopData?.follower_count || 0}人が登録</span>
                             {/* 11121: Follow button */}
-                            {auth?.user && auth.user.id !== shopData?.id && (
                                 <FavoriteShopButton 
                                     shopUserId={shopData?.id}
                                     initialIsFavorited={isFavorited}
                                     isMobile={true}
                                     refreshOnToggle={true}
+                                    disable={auth?.user && auth.user.id === shopData?.id}
                                 />
-                            )}
                         </div>
                         {/* 112: Description */}
                         <div className="flex flex-col items-start self-stretch" style={{ maxWidth: vw(1248) }}>
@@ -142,14 +141,13 @@ const ShopTop = () => {
                     <div className="absolute inline-flex items-center" style={{ top: vwd(106), right: vwd(16), gap: vwd(8) }}>
                         <span className="text-[#000] font-noto font-normal" style={{ ...responsiveTextD(16, 16, null, 'normal', 'noto', '#000') }}>{shopData?.follower_count || 0}人が登録</span>
                         {/* 1151: Follow button */}
-                        {auth?.user && auth.user.id !== shopData?.id && (
                             <FavoriteShopButton 
                                 shopUserId={shopData?.id}
                                 initialIsFavorited={isFavorited}
                                 isMobile={false}
                                 refreshOnToggle={true}
+                                disable={auth?.user && auth.user.id === shopData?.id}
                             />
-                        )}
                     </div>
                     {/* 116: Description */}
                     <div className="absolute flex flex-col items-start self-stretch" style={{ top: vwd(194), left: vwd(16), maxWidth: vwd(1248) }}>

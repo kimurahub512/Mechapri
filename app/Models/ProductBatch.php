@@ -48,7 +48,7 @@ class ProductBatch extends Model
      */
     protected $casts = [
         'sales_deadline' => 'date',
-        'price' => 'decimal:2',
+        'price' => 'integer',
         'add_category' => 'boolean',
         'sn_print' => 'boolean',
         'is_public' => 'boolean',

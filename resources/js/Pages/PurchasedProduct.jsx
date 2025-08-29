@@ -410,96 +410,28 @@ const PurchasedProduct = ({ product }) => {
                                 <span className="text-[#000] font-noto text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">ランキング</span>
                                 {/* 12211: Ranking list */}
                                 <div className="flex flex-col items-start gap-[24px] w-full">
-                                    {/* 122111: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-noto text-[36px] font-bold leading-[54px]">1</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
+                                    {product.top_buyers && product.top_buyers.map((buyer, index) => (
+                                        <div key={index} className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
+                                            <div className="flex items-center gap-[24px]">
+                                                <div className="flex flex-col items-center pb-[12px]">
+                                                    <span className={`font-noto font-bold ${index === 0 ? 'text-[36px] leading-[54px]' : index <= 2 ? 'text-[28px] leading-[42px]' : 'text-[24px] leading-[24px]'} ${index <= 2 ? 'text-[#AB31D3]' : 'text-[#222]'}`}>{index + 1}</span>
+                                                </div>
+                                                <div className="flex items-center">
+                                                    <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
+                                                        <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
+                                                            <img src={buyer.user.image || default_user} alt={buyer.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex flex-col items-start w-[158px] pr-[62px]">
+                                                        <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{buyer.user.name}</span>
                                                     </div>
                                                 </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
+                                            </div>
+                                            <div className="flex flex-col items-end">
+                                                <span className="text-[#767676] font-noto text-[14px] font-bold leading-[21px]">{buyer.total_quantity}点</span>
                                             </div>
                                         </div>
-                                    </div>
-                                    {/* 122112: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-noto text-[28px] font-bold leading-[42px]">2</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122113: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-noto text-[28px] font-bold leading-[42px]">3</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122114: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#222] font-noto text-[24px] font-bold leading-[24px]">4</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122115: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#222] font-noto text-[24px] font-bold leading-[24px]">5</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -507,34 +439,31 @@ const PurchasedProduct = ({ product }) => {
                 </div>
             </main>
             {/* Personal Info Footer (Frame 2) */}
-            <section className="hidden md:flex flex-col items-center w-[1440px] pt-[48px] pb-[48px] px-[24px] gap-[24px] bg-[#F6F8FA] mx-auto">
-                <div className="flex w-[1248px] justify-between items-start">
+            <section className="hidden md:flex flex-col items-center py-[48px] px-[96px] w-full bg-[#F6F8FA]">
+                <div className="flex justify-between items-start w-full">
                     {/* Left: 21 */}
-                    <div className="flex w-[400px] max-w-[1248px] items-start flex-shrink-0">
-                        <img src={girl} alt="girl" className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
+                    <div className="flex items-start flex-shrink-0">
+                        <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
                         {/* 211 */}
                         <div className="flex flex-col pl-[16px] items-start">
                             <div className="flex flex-col items-start gap-[12px]">
-                                <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy2005</span>
+                                <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 <div className="flex pt-[10px] gap-[4px]">
                                     <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
-                                    <img src={instagram} alt="instagram" className="w-[46.429px] h-[46.429px] opacity-100" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     {/* Right: 22 */}
-                    <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
-                        <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
+                    <div className="flex flex-col w-[55%] items-start flex-shrink-0">
                             <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
-                                こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
+                                {product.user.description}
                             </span>
-                        </div>
                     </div>
                 </div>
             </section>
             {/* Mobile Main Section */}
-            <div className="flex flex-col gap-[45px]">
+            <div className="flex flex-col gap-[45px] pt-[84px]">
                 <section className="flex flex-col items-start gap-[24px] px-4 md:hidden w-full pt-[32px] bg-[#FFF] mt-[-12px]">
                     {/* Frame 11 */}
                     <div className="flex flex-col items-start gap-[24px] w-[343px]">
@@ -831,114 +760,45 @@ const PurchasedProduct = ({ product }) => {
                                 <span className="text-[#000] font-noto text-[18px] font-bold leading-[24px]">ランキング</span>
                                 {/* 12211: Ranking list */}
                                 <div className="flex flex-col items-start gap-[16px] w-full">
-                                    {/* 122111: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#AB31D3] font-noto text-[24px] font-bold leading-[32px]">1</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
+                                    {product.top_buyers && product.top_buyers.map((buyer, index) => (
+                                        <div key={index} className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
+                                            <div className="flex items-center gap-[16px]">
+                                                <div className="flex flex-col items-center pb-[8px]">
+                                                    <span className={`font-noto font-bold ${index === 0 ? 'text-[24px] leading-[32px] text-[#AB31D3]' : index <= 2 ? 'text-[20px] leading-[28px] text-[#AB31D3]' : 'text-[18px] leading-[24px] text-[#222]'}`}>{index + 1}</span>
+                                                </div>
+                                                <div className="flex items-center">
+                                                    <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
+                                                        <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
+                                                            <img src={buyer.user.image || default_user} alt={buyer.user.name} className="w-[48px] h-[48px] rounded-full object-cover" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex flex-col items-start w-[120px] pr-[40px]">
+                                                        <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">{buyer.user.name}</span>
                                                     </div>
                                                 </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
-                                                </div>
+                                            </div>
+                                            <div className="flex flex-col items-end">
+                                                <span className="text-[#767676] font-noto text-[14px] font-bold leading-[21px]">{buyer.total_quantity}点</span>
                                             </div>
                                         </div>
-                                    </div>
-                                    {/* 122112: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#AB31D3] font-noto text-[20px] font-bold leading-[28px]">2</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122113: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#AB31D3] font-noto text-[20px] font-bold leading-[28px]">3</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122114: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#222] font-noto text-[18px] font-bold leading-[24px]">4</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122115: Ranking item example */}
-                                    <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                <span className="text-[#222] font-noto text-[18px] font-bold leading-[24px]">5</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
                     </section>
                 </section>
                 {/* Mobile Section 2 */}
-                <section className="flex md:hidden flex-col items-center py-[24px] px-[16px] gap-[24px] bg-[#F6F8FA] mx-auto">
+                <section className="flex md:hidden flex-col items-start py-[24px] px-[16px] gap-[24px] bg-[#F6F8FA] w-full">
                     <div className="flex flex-col items-start gap-[24px]">
                         {/* Left: 21 */}
                         <div className="flex items-start flex-shrink-0 ">
-                            <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
+                            <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
                             {/* 211 */}
                             <div className="flex flex-col pl-[16px] items-start">
                                 <div className="flex flex-col items-start gap-[12px]">
-                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-18px]">anchiy1005</span>
+                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[18px]">{product.user.name}</span>
                                     <div className="flex pt-[10px] gap-[4px]">
                                         <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
-                                        <img src={instagram} alt="instagram" className="w-[40px] h-[40px] opacity-100" />
                                     </div>
                                 </div>
                             </div>
@@ -947,7 +807,7 @@ const PurchasedProduct = ({ product }) => {
                         <div className="flex flex-col items-start flex-shrink-0 ">
                             <div className="flex flex-col items-start flex-shrink-0">
                                 <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">
-                                    こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
+                                    {product.user.description}
                                 </span>
                             </div>
                         </div>

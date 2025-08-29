@@ -4,12 +4,12 @@ import favoriteshop from '@/assets/images/favoriteshop.svg';
 import favoriteshop_white from '@/assets/images/favoriteshop_white.svg';
 import { vw, vwd, responsiveText, responsiveTextD } from '@/lib/utils';
 
-const FavoriteShopButton = ({ shopUserId, initialIsFavorited = false, isMobile = false, refreshOnToggle = true }) => {
+const FavoriteShopButton = ({ shopUserId, initialIsFavorited = false, isMobile = false, refreshOnToggle = true, disable = false }) => {
     const [isFavorited, setIsFavorited] = useState(initialIsFavorited);
     const [isLoading, setIsLoading] = useState(false);
 
     const toggleFavorite = async () => {
-        if (isLoading) return;
+        if (isLoading || disable) return;
         
         setIsLoading(true);
         
@@ -46,7 +46,7 @@ const FavoriteShopButton = ({ shopUserId, initialIsFavorited = false, isMobile =
     return (
         <button 
             onClick={toggleFavorite}
-            disabled={isLoading}
+            disabled={isLoading || disable}
             className={`flex items-center rounded-[40px] border border-[#FF2AA1] ${isFavorited ? 'bg-[#FF2AA1]' : 'bg-white'}`}
             style={{ 
                 gap: isMobile ? vw(8) : vwd(8), 

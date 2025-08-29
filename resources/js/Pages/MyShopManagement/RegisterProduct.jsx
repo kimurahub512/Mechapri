@@ -386,15 +386,28 @@ const RegisterProduct = () => {
 
         setUploadedPhotos(prev => [...prev, ...newPhotos]);
         setTotalSize(prev => prev + validFiles.reduce((sum, file) => sum + file.size, 0));
+        
+        // Reset the file input value to allow selecting the same file again
+        if (e.target) {
+            e.target.value = '';
+        }
     };
 
-    const handleUploadClick = () => {
+    const handleUploadClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (editMode) {
+            return; // Disable file upload in edit mode
+        }
         if (uploadedPhotos.length < 10) {
             fileInputRef.current?.click();
         }
     };
 
     const removePhoto = (photoId) => {
+        if (editMode) {
+            return; // Disable photo removal in edit mode
+        }
         setUploadedPhotos(prev => {
             const photoToRemove = prev.find(photo => photo.id === photoId);
             if (photoToRemove) {
@@ -500,7 +513,7 @@ const RegisterProduct = () => {
                                             </div>
                                         ))}
                                         {/* Add more button - show if less than 10 photos */}
-                                        {uploadedPhotos.length < 10 && (
+                                        {uploadedPhotos.length < 10 && !editMode && (
                                             <div
                                                 className="border-2 border-dashed border-gray-300 bg-white rounded-lg flex items-center justify-center cursor-pointer hover:border-gray-400 transition-colors"
                                                 onClick={handleUploadClick}
@@ -524,6 +537,7 @@ const RegisterProduct = () => {
                             accept="image/*,.pdf"
                             multiple
                             className="hidden"
+                            value=""
                         />
                         {/* Frame 12 */}
                         <div className="flex flex-col items-start self-stretch w-full">
@@ -595,6 +609,7 @@ const RegisterProduct = () => {
                                                                                                 min={new Date().toISOString().split('T')[0]}
                                                         max={maxDateString}
                                                         style={{ ...responsiveMetricD('full', 45.99), paddingLeft: vwd(12.5), paddingRight: vwd(11.99), paddingTop: vwd(12.49), paddingBottom: vwd(11.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto') }}
+                                        disabled={editMode}
                                     />
                                 </div>
                             </div>
@@ -606,7 +621,7 @@ const RegisterProduct = () => {
                                     <span style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#ACACAC') }}>いずれかを選択</span>
                                 </div>
                                 {/* Frame 12332: Radio + 有料 */}
-                                <div className="flex items-center justify-center cursor-pointer" style={{ gap: vwd(10), paddingBottom: vwd(8) }} onClick={() => setIsPaid(true)}>
+                                <div className={`flex items-center justify-center ${editMode ? 'cursor-not-allowed' : 'cursor-pointer'}`} style={{ gap: vwd(10), paddingBottom: vwd(8), opacity: editMode ? 0.5 : 1 }} onClick={editMode ? undefined : () => setIsPaid(true)}>
                                     {isPaid ? (
                                         <img src={radio} alt="radio" style={{ width: vwd(20), height: vwd(20) }} />
                                     ) : (
@@ -619,14 +634,14 @@ const RegisterProduct = () => {
                                     <input
                                         type="number"
                                         className="flex h-[48px] w-[159px] pr-[5px] text-right rounded-[5.71px] border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
-                                        placeholder="1000"
-                                        value={price}
+                                        placeholder="100"
+                                        value={price > 0 ? price : ''}
                                         onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
                                         onWheel={(e) => e.target.blur()}
                                         min="100"
                                         max="100000"
                                         style={{ ...responsiveMetricD(159, 48), paddingRight: vwd(5) }}
-                                        disabled={!isPaid}
+                                        disabled={!isPaid || editMode}
                                     />
                                     <span style={{ ...responsiveTextD(14, 25.2, null, 'medium', 'noto', '#363636'), marginLeft: vwd(8) }}>円</span>
                                     <span className="whitespace-nowrap" style={{ ...responsiveTextD(17, 20, null, 'normal', 'noto', '#87969F'), marginLeft: vwd(18) }}>100~100000円まで</span>
@@ -636,7 +651,7 @@ const RegisterProduct = () => {
                                     販売数
                                 </div>
                                 {/* Frame 12335: Circle + 無制限 */}
-                                <div className="flex items-start" style={{ paddingLeft: vwd(30), paddingRight: vwd(718), marginBottom: vwd(21), opacity: isPaid ? 1 : 0.5, cursor: isPaid ? 'pointer' : 'not-allowed' }} onClick={isPaid ? () => setIsUnlimited(true) : undefined}>
+                                <div className="flex items-start" style={{ paddingLeft: vwd(30), paddingRight: vwd(718), marginBottom: vwd(21), opacity: isPaid ? 1 : 0.5, cursor: isPaid && !editMode ? 'pointer' : 'not-allowed' }} onClick={isPaid && !editMode ? () => setIsUnlimited(true) : undefined}>
                                     {isUnlimited ? (
                                         <img src={radio} alt="radio" style={{ width: vwd(20), height: vwd(20), marginRight: vwd(10) }} />
                                     ) : (
@@ -645,7 +660,7 @@ const RegisterProduct = () => {
                                     <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636'), whiteSpace: 'nowrap' }}>無制限</span>
                                 </div>
                                 {/* Frame 12336: Radio + 販売数を指定 */}
-                                <div className="flex items-start" style={{ paddingLeft: vwd(30), paddingRight: vwd(664), marginBottom: vwd(21), opacity: isPaid ? 1 : 0.5, cursor: isPaid ? 'pointer' : 'not-allowed' }} onClick={isPaid ? () => setIsUnlimited(false) : undefined}>
+                                <div className="flex items-start" style={{ paddingLeft: vwd(30), paddingRight: vwd(664), marginBottom: vwd(21), opacity: isPaid ? 1 : 0.5, cursor: isPaid && !editMode ? 'pointer' : 'not-allowed' }} onClick={isPaid && !editMode ? () => setIsUnlimited(false) : undefined}>
                                     {!isUnlimited ? (
                                         <img src={radio} alt="radio" style={{ width: vwd(20), height: vwd(20), marginRight: vwd(10) }} />
                                     ) : (
@@ -658,19 +673,19 @@ const RegisterProduct = () => {
                                     <input
                                         type="number"
                                         className="flex text-right rounded-[5.71px] border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
-                                        placeholder="0"
-                                        value={salesLimit}
+                                        placeholder="1"
+                                        value={salesLimit > 0 ? salesLimit : ''}
                                         onChange={(e) => setSalesLimit(e.target.value)}
                                         onWheel={(e) => e.target.blur()}
                                         min="1"
                                         max="999999"
                                         style={{ ...responsiveMetricD(159, 48), paddingRight: vwd(5), ...responsiveTextD(20, 20, null, 'normal', 'noto') }}
-                                        disabled={!isPaid || isUnlimited}
+                                        disabled={!isPaid || isUnlimited || editMode}
                                     />
                                     <span className="whitespace-nowrap" style={{ ...responsiveTextD(17, 20, null, 'normal', 'noto', '#87969F'), marginLeft: vwd(18) }}>1~999999まで</span>
                                 </div>
                                 {/* Frame 12338: Circle + 無料 */}
-                                <div className="flex items-start cursor-pointer" style={{ paddingBottom: vwd(8), marginBottom: vwd(21) }} onClick={() => setIsPaid(false)}>
+                                <div className={`flex items-start ${editMode ? 'cursor-not-allowed' : 'cursor-pointer'}`} style={{ paddingBottom: vwd(8), marginBottom: vwd(21), opacity: editMode ? 0.5 : 1 }} onClick={editMode ? undefined : () => setIsPaid(false)}>
                                     {!isPaid ? (
                                         <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20), marginRight: vwd(10) }} />
                                     ) : (
@@ -871,11 +886,11 @@ const RegisterProduct = () => {
                                 {/* Frame 123442 */}
                                 <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                                     {/* 1234421 */}
-                                    <div className="flex items-center cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setPrintSerial(true)}>
+                                    <div className="flex items-center self-stretch cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setPrintSerial(true)}>
                                         {printSerial ? (
-                                            <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
+                                            <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20), margin: 0 }} />
                                         ) : (
-                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
+                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetric(20, 20), margin: 0 }} />
                                         )}
                                         <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>印字する</span>
                                     </div>
@@ -886,16 +901,16 @@ const RegisterProduct = () => {
                                             <span style={{ ...responsiveTextD(13, 19.5, null, 'medium', 'noto', '#87969F') }}>プリントする時にシリアル番号を印字することができます</span>
                                             {/* 1234423 */}
                                             <div className="flex items-center cursor-pointer" style={{ gap: vwd(15), ...responsiveMetricD(772, 24) }} onClick={() => setSerialFormat('number')}>
-                                                {serialFormat === 'number' ? (
+                                                {/* {serialFormat === 'number' ? (
                                                     <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                                 ) : (
                                                     <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
-                                                )}
+                                                )} */}
                                                 <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>発行枚数を表示</span>
                                                 <span style={{ ...responsiveTextD(17, 24, null, 'normal', 'noto', '#ACACAC') }}>例：000001,000002</span>
                                             </div>
                                             {/* 1234424 */}
-                                            <div className="flex items-center cursor-pointer" style={{ gap: vwd(15), ...responsiveMetricD(772, 24) }} onClick={() => setSerialFormat('random')}>
+                                            {/* <div className="flex items-center cursor-pointer" style={{ gap: vwd(15), ...responsiveMetricD(772, 24) }} onClick={() => setSerialFormat('random')}>
                                                 {serialFormat === 'random' ? (
                                                     <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                                 ) : (
@@ -903,7 +918,7 @@ const RegisterProduct = () => {
                                                 )}
                                                 <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>乱数6文字で表示</span>
                                                 <span style={{ ...responsiveTextD(17, 24, null, 'normal', 'noto', '#ACACAC') }}>例：736593,918482</span>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     )}
                                 </div>
@@ -930,7 +945,7 @@ const RegisterProduct = () => {
                                 {/* 123452 */}
                                 <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                                     {/* 1234521 */}
-                                    <div className="flex items-start cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setIsPublic(true)}>
+                                    <div className="flex items-start self-stretch cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setIsPublic(true)}>
                                         {isPublic ? (
                                             <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                         ) : (
@@ -944,7 +959,7 @@ const RegisterProduct = () => {
                                 {/* 123453 */}
                                 <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                                     {/* 1234531 */}
-                                    <div className="flex items-start cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setIsPublic(false)}>
+                                    <div className="flex items-start self-stretch cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setIsPublic(false)}>
                                         {!isPublic ? (
                                             <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
                                         ) : (
@@ -1041,14 +1056,14 @@ const RegisterProduct = () => {
                                         {uploadedPhotos.map((photo, index) => (
                                             <div key={photo.id} className="relative group">
                                                 <img
-                                                    src={photo.preview}
+                                                    src={photo.isExisting ? photo.url : photo.preview}
                                                     alt={`Photo ${index + 1}`}
                                                     className="object-cover rounded-lg"
                                                     style={{ ...responsiveMetric(88, 88) }}
                                                 />
                                                 <button
                                                     onClick={() => removePhoto(photo.id)}
-                                                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                                                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full flex items-center justify-center text-xs"
                                                     style={{ width: vw(20), height: vw(20) }}
                                                 >
                                                     ×
@@ -1056,7 +1071,7 @@ const RegisterProduct = () => {
                                             </div>
                                         ))}
                                         {/* Add more button - show if less than 10 photos */}
-                                        {uploadedPhotos.length < 10 && (
+                                        {uploadedPhotos.length < 10 && !editMode && (
                                             <div
                                                 className="border-2 border-dashed border-gray-300 bg-white rounded-lg flex items-center justify-center cursor-pointer hover:border-gray-400 transition-colors"
                                                 onClick={handleUploadClick}
@@ -1144,6 +1159,7 @@ const RegisterProduct = () => {
                                                                                                         min={new Date().toISOString().split('T')[0]}
                                                             max={maxDateString}
                                                             style={{ ...responsiveMetric(311, 45.99), paddingTop: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49), borderRadius: vw(5.71), ...responsiveText(14, 14, null, 'normal', 'noto') }}
+                                            disabled={editMode}
                                         />
                                     </div>
                                 </div>
@@ -1155,7 +1171,7 @@ const RegisterProduct = () => {
                                         <span style={{ ...responsiveText(14, 21, null, 'normal', 'noto', '#ACACAC') }}>いずれかを選択</span>
                                     </div>
                                     {/* 12332: Radio + 有料 */}
-                                    <div className="flex items-center cursor-pointer" style={{ gap: vw(8), marginTop: vw(4.19), marginBottom: vw(8) }} onClick={() => setIsPaid(true)}>
+                                    <div className={`flex items-center ${editMode ? 'cursor-not-allowed' : 'cursor-pointer'}`} style={{ gap: vw(8), marginTop: vw(4.19), marginBottom: vw(8), opacity: editMode ? 0.5 : 1 }} onClick={editMode ? undefined : () => setIsPaid(true)}>
                                         {isPaid ? (
                                             <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20) }} />
                                         ) : (
@@ -1168,14 +1184,14 @@ const RegisterProduct = () => {
                                         <input
                                             type="number"
                                             className="flex text-right border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
-                                            placeholder="0"
-                                            value={price}
+                                            placeholder="100"
+                                            value={price > 0 ? price : ''}
                                             onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
                                             onWheel={(e) => e.target.blur()}
                                             min="100"
                                             max="100000"
                                             style={{ ...responsiveMetric(120, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(4), ...responsiveText(20, 20, null, 'normal', 'noto') }}
-                                            disabled={!isPaid}
+                                            disabled={!isPaid || editMode}
                                         />
                                         <span style={{ ...responsiveText(14, 25, null, 'medium', 'noto', '#363636') }}>円</span>
                                         <span style={{ ...responsiveText(12, 18, null, 'normal', 'noto', '#87969F') }}>100~100000円まで</span>
@@ -1185,7 +1201,7 @@ const RegisterProduct = () => {
                                         <span style={{ ...responsiveText(14, 14, null, 'bold', 'noto', '#363636') }}>販売数</span>
                                     </div>
                                     {/* 12335: Circle + 無制限 */}
-                                    <div className="flex items-center" style={{ ...responsiveMetric(281, 29), marginLeft: vw(30), marginBottom: vw(16), opacity: isPaid ? 1 : 0.5, cursor: isPaid ? 'pointer' : 'not-allowed' }} onClick={isPaid ? () => setIsUnlimited(true) : undefined}>
+                                    <div className="flex items-center" style={{ ...responsiveMetric(281, 29), marginLeft: vw(30), marginBottom: vw(16), opacity: isPaid ? 1 : 0.5, cursor: isPaid && !editMode ? 'pointer' : 'not-allowed' }} onClick={isPaid && !editMode ? () => setIsUnlimited(true) : undefined}>
                                         {isUnlimited ? (
                                             <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20), marginRight: vw(10) }} />
                                         ) : (
@@ -1194,7 +1210,7 @@ const RegisterProduct = () => {
                                         <span className="whitespace-nowrap" style={{ ...responsiveText(14, 24, null, 'normal', 'noto', '#363636') }}>無制限</span>
                                     </div>
                                     {/* 12336: Radio + 販売数を指定 */}
-                                    <div className="flex items-center" style={{ ...responsiveMetric(281, 29), marginLeft: vw(30), marginBottom: vw(8), opacity: isPaid ? 1 : 0.5, cursor: isPaid ? 'pointer' : 'not-allowed' }} onClick={isPaid ? () => setIsUnlimited(false) : undefined}>
+                                    <div className="flex items-center" style={{ ...responsiveMetric(281, 29), marginLeft: vw(30), marginBottom: vw(8), opacity: isPaid ? 1 : 0.5, cursor: isPaid && !editMode ? 'pointer' : 'not-allowed' }} onClick={isPaid && !editMode ? () => setIsUnlimited(false) : undefined}>
                                         {!isUnlimited ? (
                                             <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20), marginRight: vw(10) }} />
                                         ) : (
@@ -1207,19 +1223,19 @@ const RegisterProduct = () => {
                                         <input
                                             type="number"
                                             className="flex text-right border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
-                                            placeholder="1000"
-                                            value={salesLimit}
+                                            placeholder="1"
+                                            value={salesLimit > 0 ? salesLimit : ''}
                                             onChange={(e) => setSalesLimit(e.target.value)}
                                             onWheel={(e) => e.target.blur()}
                                             min="1"
                                             max="999999"
                                             style={{ ...responsiveMetric(120, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(4), ...responsiveText(20, 20, null, 'normal', 'noto') }}
-                                            disabled={!isPaid || isUnlimited}
+                                            disabled={!isPaid || isUnlimited || editMode}
                                         />
                                         <span style={{ ...responsiveText(12, 18, null, 'normal', 'noto', '#87969F') }}>1~999999まで</span>
                                     </div>
                                     {/* 12338: Circle + 無料 */}
-                                    <div className="flex items-center cursor-pointer" style={{ ...responsiveMetric(311, 'auto') }} onClick={() => setIsPaid(false)}>
+                                    <div className={`flex items-center ${editMode ? 'cursor-not-allowed' : 'cursor-pointer'}`} style={{ ...responsiveMetric(311, 'auto'), opacity: editMode ? 0.5 : 1 }} onClick={editMode ? undefined : () => setIsPaid(false)}>
                                         {!isPaid ? (
                                             <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20), marginRight: vw(10) }} />
                                         ) : (
@@ -1441,16 +1457,16 @@ const RegisterProduct = () => {
                                                     <span style={{ ...responsiveText(13, 19.5, null, 'medium', 'noto', '#87969F') }}>プリントする時にシリアル番号を印字することができます</span>
                                                     {/* 1234423 */}
                                                     <div className="flex items-center cursor-pointer" style={{ gap: vw(15), width: '100%' }} onClick={() => setSerialFormat('number')}>
-                                                        {serialFormat === 'number' ? (
+                                                        {/* {serialFormat === 'number' ? (
                                                             <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20) }} />
                                                         ) : (
                                                             <span className="flex flex-shrink-0 rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetric(20, 20) }} />
-                                                        )}
+                                                        )} */}
                                                         <span style={{ ...responsiveText(14, 24, null, 'normal', 'noto', '#363636') }}>発行枚数を表示</span>
                                                         <span style={{ ...responsiveText(12, 18, null, 'normal', 'noto', '#ACACAC') }}>例：000001,000002</span>
                                                     </div>
                                                     {/* 1234424 */}
-                                                    <div className="flex items-center cursor-pointer" style={{ gap: vw(15), width: '100%' }} onClick={() => setSerialFormat('random')}>
+                                                    {/* <div className="flex items-center cursor-pointer" style={{ gap: vw(15), width: '100%' }} onClick={() => setSerialFormat('random')}>
                                                         {serialFormat === 'random' ? (
                                                             <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20) }} />
                                                         ) : (
@@ -1458,7 +1474,7 @@ const RegisterProduct = () => {
                                                         )}
                                                         <span style={{ ...responsiveText(14, 24, null, 'normal', 'noto', '#363636') }}>乱数6文字で表示</span>
                                                         <span style={{ ...responsiveText(12, 18, null, 'normal', 'noto', '#ACACAC') }}>例：736593,918482</span>
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                             )}
                                         </div>

@@ -302,7 +302,6 @@ const ProductDetailsFree = () => {
                                 <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy2005</span>
                                 <div className="flex pt-[10px] gap-[4px]">
                                     <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
-                                    <img src={instagram} alt="instagram" className="w-[46.429px] h-[46.429px] opacity-100" />
                                 </div>
                             </div>
                         </div>
@@ -584,7 +583,6 @@ const ProductDetailsFree = () => {
                                 <span className="text-[#000] font-noto text-[16px] font-bold leading-[18px]">anchiy1005</span>
                                 <div className="flex pt-[10px] gap-[4px]">
                                     <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
-                                    <img src={instagram} alt="instagram" className="w-[40px] h-[40px] opacity-100" />
                                 </div>
                             </div>
                         </div>

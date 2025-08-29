@@ -27,7 +27,7 @@ class UserPurchasedProduct extends Model
 
     protected $casts = [
         'purchase_time' => 'datetime',
-        'price' => 'decimal:2',
+        'price' => 'integer',
         'nwps_token_expires_at' => 'datetime',
         'printed_at' => 'datetime',
         'print_expires_at' => 'datetime',

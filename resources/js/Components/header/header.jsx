@@ -102,7 +102,7 @@ const Header = ({ authButton }) => {
         </div>
       </div>
       {/* Mobile header (visible below lg) */}
-      <div className='md:hidden flex w-full px-2 items-center border-b border-[#DCDCDC] bg-white'>
+      <div className='md:hidden fixed top-0 left-0 right-0 z-[10000] flex w-full px-2 items-center border-b border-[#DCDCDC] bg-white'>
         {auth?.user ? (
           <div className='flex items-center pt-[7px] pb-[6px] items-center justify-between w-full'>
             <a href='/' className='flex items-center'>

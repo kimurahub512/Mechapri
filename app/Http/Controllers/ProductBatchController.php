@@ -680,6 +680,8 @@ class ProductBatchController extends Controller
                 'title' => $product->title,
                 'description' => $product->description,
                 'price' => $product->price,
+                'sales_limit' => $product->sales_limit,
+                'sales_deadline' => $product->sales_deadline ? $product->sales_deadline->format('Y/m/d') : null,
                 'display_mode' => $product->display_mode,
                 'image' => $product->getWatermarkedImageUrl(auth()->user()),
                 'images' => collect($product->getWatermarkedImages(auth()->user()))->pluck('url'),
@@ -694,6 +696,7 @@ class ProductBatchController extends Controller
                 'is_favorited' => $product->isFavoritedBy(auth()->user()),
                 'favorite_count' => $product->favorite_count,
                 'print_deadline' => now()->addDays(30)->format('Y/m/d'),
+                'printed_count' => $printedCount,
                 'top_buyers' => UserPurchasedProduct::getTopBuyersForProduct($product->id)->map(function($purchase) {
                     return [
                         'user' => [
