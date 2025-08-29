@@ -81,22 +81,27 @@ const RegisterProduct = () => {
     const scrollToTop = () => {
         // Try multiple approaches
         try {
-            // Method 1: Scroll to top of page
-            window.scrollTo(0, 0);
-
-            // Method 2: Scroll the main container
-            const mainElement = document.querySelector('main');
-            if (mainElement) {
-                mainElement.scrollTop = 0;
-            }
-
-            // Method 3: Scroll to error element
+            // Method 1: Scroll to error element first (prioritize this)
             setTimeout(() => {
                 const errorElement = document.querySelector('.error-message');
                 if (errorElement) {
                     errorElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    return; // Exit early if we successfully scroll to error
                 }
             }, 100);
+
+            // Method 2: If no error element, scroll to top of page
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 200);
+
+            // Method 3: Scroll the main container as fallback
+            setTimeout(() => {
+                const mainElement = document.querySelector('main');
+                if (mainElement) {
+                    mainElement.scrollTop = 0;
+                }
+            }, 300);
 
         } catch (error) {
             console.error('Scroll error:', error);
@@ -538,12 +543,12 @@ const RegisterProduct = () => {
                                 <div className="flex flex-col items-start self-stretch w-full">
                                     <input
                                         type="text"
-                                        className="border border-[#E9E9E9] bg-white focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                        className="border border-[#E9E9E9] bg-white focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
                                         placeholder="商品のタイトル"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                         maxLength={30}
-                                        style={{ ...responsiveMetricD('full', 48), paddingLeft: vwd(11), paddingRight: vwd(11), paddingTop: vwd(1), paddingBottom: vwd(1), borderRadius: vwd(10), ...responsiveTextD(16, 16, null, 'medium', 'noto', '#C9177A') }}
+                                        style={{ ...responsiveMetricD('full', 48), paddingLeft: vwd(11), paddingRight: vwd(11), paddingTop: vwd(1), paddingBottom: vwd(1), borderRadius: vwd(10), ...responsiveTextD(16, 16, null, 'medium', 'noto') }}
                                     />
                                 </div>
                             </div>
@@ -562,12 +567,12 @@ const RegisterProduct = () => {
                                     {/* Frame 123121 */}
                                     <div className="flex flex-col items-start" style={{ ...responsiveMetricD('full', 90) }}>
                                         <textarea
-                                            className="flex min-h-[90px] w-full bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 resize-none"
+                                            className="flex min-h-[90px] w-full bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 resize-none placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
                                             placeholder="商品の説明文"
                                             value={description}
                                             onChange={(e) => setDescription(e.target.value)}
                                             maxLength={200}
-                                            style={{ ...responsiveMetricD('full', 90), paddingTop: vwd(10.37), paddingRight: vwd(11.99), paddingBottom: vwd(53.21), paddingLeft: vwd(11.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto', '#C9177A') }}
+                                            style={{ ...responsiveMetricD('full', 90), paddingTop: vwd(10.37), paddingRight: vwd(11.99), paddingBottom: vwd(53.21), paddingLeft: vwd(11.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto') }}
                                         />
                                     </div>
                                 </div>
@@ -583,13 +588,13 @@ const RegisterProduct = () => {
                                 <div className="flex flex-col items-start self-stretch w-full" style={{ paddingBottom: vwd(8) }}>
                                     <input
                                         type="date"
-                                        className="flex bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                        className="flex bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
                                         placeholder="2025/11/24"
                                         value={salesDeadline}
                                         onChange={(e) => setSalesDeadline(e.target.value)}
                                                                                                 min={new Date().toISOString().split('T')[0]}
                                                         max={maxDateString}
-                                                        style={{ ...responsiveMetricD('full', 45.99), paddingLeft: vwd(12.5), paddingRight: vwd(11.99), paddingTop: vwd(12.49), paddingBottom: vwd(11.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto', '#C9177A') }}
+                                                        style={{ ...responsiveMetricD('full', 45.99), paddingLeft: vwd(12.5), paddingRight: vwd(11.99), paddingTop: vwd(12.49), paddingBottom: vwd(11.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto') }}
                                     />
                                 </div>
                             </div>
@@ -613,7 +618,7 @@ const RegisterProduct = () => {
                                 <div className="inline-flex items-center" style={{ paddingLeft: vwd(30), marginBottom: vwd(21), opacity: isPaid ? 1 : 0.5 }}>
                                     <input
                                         type="number"
-                                        className="flex h-[48px] w-[159px] pr-[5px] text-right rounded-[5.71px] border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                        className="flex h-[48px] w-[159px] pr-[5px] text-right rounded-[5.71px] border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
                                         placeholder="1000"
                                         value={price}
                                         onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
@@ -652,14 +657,14 @@ const RegisterProduct = () => {
                                 <div className="flex items-center flex-shrink-0" style={{ paddingLeft: vwd(30), marginBottom: vwd(21), opacity: isPaid ? 1 : 0.5 }}>
                                     <input
                                         type="number"
-                                        className="flex text-right rounded-[5.71px] border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                        className="flex text-right rounded-[5.71px] border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
                                         placeholder="0"
                                         value={salesLimit}
                                         onChange={(e) => setSalesLimit(e.target.value)}
                                         onWheel={(e) => e.target.blur()}
                                         min="1"
                                         max="999999"
-                                        style={{ ...responsiveMetricD(159, 48), paddingRight: vwd(5), ...responsiveTextD(20, 20, null, 'normal', 'noto', '#C9177A') }}
+                                        style={{ ...responsiveMetricD(159, 48), paddingRight: vwd(5), ...responsiveTextD(20, 20, null, 'normal', 'noto') }}
                                         disabled={!isPaid || isUnlimited}
                                     />
                                     <span className="whitespace-nowrap" style={{ ...responsiveTextD(17, 20, null, 'normal', 'noto', '#87969F'), marginLeft: vwd(18) }}>1~999999まで</span>
@@ -1087,12 +1092,12 @@ const RegisterProduct = () => {
                                 <div className="flex flex-col items-start self-stretch w-full" style={{ paddingBottom: vw(6.57) }}>
                                     <input
                                         type="text"
-                                        className="border border-[#E9E9E9] bg-white focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                        className="border border-[#E9E9E9] bg-white focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
                                         placeholder="商品のタイトル"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                         maxLength={30}
-                                        style={{ ...responsiveMetric(311, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(10), ...responsiveText(16, 16, null, 'medium', 'noto', '#C9177A') }}
+                                        style={{ ...responsiveMetric(311, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(10), ...responsiveText(16, 16, null, 'medium', 'noto') }}
                                     />
                                 </div>
                             </div>
@@ -1111,12 +1116,12 @@ const RegisterProduct = () => {
                                         {/* 123121 */}
                                         <div className="flex flex-col items-start" style={{ ...responsiveMetric(311, 128) }}>
                                             <textarea
-                                                className="flex w-full h-full bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 resize-none"
+                                                className="flex w-full h-full bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 resize-none placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
                                                 placeholder="商品の説明文"
                                                 value={description}
                                                 onChange={(e) => setDescription(e.target.value)}
                                                 maxLength={200}
-                                                style={{ paddingTop: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49), borderRadius: vw(5.71), ...responsiveText(14, 25.66, null, 'normal', 'noto', '#C9177A') }}
+                                                style={{ paddingTop: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49), borderRadius: vw(5.71), ...responsiveText(14, 25.66, null, 'normal', 'noto') }}
                                             />
                                         </div>
                                     </div>
@@ -1132,13 +1137,13 @@ const RegisterProduct = () => {
                                     <div className="flex flex-col items-start self-stretch" style={{ paddingBottom: vw(8) }}>
                                         <input
                                             type="date"
-                                            className="flex bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                            className="flex bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
                                             placeholder="2025/11/24"
                                             value={salesDeadline}
                                             onChange={(e) => setSalesDeadline(e.target.value)}
                                                                                                         min={new Date().toISOString().split('T')[0]}
                                                             max={maxDateString}
-                                                            style={{ ...responsiveMetric(311, 45.99), paddingTop: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49), borderRadius: vw(5.71), ...responsiveText(14, 14, null, 'normal', 'noto', '#C9177A') }}
+                                                            style={{ ...responsiveMetric(311, 45.99), paddingTop: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49), borderRadius: vw(5.71), ...responsiveText(14, 14, null, 'normal', 'noto') }}
                                         />
                                     </div>
                                 </div>
@@ -1162,14 +1167,14 @@ const RegisterProduct = () => {
                                     <div className="inline-flex items-center" style={{ gap: vw(8), marginLeft: vw(30), marginRight: vw(23), marginBottom: vw(8), opacity: isPaid ? 1 : 0.5 }}>
                                         <input
                                             type="number"
-                                            className="flex text-right border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                            className="flex text-right border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
                                             placeholder="0"
                                             value={price}
                                             onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
                                             onWheel={(e) => e.target.blur()}
                                             min="100"
                                             max="100000"
-                                            style={{ ...responsiveMetric(120, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(4), ...responsiveText(20, 20, null, 'normal', 'noto', '#C9177A') }}
+                                            style={{ ...responsiveMetric(120, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(4), ...responsiveText(20, 20, null, 'normal', 'noto') }}
                                             disabled={!isPaid}
                                         />
                                         <span style={{ ...responsiveText(14, 25, null, 'medium', 'noto', '#363636') }}>円</span>
@@ -1201,14 +1206,14 @@ const RegisterProduct = () => {
                                     <div className="inline-flex items-center" style={{ gap: vw(8), marginLeft: vw(30), marginBottom: vw(8), opacity: isPaid ? 1 : 0.5 }}>
                                         <input
                                             type="number"
-                                            className="flex text-right border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                            className="flex text-right border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
                                             placeholder="1000"
                                             value={salesLimit}
                                             onChange={(e) => setSalesLimit(e.target.value)}
                                             onWheel={(e) => e.target.blur()}
                                             min="1"
                                             max="999999"
-                                            style={{ ...responsiveMetric(120, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(4), ...responsiveText(20, 20, null, 'normal', 'noto', '#C9177A') }}
+                                            style={{ ...responsiveMetric(120, 48), paddingLeft: vw(11), paddingRight: vw(11), paddingTop: vw(1), paddingBottom: vw(1), borderRadius: vw(4), ...responsiveText(20, 20, null, 'normal', 'noto') }}
                                             disabled={!isPaid || isUnlimited}
                                         />
                                         <span style={{ ...responsiveText(12, 18, null, 'normal', 'noto', '#87969F') }}>1~999999まで</span>
@@ -1322,12 +1327,12 @@ const RegisterProduct = () => {
                                                 {displayMode === 'password' && (
                                                     <input
                                                         type="text"
-                                                        className="flex w-full bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                                        className="flex w-full bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 placeholder-[#ACACAC] text-[#363636] focus:text-[#C9177A]"
                                                         placeholder="半角英数16文字まで"
                                                         value={password}
                                                         onChange={(e) => setPassword(e.target.value)}
                                                         maxLength={16}
-                                                        style={{ ...responsiveMetric('full', 45.99), borderRadius: vw(5.71), ...responsiveText(13, 14, null, 'normal', 'noto', '#363636'), marginTop: vw(8) }}
+                                                        style={{ ...responsiveMetric('full', 45.99), borderRadius: vw(5.71), ...responsiveText(13, 14, null, 'normal', 'noto'), marginTop: vw(8) }}
                                                     />
                                                 )}
                                             </div>
