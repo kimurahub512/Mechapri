@@ -61,7 +61,13 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
 
         try {
             // 1) Guest login
+            // Expire should match sales_deadline for free products
             $days = (int) config('nwps.guest_token_days', 30);
+            if ($product->sales_deadline) {
+                $diff = now()->diffInDays($product->sales_deadline, false);
+                // Ensure at least 1 day and fallback if negative
+                $days = $diff > 0 ? $diff : 1;
+            }
             $login = $nwps->guestLogin('Web', [
                 'os' => php_uname('s') ?: 'PHP',
                 'brand' => 'Mechapuri',
@@ -89,7 +95,8 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
                 $data = [
                     'file_url' => $file->url,
                     'file_name' => $file->original_name ?? basename($file->file_path),
-                    'expire' => (int) config('nwps.guest_token_days', 30), // days
+                    // expire should be same as sales_deadline (in days)
+                    'expire' => $days, // days
                     // Note: printing_limit is omitted for free products
                 ];
                 $registered = $nwps->registerFileFromUrl($token, $data);
@@ -125,7 +132,8 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
                     $product->update([
                         'nwps_token' => $token,
                         'nwps_user_code' => $userCode,
-                        'nwps_token_expires_at' => now()->addDays($days),
+                        // Align token expiration with sales_deadline when provided
+                        'nwps_token_expires_at' => $product->sales_deadline ? \Carbon\Carbon::parse($product->sales_deadline)->endOfDay() : now()->addDays($days),
                         'nwps_file_id' => $fileId,
                         'nwps_qr_code_url' => $qrCodeUrl,
                     ]);

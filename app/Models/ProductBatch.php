@@ -185,10 +185,9 @@ class ProductBatch extends Model
      */
     public function getWatermarkedImages(?User $user = null): array
     {
-        $isPurchased = $user ? $this->isPurchasedBy($user) : false;
-        
-        if ($isPurchased) {
-            // Return original images for purchased products
+        // Show original images only to the owner; everyone else sees watermarked
+        $viewerIsOwner = $user && $user->id === $this->user_id;
+        if ($viewerIsOwner) {
             return $this->files->map(function($file) {
                 return [
                     'id' => $file->id,
@@ -199,7 +198,7 @@ class ProductBatch extends Model
             })->toArray();
         }
 
-        // For unpurchased products, return watermarked HTML wrapper URLs
+        // For non-owners, return watermarked HTML wrapper URLs
         $watermarkService = app(\App\Services\ImageWatermarkService::class);
         
         return $this->files->map(function($file) use ($watermarkService) {
@@ -218,14 +217,14 @@ class ProductBatch extends Model
      */
     public function getWatermarkedImageUrl(?User $user = null): string
     {
-        $isPurchased = $user ? $this->isPurchasedBy($user) : false;
+        // Show original image only to the owner; everyone else gets watermarked
+        $viewerIsOwner = $user && $user->id === $this->user_id;
         
-        if ($isPurchased) {
-            // Return original image for purchased products
+        if ($viewerIsOwner) {
             return $this->files->first()?->url ?? '';
         }
 
-        // For unpurchased products, return watermarked image
+        // For non-owners, return watermarked image
         $watermarkService = app(\App\Services\ImageWatermarkService::class);
         $firstFile = $this->files->first();
         
