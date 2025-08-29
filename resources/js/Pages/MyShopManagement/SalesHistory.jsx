@@ -60,7 +60,7 @@ const SalesHistory = () => {
                     </section>
                 </main>
                 {/* Mobile Main Section */}
-                <main className="md:hidden inline-flex flex-col items-start gap-4 pb-[80px] mx-4">
+                <main className="md:hidden inline-flex flex-col items-start gap-4 pb-[80px] mx-4 pt-[30px]">
                     {/* Title */}
                     <h1 className="w-full text-left font-bold text-[24px] leading-[24px] text-[#363636] font-[\'Noto Sans JP\']">販売履歴</h1>
                     {/* Frame 1 */}

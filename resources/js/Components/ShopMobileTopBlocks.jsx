@@ -14,7 +14,7 @@ const ShopMobileTopBlocks = () => {
   const isTransaction = window.location.pathname === '/myshop/transaction';
   const isSalesHistory = window.location.pathname === '/myshop/saleshistory';
   const isCategory = window.location.pathname === '/myshop/category';
-  const isRegisterProduct = window.location.pathname === '/myshop/registerproduct';
+  const isShopEdit = window.location.pathname === '/myshop/edit';
   return (
     <>
       {/* Mobile Header */}
@@ -175,10 +175,10 @@ const ShopMobileTopBlocks = () => {
             </div>
           </div>
           <div className="shopmanagement-mobile-nav-item">
-            <a href="/myshop/registerproduct" style={{ textDecoration: 'none' }}>
+            <a href="/myshop/edit" style={{ textDecoration: 'none' }}>
               <div 
                 className="shopmanagement-mobile-nav-item-content"
-                style={isRegisterProduct ? {
+                style={isShopEdit ? {
                   display: 'flex',
                   height: '48px',
                   padding: '12px 4px',
@@ -190,7 +190,7 @@ const ShopMobileTopBlocks = () => {
                 } : {}}
               >
                 <img src={pen_paper} alt="Edit" className="shopmanagement-mobile-nav-icon" />
-                <span className="shopmanagement-mobile-nav-text">写真を商品登録</span>
+                <span className="shopmanagement-mobile-nav-text">ショップ編集</span>
               </div>
             </a>
           </div>

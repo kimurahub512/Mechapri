@@ -23,7 +23,7 @@ const ShopTop = () => {
         <div className="bg-white">
             <Header />
             {/* Section 1 (Mobile) */}
-            <section className="flex flex-col items-start w-full bg-white md:hidden" style={{ paddingTop: vw(40), paddingBottom: vw(32), paddingLeft: vw(16), paddingRight: vw(16) }}>
+            <section className="flex flex-col items-start w-full bg-white md:hidden" style={{ paddingTop: vw(100), paddingBottom: vw(32), paddingLeft: vw(16), paddingRight: vw(16) }}>
                 {/* Frame 11 */}
                 <div className="flex flex-col items-start self-stretch" style={{ paddingBottom: vw(32), gap: vw(24) }}>
                     {/* 111 */}

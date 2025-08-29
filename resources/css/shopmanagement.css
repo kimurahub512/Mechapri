@@ -774,7 +774,7 @@
     align-self: stretch;
     border-bottom: 1px solid var(--color-grey-86, #DCDCDC);
     background: var(--color-white-solid, #FFF);
-    margin-top: 0;
+    margin-top: 64px;
     padding-top: 0;
   }
 
