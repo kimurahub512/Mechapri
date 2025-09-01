@@ -106,12 +106,18 @@ const UnpurchasedProductExpand = ({ product }) => {
                                 {/* 11211 */}
                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
                                     {/* 112111 */}
-                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
+                                    <div 
+                                        className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+                                        onClick={() => router.visit(`/${product.user.id}`)}
+                                    >
                                         <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
                                     </div>
                                 </div>
                                 {/* 11212 */}
-                                <div className="flex flex-col items-start">
+                                <div 
+                                    className="flex flex-col items-start cursor-pointer hover:opacity-80 transition-opacity"
+                                    onClick={() => router.visit(`/${product.user.id}`)}
+                                >
                                     <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 </div>
                             </div>
@@ -254,20 +260,7 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                                 <img src={bubble} alt="bubble" className="w-[42px] h-[42px]" />
                                                                 <span className="text-white text-[15px] font-bold">ガチャ</span>
                                                                 <span className="text-white text-[13px]">ランダムで1枚選定されます</span>
-                                                            </div>
-                                                            {/* Watermark Overlay for Gacha */}
-                                                            <div className="absolute inset-0 pointer-events-none">
-                                                                <div className="absolute inset-0 opacity-30">
-                                                                    <div className="absolute top-[20%] left-[-15%] transform -rotate-45 flex gap-6">
-                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
-                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
-                                                                    </div>
-                                                                    <div className="absolute top-[60%] left-[-10%] transform -rotate-45 flex gap-6">
-                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
-                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            </div>                                                            
                                                         </div>
                                                     ) : product.display_mode === 'blur' ? (
                                                         <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
@@ -520,11 +513,19 @@ const UnpurchasedProductExpand = ({ product }) => {
                 <div className="flex justify-between items-start w-full">
                     {/* Left: 21 */}
                     <div className="flex items-start flex-shrink-0">
-                        <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
+                        <div 
+                            className="cursor-pointer hover:opacity-80 transition-opacity"
+                            onClick={() => router.visit(`/${product.user.id}`)}
+                        >
+                            <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
+                        </div>
                         {/* 211 */}
                         <div className="flex flex-col pl-[16px] items-start">
                             <div className="flex flex-col items-start gap-[12px]">
-                                <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
+                                <span 
+                                    className="text-[#000] font-noto text-[21px] font-bold leading-[32px] cursor-pointer hover:opacity-80 transition-opacity"
+                                    onClick={() => router.visit(`/${product.user.id}`)}
+                                >{product.user.name}</span>
                                 <div className="flex pt-[10px] gap-[4px]">
                                     <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
                                 </div>
@@ -552,11 +553,17 @@ const UnpurchasedProductExpand = ({ product }) => {
                                 <div className="flex items-center w-full">
                                     {/* 112111 */}
                                     <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                        <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
+                                        <div 
+                                            className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+                                            onClick={() => router.visit(`/${product.user.id}`)}
+                                        >
                                             <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
                                         </div>
                                     </div>
-                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
+                                    <span 
+                                        className="text-[#000] font-noto text-[21px] font-bold leading-[32px] cursor-pointer hover:opacity-80 transition-opacity"
+                                        onClick={() => router.visit(`/${product.user.id}`)}
+                                    >{product.user.name}</span>
                                 </div>
                             </div>
                             <button
@@ -868,11 +875,19 @@ const UnpurchasedProductExpand = ({ product }) => {
                     <div className="flex flex-col items-start gap-[24px]">
                         {/* Left: 21 */}
                         <div className="flex items-start flex-shrink-0 ">
-                            <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
+                            <div 
+                                className="cursor-pointer hover:opacity-80 transition-opacity"
+                                onClick={() => router.visit(`/${product.user.id}`)}
+                            >
+                                <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
+                            </div>
                             {/* 211 */}
                             <div className="flex flex-col pl-[16px] items-start">
                                 <div className="flex flex-col items-start gap-[12px]">
-                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[18px]">{product.user.name}</span>
+                                    <span 
+                                        className="text-[#000] font-noto text-[16px] font-bold leading-[18px] cursor-pointer hover:opacity-80 transition-opacity"
+                                        onClick={() => router.visit(`/${product.user.id}`)}
+                                    >{product.user.name}</span>
                                     <div className="flex pt-[10px] gap-[4px]">
                                         <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
                                     </div>

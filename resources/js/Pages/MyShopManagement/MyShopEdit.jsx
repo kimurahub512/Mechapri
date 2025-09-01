@@ -33,7 +33,26 @@ const MyShopEdit = () => {
     const [userImage, setUserImage] = useState(shopData?.image || default_user);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+    const [hasChanges, setHasChanges] = useState(false);
     const fileInputRef = useRef(null);
+    
+    // Check if form has changes
+    useEffect(() => {
+        const originalData = {
+            shop_title: shopData?.shop_title || '',
+            shop_description: shopData?.shop_description || '',
+            xlink: shopData?.xlink || '',
+            instagram: shopData?.instagram || '',
+            youtube: shopData?.youtube || '',
+        };
+        
+        const hasFormChanges = Object.keys(formData).some(key => {
+            if (key === 'image') return false; // Skip image comparison for now
+            return formData[key] !== originalData[key];
+        });
+        
+        setHasChanges(hasFormChanges);
+    }, [formData, shopData]);
     
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
@@ -62,6 +81,9 @@ const MyShopEdit = () => {
                 ...prev,
                 image: file
             }));
+            
+            // Set hasChanges to true when image is uploaded
+            setHasChanges(true);
         }
     };
     
@@ -89,6 +111,7 @@ const MyShopEdit = () => {
             onSuccess: () => {
                 setShowSuccessMessage(true);
                 setTimeout(() => setShowSuccessMessage(false), 3000);
+                setHasChanges(false); // Reset changes state after successful submission
             }
         });
     };
@@ -285,11 +308,12 @@ const MyShopEdit = () => {
                             
                             {/* Frame 217 */}
                             <div className="w-full">
-                                <div className="flex w-full justify-center items-center rounded-[8px] bg-[#E9EEF1]" style={{ width: vwd(802), height: vwd(60), padding: vwd(2) }}>
+                                <div className={`flex w-full justify-center items-center rounded-[8px] ${hasChanges ? 'bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]' : 'bg-[#E9EEF1]'}`} style={{ width: vwd(802), height: vwd(60), padding: vwd(2) }}>
                                     <button 
-                                        onClick={handleSubmit}
-                                        className="w-full h-full text-center cursor-pointer hover:bg-[#D9E4E7] transition-colors" 
-                                        style={{ ...responsiveTextD(18, 21, null, 'black', 'noto', '#969696') }}
+                                        onClick={hasChanges ? handleSubmit : undefined}
+                                        disabled={!hasChanges}
+                                        className={`w-full h-full text-center transition-colors ${hasChanges ? 'cursor-pointer hover:opacity-90 text-white' : 'cursor-not-allowed text-[#969696] opacity-60'}`}
+                                        style={{ ...responsiveTextD(18, 21, null, 'black', 'noto') }}
                                     >
                                         保存する
                                     </button>
@@ -477,11 +501,12 @@ const MyShopEdit = () => {
                         
                         {/* Frame 217 */}
                         <div className="w-full" style={{ paddingLeft: vw(34), paddingRight: vw(34) }}>
-                            <div className="flex w-full justify-center items-center rounded-[8px] bg-[#E9EEF1]" style={{ width: vw(240), height: vw(48), padding: vw(2) }}>
+                            <div className={`flex w-full justify-center items-center rounded-[8px] ${hasChanges ? 'bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]' : 'bg-[#E9EEF1]'}`} style={{ width: vw(240), height: vw(48), padding: vw(2) }}>
                                 <button 
-                                    onClick={handleSubmit}
-                                    className="w-full h-full text-center cursor-pointer hover:bg-[#D9E4E7] transition-colors" 
-                                    style={{ ...responsiveText(18, 18, null, 'black', 'noto', '#969696') }}
+                                    onClick={hasChanges ? handleSubmit : undefined}
+                                    disabled={!hasChanges}
+                                    className={`w-full h-full text-center transition-colors ${hasChanges ? 'cursor-pointer hover:opacity-90 text-white' : 'cursor-not-allowed text-[#969696] opacity-60'}`}
+                                    style={{ ...responsiveText(18, 18, null, 'black', 'noto') }}
                                 >
                               保存する
                             </button>

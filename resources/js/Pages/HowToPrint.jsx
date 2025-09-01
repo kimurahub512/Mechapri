@@ -31,7 +31,7 @@ const HowToPrint = () => {
         <div className='product-details-no-footer-gap bg-[#FFF]'>
             <Header />
             {/* Desktop Main Section */}
-            <main className="hidden md:flex flex-col items-center pl-[261px] pt-[48px] pb-[88px] pr-[219px] w-full ">
+            <main className="hidden md:flex flex-col items-center pl-[261px] pt-[148px] pb-[88px] pr-[219px] w-full ">
                 <div className="flex flex-col items-center pb-[32px] gap-[25px] w-full">
                     <div className="relative flex w-[960px] h-[180px] rounded-[16px]">
                         <img src={hero} alt="hero" className="w-full h-full object-cover object-[50%_32%] rounded-[16px]" />
@@ -72,7 +72,7 @@ const HowToPrint = () => {
                 </div>
             </main>
             {/* Mobile Main Section */}
-            <main className="md:hidden flex flex-col items-center py-[32px] px-[16px] w-full">
+            <main className="md:hidden flex flex-col items-center py-[32px] pt-[100px] px-[16px] w-full">
                 <div className="flex flex-col items-center pb-[16px] gap-[16px] w-full mx-[16px]">
                     <div className="relative flex h-[64px] w-full rounded-[7px]">
                         <img src={hero} alt="hero" className="w-full h-full object-cover object-[50%_32%] rounded-[7px]" />

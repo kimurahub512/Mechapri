@@ -97,7 +97,18 @@ class ProductBatchFileService
             
             // Only resize if image is larger than 2L size
             if ($width > 1500 || $height > 2100) {
-                $img = $img->resize(1500, 2100, function ($constraint) {
+                // Determine if image is landscape or portrait and apply appropriate 2L size limits
+                if ($width > $height) {
+                    // Landscape image: limit to 2100x1500
+                    $maxWidth = 2100;
+                    $maxHeight = 1500;
+                } else {
+                    // Portrait image: limit to 1500x2100
+                    $maxWidth = 1500;
+                    $maxHeight = 2100;
+                }
+                
+                $img = $img->resize($maxWidth, $maxHeight, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize(false); // Prevent upscaling
                 });

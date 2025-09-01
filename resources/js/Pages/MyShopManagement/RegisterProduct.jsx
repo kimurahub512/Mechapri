@@ -68,7 +68,7 @@ const RegisterProduct = () => {
     const [displayMode, setDisplayMode] = useState(editMode && productBatch ? productBatch.display_mode : 'normal'); // 'normal', 'gacha', 'blur', 'password', 'cushion'
     const [addToCategory, setAddToCategory] = useState(editMode && productBatch ? (productBatch.add_category || (productBatch.categories && productBatch.categories.length > 0)) : false); // true for 商品カテゴリに追加, false for 追加しない
     const [selectedCategories, setSelectedCategories] = useState(editMode && productBatch && productBatch.categories ? productBatch.categories.map(c => c.id) : []); // Array of selected category IDs
-    const [printSerial, setPrintSerial] = useState(editMode && productBatch ? productBatch.sn_print : true); // true for 印字する, false for 印字しない
+    const [printSerial, setPrintSerial] = useState(editMode && productBatch ? productBatch.sn_print : false); // true for 印字する, false for 印字しない
     const [serialFormat, setSerialFormat] = useState(editMode && productBatch ? productBatch.sn_format : 'number'); // 'number' for 発行枚数を表示, 'random' for 乱数6文字で表示
     const [isPublic, setIsPublic] = useState(editMode && productBatch ? productBatch.is_public : true); // true for 公開, false for 非公開
 
@@ -905,6 +905,18 @@ const RegisterProduct = () => {
                                         <span style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#ACACAC') }}>いずれかを選択</span>
                                     </div>
                                 </div>
+                                {/* Frame 123443 */}
+                                <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
+                                    <div className="flex items-center cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setPrintSerial(false)}>
+                                        {!printSerial ? (
+                                            <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
+                                        ) : (
+                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
+                                        )}
+                                        <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>印字しない</span>
+                                    </div>
+                                    <span style={{ ...responsiveTextD(13, 19.5, null, 'medium', 'noto', '#87969F') }}>プリントする時にシリアル番号は印字されません</span>
+                                </div>
                                 {/* Frame 123442 */}
                                 <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                                     {/* 1234421 */}
@@ -912,7 +924,7 @@ const RegisterProduct = () => {
                                         {printSerial ? (
                                             <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20), margin: 0 }} />
                                         ) : (
-                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetric(20, 20), margin: 0 }} />
+                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20), margin: 0 }} />
                                         )}
                                         <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>印字する</span>
                                     </div>
@@ -943,18 +955,6 @@ const RegisterProduct = () => {
                                             </div> */}
                                         </div>
                                     )}
-                                </div>
-                                {/* Frame 123443 */}
-                                <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
-                                    <div className="flex items-center cursor-pointer" style={{ gap: vwd(10) }} onClick={() => setPrintSerial(false)}>
-                                        {!printSerial ? (
-                                            <img src={radio} alt="radio" style={{ ...responsiveMetricD(20, 20) }} />
-                                        ) : (
-                                            <span className="flex rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetricD(20, 20) }} />
-                                        )}
-                                        <span style={{ ...responsiveTextD(18, 24, null, 'normal', 'noto', '#363636') }}>印字しない</span>
-                                    </div>
-                                    <span style={{ ...responsiveTextD(13, 19.5, null, 'medium', 'noto', '#87969F') }}>プリントする時にシリアル番号は印字されません</span>
                                 </div>
                             </div>
                             {/* Frame 12345 */}
@@ -1018,7 +1018,7 @@ const RegisterProduct = () => {
                 {/* Show modal on all screen sizes */}
                 {showModal && (
                     <div
-                        className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-[1000] pt-[60px] md:pt-[90px] pb-[40px] overflow-y-auto mr-[16px] md:mr-[0px]"
+                        className="fixed top-[60px] md:top-[90px] left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-start justify-center z-[10004] pt-[60px] md:top-[90px] pb-[40px] overflow-y-auto mr-[16px] md:mr-[0px]"
 
                         onClick={() => setShowModal(false)}
                     >
@@ -1461,6 +1461,18 @@ const RegisterProduct = () => {
                                                 <span className="flex flex-col justify-center" style={{ ...responsiveMetric(112, 27), marginLeft: vw(10), ...responsiveText(14, 14, null, 'normal', 'noto', '#ACACAC') }}>いずれかを選択</span>
                                             </div>
                                         </div>
+                                        {/* Frame 123443 */}
+                                        <div className="flex flex-col items-start self-stretch" style={{ gap: vw(8) }}>
+                                            <div className="flex items-center cursor-pointer" style={{ gap: vw(10) }} onClick={() => setPrintSerial(false)}>
+                                                {!printSerial ? (
+                                                    <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20) }} />
+                                                ) : (
+                                                    <span className="flex flex-shrink-0 rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetric(20, 20) }} />
+                                                )}
+                                                <span style={{ ...responsiveText(14, 24, null, 'normal', 'noto', '#363636') }}>印字しない</span>
+                                            </div>
+                                            <span className="whitespace-nowrap" style={{ paddingLeft: vw(30), ...responsiveText(13, 19.5, null, 'medium', 'noto', '#87969F') }}>プリントする時にシリアル番号は印字されません</span>
+                                        </div>
                                         {/* Frame 123442 */}
                                         <div className="flex flex-col items-start self-stretch" style={{ gap: vw(8) }}>
                                             {/* 1234421 */}
@@ -1499,18 +1511,6 @@ const RegisterProduct = () => {
                                                     </div> */}
                                                 </div>
                                             )}
-                                        </div>
-                                        {/* Frame 123443 */}
-                                        <div className="flex flex-col items-start self-stretch" style={{ gap: vw(8) }}>
-                                            <div className="flex items-center cursor-pointer" style={{ gap: vw(10) }} onClick={() => setPrintSerial(false)}>
-                                                {!printSerial ? (
-                                                    <img src={radio} alt="radio" style={{ ...responsiveMetric(20, 20) }} />
-                                                ) : (
-                                                    <span className="flex flex-shrink-0 rounded-full border border-[#D1D1D1] bg-[#F8F8F8]" style={{ ...responsiveMetric(20, 20) }} />
-                                                )}
-                                                <span style={{ ...responsiveText(14, 24, null, 'normal', 'noto', '#363636') }}>印字しない</span>
-                                            </div>
-                                            <span className="whitespace-nowrap" style={{ paddingLeft: vw(30), ...responsiveText(13, 19.5, null, 'medium', 'noto', '#87969F') }}>プリントする時にシリアル番号は印字されません</span>
                                         </div>
                                     </div>
                                     {/* Frame 12345 */}

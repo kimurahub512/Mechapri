@@ -38,7 +38,7 @@ const ShopNewCategory = () => {
     return (
         <div className="bg-white">
             <Header />
-            <section className="flex flex-col justify-center items-start bg-white" style={{paddingTop: vwR(32, 32), paddingBottom: vwR(32, 80), paddingLeft: vwR(16, 120), paddingRight: vwR(16, 120), gap: vwR(16, 10)}}>
+            <section className="flex flex-col justify-center items-start bg-white" style={{paddingTop: vwR(76, 124), paddingBottom: vwR(32, 80), paddingLeft: vwR(16, 120), paddingRight: vwR(16, 120), gap: vwR(16, 10)}}>
                 {/* Frame 11 */}
                 <a href="/shoptop" className="flex flex-row items-center self-stretch" style={{gap: vwR(4, 4), paddingTop: vwR(4, 4), paddingBottom: vwR(4, 4)}}>
                     <img src={arrow_left} alt="arrow left" style={{...responsiveMetricR(18.375, 13.125, 18.375, 13.125)}}/>

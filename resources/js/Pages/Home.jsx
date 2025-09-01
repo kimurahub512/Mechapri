@@ -26,8 +26,21 @@ import section6_m from '@/assets/images/homepage/section6_m.png';
 import section8 from '@/assets/images/homepage/section8.png';
 import bubble from '@/assets/images/bubble.svg';
 import lock from '@/assets/images/lock.svg';
+import { usePage } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 
 export default function Home() {
+  const { auth } = usePage().props;
+
+  const handleListNowClick = () => {
+    if (auth?.user) {
+      // User is logged in, navigate to register product page
+      router.visit('/myshop/registerproduct');
+    } else {
+      // User is not logged in, navigate to login page
+      router.visit('/login');
+    }
+  };
 
   return (
 
@@ -75,6 +88,7 @@ export default function Home() {
               </div>
             </div>
             <button 
+              onClick={handleListNowClick}
               className='flex flex-col items-center justify-center bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer' 
               style={{ 
                 ...responsiveMetricD(494, 64), 
@@ -258,12 +272,15 @@ export default function Home() {
         {/*section4*/}
         <div className='flex flex-col gap-[24px] py-[16px] items-center justify-center w-full'>
           <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">全国のコンビニであなたのグッズを販売しましょう！</span>
-          <div className='flex flex-col items-center justify-center w-[494px] h-[80px] rounded-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]'>
+          <button 
+            onClick={handleListNowClick}
+            className='flex flex-col items-center justify-center w-[494px] h-[80px] rounded-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer'
+          >
             <div className='flex flex-col items-center justify-center'>
               <span className="text-[#FFF] font-noto text-[16px] font-normal leading-[21px]">１分で無料</span>
               <span className="text-[#FFF] font-noto text-[21px] font-black leading-[21px]">今すぐ出品する</span>
             </div>
-          </div>
+          </button>
         </div>
         {/*section5*/}
         <div className='flex flex-col items-center relative' style={{ ...responsiveMetricD('full', 720) }}>
@@ -305,12 +322,15 @@ export default function Home() {
         {/*section7*/}
         <div className='flex flex-col gap-[24px] py-[16px] items-center justify-center w-full'>
           <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">全国のコンビニであなたのグッズを販売しましょう！</span>
-          <div className='flex flex-col items-center justify-center w-[494px] h-[80px] rounded-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]'>
+          <button 
+            onClick={handleListNowClick}
+            className='flex flex-col items-center justify-center w-[494px] h-[80px] rounded-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer'
+          >
             <div className='flex flex-col items-center justify-center'>
               <span className="text-[#FFF] font-noto text-[16px] font-normal leading-[21px]">１分で無料</span>
               <span className="text-[#FFF] font-noto text-[21px] font-black leading-[21px]">今すぐ出品する</span>
             </div>
-          </div>
+          </button>
         </div>
         {/*section8*/}
         <div className='flex flex-col items-center bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] relative' style={{...responsiveMetricD('full', 530), marginTop: vwd(128)}}>
@@ -377,7 +397,10 @@ export default function Home() {
               <img src={logo_group} alt="logo_group" className='w-full h-full' />
             </div>
           </div>
-          <button className='flex flex-col items-center justify-center w-full max-w-[311px] h-[64px] rounded-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]'>
+          <button 
+            onClick={handleListNowClick}
+            className='flex flex-col items-center justify-center w-full max-w-[311px] h-[64px] rounded-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer'
+          >
             <span style={{ ...responsiveText(14, 21, null, 'normal', 'noto', '#FFF') }}>
               １分で無料
             </span>
@@ -430,7 +453,7 @@ export default function Home() {
               <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{ ...responsiveText(32, 44, null, 'black', 'mplus') }}>
                 ファンの
               </span>
-              <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent whitespace-nowrap" style={{ ...responsiveText(32, 44, null, 'black', 'mplus') }}>
+              <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{ ...responsiveText(32, 44, null, 'black', 'mplus') }}>
                 ドキドキが倍増！
               </span>
             </div>
@@ -560,12 +583,16 @@ export default function Home() {
         {/*section4*/}
         <div className='flex flex-col gap-[16px] py-[16px] px-[32px] items-center justify-center w-full'>
           <span className="text-[#363636] text-center font-noto text-[18px] font-bold leading-[27px]">全国のコンビニであなたのグッズを販売しましょう！</span>
-          <div className='flex flex-col items-center justify-center w-full rounded-[4] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]' style={{ height: vw(64), borderRadius: vw(4) }}>
+          <button 
+            onClick={handleListNowClick}
+            className='flex flex-col items-center justify-center w-full rounded-[4] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer'
+            style={{ height: vw(64), borderRadius: vw(4) }}
+          >
             <div className='flex flex-col items-center justify-center'>
               <span className="text-[#FFF] font-noto text-[14px] font-normal leading-[21px]">１分で無料</span>
               <span className="text-[#FFF] font-noto text-[18px] font-black leading-[21px]">今すぐ出品する！</span>
             </div>
-          </div>
+          </button>
         </div>
         {/*section5*/}
         <div className='flex flex-col items-center w-full relative' style={{ height: vw(493) }}>
@@ -619,12 +646,16 @@ export default function Home() {
         {/*section7*/}
         <div className='flex flex-col gap-[calc(100vw*16/375)] py-[calc(100vw*16/375)] px-[calc(100vw*32/375)] items-center justify-center w-full'>
           <span className="text-center" style={{ ...responsiveText(18, 27, null, 'bold', 'noto', '#363636') }}>全国のコンビニであなたのグッズを販売しましょう！</span>
-          <div className='flex flex-col items-center justify-center w-full rounded-[4] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]' style={{ ...responsiveMetric(null, 64), borderRadius: vw(4) }}>
+          <button 
+            onClick={handleListNowClick}
+            className='flex flex-col items-center justify-center w-full rounded-[4] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer'
+            style={{ ...responsiveMetric(null, 64), borderRadius: vw(4) }}
+          >
             <div className='flex flex-col items-center justify-center'>
               <span style={{ ...responsiveText(14, 21, null, 'normal', 'noto', '#FFF') }}>１分で無料</span>
               <span style={{ ...responsiveText(18, 21, null, 'black', 'noto', '#FFF') }}>今すぐ出品する！</span>
             </div>
-          </div>
+          </button>
         </div>
         {/*section8*/}
         <div className='flex flex-col items-center bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] mt-[97px] relative' style={{ ...responsiveMetric('full', 920) }}>

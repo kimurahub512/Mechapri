@@ -11,7 +11,7 @@ import recyclebin from '@/assets/images/recyclebin.svg';
 import list from '@/assets/images/list_unordered.png';
 import arrow from '@/assets/images/arrow_right.svg';
 import file_add from '@/assets/images/file_add.svg';
-import {vw, vwd, responsiveText, responsiveTextD, responsiveMetric, responsiveMetricD} from '@/lib/utils';
+import { vw, vwd, responsiveText, responsiveTextD, responsiveMetric, responsiveMetricD } from '@/lib/utils';
 
 
 const Category = () => {
@@ -93,14 +93,14 @@ const Category = () => {
     return (
         <>
             <Header />
-            
+
             {/* Success Message */}
             {showSuccessMessage && (
                 <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg font-['Noto_Sans_JP']">
                     {flash?.success}
                 </div>
             )}
-            
+
             <div className="shopmanagement-root flex flex-col w-full overflow-x-hidden md:flex-row">
                 {/* Sidebar Section */}
                 <div className="hidden md:block">
@@ -110,48 +110,48 @@ const Category = () => {
                 {/* Main Section */}
                 {/* MOBILE: custom layout, DESKTOP: keep as is */}
                 {/* MOBILE ONLY */}
-                <div className="block md:hidden flex flex-col items-start" style={{marginRight: vw(16), marginLeft: vw(16), paddingTop: vw(32), paddingBottom: vw(20), gap: vw(8)}}>
+                <div className="block md:hidden flex flex-col items-start" style={{ marginRight: vw(16), marginLeft: vw(16), paddingTop: vw(32), paddingBottom: vw(20), gap: vw(8) }}>
                     {/* Title */}
                     <div className="flex flex-row items-center justify-between w-full">
-                        <h1 style={{...responsiveText(24, 24, null, 'bold', 'noto', '#363636')}}>商品のカテゴリ</h1>
-                        <span style={{...responsiveText(16, 16, null, 'normal', 'noto', '#363636')}}>{categories.length || 0}/200</span>
+                        <h1 style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>商品のカテゴリ</h1>
+                        <span style={{ ...responsiveText(16, 16, null, 'normal', 'noto', '#363636') }}>{categories.length || 0}/200</span>
                     </div>
                     {/* Frame 1 */}
-                    <div className="flex flex-col item-start  w-full" style={{gap: vw(8)}}>
-                        <div className="flex flex-row item-center" style={{gap: vw(8)}}>
-                            <button 
+                    <div className="flex flex-col item-start  w-full" style={{ gap: vw(8) }}>
+                        <div className="flex flex-row item-center" style={{ gap: vw(8) }}>
+                            <button
                                 onClick={handleReorder}
                                 className="flex flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white hover:bg-gray-50 transition-colors cursor-pointer"
-                                style={{...responsiveMetric(120, 34, null, 'normal', 'noto', '#FF8D4E'), marginTop: vw(7), marginBottom: vw(7)}}
+                                style={{ ...responsiveMetric(120, 34, null, 'normal', 'noto', '#FF8D4E'), marginTop: vw(7), marginBottom: vw(7) }}
                             >
-                                <span className="text-center bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent" style={{...responsiveText(12, 18, null, 'bold', 'noto')}}>カテゴリの並び替え</span>
+                                <span className="text-center bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent" style={{ ...responsiveText(12, 18, null, 'bold', 'noto') }}>カテゴリの並び替え</span>
                             </button>
-                            <div className="flex flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white" style={{...responsiveMetric(120, 34, null, 'normal', 'noto', '#FF8D4E'), marginTop: vw(7), marginBottom: vw(7)}}>
-                                <a href='/myshop/category/create' className="text-center bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent" style={{...responsiveText(12, 18, null, 'bold', 'noto')}}>カテゴリを追加</a>
+                            <div className="flex flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white" style={{ ...responsiveMetric(120, 34, null, 'normal', 'noto', '#FF8D4E'), marginTop: vw(7), marginBottom: vw(7) }}>
+                                <a href='/myshop/category/create' className="text-center bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent" style={{ ...responsiveText(12, 18, null, 'bold', 'noto') }}>カテゴリを追加</a>
                             </div>
                         </div>
-                        <div className="flex flex-col items-center self-stretch" style={{gap: vw(16)}}>
-                            <div className="flex flex-col items-start rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch" style={{gap: vw(8), paddingTop: vw(20), paddingBottom: vw(20), paddingLeft: vw(16), paddingRight: vw(16)}}>
+                        <div className="flex flex-col items-center self-stretch" style={{ gap: vw(16) }}>
+                            <div className="flex flex-col items-start rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch" style={{ gap: vw(8), paddingTop: vw(20), paddingBottom: vw(20), paddingLeft: vw(16), paddingRight: vw(16) }}>
                                 <div className="flex flex-col items-start justify-between w-full">
-                                    <span style={{...responsiveText(24, 24, null, 'bold', 'noto', '#363636')}}>最新の出品</span>
+                                    <span style={{ ...responsiveText(24, 24, null, 'bold', 'noto', '#363636') }}>最新の出品</span>
                                     <div
                                         onClick={() => router.visit('/shop-newproducts')}
                                         className="flex flex-row items-center cursor-pointer hover:opacity-80 transition-opacity"
-                                        style={{gap: vw(4), paddingTop: vw(12), paddingBottom: vw(12)}}
+                                        style={{ gap: vw(4), paddingTop: vw(12), paddingBottom: vw(12) }}
                                     >
-                                        <img src={list} alt="list" style={{width: vw(16), height: vw(16)}} />
-                                        <span style={{...responsiveText(14, 10, null, 'medium', 'noto', '#363636')}}>
+                                        <img src={list} alt="list" style={{ width: vw(16), height: vw(16) }} />
+                                        <span style={{ ...responsiveText(14, 10, null, 'medium', 'noto', '#363636') }}>
                                             詳細を見る
                                         </span>
-                                        <img src={arrow} alt="arrow" style={{width: vw(16), height: vw(16)}} />
+                                        <img src={arrow} alt="arrow" style={{ width: vw(16), height: vw(16) }} />
                                     </div>
                                 </div>
                                 {/* 1212: batch count */}
-                                <div className="flex items-end self-stretch" style={{paddingLeft: vw(8), paddingRight: vw(8)}}>
-                                    <span style={{...responsiveText(21, 40, null, 'bold', 'noto', '#363636')}}>
+                                <div className="flex items-end self-stretch" style={{ paddingLeft: vw(8), paddingRight: vw(8) }}>
+                                    <span style={{ ...responsiveText(21, 40, null, 'bold', 'noto', '#363636') }}>
                                         {totalBatches || 0}
                                     </span>
-                                    <span style={{...responsiveText(12, 32, null, 'black', 'noto', '#000'), paddingLeft: vw(1), paddingRight: vw(1)}}>
+                                    <span style={{ ...responsiveText(12, 32, null, 'black', 'noto', '#000'), paddingLeft: vw(1), paddingRight: vw(1) }}>
                                         点
                                     </span>
                                 </div>
@@ -159,13 +159,17 @@ const Category = () => {
                             {/* <div className="flex flex-col items-start py-5 px-[16px] gap-2 rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch">
                                 <div className="flex flex-col items-start justify-between w-full">
                                     <span className="text-[#363636] font-['Noto_Sans_JP'] text-[24px] font-bold leading-[24px]">新しいリスト</span>
-                                    <div className="flex flex-row items-center py-[12px] gap-[4px]">
+                                    <button
+                                                onClick={() => router.visit(`/myshop/category/${category.id}/edit`)}
+                                                className="flex items-center rounded-[5px] bg-[#E9E9E9] hover:bg-[#D9D9D9] transition-colors cursor-pointer"
+                                                style={{...responsiveMetric(80, 32), paddingLeft: vw(12), paddingRight: vw(12), gap: vw(8)}}
+                                            >
                                         <img src={list} alt="list" className="w-[16px] h-[16px]" />
                                         <span className="text-[#363636] font-noto text-[14px] font-medium leading-[10px]">
                                             詳細を見る
                                         </span>
                                         <img src={arrow} alt="arrow" className="w-[16px] h-[16px] " />
-                                    </div>
+                                    </button>
                                 </div>
                                 <div className="flex px-2 items-end self-stretch">
                                     <span className="text-[#363636] font-['Noto_Sans_JP'] text-[21px] font-bold leading-[40px]">
@@ -204,53 +208,63 @@ const Category = () => {
 
                     {/* Categories List */}
                     {categories && categories.length > 0 && (
-                        <div className="flex flex-col w-full" style={{gap: vw(16)}}>
-                            <h2 style={{...responsiveText(20, 24, null, 'bold', 'noto', '#363636')}}>カテゴリ一覧</h2>
+                        <div className="flex flex-col w-full" style={{ gap: vw(16) }}>
                             {categories.map((category) => (
-                                <div key={category.id} className="flex flex-col items-start rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch" style={{gap: vw(12), paddingTop: vw(16), paddingBottom: vw(16), paddingLeft: vw(16), paddingRight: vw(16)}}>
+                                <div key={category.id} className="flex flex-col items-start rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch" style={{ gap: vw(12), paddingTop: vw(16), paddingBottom: vw(16), paddingLeft: vw(16), paddingRight: vw(16) }}>
                                     <div className="flex flex-row items-start justify-between w-full">
-                                        <div className="flex flex-col" style={{gap: vw(8)}}>
-                                            <span style={{...responsiveText(18, 24, null, 'bold', 'noto', '#363636')}}>{category.title}</span>
-
-                                            <div className="flex items-end self-stretch" style={{paddingLeft: vw(8), paddingRight: vw(8)}}>
-                                                <span style={{...responsiveText(21, 40, null, 'bold', 'noto', '#363636')}}>
+                                        <div className="flex flex-col w-full" style={{ gap: vw(8) }}>
+                                            <span style={{ ...responsiveText(18, 24, null, 'bold', 'noto', '#363636') }}>{category.title}</span>
+                                            <div
+                                                onClick={() => router.visit(`/shop-newcategory/${category.id}`)}
+                                                className="flex flex-row items-center cursor-pointer hover:opacity-80 transition-opacity"
+                                                style={{ gap: vw(4), paddingTop: vw(12), paddingBottom: vw(12) }}
+                                            >
+                                                <img src={list} alt="list" style={{ width: vw(16), height: vw(16) }} />
+                                                <span style={{ ...responsiveText(14, 10, null, 'medium', 'noto', '#363636') }}>
+                                                    詳細を見る
+                                                </span>
+                                                <img src={arrow} alt="arrow" style={{ width: vw(16), height: vw(16) }} />
+                                            </div>
+                                            <div className="flex items-end self-stretch" style={{ paddingLeft: vw(8), paddingRight: vw(8) }}>
+                                                <span style={{ ...responsiveText(21, 40, null, 'bold', 'noto', '#363636') }}>
                                                     {category.batch_cnt || 0}
                                                 </span>
-                                                <span style={{...responsiveText(12, 32, null, 'black', 'noto', '#000'), paddingLeft: vw(1), paddingRight: vw(1)}}>
+                                                <span style={{ ...responsiveText(12, 32, null, 'black', 'noto', '#000'), paddingLeft: vw(1), paddingRight: vw(1) }}>
                                                     点
                                                 </span>
                                             </div>
-                                            <div className="flex flex-row items-start justify-between self-stretch">
-                                                <div className="flex flex-col justify-center items-start rounded-[5px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]" style={{...responsiveMetric(120, 35, null, 'normal', 'noto', '#FF8D4E')}}>
-                                                    <a href='/myshop/registerproduct' className="flex justify-center items-center gap-[10px] flex-shrink-0" style={{...responsiveMetric(120, 35, null, 'normal', 'noto', '#FF8D4E')}}>
-                                                        <div className="flex justify-center items-center flex-shrink-0" style={{width: vw(16), height: vw(16)}}>
-                                                            <img src={file_add} alt="file_add" style={{width: vw(16), height: vw(16)}} />
+                                            <div className="flex flex-row items-start justify-between w-full">
+                                                <div className="flex flex-col justify-center items-start rounded-[5px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]" style={{ ...responsiveMetric(120, 35, null, 'normal', 'noto', '#FF8D4E') }}>
+                                                    <a href='/myshop/registerproduct' className="flex justify-center items-center gap-[10px] flex-shrink-0" style={{ ...responsiveMetric(120, 35, null, 'normal', 'noto', '#FF8D4E') }}>
+                                                        <div className="flex justify-center items-center flex-shrink-0" style={{ width: vw(16), height: vw(16) }}>
+                                                            <img src={file_add} alt="file_add" style={{ width: vw(16), height: vw(16) }} />
                                                         </div>
-                                                        <span style={{...responsiveText(13, 19.5, null, 'black', 'noto', '#fff')}}>商品登録</span>
+                                                        <span style={{ ...responsiveText(13, 19.5, null, 'black', 'noto', '#fff') }}>商品登録</span>
                                                     </a>
                                                 </div>
+
+                                                <button
+                                                    onClick={() => router.visit(`/myshop/category/${category.id}/edit`)}
+                                                    className="flex items-center rounded-[5px] bg-[#E9E9E9] hover:bg-[#D9D9D9] transition-colors cursor-pointer"
+                                                    style={{ ...responsiveMetric(80, 32), paddingLeft: vw(12), paddingRight: vw(12), gap: vw(8) }}
+                                                >
+                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ ...responsiveMetric(20, 20) }}>
+                                                        <path d="M2 17.9997H18M2 17.9997V13.9997L10 5.99975M2 17.9997L6 17.9997L14 9.99974M10 5.99975L12.8686 3.1311L12.8704 3.1294C13.2652 2.73451 13.463 2.53672 13.691 2.46264C13.8919 2.39738 14.1082 2.39738 14.3091 2.46264C14.5369 2.53667 14.7345 2.73424 15.1288 3.12856L16.8686 4.86836C17.2646 5.26437 17.4627 5.46247 17.5369 5.6908C17.6022 5.89164 17.6021 6.10799 17.5369 6.30883C17.4628 6.537 17.265 6.7348 16.8695 7.13025L16.8686 7.1311L14 9.99974M10 5.99975L14 9.99974" stroke="#767676" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                    <span style={{ ...responsiveText(12, 18, null, 'bold', 'noto', '#767676') }}>編集</span>
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(category)}
+                                                    className="flex items-center rounded-[5px] bg-[#E9E9E9] hover:bg-[#D9D9D9] transition-colors cursor-pointer"
+                                                    style={{ gap: vw(8), ...responsiveMetric(80, 32), paddingLeft: vw(12), paddingRight: vw(12) }}
+                                                >
+                                                    <img src={recyclebin} alt="delete" style={{ width: vw(20), height: vw(20) }} />
+                                                    <span style={{ ...responsiveText(12, 18, null, 'bold', 'noto', '#767676') }}>削除</span>
+                                                </button>
+
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-2" style={{gap: vw(8)}}>
-                                            <button
-                                                onClick={() => router.visit(`/myshop/category/${category.id}/edit`)}
-                                                className="flex items-center rounded-[5px] bg-[#E9E9E9] hover:bg-[#D9D9D9] transition-colors cursor-pointer"
-                                                style={{...responsiveMetric(80, 32), paddingLeft: vw(12), paddingRight: vw(12), gap: vw(8)}}
-                                            >
-                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{...responsiveMetric(20, 20)}}>
-                                                    <path d="M2 17.9997H18M2 17.9997V13.9997L10 5.99975M2 17.9997L6 17.9997L14 9.99974M10 5.99975L12.8686 3.1311L12.8704 3.1294C13.2652 2.73451 13.463 2.53672 13.691 2.46264C13.8919 2.39738 14.1082 2.39738 14.3091 2.46264C14.5369 2.53667 14.7345 2.73424 15.1288 3.12856L16.8686 4.86836C17.2646 5.26437 17.4627 5.46247 17.5369 5.6908C17.6022 5.89164 17.6021 6.10799 17.5369 6.30883C17.4628 6.537 17.265 6.7348 16.8695 7.13025L16.8686 7.1311L14 9.99974M10 5.99975L14 9.99974" stroke="#767676" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                                </svg>
-                                                <span style={{...responsiveText(12, 18, null, 'bold', 'noto', '#767676')}}>編集</span>
-                                            </button>
-                                            <button
-                                                onClick={() => handleDelete(category)}
-                                                className="flex items-center rounded-[5px] bg-[#E9E9E9] hover:bg-[#D9D9D9] transition-colors cursor-pointer"
-                                                style={{gap:vw(8), ...responsiveMetric(80, 32), paddingLeft: vw(12), paddingRight: vw(12)}}
-                                            >
-                                                <img src={recyclebin} alt="delete" style={{width: vw(20), height: vw(20)}} />
-                                                <span style={{...responsiveText(12, 18, null, 'bold', 'noto', '#767676')}}>削除</span>
-                                            </button>
-                                        </div>
+
                                     </div>
                                 </div>
                             ))}
@@ -259,50 +273,50 @@ const Category = () => {
 
                 </div>
                 <main
-                    className="hidden md:flex flex-col items-left" style={{marginLeft: vwd(79), gap: vwd(32), width: vwd(928), paddingTop: vwd(140), paddingBottom: vwd(40)}}
+                    className="hidden md:flex flex-col items-left" style={{ marginLeft: vwd(79), gap: vwd(32), width: vwd(928), paddingTop: vwd(140), paddingBottom: vwd(40) }}
                 >
                     {/* DESKTOP: keep original layout */}
                     {/* Title */}
                     <div className="flex flex-row items-center justify-between w-full">
-                        <h1 style={{...responsiveTextD(36, 54, null, 'bold', 'noto', '#363636')}}>商品のカテゴリ</h1>
-                        <span style={{...responsiveTextD(16, 24, null, 'normal', 'noto', '#363636')}}>{categories.length || 0}/200</span>
+                        <h1 style={{ ...responsiveTextD(36, 54, null, 'bold', 'noto', '#363636') }}>商品のカテゴリ</h1>
+                        <span style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#363636') }}>{categories.length || 0}/200</span>
                     </div>
                     {/* Frame 1 */}
-                    <div className="flex flex-col item-start" style={{gap: vwd(16)}}>
-                        <div className="flex flex-row item-center" style={{gap: vwd(24)}}>
-                            <button 
+                    <div className="flex flex-col item-start" style={{ gap: vwd(16) }}>
+                        <div className="flex flex-row item-center" style={{ gap: vwd(24) }}>
+                            <button
                                 onClick={handleReorder}
                                 className="flex flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white hover:bg-gray-50 transition-colors cursor-pointer"
-                                style={{...responsiveMetricD(165, 34), marginTop: vwd(7), marginBottom: vwd(7)}}
+                                style={{ ...responsiveMetricD(165, 34), marginTop: vwd(7), marginBottom: vwd(7) }}
                             >
-                                <span className="text-center bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent" style={{...responsiveTextD(14, 22, null, 'bold', 'noto')}}>カテゴリの並び替え</span>
+                                <span className="text-center bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent" style={{ ...responsiveTextD(14, 22, null, 'bold', 'noto') }}>カテゴリの並び替え</span>
                             </button>
-                            <div className="flex flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white" style={{...responsiveMetricD(165, 34), marginTop: vwd(7), marginBottom: vwd(7)}}>
-                                <a href='/myshop/category/create' className="text-center bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent" style={{...responsiveTextD(14, 22, null, 'bold', 'noto')}}>カテゴリを追加</a>
+                            <div className="flex flex-col justify-center items-center rounded-[5px] border border-[#FF8D4E] bg-white" style={{ ...responsiveMetricD(165, 34), marginTop: vwd(7), marginBottom: vwd(7) }}>
+                                <a href='/myshop/category/create' className="text-center bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] bg-clip-text text-transparent" style={{ ...responsiveTextD(14, 22, null, 'bold', 'noto') }}>カテゴリを追加</a>
                             </div>
                         </div>
-                        <div className="flex flex-col items-center self-stretch" style={{gap: vwd(16)}}>
-                            <div className="flex flex-col items-start rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch" style={{gap: vwd(16), paddingTop: vwd(20), paddingBottom: vwd(20), paddingLeft: vwd(50), paddingRight: vwd(50)}}>
+                        <div className="flex flex-col items-center self-stretch" style={{ gap: vwd(16) }}>
+                            <div className="flex flex-col items-start rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch" style={{ gap: vwd(16), paddingTop: vwd(20), paddingBottom: vwd(20), paddingLeft: vwd(50), paddingRight: vwd(50) }}>
                                 <div className="flex flex-row items-start justify-between w-full">
-                                    <span style={{...responsiveTextD(24, 24, null, 'bold', 'noto', '#363636')}}>最新の出品</span>
+                                    <span style={{ ...responsiveTextD(24, 24, null, 'bold', 'noto', '#363636') }}>最新の出品</span>
                                     <div
                                         onClick={() => router.visit('/shop-newproducts')}
                                         className="flex flex-row items-center cursor-pointer hover:opacity-80 transition-opacity"
-                                        style={{gap: vwd(4), paddingTop: vwd(12), paddingBottom: vwd(12)}}
+                                        style={{ gap: vwd(4), paddingTop: vwd(12), paddingBottom: vwd(12) }}
                                     >
-                                        <img src={list} alt="list" style={{width: vwd(16), height: vwd(16)}} />
-                                        <span style={{...responsiveTextD(14, 10, null, 'medium', 'noto', '#363636')}}>
+                                        <img src={list} alt="list" style={{ width: vwd(16), height: vwd(16) }} />
+                                        <span style={{ ...responsiveTextD(14, 10, null, 'medium', 'noto', '#363636') }}>
                                             詳細を見る
                                         </span>
-                                        <img src={arrow} alt="arrow" style={{...responsiveMetricD(16, 16)}}/>
+                                        <img src={arrow} alt="arrow" style={{ ...responsiveMetricD(16, 16) }} />
                                     </div>
                                 </div>
                                 {/* 1212: batch count */}
                                 <div className="flex px-2 items-end self-stretch">
-                                    <span style={{...responsiveTextD(46, 40.5, null, 'bold', 'noto', '#363636')}}>
+                                    <span style={{ ...responsiveTextD(46, 40.5, null, 'bold', 'noto', '#363636') }}>
                                         {totalBatches || 0}
                                     </span>
-                                    <span style={{...responsiveTextD(18, 18, 0.9, 'black', 'noto', '#000'), paddingLeft: vwd(1), paddingRight: vwd(1)}}>
+                                    <span style={{ ...responsiveTextD(18, 18, 0.9, 'black', 'noto', '#000'), paddingLeft: vwd(1), paddingRight: vwd(1) }}>
                                         点
                                     </span>
                                 </div>
@@ -356,13 +370,21 @@ const Category = () => {
 
                     {/* Categories List - Desktop */}
                     {categories && categories.length > 0 && (
-                        <div className="flex flex-col w-full" style={{gap: vwd(24)}}>
-                            <h2 style={{...responsiveTextD(28, 36, null, 'bold', 'noto', '#363636')}}>カテゴリ一覧</h2>
+                        <div className="flex flex-col w-full" style={{ gap: vwd(24) }}>
                             {categories.map((category) => (
-                                <div key={category.id} className="flex flex-col items-start rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch" style={{paddingTop: vwd(24), paddingBottom: vwd(24), paddingLeft: vwd(50), paddingRight: vwd(50), gap: vwd(16)}}>
+                                <div key={category.id} className="flex flex-col items-start rounded-[10px] bg-white shadow-[0px_4px_36px_0px_rgba(0,0,0,0.10)] self-stretch" style={{ paddingTop: vwd(24), paddingBottom: vwd(24), paddingLeft: vwd(50), paddingRight: vwd(50), gap: vwd(16) }}>
                                     <div className="flex flex-row items-start justify-between w-full">
-                                        <div className="flex flex-col gap-3">
-                                            <span style={{...responsiveTextD(24, 32, null, 'bold', 'noto', '#363636')}}>{category.title}</span>
+                                        <div className="flex flex-col gap-3 w-full">
+                                            <div className="flex flex-row items-center justify-between w-full">
+                                                <span style={{ ...responsiveTextD(24, 32, null, 'bold', 'noto', '#363636') }}>{category.title}</span>
+                                                <a href={`/shop-newcategory/${category.id}`} className="flex flex-row items-center p-[12px] gap-[4px]">
+                                                    <img src={list} alt="list" className="w-[16px] h-[16px]" />
+                                                    <span className="text-[#363636] font-noto text-[14px] font-medium leading-[10px]">
+                                                        詳細を見る
+                                                    </span>
+                                                    <img src={arrow} alt="arrow" className="w-[16px] h-[16px] " />
+                                                </a>
+                                            </div>
                                             {/* {category.description && (
                                                 <span className="text-[#87969F] font-['Noto_Sans_JP'] text-[16px] font-normal leading-[24px]">{category.description}</span>
                                             )} */}
@@ -373,43 +395,43 @@ const Category = () => {
                                                 </span>
                                             </div> */}
                                             <div className="flex px-2 items-end self-stretch">
-                                                <span style={{...responsiveTextD(46, 40.5, null, 'bold', 'noto', '#363636')}}>
+                                                <span style={{ ...responsiveTextD(46, 40.5, null, 'bold', 'noto', '#363636') }}>
                                                     {category.batch_cnt || 0}
                                                 </span>
-                                                <span style={{...responsiveTextD(18, 18, 0.9, 'black', 'noto', '#000'), paddingLeft: vwd(1), paddingRight: vwd(1)}}>
+                                                <span style={{ ...responsiveTextD(18, 18, 0.9, 'black', 'noto', '#000'), paddingLeft: vwd(1), paddingRight: vwd(1) }}>
                                                     点
                                                 </span>
                                             </div>
                                             <div className="flex flex-row items-start justify-between self-stretch">
-                                                <div className="flex flex-col justify-center items-start rounded-[5px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]" style={{...responsiveMetricD(160, 35)}}>
-                                                    <a href='/myshop/registerproduct' className="flex justify-center items-center gap-[10px] flex-shrink-0" style={{...responsiveMetricD(165, 35)}}>
-                                                        <div className="flex justify-center items-center flex-shrink-0" style={{width: vwd(16), height: vwd(16)}}>
-                                                            <img src={file_add} alt="file_add" style={{width: vwd(16), height: vwd(16)}} />
+                                                <div className="flex flex-col justify-center items-start rounded-[5px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]" style={{ ...responsiveMetricD(160, 35) }}>
+                                                    <a href='/myshop/registerproduct' className="flex justify-center items-center gap-[10px] flex-shrink-0" style={{ ...responsiveMetricD(165, 35) }}>
+                                                        <div className="flex justify-center items-center flex-shrink-0" style={{ width: vwd(16), height: vwd(16) }}>
+                                                            <img src={file_add} alt="file_add" style={{ width: vwd(16), height: vwd(16) }} />
                                                         </div>
-                                                        <span style={{...responsiveTextD(13, 19.5, null, 'black', 'noto', '#fff')}}>写真を商品登録</span>
+                                                        <span style={{ ...responsiveTextD(13, 19.5, null, 'black', 'noto', '#fff') }}>写真を商品登録</span>
                                                     </a>
                                                 </div>
-                                            </div>
-                                        </div>
                                         <div className="flex items-center gap-3">
                                             <button
                                                 onClick={() => router.visit(`/myshop/category/${category.id}/edit`)}
                                                 className="flex items-center rounded-[5px] bg-[#E9E9E9] hover:bg-[#D9D9D9] transition-colors cursor-pointer"
-                                                style={{...responsiveMetricD(100, 40), paddingLeft: vwd(16), paddingRight: vwd(16), gap: vwd(8)}}
+                                                style={{ ...responsiveMetricD(100, 40), paddingLeft: vwd(16), paddingRight: vwd(16), gap: vwd(8) }}
                                             >
-                                                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{...responsiveMetricD(20, 20)}}>
+                                                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ ...responsiveMetricD(20, 20) }}>
                                                     <path d="M2 17.9997H18M2 17.9997V13.9997L10 5.99975M2 17.9997L6 17.9997L14 9.99974M10 5.99975L12.8686 3.1311L12.8704 3.1294C13.2652 2.73451 13.463 2.53672 13.691 2.46264C13.8919 2.39738 14.1082 2.39738 14.3091 2.46264C14.5369 2.53667 14.7345 2.73424 15.1288 3.12856L16.8686 4.86836C17.2646 5.26437 17.4627 5.46247 17.5369 5.6908C17.6022 5.89164 17.6021 6.10799 17.5369 6.30883C17.4628 6.537 17.265 6.7348 16.8695 7.13025L16.8686 7.1311L14 9.99974M10 5.99975L14 9.99974" stroke="#767676" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                 </svg>
-                                                <span style={{...responsiveTextD(14, 20, null, 'bold', 'noto', '#767676')}}>編集</span>
+                                                <span style={{ ...responsiveTextD(14, 20, null, 'bold', 'noto', '#767676') }}>編集</span>
                                             </button>
                                             <button
                                                 onClick={() => handleDelete(category)}
                                                 className="flex items-center rounded-[5px] bg-[#E9E9E9] hover:bg-[#D9D9D9] transition-colors cursor-pointer"
-                                                style={{...responsiveMetricD(100, 40), paddingLeft: vwd(16), paddingRight: vwd(16), gap: vwd(8)}}
+                                                style={{ ...responsiveMetricD(100, 40), paddingLeft: vwd(16), paddingRight: vwd(16), gap: vwd(8) }}
                                             >
-                                                <img src={recyclebin} alt="delete" style={{width: vwd(20), height: vwd(20)}} />
-                                                <span style={{...responsiveTextD(14, 20, null, 'bold', 'noto', '#767676')}}>削除</span>
+                                                <img src={recyclebin} alt="delete" style={{ width: vwd(20), height: vwd(20) }} />
+                                                <span style={{ ...responsiveTextD(14, 20, null, 'bold', 'noto', '#767676') }}>削除</span>
                                             </button>
+                                        </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

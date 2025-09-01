@@ -27,6 +27,7 @@ const AccountSetting = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [resultMessage, setResultMessage] = useState({ type: '', message: '' });
   const [emailVerifying, setEmailVerifying] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false); // New state for form changes
 
   // Email verification states
   const [showVerificationInput, setShowVerificationInput] = useState(false);
@@ -61,6 +62,22 @@ const AccountSetting = () => {
       handleVerifyCode();
     }
   }, [verificationCode]);
+
+  // Check if form has changes
+  useEffect(() => {
+    const originalData = {
+      name: userData.name,
+      email: originalEmail,
+      notificationSettings: userData.notificationSettings
+    };
+    
+    const hasFormChanges = 
+      userData.name !== originalData.name ||
+      emailInput !== originalData.email ||
+      JSON.stringify(userData.notificationSettings) !== JSON.stringify(originalData.notificationSettings);
+    
+    setHasChanges(hasFormChanges);
+  }, [userData.name, emailInput, userData.notificationSettings, originalEmail]);
 
   const fetchUserData = async () => {
     try {
@@ -318,6 +335,9 @@ const AccountSetting = () => {
       if (response.ok) {
         const data = await response.json();
         setResultMessage({ type: 'success', message: '設定が正常に保存されました' });
+        // Update original values and reset changes state
+        setOriginalEmail(emailInput);
+        setHasChanges(false);
         // Auto-hide success message after 3 seconds
         setTimeout(() => {
           setResultMessage({ type: '', message: '' });
@@ -640,12 +660,12 @@ const AccountSetting = () => {
               </div>
               {/* 1234: 保存する button */}
               <button
-                className="flex p-[2px] justify-center items-center self-stretch rounded-[8px] bg-[#E9EEF1]"
+                className={`flex p-[2px] justify-center items-center self-stretch rounded-[8px] ${hasChanges ? 'bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]' : 'bg-[#E9EEF1]'}`}
                 style={{ ...responsiveMetricD('full', 60), marginTop: vwd(24) }}
-                onClick={handleSaveClick}
-                disabled={saving}
+                onClick={hasChanges ? handleSaveClick : undefined}
+                disabled={!hasChanges || saving}
               >
-                <span style={{ ...responsiveTextD(18, 21, null, 'black', 'noto', '#969696') }}>
+                <span className={`w-full h-full text-center transition-colors ${hasChanges ? 'cursor-pointer hover:opacity-90 text-white' : 'cursor-not-allowed text-[#969696] opacity-60'}`} style={{ ...responsiveTextD(18, 21, null, 'black', 'noto') }}>
                   {saving ? '保存中...' : '保存する'}
                 </span>
               </button>
@@ -906,12 +926,12 @@ const AccountSetting = () => {
           </div>
           {/* 1234: 保存する button */}
           <button
-            className="flex p-[2px] justify-center items-center rounded-[8px] bg-[#E9EEF1]"
+            className={`flex p-[2px] justify-center items-center rounded-[8px] ${hasChanges ? 'bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]' : 'bg-[#E9EEF1]'}`}
             style={{ ...responsiveMetric(240, 48), marginTop: vw(24) }}
-            onClick={handleSaveClick}
-            disabled={saving}
+            onClick={hasChanges ? handleSaveClick : undefined}
+            disabled={!hasChanges || saving}
           >
-            <span style={{ ...responsiveText(18, 21, null, 'black', 'noto', '#969696') }}>
+            <span className={`w-full h-full text-center transition-colors ${hasChanges ? 'cursor-pointer hover:opacity-90 text-white' : 'cursor-not-allowed text-[#969696] opacity-60'}`} style={{ ...responsiveText(18, 21, null, 'black', 'noto') }}>
               {saving ? '保存中...' : '保存する'}
             </span>
           </button>

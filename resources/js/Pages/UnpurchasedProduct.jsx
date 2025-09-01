@@ -97,12 +97,18 @@ const UnpurchasedProduct = ({ product }) => {
                                 {/* 11211 */}
                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
                                     {/* 112111 */}
-                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
+                                    <div 
+                                        className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+                                        onClick={() => router.visit(`/${product.user.id}`)}
+                                    >
                                         <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
                                     </div>
                                 </div>
                                 {/* 11212 */}
-                                <div className="flex flex-col items-start">
+                                <div 
+                                    className="flex flex-col items-start cursor-pointer hover:opacity-80 transition-opacity"
+                                    onClick={() => router.visit(`/${product.user.id}`)}
+                                >
                                     <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 </div>
                             </div>
@@ -531,11 +537,19 @@ const UnpurchasedProduct = ({ product }) => {
                 <div className="flex justify-between items-start w-full">
                     {/* Left: 21 */}
                     <div className="flex items-start flex-shrink-0">
-                        <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
+                        <div 
+                            className="cursor-pointer hover:opacity-80 transition-opacity"
+                            onClick={() => router.visit(`/${product.user.id}`)}
+                        >
+                            <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
+                        </div>
                         {/* 211 */}
                         <div className="flex flex-col pl-[16px] items-start">
                             <div className="flex flex-col items-start gap-[12px]">
-                                <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
+                                <span 
+                                    className="text-[#000] font-noto text-[21px] font-bold leading-[32px] cursor-pointer hover:opacity-80 transition-opacity"
+                                    onClick={() => router.visit(`/${product.user.id}`)}
+                                >{product.user.name}</span>
                                 <div className="flex pt-[10px] gap-[4px]">
                                     <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
                                 </div>
@@ -563,11 +577,17 @@ const UnpurchasedProduct = ({ product }) => {
                                 <div className="flex items-center w-full">
                                     {/* 112111 */}
                                     <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                        <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
+                                        <div 
+                                            className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+                                            onClick={() => router.visit(`/${product.user.id}`)}
+                                        >
                                             <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
                                         </div>
                                     </div>
-                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
+                                    <span 
+                                        className="text-[#000] font-noto text-[21px] font-bold leading-[32px] cursor-pointer hover:opacity-80 transition-opacity"
+                                        onClick={() => router.visit(`/${product.user.id}`)}
+                                    >{product.user.name}</span>
                                 </div>
                             </div>
                             <button
@@ -765,79 +785,7 @@ const UnpurchasedProduct = ({ product }) => {
                                         )}
                                     </div>
                                 </div>
-                                {/* Overlay Area: Mobile inclined logos */}
-                                <div
-                                    className="flex flex-col items-start absolute top-0 left-0 h-full opacity-75 px-6 "
-                                    style={{
-                                        width: '100%',
-                                        pointerEvents: 'none',
-                                    }}
-                                >
-                                    {/* Mobile 12111: Logo row */}
-                                    <div
-                                        className="flex items-center mt-[20px]"
-                                        style={{
-                                            transform: 'rotate(-30deg)',
-                                            gap: '12px',
-                                            alignSelf: 'stretch',
-                                        }}
-                                    >
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                    </div>
-                                    {/* Mobile 12112: Logo row */}
-                                    <div
-                                        className="flex items-center mt-[50px]"
-                                        style={{
-                                            transform: 'rotate(-30deg)',
-                                            gap: '12px',
-                                            alignSelf: 'stretch',
-                                        }}
-                                    >
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                    </div>
-                                    {/* Mobile 12113: Logo row */}
-                                    <div
-                                        className="flex items-center mt-[50px]"
-                                        style={{
-                                            transform: 'rotate(-30deg)',
-                                            gap: '12px',
-                                            alignSelf: 'stretch',
-                                        }}
-                                    >
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                    </div>
-                                    {/* Mobile 12114: Logo row */}
-                                    <div
-                                        className="flex items-center mt-[50px]"
-                                        style={{
-                                            transform: 'rotate(-30deg)',
-                                            gap: '12px',
-                                            alignSelf: 'stretch',
-                                        }}
-                                    >
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                    </div>
-                                    {/* Mobile 12115: Logo row */}
-                                    <div
-                                        className="flex items-center mt-[50px]"
-                                        style={{
-                                            transform: 'rotate(-30deg)',
-                                            gap: '12px',
-                                            alignSelf: 'stretch',
-                                        }}
-                                    >
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                        <img src={logo} alt="logo" style={{ width: '80px', height: '14px' }} />
-                                    </div>
-                                </div>
+                               
                             </div>
                             {/* 1212: Badge display */}
                             <div className="flex justify-center w-full mt-[16px]">
@@ -1027,11 +975,19 @@ const UnpurchasedProduct = ({ product }) => {
                     <div className="flex flex-col items-start gap-[24px]">
                         {/* Left: 21 */}
                         <div className="flex items-start flex-shrink-0 ">
-                            <img src={product.user.image || default_user} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
+                            <div 
+                                className="cursor-pointer hover:opacity-80 transition-opacity"
+                                onClick={() => router.visit(`/${product.user.id}`)}
+                            >
+                                <img src={product.user.image || default_user} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
+                            </div>
                             {/* 211 */}
                             <div className="flex flex-col pl-[16px] items-start ">
                                 <div className="flex flex-col items-start gap-[12px]">
-                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[18px]">{product.user.name}</span>
+                                    <span 
+                                        className="text-[#000] font-noto text-[16px] font-bold leading-[18px] cursor-pointer hover:opacity-80 transition-opacity"
+                                        onClick={() => router.visit(`/${product.user.id}`)}
+                                    >{product.user.name}</span>
                                     <div className="flex gap-[4px]">
                                         <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
                                     </div>

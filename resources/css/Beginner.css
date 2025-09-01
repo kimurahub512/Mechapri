@@ -3,6 +3,7 @@ body {
 }
 
 .beginner-hero-section {
+  padding-top: 8rem;
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
@@ -942,7 +943,7 @@ body {
   
   .beginner-hero-mobile-section {
     display: block !important;
-    margin-top: 32px;
+    margin-top: 86px;
     padding: 0 16px;
   }
 

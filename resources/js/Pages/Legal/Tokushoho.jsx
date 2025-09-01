@@ -36,7 +36,7 @@ const Tokushoho = () => {
                                      
                                      <div className="border-b border-gray-200 pb-4">
                                          <h2 className="text-xl font-semibold text-gray-800 mb-2">電子メールアドレス</h2>
-                                         <p className="text-gray-600">contact@over-x.tech</p>
+                                         <p className="text-gray-600">info@mechapri.com</p>
                                      </div>
                                      
                                      <div className="border-b border-gray-200 pb-4">
@@ -101,7 +101,7 @@ const Tokushoho = () => {
                                          <h2 className="text-xl font-semibold text-gray-800 mb-2">お問い合わせ先</h2>
                                          <p className="text-gray-600">
                                              カスタマーセンター<br />
-                                             contact@over-x.tech<br />
+                                             info@mechapri.com<br />
                                              【営業時間】11：00～16：00（土日、祝祭日および夏季休業、年末年始は除く）
                                          </p>
                                      </div>

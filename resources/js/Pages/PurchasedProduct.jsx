@@ -90,7 +90,7 @@ const PurchasedProduct = ({ product }) => {
     return (
         <div className='product-details-no-footer-gap bg-[#FFF]'>
             <Header />
-            <main className="hidden md:flex flex-col items-center px-[120px] pt-[44px] pb-[176px] w-full bg-[#FFF]">
+            <main className="hidden md:flex flex-col items-center px-[120px] pt-[140px] pb-[176px] w-full bg-[#FFF]">
                 {/* Frame 1 */}
                 <div className="flex flex-col items-center gap-[41px] w-full max-w-[1200px]">
                     {/* 11 */}
@@ -102,12 +102,18 @@ const PurchasedProduct = ({ product }) => {
                                 {/* 11211 */}
                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
                                     {/* 112111 */}
-                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
+                                    <div 
+                                        className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+                                        onClick={() => router.visit(`/${product.user.id}`)}
+                                    >
                                         <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
                                     </div>
                                 </div>
                                 {/* 11212 */}
-                                <div className="flex flex-col items-start">
+                                <div 
+                                    className="flex flex-col items-start cursor-pointer hover:opacity-80 transition-opacity"
+                                    onClick={() => router.visit(`/${product.user.id}`)}
+                                >
                                     <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 </div>
                             </div>
@@ -388,7 +394,7 @@ const PurchasedProduct = ({ product }) => {
                                                     alt="qr" 
                                                     className="absolute top-0 left-0 w-[150px] h-[150px] " 
                                                 />
-                                                <span className="absolute top-[44.5px] left-[226px] text-[#000] font-noto text-[14px] font-normal leading-[21px]">印刷番号</span>
+                                                <span className="absolute top-[44.5px] left-[226px] text-[#000] font-noto text-[14px] font-normal leading-[21px]">ユーザー番号</span>
                                                 <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">
                                                     {product?.nwps_user_code || '発行中...'}
                                                 </span>
@@ -452,11 +458,19 @@ const PurchasedProduct = ({ product }) => {
                 <div className="flex justify-between items-start w-full">
                     {/* Left: 21 */}
                     <div className="flex items-start flex-shrink-0">
-                        <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
+                        <div 
+                            className="cursor-pointer hover:opacity-80 transition-opacity"
+                            onClick={() => router.visit(`/${product.user.id}`)}
+                        >
+                            <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
+                        </div>
                         {/* 211 */}
                         <div className="flex flex-col pl-[16px] items-start">
                             <div className="flex flex-col items-start gap-[12px]">
-                                <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
+                                <span 
+                                    className="text-[#000] font-noto text-[21px] font-bold leading-[32px] cursor-pointer hover:opacity-80 transition-opacity"
+                                    onClick={() => router.visit(`/${product.user.id}`)}
+                                >{product.user.name}</span>
                                 <div className="flex pt-[10px] gap-[4px]">
                                     <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
                                 </div>
@@ -484,11 +498,17 @@ const PurchasedProduct = ({ product }) => {
                                 <div className="flex items-center w-full">
                                     {/* 112111 */}
                                     <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                        <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
+                                        <div 
+                                            className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+                                            onClick={() => router.visit(`/${product.user.id}`)}
+                                        >
                                             <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
                                         </div>
                                     </div>
-                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
+                                    <span 
+                                        className="text-[#000] font-noto text-[21px] font-bold leading-[32px] cursor-pointer hover:opacity-80 transition-opacity"
+                                        onClick={() => router.visit(`/${product.user.id}`)}
+                                    >{product.user.name}</span>
                                 </div>
                             </div>
                             <button
@@ -746,7 +766,7 @@ const PurchasedProduct = ({ product }) => {
                                                     alt="qr" 
                                                     className="absolute top-0 left-0 w-[100px] h-[100px]" 
                                                 />
-                                                <span className="absolute top-[30px] left-[150px] text-[#000] font-noto text-[12px] font-normal leading-[16px]">印刷番号</span>
+                                                <span className="absolute top-[30px] left-[150px] text-[#000] font-noto text-[12px] font-normal leading-[16px]">ユーザー番号</span>
                                                 <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">
                                                     {product?.nwps_user_code || '発行中...'}
                                                 </span>
@@ -809,11 +829,19 @@ const PurchasedProduct = ({ product }) => {
                     <div className="flex flex-col items-start gap-[24px]">
                         {/* Left: 21 */}
                         <div className="flex items-start flex-shrink-0 ">
-                            <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
+                            <div 
+                                className="cursor-pointer hover:opacity-80 transition-opacity"
+                                onClick={() => router.visit(`/${product.user.id}`)}
+                            >
+                                <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
+                            </div>
                             {/* 211 */}
                             <div className="flex flex-col pl-[16px] items-start">
                                 <div className="flex flex-col items-start gap-[12px]">
-                                    <span className="text-[#000] font-noto text-[16px] font-bold leading-[18px]">{product.user.name}</span>
+                                    <span 
+                                        className="text-[#000] font-noto text-[16px] font-bold leading-[18px] cursor-pointer hover:opacity-80 transition-opacity"
+                                        onClick={() => router.visit(`/${product.user.id}`)}
+                                    >{product.user.name}</span>
                                     <div className="flex pt-[10px] gap-[4px]">
                                         <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
                                     </div>
