@@ -46,12 +46,16 @@ class ImageWatermarkService
                 return null;
             }
             
+            Log::info('Attempting to read image: ' . $originalFullPath . ' (size: ' . $fileSize . ' bytes)');
+            
             // Check image type first
             $imageInfo = getimagesize($originalFullPath);
             if ($imageInfo === false) {
                 Log::error('Invalid image file - getimagesize failed: ' . $originalFullPath);
                 return null;
-            }      
+            }
+            
+            Log::info('Image info: ' . json_encode($imageInfo));
             
                         // Try to create a new image from the existing one using PHP's built-in functions
             $image = null;
@@ -61,6 +65,7 @@ class ImageWatermarkService
                 // First try Intervention Image directly
             $manager = new ImageManager(new Driver());
             $image = $manager->read($originalFullPath);
+                Log::info('Successfully read image with Intervention Image');
             } catch (\Exception $e) {
                 $lastError = $e->getMessage();
                 Log::warning('Failed to read with Intervention Image: ' . $e->getMessage());
@@ -82,7 +87,9 @@ class ImageWatermarkService
                     $image = $manager->read($tempPath);
                     
                     // Clean up temp file
-                    unlink($tempPath);                    
+                    unlink($tempPath);
+                    
+                    Log::info('Successfully read image using PHP GD functions and converted to Intervention Image');
                 } catch (\Exception $e2) {
                     $lastError = $e2->getMessage();
                     Log::error('Failed to read image with PHP GD functions: ' . $e2->getMessage());
@@ -99,7 +106,11 @@ class ImageWatermarkService
 
             // Add simple center watermark
             try {
-                $this->addCenterWatermark($image, $watermarkText, $width, $height);
+                // $this->addCenterWatermark($image, $watermarkText, $width, $height);
+                // $this->addDiagonalWatermarks($image, $width, $height);
+                $this->addRotatedLogoRows($image, $width, $height);
+
+                Log::info('Successfully added watermark to image');
             } catch (\Exception $e) {
                 Log::error('Error adding watermark: ' . $e->getMessage());
                 throw $e;
@@ -115,6 +126,7 @@ class ImageWatermarkService
 
             Storage::disk('public')->put($watermarkedPath, $imageData);
 
+            Log::info('Watermarked image created: ' . $watermarkedPath);
             return $watermarkedPath;
 
         } catch (\Exception $e) {
@@ -130,25 +142,92 @@ class ImageWatermarkService
         }
     }
 
+
+
+    private function addRotatedLogoRows($image, int $width, int $height): void
+    {
+        $manager = new ImageManager(new Driver());
+    
+        // Calculate scaling factor based on image size
+        // Use the smaller dimension as reference, with a base size of 800px
+        // This ensures more rows for larger images (up to 1500x2100)
+        $baseSize = 800;
+        $scaleFactor = min($width, $height) / $baseSize;
+        
+        // Scale logo size based on image dimensions
+        $logoWidth = (int)(280 * $scaleFactor);
+        $logoHeight = (int)(49 * $scaleFactor);
+        
+        // Scale gaps based on image dimensions - smaller gaps for more rows
+        $gapX = (int)(40 * $scaleFactor);
+        $gapY = (int)(600 * $scaleFactor); // Gap between rows - reduced for more rows
+        $gapXOffset = (int)(400 * $scaleFactor); // Horizontal offset between tiles - reduced
+        
+        Log::info("Image size: {$width}x{$height}, Scale factor: {$scaleFactor}");
+        Log::info("Logo size: {$logoWidth}x{$logoHeight}, Gaps: X={$gapX}, Y={$gapY}, XOffset={$gapXOffset}");
+    
+        // 1) Load & resize logo
+        $logoPath = resource_path('js/assets/images/logo_white.png');
+        $logo = $manager->read($logoPath)->resize($logoWidth, $logoHeight);
+    
+        // 2) Build a row of logos
+        $logosPerRow = 4;
+        $rowW        = $logosPerRow * $logo->width() + ($logosPerRow - 1) * $gapX;
+        $rowH        = $logo->height();
+    
+        $row = $manager->create($rowW, $rowH)->fill('rgba(0,0,0,0)');
+        for ($i = 0; $i < $logosPerRow; $i++) {
+            $x = $i * ($logo->width() + $gapX);
+            $row->place($logo, 'top-left', $x, 0);
+        }
+    
+        // 3) Rotate the row
+        $rotatedRow = clone $row;
+        $rotatedRow->rotate(30, 'rgba(0,0,0,0)');
+    
+        // 4) Create an overlay canvas same size as the target
+        $overlay = $manager->create($width, $height)->fill('rgba(0,0,0,0)');
+    
+        // 5) Tile the rotated row only within overlay (like overflow-hidden)
+        $tileW = $rotatedRow->width();
+        $tileH = $rotatedRow->height();
+    
+        for ($y = -$tileH; $y < $height + $tileH; $y += $gapY) {
+            for ($x = -$tileW; $x < $width + $tileW; $x += $gapXOffset) {
+                $overlay->place($rotatedRow, 'top-left', $x, $y);
+            }
+        }
+    
+        // 6) Merge overlay into original image
+        $image->place($overlay, 'top-left', 0, 0);
+    }
+    
+    
+
     /**
      * Add SVG watermark
      */
     private function addCenterWatermark($image, $text, $width, $height)
     {
+        Log::info('size: ' . $width . 'x' . $height);
         // Calculate watermark size based on image dimensions (about 1/4 of the smaller dimension)
         $watermarkSize = min($width, $height) / 4;
         $watermarkWidth = $watermarkSize;
         $watermarkHeight = ($watermarkSize * 96) / 141; // Maintain aspect ratio
         
+        Log::info('Watermark size: ' . $watermarkWidth . 'x' . $watermarkHeight);
         
         // Center position
         $centerX = ($width - $watermarkWidth) / 2;
         $centerY = ($height - $watermarkHeight) / 2;
         
+        Log::info('Watermark position: ' . $centerX . ', ' . $centerY);
         
         // Use the existing PNG logo file
+        Log::info('Using PNG logo file for watermark');
         
-        $logoPath = resource_path('js/assets/images/logo_white.png');
+        $logoPath = resource_path('js/assets/images/rotated_logo.png');
+        Log::info('Logo file path: ' . $logoPath);
         
         if (!file_exists($logoPath)) {
             throw new \Exception('Logo file not found: ' . $logoPath);
@@ -159,14 +238,17 @@ class ImageWatermarkService
             $manager = new ImageManager(new Driver());
             $watermark = $manager->read($logoPath);
             
+            Log::info('Successfully read PNG logo file');
             
             // Resize watermark
             $watermark->resize($watermarkWidth, $watermarkHeight);
             
+            Log::info('Resized watermark to: ' . $watermarkWidth . 'x' . $watermarkHeight);
             
             // Place watermark on the image
             $image->place($watermark, $centerX, $centerY);
             
+            Log::info('Watermark process completed successfully');
             
         } catch (\Exception $e) {
             Log::error('Failed to use PNG logo: ' . $e->getMessage());
