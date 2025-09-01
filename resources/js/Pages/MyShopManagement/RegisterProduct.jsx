@@ -292,14 +292,36 @@ const RegisterProduct = () => {
                     const productData = result.data;
                     setProductData(productData);
 
-                    // Show success modal
-                    setShowModal(true);
+                    // Scroll to top using the same method as validation errors
+                    try {
+                        // Method 1: Scroll to top of page
+                        setTimeout(() => {
+                            window.scrollTo(0, 0);
+                        }, 100);
+
+                        // Method 2: Scroll the main container as fallback
+                        setTimeout(() => {
+                            const mainElement = document.querySelector('main');
+                            if (mainElement) {
+                                mainElement.scrollTop = 0;
+                            }
+                        }, 200);
+
+                        // Show modal after scroll completes
+                        setTimeout(() => {
+                            setShowModal(true);
+                        }, 400);
+                    } catch (error) {
+                        console.error('Scroll error:', error);
+                        // Show modal even if scroll fails
+                        setShowModal(true);
+                    }
                     // Reset form
                     setTitle('');
                     setDescription('');
                     setPrice(0);
                     setSalesLimit('');
-                    setSalesDeadline('');
+                    setSalesDeadline(maxDateString);
                     setPassword('');
                     setUploadedPhotos([]);
                     setTotalSize(0);

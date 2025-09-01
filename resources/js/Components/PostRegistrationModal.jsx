@@ -332,16 +332,7 @@ ${productData.title}
                                 />
                                 <span className="text-[#222] font-noto text-[13px] leading-[20px] font-normal">{productData?.user?.name || 'ユーザー名'}</span>
                             </div>
-                            <span className="text-[#363636] font-noto font-medium text-[14px] leading-[25px] mb-[4px]">
-                                {productData?.created_at ? (() => {
-                                    try {
-                                        const date = new Date(productData.created_at);
-                                        return `${date.toLocaleDateString('ja-JP')} ${date.toLocaleTimeString('ja-JP', {hour: '2-digit', minute: '2-digit'})}に登録`;
-                                    } catch (e) {
-                                        return '登録日時';
-                                    }
-                                })() : '登録日時'}
-                            </span>
+                            
                             <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">枚数：{productData?.files_count || 0}</span>
                             <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">購入金額： {productData?.price ? `${parseInt(productData.price)}円` : '0円'}</span>
                             <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷番号：{productData?.sn || (productData?.id ? `PB${productData.id.toString().padStart(6, '0')}` : 'N/A')}</span>
