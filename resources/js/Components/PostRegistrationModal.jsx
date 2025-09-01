@@ -45,7 +45,15 @@ const PostRegistrationModal = ({ onClose, productData }) => {
 
     // Generate share URL
     const getShareUrl = () => {
-        return `${window.location.origin}/products/${productData.id}`;
+        const ownerUserId = productData?.user?.id ?? productData?.user_id;
+        const isFree = Number(productData?.price) === 0;
+        if (!ownerUserId) {
+            return `${window.location.origin}`;
+        }
+        const base = `${window.location.origin}/user/${ownerUserId}`;
+        return isFree
+            ? `${base}/purchasedproduct/${productData.id}`
+            : `${base}/unpurchasedproduct/${productData.id}`;
     };
 
     // Copy URL to clipboard

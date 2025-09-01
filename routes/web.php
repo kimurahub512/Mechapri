@@ -449,19 +449,23 @@ Route::post('/api/verify-email-code', [ProfileController::class, 'verifyEmailCod
 // Protected Routes
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    
+    // Admin-only dashboard routes
+    Route::middleware([\App\Http\Middleware\EnsureUserIsAdmin::class])->group(function () {
+        Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
-    // Dashboard sub-routes
-    Route::get('/dashboard/users', [App\Http\Controllers\DashboardController::class, 'users'])->name('dashboard.users');
-    Route::post('/dashboard/users', [App\Http\Controllers\DashboardController::class, 'createUser'])->name('dashboard.users.create');
-    Route::put('/dashboard/users/{user}', [App\Http\Controllers\DashboardController::class, 'updateUser'])->name('dashboard.users.update');
-    Route::delete('/dashboard/users/{user}', [App\Http\Controllers\DashboardController::class, 'deleteUser'])->name('dashboard.users.delete');
-    Route::get('/dashboard/finance', [App\Http\Controllers\DashboardController::class, 'finance'])->name('dashboard.finance');
-    Route::post('/dashboard/withdrawals', [App\Http\Controllers\DashboardController::class, 'createWithdrawal'])->name('dashboard.withdrawals.create');
-    Route::get('/dashboard/withdrawals/{seller}', [App\Http\Controllers\DashboardController::class, 'getSellerWithdrawals'])->name('dashboard.withdrawals.seller');
-    Route::get('/dashboard/products', [App\Http\Controllers\DashboardController::class, 'products'])->name('dashboard.products');
-    Route::get('/dashboard/sales', [App\Http\Controllers\DashboardController::class, 'sales'])->name('dashboard.sales');
-    Route::get('/dashboard/reports', [App\Http\Controllers\DashboardController::class, 'reports'])->name('dashboard.reports');
+        // Dashboard sub-routes
+        Route::get('/dashboard/users', [App\Http\Controllers\DashboardController::class, 'users'])->name('dashboard.users');
+        Route::post('/dashboard/users', [App\Http\Controllers\DashboardController::class, 'createUser'])->name('dashboard.users.create');
+        Route::put('/dashboard/users/{user}', [App\Http\Controllers\DashboardController::class, 'updateUser'])->name('dashboard.users.update');
+        Route::delete('/dashboard/users/{user}', [App\Http\Controllers\DashboardController::class, 'deleteUser'])->name('dashboard.users.delete');
+        Route::get('/dashboard/finance', [App\Http\Controllers\DashboardController::class, 'finance'])->name('dashboard.finance');
+        Route::post('/dashboard/withdrawals', [App\Http\Controllers\DashboardController::class, 'createWithdrawal'])->name('dashboard.withdrawals.create');
+        Route::get('/dashboard/withdrawals/{seller}', [App\Http\Controllers\DashboardController::class, 'getSellerWithdrawals'])->name('dashboard.withdrawals.seller');
+        Route::get('/dashboard/products', [App\Http\Controllers\DashboardController::class, 'products'])->name('dashboard.products');
+        Route::get('/dashboard/sales', [App\Http\Controllers\DashboardController::class, 'sales'])->name('dashboard.sales');
+        Route::get('/dashboard/reports', [App\Http\Controllers\DashboardController::class, 'reports'])->name('dashboard.reports');
+    });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

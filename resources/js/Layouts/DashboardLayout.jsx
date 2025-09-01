@@ -71,9 +71,9 @@ export default function DashboardLayout({ children, activeTab = 'dashboard' }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>
+                                        {/* <Dropdown.Link href={route('profile.edit')}>
                                             プロフィール設定
-                                        </Dropdown.Link>
+                                        </Dropdown.Link> */}
                                         <Dropdown.Link href="/">
                                             サイトに戻る
                                         </Dropdown.Link>

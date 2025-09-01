@@ -310,11 +310,11 @@ const PurchasedProduct = ({ product }) => {
                                                         onClick={() => setCushionRevealed(true)}
                                                         className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px] cursor-pointer z-10"
                                                     >
-                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                            <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
-                                                            <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
-                                                            <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
-                                                        </div>
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
+                                                    <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
+                                                    <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
+                                                </div>
                                                     </button>
                                                 ) : null}
                                                 <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
@@ -670,11 +670,11 @@ const PurchasedProduct = ({ product }) => {
                                                         onClick={() => setCushionRevealed(true)}
                                                         className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px] cursor-pointer z-10"
                                                     >
-                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                            <img src={warning} alt="warning" className="w-[24px] h-[24px]" />
-                                                            <span className="text-[#464F5D] text-[10px] font-bold">WARNING</span>
-                                                            <span className="text-[#464F5D] text-[8px]">クリックして内容を確認</span>
-                                                        </div>
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                    <img src={warning} alt="warning" className="w-[24px] h-[24px]" />
+                                                    <span className="text-[#464F5D] text-[10px] font-bold">WARNING</span>
+                                                    <span className="text-[#464F5D] text-[8px]">クリックして内容を確認</span>
+                                                </div>
                                                     </button>
                                                 ) : null}
                                                 <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
