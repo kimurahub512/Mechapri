@@ -1553,13 +1553,14 @@ const RegisterProduct = () => {
                                 {/* Frame 1235 */}
                                 <div className="flex flex-col items-start self-stretch" style={{ gap: vw(10), ...responsiveMetric('auto', 104.8), paddingTop: vw(32.8) }}>
                                     {/* 12351: Button */}
-                                    <button
-                                        className="flex flex-col justify-center items-center bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] shadow-[0_4px_8px_0_rgba(255,42,161,0.20)]"
-                                        type="button"
-                                        onClick={handleSubmit}
-                                        disabled={isSubmitting}
-                                        style={{ ...responsiveMetric(311, 'auto'), paddingLeft: vw(36), paddingRight: vw(36), paddingTop: vw(15), paddingBottom: vw(15), borderRadius: vw(8) }}
-                                    >
+                                                                <button
+                                className="relative z-[10] pointer-events-auto flex flex-col justify-center items-center bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] shadow-[0_4px_8px_0_rgba(255,42,161,0.20)]"
+                                type="button"
+                                onClick={handleSubmit}
+                                onTouchStart={handleSubmit}
+                                disabled={isSubmitting}
+                                style={{ ...responsiveMetric(311, 'auto'), paddingLeft: vw(36), paddingRight: vw(36), paddingTop: vw(15), paddingBottom: vw(15), borderRadius: vw(8) }}
+                            >
                                         <span style={{ ...responsiveText(18, 14, null, 'bold', 'noto', '#FFFFFF') }}>
                                             {isSubmitting ? (editMode ? '保存中...' : '登録中...') : (editMode ? '保存' : '登録する')}
                                         </span>

@@ -21,6 +21,8 @@ const AccountSetting = () => {
     }
   });
   const [originalEmail, setOriginalEmail] = useState(''); // Store original email from DB
+  const [originalName, setOriginalName] = useState(''); // Store original name from DB
+  const [originalNotifications, setOriginalNotifications] = useState(null); // Store original notification settings from DB
   const [emailInput, setEmailInput] = useState(''); // Separate state for email input
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -63,21 +65,17 @@ const AccountSetting = () => {
     }
   }, [verificationCode]);
 
-  // Check if form has changes
+  // Check if form has changes (only name and notification settings)
   useEffect(() => {
-    const originalData = {
-      name: userData.name,
-      email: originalEmail,
-      notificationSettings: userData.notificationSettings
-    };
+    const nameChanged = userData.name !== originalName;
+    const notificationsChanged = originalNotifications ? 
+      JSON.stringify(userData.notificationSettings) !== JSON.stringify(originalNotifications) : 
+      false;
     
-    const hasFormChanges = 
-      userData.name !== originalData.name ||
-      emailInput !== originalData.email ||
-      JSON.stringify(userData.notificationSettings) !== JSON.stringify(originalData.notificationSettings);
-    
+    const hasFormChanges = nameChanged || notificationsChanged;
+
     setHasChanges(hasFormChanges);
-  }, [userData.name, emailInput, userData.notificationSettings, originalEmail]);
+  }, [userData.name, userData.notificationSettings, originalName, originalNotifications]);
 
   const fetchUserData = async () => {
     try {
@@ -107,6 +105,8 @@ const AccountSetting = () => {
         });
         setOriginalEmail(data.email || '');
         setEmailInput(data.email || '');
+        setOriginalName(data.name || '');
+        setOriginalNotifications(JSON.parse(JSON.stringify(mappedNotifications)));
       } else {
         console.error('Failed to fetch user data');
         setResultMessage({ type: 'error', message: 'データの取得に失敗しました' });
@@ -337,6 +337,8 @@ const AccountSetting = () => {
         setResultMessage({ type: 'success', message: '設定が正常に保存されました' });
         // Update original values and reset changes state
         setOriginalEmail(emailInput);
+        setOriginalName(userData.name);
+        setOriginalNotifications(JSON.parse(JSON.stringify(userData.notificationSettings)));
         setHasChanges(false);
         // Auto-hide success message after 3 seconds
         setTimeout(() => {
@@ -665,7 +667,7 @@ const AccountSetting = () => {
                 onClick={hasChanges ? handleSaveClick : undefined}
                 disabled={!hasChanges || saving}
               >
-                <span className={`w-full h-full text-center transition-colors ${hasChanges ? 'cursor-pointer hover:opacity-90 text-white' : 'cursor-not-allowed text-[#969696] opacity-60'}`} style={{ ...responsiveTextD(18, 21, null, 'black', 'noto') }}>
+                <span className={`flex items-center justify-center w-full h-full transition-colors ${hasChanges ? 'cursor-pointer hover:opacity-90 text-white' : 'cursor-not-allowed text-[#969696] opacity-60'}`} style={{ ...responsiveTextD(18, 21, null, 'black', 'noto') }}>
                   {saving ? '保存中...' : '保存する'}
                 </span>
               </button>
@@ -931,7 +933,7 @@ const AccountSetting = () => {
             onClick={hasChanges ? handleSaveClick : undefined}
             disabled={!hasChanges || saving}
           >
-            <span className={`w-full h-full text-center transition-colors ${hasChanges ? 'cursor-pointer hover:opacity-90 text-white' : 'cursor-not-allowed text-[#969696] opacity-60'}`} style={{ ...responsiveText(18, 21, null, 'black', 'noto') }}>
+            <span className={`flex items-center justify-center w-full h-full transition-colors ${hasChanges ? 'cursor-pointer hover:opacity-90 text-white' : 'cursor-not-allowed text-[#969696] opacity-60'}`} style={{ ...responsiveText(18, 21, null, 'black', 'noto') }}>
               {saving ? '保存中...' : '保存する'}
             </span>
           </button>

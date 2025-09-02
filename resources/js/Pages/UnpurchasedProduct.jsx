@@ -872,12 +872,15 @@ const UnpurchasedProduct = ({ product }) => {
                                                 onQuantityChange={(newQuantity) => handleQuantityChange('mobileDirect', newQuantity)}
                                         />
                                     </div>
-                                    <button className="flex w-[160px] h-[40px] px-[16px] justify-center items-center rounded-[10px] bg-[#AB31D3] mr-auto">
+                                    <button
+                                        onClick={() => router.visit(route('payment.checkout', { product: product.id }))}
+                                        className="flex w-[160px] h-[40px] px-[16px] justify-center items-center rounded-[10px] bg-[#AB31D3] mr-auto hover:bg-opacity-90 transition-all"
+                                    >
                                         <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-noto whitespace-nowrap">すぐにプリントコード購入</span>
                                     </button>
+                                    </div>
                                 </div>
-                            </div>
-                            
+                                
                             {/* 1216: Explanation section */}
                             <div className="flex flex-col justify-center items-center self-stretch border-t mt-[24px]" style={{ borderTop: '1px solid #E9E9E9' }}>
                                 {/* 12161 */}
