@@ -28,7 +28,7 @@ const ShopSidebar = () => {
             src={auth?.user?.image || default_user}
             alt="Shop Hero"
           />
-          <div style={{ ...responsiveTextD(21, 24), fontWeight: 700, color: '#222', textAlign: 'center' }}>{auth?.user?.name}’s SHOP</div>
+          <div style={{ ...responsiveTextD(21, 24), fontWeight: 700, color: '#222', textAlign: 'center' }}>{auth?.user?.shop_title || auth?.user?.name + "'s SHOP"}</div>
           <a href="/shoptop" className="flex items-center justify-center w-full border-[1px] border-[#FF8D4E] text-center" style={{ ...responsiveTextD(12, 18, null, 'bold', 'noto', '#E358A6'), height: vwd(34), borderRadius: vwd(5) }}>自分のショップを見る</a>
           <div className="w-full" style={{ gap: vwd(10) }}>
             <a href="/myshop/edit"

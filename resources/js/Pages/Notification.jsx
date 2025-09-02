@@ -110,7 +110,7 @@ const Notification = () => {
         <div className="bg-white">
             <Header />
             {/* Main Section */}
-            <main className="hidden md:flex flex-col items-center self-stretch h-[1020px] pb-[60px] bg-white pt-[98px]">
+            <main className="hidden md:flex flex-col items-center self-stretch min-h-screen pb-[80px] bg-white pt-[98px]">
                 {/* Frame 1 */}
                 <div className="flex flex-col items-start w-[880px] min-w-[880px] max-w-[880px] gap-[24px] ">
                     {/* Frame 11 */}
@@ -176,7 +176,7 @@ const Notification = () => {
                 </div >
             </main >
             {/* Mobile Main Section */}
-            < main className="flex md:hidden flex-col items-center self-stretch bg-white pt-[80px]" >
+            < main className="flex md:hidden flex-col items-center self-stretch min-h-screen pb-[80px] bg-white pt-[80px]" >
                 {/* Title */}
                 < div className="flex flex-col items-center p-[16px_0_16px_0] self-stretch border-b border-[#D1D1D1]" >
                     <h1 className="w-full text-center text-[#363636] font-noto font-bold text-[24px] leading-[24px]">通知</h1>

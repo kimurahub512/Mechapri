@@ -16,14 +16,14 @@ import '@/../../resources/css/footer.css';
 
 
 const Footer = () => {
-  const { cartCount } = usePage().props;
+  const { cartCount, auth } = usePage().props;
   
   return (
     <footer className="mechapuri-footer" style={{marginTop: vwd(80)}}>
       {/* Desktop Section */}
       <div className="hidden md:block w-full" style={{height: vwd(443), paddingTop: vwd(99), paddingRight: vwd(141), paddingBottom: vwd(16), paddingLeft: vwd(99)}}>
         <div className="w-full h-full relative">
-          <a href='/' className='flex items-center'>
+          <a href={auth?.user ? '/homelogin' : '/'} className='flex items-center'>
             <img
               src={logo}
               alt="Mechapuri Logo"
@@ -124,7 +124,7 @@ const Footer = () => {
       {/* Mobile Section */}
       <div className="md:hidden w-full" style={{height: vw(518), paddingTop: vw(32), paddingRight: vw(16), paddingBottom: vw(120), paddingLeft: vw(16)}}>
         <div className="w-full h-full relative">
-          <a href='/' className='flex items-center'>
+          <a href={auth?.user ? '/homelogin' : '/'} className='flex items-center'>
           <img
             src={logo}
             alt="Mechapuri Logo"
@@ -228,7 +228,7 @@ const Footer = () => {
 
       {/* Mobile Navigation Section */}
       <div className='md:hidden fixed bottom-0 left-0 right-0 z-[10003] flex flex-row justify-between p-[8px_16px_4px_16px] bg-[#FFF] border-t border-[#DCDCDC]'>
-        <a href='/' className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
+        <a href={auth?.user ? '/homelogin' : '/'} className='flex flex-col items-center gap-[4px]' style={{...responsiveMetric(60, null)}}>
           {/* Home */}
           <img
             src={home}

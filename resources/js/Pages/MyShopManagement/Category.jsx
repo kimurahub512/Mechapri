@@ -235,7 +235,7 @@ const Category = () => {
                                             </div>
                                             <div className="flex flex-row items-start justify-between w-full">
                                                 <div className="flex flex-col justify-center items-start rounded-[5px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]" style={{ ...responsiveMetric(120, 35, null, 'normal', 'noto', '#FF8D4E') }}>
-                                                    <a href='/myshop/registerproduct' className="flex justify-center items-center gap-[10px] flex-shrink-0" style={{ ...responsiveMetric(120, 35, null, 'normal', 'noto', '#FF8D4E') }}>
+                                                    <a href={`/myshop/registerproduct?category=${category.id}`} className="flex justify-center items-center gap-[10px] flex-shrink-0" style={{ ...responsiveMetric(120, 35, null, 'normal', 'noto', '#FF8D4E') }}>
                                                         <div className="flex justify-center items-center flex-shrink-0" style={{ width: vw(16), height: vw(16) }}>
                                                             <img src={file_add} alt="file_add" style={{ width: vw(16), height: vw(16) }} />
                                                         </div>
@@ -404,7 +404,7 @@ const Category = () => {
                                             </div>
                                             <div className="flex flex-row items-start justify-between self-stretch">
                                                 <div className="flex flex-col justify-center items-start rounded-[5px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]" style={{ ...responsiveMetricD(160, 35) }}>
-                                                    <a href='/myshop/registerproduct' className="flex justify-center items-center gap-[10px] flex-shrink-0" style={{ ...responsiveMetricD(165, 35) }}>
+                                                    <a href={`/myshop/registerproduct?category=${category.id}`} className="flex justify-center items-center gap-[10px] flex-shrink-0" style={{ ...responsiveMetricD(165, 35) }}>
                                                         <div className="flex justify-center items-center flex-shrink-0" style={{ width: vwd(16), height: vwd(16) }}>
                                                             <img src={file_add} alt="file_add" style={{ width: vwd(16), height: vwd(16) }} />
                                                         </div>

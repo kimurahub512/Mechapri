@@ -18,17 +18,9 @@ const Header = ({ authButton }) => {
       {/* Desktop header (visible on lg and up) */}
       <div className='hidden md:flex fixed top-0 left-0 right-0 z-[10000] items-center border-b border-[#DCDCDC] bg-white' style={{ ...responsiveMetricD('full', 98) }}>
         <div className='flex flex-row items-center justify-between py-[16px] w-full' style={{ marginLeft: vwd(110), marginRight: vwd(120) }}>
-          <a href='/' className='flex items-center'>
+          <a href={auth?.user ? '/homelogin' : '/'} className='flex items-center'>
             <img src={logo} alt='mechapuri Logo' style={{ ...responsiveMetricD(224, 58) }} />
-          </a>
-          {/* {auth?.user?.user_type === 'admin' && (
-          <a href='/dashboard' className="p-2 text-gray-400 hover:text-gray-600">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-            </svg>
-          </a>
-          )} */}
+          </a>          
           <div className='flex flex-col items-end' style={{ width: vwd(666) }}>
             <div className='flex flex-row items-center justify-end' style={{ width: vwd(366), gap: vwd(20) }}>
               {/* ログイン: only show if not logged in */}
@@ -73,7 +65,7 @@ const Header = ({ authButton }) => {
             </div>
             <ul className='flex flex-row w-full justify-end' style={{ gap: vwd(26) }}>
               <li>
-                <a href='/' className='align-middle text-whitewash bg-transparent' style={{ ...responsiveTextD(15, 22, null, 'normal', 'noto', '#222'), paddingLeft: vwd(7), paddingRight: vwd(7), paddingTop: vwd(5), paddingBottom: vwd(5) }}>ホーム</a>
+                <a href={auth?.user ? '/homelogin' : '/'} className='align-middle text-whitewash bg-transparent' style={{ ...responsiveTextD(15, 22, null, 'normal', 'noto', '#222'), paddingLeft: vwd(7), paddingRight: vwd(7), paddingTop: vwd(5), paddingBottom: vwd(5) }}>ホーム</a>
               </li>
               <li>
                 <a href='/favoriteproducts' className='align-middle text-whitewash bg-transparent' style={{ ...responsiveTextD(15, 22, null, 'normal', 'noto', '#222'), paddingLeft: vwd(7), paddingRight: vwd(7), paddingTop: vwd(5), paddingBottom: vwd(5) }}>お気に入り</a>
@@ -113,7 +105,7 @@ const Header = ({ authButton }) => {
       <div className='md:hidden fixed top-0 left-0 right-0 z-[10000] flex w-full px-2 items-center border-b border-[#DCDCDC] bg-white'>
         {auth?.user ? (
           <div className='flex items-center pt-[7px] pb-[6px] items-center justify-between w-full'>
-            <a href='/' className='flex items-center'>
+            <a href='/homelogin' className='flex items-center'>
               <img src={logo} alt='shop' style={{ ...responsiveMetric(104, 27) }} />
             </a>
             <div className='flex flex-row gap-[5px] items-center'>

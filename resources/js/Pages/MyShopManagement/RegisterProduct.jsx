@@ -28,6 +28,10 @@ import { vw, vwd, responsiveText, responsivePosition, responsiveMetric, responsi
 
 const RegisterProduct = () => {
     const { auth, editMode, productBatch, categories } = usePage().props;
+    
+    // Get category ID from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryIdFromUrl = urlParams.get('category');
     const [showModal, setShowModal] = useState(false);
     const [uploadedPhotos, setUploadedPhotos] = useState(() => {
         if (editMode && productBatch && productBatch.files) {
@@ -66,8 +70,16 @@ const RegisterProduct = () => {
     const [isPaid, setIsPaid] = useState(editMode && productBatch ? productBatch.price > 0 : true); // true for 有料, false for 無料
     const [isUnlimited, setIsUnlimited] = useState(editMode && productBatch ? !productBatch.sales_limit : true); // true for 無制限, false for 販売数を指定
     const [displayMode, setDisplayMode] = useState(editMode && productBatch ? productBatch.display_mode : 'normal'); // 'normal', 'gacha', 'blur', 'password', 'cushion'
-    const [addToCategory, setAddToCategory] = useState(editMode && productBatch ? (productBatch.add_category || (productBatch.categories && productBatch.categories.length > 0)) : false); // true for 商品カテゴリに追加, false for 追加しない
-    const [selectedCategories, setSelectedCategories] = useState(editMode && productBatch && productBatch.categories ? productBatch.categories.map(c => c.id) : []); // Array of selected category IDs
+    const [gachaError, setGachaError] = useState(''); // Error message for gacha validation
+    const [addToCategory, setAddToCategory] = useState(editMode && productBatch ? (productBatch.add_category || (productBatch.categories && productBatch.categories.length > 0)) : (categoryIdFromUrl ? true : false)); // true for 商品カテゴリに追加, false for 追加しない
+    const [selectedCategories, setSelectedCategories] = useState(() => {
+        if (editMode && productBatch && productBatch.categories) {
+            return productBatch.categories.map(c => c.id);
+        } else if (categoryIdFromUrl) {
+            return [parseInt(categoryIdFromUrl)];
+        }
+        return [];
+    }); // Array of selected category IDs
     const [printSerial, setPrintSerial] = useState(editMode && productBatch ? productBatch.sn_print : false); // true for 印字する, false for 印字しない
     const [serialFormat, setSerialFormat] = useState(editMode && productBatch ? productBatch.sn_format : 'number'); // 'number' for 発行枚数を表示, 'random' for 乱数6文字で表示
     const [isPublic, setIsPublic] = useState(editMode && productBatch ? productBatch.is_public : true); // true for 公開, false for 非公開
@@ -125,6 +137,13 @@ const RegisterProduct = () => {
 
             if (uploadedPhotos.length === 0) {
                 setError('最低1枚の画像をアップロードしてください。');
+                setTimeout(() => scrollToTop(), 100);
+                setIsSubmitting(false);
+                return;
+            }
+
+            if (displayMode === 'gacha' && uploadedPhotos.length < 2) {
+                setError('ガチャ利用する場合は、最低2枚以上画像をアップロードしてください。');
                 setTimeout(() => scrollToTop(), 100);
                 setIsSubmitting(false);
                 return;
@@ -409,6 +428,11 @@ const RegisterProduct = () => {
         setUploadedPhotos(prev => [...prev, ...newPhotos]);
         setTotalSize(prev => prev + validFiles.reduce((sum, file) => sum + file.size, 0));
         
+        // Clear gacha error if user now has 2 or more photos
+        if (uploadedPhotos.length + validFiles.length >= 2) {
+            setGachaError('');
+        }
+        
         // Reset the file input value to allow selecting the same file again
         if (e.target) {
             e.target.value = '';
@@ -439,7 +463,14 @@ const RegisterProduct = () => {
                     URL.revokeObjectURL(photoToRemove.preview);
                 }
             }
-            return prev.filter(photo => photo.id !== photoId);
+            const newPhotos = prev.filter(photo => photo.id !== photoId);
+            
+            // Set gacha error if user now has less than 2 photos and gacha is selected
+            if (newPhotos.length < 2 && displayMode === 'gacha') {
+                setGachaError('ガチャ利用する場合は、最低2枚以上画像をアップロードしてください。');
+            }
+            
+            return newPhotos;
         });
     };
 
@@ -455,6 +486,15 @@ const RegisterProduct = () => {
 
     const isCategorySelected = (categoryId) => {
         return selectedCategories.includes(categoryId);
+    };
+
+    const handleDisplayModeChange = (mode) => {
+        if (mode === 'gacha' && uploadedPhotos.length < 2) {
+            setGachaError('ガチャ利用する場合は、最低2枚以上画像をアップロードしてください。');
+            return; // Don't change the display mode
+        }
+        setGachaError(''); // Clear error for any display mode change
+        setDisplayMode(mode);
     };
 
     return (
@@ -729,7 +769,7 @@ const RegisterProduct = () => {
                                 {/* 123421: 3 photo options, aligned */}
                                 <div className="flex flex-row justify-center items-start w-full" style={{ gap: vwd(14) }}>
                                     {/* 1234211: 設定しない */}
-                                    <div className="flex flex-col items-start cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => setDisplayMode('normal')}>
+                                    <div className="flex flex-col items-start cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => handleDisplayModeChange('normal')}>
                                         <img src={photo1} alt="設定しない" className="object-cover" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }} />
                                         <div className="flex items-center w-full" style={{ gap: vwd(10) }}>
                                             {displayMode === 'normal' ? (
@@ -741,7 +781,7 @@ const RegisterProduct = () => {
                                         </div>
                                     </div>
                                     {/* 1234212: ガチャ */}
-                                    <div className="flex flex-col items-start cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => setDisplayMode('gacha')}>
+                                    <div className="flex flex-col items-start cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => handleDisplayModeChange('gacha')}>
                                         <div className="flex relative overflow-hidden" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12), backgroundColor: '#A0A5AC' }}>
                                             <img src={photo1} alt="ガチャ" className="object-cover filter blur-[4px]" style={{ ...responsiveMetricD(256, 106), borderRadius: vwd(4) }} />
                                             <div className="absolute top-0 left-0 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px]" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }} />
@@ -763,9 +803,14 @@ const RegisterProduct = () => {
                                         <div className="flex flex-col items-start w-full">
                                             <span style={{ ...responsiveTextD(13, 19.5, null, 'medium', 'noto', '#87969F') }}>複数の写真の中からランダムで1枚だけ印刷されます。アップ画像が2枚以上で選択できます。</span>
                                         </div>
+                                        {gachaError && (
+                                            <div className="flex flex-col items-start w-full mt-2">
+                                                <span className="text-red-500" style={{ ...responsiveTextD(13, 19.5, null, 'medium', 'noto') }}>{gachaError}</span>
+                                            </div>
+                                        )}
                                     </div>
                                     {/* 1234213: ぼかしフィルター */}
-                                    <div className="flex flex-col items-end cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => setDisplayMode('blur')}>
+                                    <div className="flex flex-col items-end cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => handleDisplayModeChange('blur')}>
                                         <div className="flex relative overflow-hidden" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12), backgroundColor: '#A0A5AC' }}>
                                             <img src={photo1} alt="ぼかしフィルター" className="object-cover filter blur-[4px]" style={{ ...responsiveMetricD(256, 106), borderRadius: vwd(4) }} />
                                             <div className="absolute top-0 left-0 bg-black opacity-50 filter blur-[4px]" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }} />
@@ -792,7 +837,7 @@ const RegisterProduct = () => {
                                 {/* 123422: 2 options, stacked below */}
                                 <div className="flex flex-row justify-left items-start w-full" style={{ gap: vwd(14) }}>
                                     {/* 1234221: パスワード */}
-                                    <div className="flex flex-col items-start cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => setDisplayMode('password')}>
+                                    <div className="flex flex-col items-start cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => handleDisplayModeChange('password')}>
                                         <div className="flex relative overflow-hidden" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }}>
                                             <div className="absolute top-0 left-0 bg-[#586B88]" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }} />
                                             <div className="flex flex-col items-center" style={{ ...responsivePositionD(21, 92) }}>
@@ -825,7 +870,7 @@ const RegisterProduct = () => {
                                         )}
                                     </div>
                                     {/* 1234222: ワンクッション with overlay */}
-                                    <div className="flex flex-col items-end cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => setDisplayMode('cushion')}>
+                                    <div className="flex flex-col items-end cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => handleDisplayModeChange('cushion')}>
                                         <div className="flex relative items-center justify-center bg-[#A0A5AC]" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12)}}>
                                             <div className="flex flex-col items-center">
                                                 <img src={warning} alt="question" style={{ ...responsiveMetricD(36, 36), marginBottom: vwd(5) }} />
@@ -1278,7 +1323,7 @@ const RegisterProduct = () => {
                                         {/* 123421: 2 photo options, aligned */}
                                         <div className="flex flex-row justify-center items-start w-full" style={{ gap: vw(14) }}>
                                             {/* 1234211: 設定しない */}
-                                            <div className="flex flex-col items-start cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 220) }} onClick={() => setDisplayMode('normal')}>
+                                            <div className="flex flex-col items-start cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 220) }} onClick={() => handleDisplayModeChange('normal')}>
                                                 <img src={photo1_m} alt="設定しない" className="object-cover" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
                                                 <div className="flex items-center w-full" style={{ gap: vw(10) }}>
                                                     {displayMode === 'normal' ? (
@@ -1290,7 +1335,7 @@ const RegisterProduct = () => {
                                                 </div>
                                             </div>
                                             {/* 1234212: ガチャ */}
-                                            <div className="flex flex-col items-start cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 220) }} onClick={() => setDisplayMode('gacha')}>
+                                            <div className="flex flex-col items-start cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 220) }} onClick={() => handleDisplayModeChange('gacha')}>
                                                 <div className="flex relative overflow-hidden" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12), backgroundColor: '#A0A5AC' }}>
                                                     <img src={photo1} alt="ぼかしフィルター" className="object-cover filter blur-[4px]" style={{ ...responsiveMetric(213, 88), borderRadius: vw(4) }} />
                                                     <div className="absolute top-0 left-0 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px]" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
@@ -1312,12 +1357,17 @@ const RegisterProduct = () => {
                                                 <div className="flex flex-col items-start w-full">
                                                     <span style={{ ...responsiveText(12, 19.5, null, 'normal', 'noto', '#87969F') }}>複数の写真の中からランダムで1枚だけ印刷されます。アップ画像が2枚以上で選択できます。</span>
                                                 </div>
+                                                {gachaError && (
+                                                    <div className="flex flex-col items-start w-full mt-2">
+                                                        <span className="text-red-500" style={{ ...responsiveText(12, 19.5, null, 'normal', 'noto') }}>{gachaError}</span>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                         {/* 123422: 2 options, aligned */}
                                         <div className="flex flex-row justify-left items-start w-full" style={{ gap: vw(14) }}>
                                             {/* 1234213: ぼかしフィルター */}
-                                            <div className="flex flex-col items-end cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 250), paddingTop: vw(10) }} onClick={() => setDisplayMode('blur')}>
+                                            <div className="flex flex-col items-end cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 250), paddingTop: vw(10) }} onClick={() => handleDisplayModeChange('blur')}>
                                                 <div className="flex relative overflow-hidden" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12), backgroundColor: '#A0A5AC' }}>
                                                     <img src={photo1} alt="ぼかしフィルター" className="object-cover filter blur-[4px]" style={{ ...responsiveMetric(213, 88), borderRadius: vw(4) }} />
                                                     <div className="absolute top-0 left-0 bg-black opacity-50 filter blur-[4px]" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
@@ -1342,7 +1392,7 @@ const RegisterProduct = () => {
                                                 </div>
                                             </div>
                                             {/* 1234221: パスワード */}
-                                            <div className="flex flex-col items-start cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 262), paddingTop: vw(10) }} onClick={() => setDisplayMode('password')}>
+                                            <div className="flex flex-col items-start cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 262), paddingTop: vw(10) }} onClick={() => handleDisplayModeChange('password')}>
                                                 <div className="flex relative overflow-hidden" style={{ ...responsiveMetric(148, 88), borderRadius: vw(4) }}>
                                                     <div className="absolute top-0 left-0 bg-[#586B88]" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
                                                     <div className="flex flex-col items-center" style={{ gap: vw(4), ...responsivePosition(12, 26) }}>
@@ -1376,7 +1426,7 @@ const RegisterProduct = () => {
                                             </div>
                                         </div>
                                         {/* 1234213: warning */}
-                                        <div className="flex flex-col items-end cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 220), paddingTop: vw(10) }} onClick={() => setDisplayMode('cushion')}>
+                                        <div className="flex flex-col items-end cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 220), paddingTop: vw(10) }} onClick={() => handleDisplayModeChange('cushion')}>
                                             <div className="flex relative overflow-hidden" style={{ ...responsiveMetric(148, 88), borderRadius: vw(4) }}>
                                                 <div className="absolute top-0 left-0 bg-[#A0A5AC]" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
                                                 <div className="flex flex-col items-center" style={{ gap: vw(4), ...responsivePosition(12, 26) }}>

@@ -26,7 +26,7 @@ const ShopMobileTopBlocks = () => {
               src={auth?.user?.image || default_user}
               alt="Shop Hero"
             />
-            <span className="shopmanagement-mobile-title">{auth?.user?.name}'s SHOP</span>
+            <span className="shopmanagement-mobile-title">{auth?.user?.shop_title || auth?.user?.name + "'s SHOP"}</span>
           </div>
           <a href='/shoptop' className="shopmanagement-mobile-shop-btn">自分のショップ</a>
         </div>

@@ -48,6 +48,7 @@ class HandleInertiaRequests extends Middleware
                     'email' => $request->user()->email,
                     'image' => $request->user()->image,
                     'user_type' => $request->user()->user_type,
+                    'shop_title' => $request->user()->shop_title,
                 ] : null,
             ],
             'cartCount' => $cartCount,

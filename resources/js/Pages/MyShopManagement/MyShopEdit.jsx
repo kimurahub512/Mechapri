@@ -390,7 +390,7 @@ const MyShopEdit = () => {
                                     value={formData.shop_title}
                                     onChange={(e) => setFormData({...formData, shop_title: e.target.value})}
                                     className="w-full rounded-[5.71px] bg-white border border-[#E9E9E9] focus:outline-none placeholder:text-[#ACACAC] placeholder:font-normal placeholder:font-noto placeholder:text-[14px]"
-                                    style={{ ...responsiveMetric(311, 46), ...responsiveText(14, 14, null, 'normal', 'noto', '#ACACAC'), padding: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49) }}
+                                    style={{ ...responsiveMetric(311, 46), ...responsiveText(14, 14, null, 'normal', 'noto', '#222'), padding: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49) }}
                                 />
                             </div>
                         </div>
@@ -413,7 +413,7 @@ const MyShopEdit = () => {
                                     value={formData.shop_description}
                                     onChange={(e) => setFormData({...formData, shop_description: e.target.value})}
                                     className="w-full rounded-[5.71px] bg-white border border-[#E9E9E9] focus:outline-none placeholder:text-[#ACACAC] placeholder:font-normal placeholder:font-noto placeholder:text-[14px] resize-none"
-                                    style={{ ...responsiveMetric(311, 128), ...responsiveText(14, 14, null, 'normal', 'noto', '#ACACAC'), lineHeight: vw(25.664), padding: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49) }}
+                                    style={{ ...responsiveMetric(311, 128), ...responsiveText(14, 14, null, 'normal', 'noto', '#222'), lineHeight: vw(25.664), padding: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49) }}
                                 />
                             </div>
                         </div>
@@ -439,7 +439,7 @@ const MyShopEdit = () => {
                                         value={formData.xlink}
                                         onChange={(e) => setFormData({...formData, xlink: e.target.value})}
                                         className="w-full h-full rounded-[5.71px] bg-white border border-[#E9E9E9] focus:outline-none placeholder:text-[#ACACAC] placeholder:font-normal placeholder:font-noto placeholder:text-[14px]"
-                                        style={{ ...responsiveMetric(null, 46), ...responsiveText(14, 14, null, 'normal', 'noto', '#ACACAC'), padding: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49) }}
+                                        style={{ ...responsiveMetric(null, 46), ...responsiveText(14, 14, null, 'normal', 'noto', '#222'), padding: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49) }}
                                     />
                                 </div>
                             </div>
@@ -466,7 +466,7 @@ const MyShopEdit = () => {
                                         value={formData.instagram}
                                         onChange={(e) => setFormData({...formData, instagram: e.target.value})}
                                         className="w-full h-full rounded-[5.71px] bg-white border border-[#E9E9E9] focus:outline-none placeholder:text-[#ACACAC] placeholder:font-normal placeholder:font-noto placeholder:text-[14px]"
-                                        style={{ ...responsiveMetric(null, 46), ...responsiveText(14, 14, null, 'normal', 'noto', '#ACACAC'), padding: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49) }}
+                                        style={{ ...responsiveMetric(null, 46), ...responsiveText(14, 14, null, 'normal', 'noto', '#222'), padding: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49) }}
                                     />
                                 </div>
                             </div>
@@ -493,7 +493,7 @@ const MyShopEdit = () => {
                                         value={formData.youtube}
                                         onChange={(e) => setFormData({...formData, youtube: e.target.value})}
                                         className="w-full h-full rounded-[5.71px] bg-white border border-[#E9E9E9] focus:outline-none placeholder:text-[#ACACAC] placeholder:font-normal placeholder:font-noto placeholder:text-[14px]"
-                                        style={{ ...responsiveMetric(null, 46), ...responsiveText(14, 14, null, 'normal', 'noto', '#ACACAC'), padding: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49) }}
+                                        style={{ ...responsiveMetric(null, 46), ...responsiveText(14, 14, null, 'normal', 'noto', '#222'), padding: vw(12.5), paddingLeft: vw(11.99), paddingRight: vw(11.99), paddingBottom: vw(12.49) }}
                                     />
                                 </div>
                             </div>
