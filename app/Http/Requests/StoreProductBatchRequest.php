@@ -52,7 +52,7 @@ class StoreProductBatchRequest extends FormRequest
             'image_cnt.required' => '画像枚数は必須です。',
             'image_cnt.min' => '画像は最低1枚必要です。',
             'image_cnt.max' => '画像は10枚までアップロードできます。',
-            'sales_deadline.after' => '販売期限は今日以降の日付を選択してください。',
+            'sales_deadline.after' => '販売期限の日付は翌日以降の日付を指定してください。',
             'sales_limit.min' => '販売数は1以上を入力してください。',
             'price.required' => '価格は必須です。',
             'price.min' => '価格は0円以上で入力してください。',

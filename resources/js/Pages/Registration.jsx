@@ -242,7 +242,7 @@ export default function Register() {
         <div className="flex flex-col items-center bg-white">
             {/* Result Message */}
             {resultMessage.type && (
-                <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg ${resultMessage.type === 'success'
+                <div className={`fixed top-20 md:top-28 left-1/2 transform -translate-x-1/2 z-[100] px-6 py-3 rounded-lg shadow-lg ${resultMessage.type === 'success'
                     ? 'bg-green-500 text-white'
                     : 'bg-red-500 text-white'
                     }`}>
@@ -251,7 +251,7 @@ export default function Register() {
             )}
             <Header />
 
-            <section className="md:flex hidden flex-col justify-center items-center bg-white" style={{ paddingTop: vwd(80), paddingBottom: vwd(80) }}>
+            <section className="md:flex hidden flex-col justify-center items-center bg-white" style={{ paddingTop: vwd(180), paddingBottom: vwd(80) }}>
                 <div className="flex flex-col w-full justify-center items-center bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.1)] relative" style={{ borderRadius: vwd(16), width: vwd(960), paddingBottom: vwd(30) }}>
                     {/* Close Button */}
                     <div className="flex justify-end w-full p-4">
@@ -546,7 +546,7 @@ export default function Register() {
             </section>
 
             {/* Mobile */}
-            <section className="md:hidden flex flex-col justify-center items-center w-full bg-white" style={{ paddingTop: vw(80), paddingBottom: vw(80), paddingLeft: vw(16), paddingRight: vw(16) }}>
+            <section className="md:hidden flex flex-col justify-center items-center w-full bg-white" style={{ paddingTop: vw(140), paddingBottom: vw(80), paddingLeft: vw(16), paddingRight: vw(16) }}>
                 <div className="flex flex-col w-full justify-center items-center bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.1)] relative" style={{ borderRadius: vw(10), paddingBottom: vw(20), paddingTop: vw(20), paddingLeft: vw(16), paddingRight: vw(16) }}>
                     {/* Close Button */}
                     <div className="flex justify-end w-full">

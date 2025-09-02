@@ -118,7 +118,7 @@ class ProductBatchService
         if (!empty($data['sales_deadline'])) {
             $deadline = \Carbon\Carbon::parse($data['sales_deadline']);
             if ($deadline->isPast()) {
-                throw new \InvalidArgumentException('販売期限は今日以降の日付を選択してください。');
+                throw new \InvalidArgumentException('販売期限の日付は翌日以降の日付を指定してください。');
             }
         }
 

@@ -59,7 +59,7 @@ export default function Login({ status }) {
             </Modal>
             <Header />
 
-            <section className="md:flex hidden flex-col justify-center items-center bg-white" style={{ paddingTop: vwd(80), paddingBottom: vwd(80) }}>
+            <section className="md:flex hidden flex-col justify-center items-center bg-white border-red-500" style={{ paddingTop: vwd(180), paddingBottom: vwd(80) }}>
                 <div className="flex flex-col w-full justify-center items-center bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.1)] relative" style={{ borderRadius: vwd(16), width: vwd(960), paddingBottom: vwd(30) }}>
                     {/* Close Button */}
                     <button
@@ -258,7 +258,7 @@ export default function Login({ status }) {
             </section>
 
             {/* Mobile */}
-            <section className="md:hidden flex flex-col justify-center items-center w-full bg-white" style={{ paddingTop: vw(80), paddingBottom: vw(80), paddingLeft: vw(16), paddingRight: vw(16) }}>
+            <section className="md:hidden flex flex-col justify-center items-center w-full bg-white" style={{ paddingTop: vw(140), paddingBottom: vw(80), paddingLeft: vw(16), paddingRight: vw(16) }}>
                 <div className="flex flex-col w-full justify-center items-center bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.1)] relative" style={{ borderRadius: vw(10), paddingBottom: vw(20), paddingTop: vw(20), paddingLeft: vw(16), paddingRight: vw(16) }}>
                     {/* Close Button */}
                     <button
