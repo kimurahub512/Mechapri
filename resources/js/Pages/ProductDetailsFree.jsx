@@ -6,7 +6,6 @@ import RankingSection from '@/Components/RankingSection';
 import ConfirmationModal from '@/Components/ConfirmationModal';
 import '@/../../resources/css/shopmanagement.css';
 import photo1 from '@/assets/images/productdetails/photo1.jpg';
-import girl from '@/assets/images/favoriteshops/girl.svg';
 import favoriteshop from '@/assets/images/favoriteshop.svg';
 import favoriteshop_white from '@/assets/images/favoriteshop_white.svg';
 import pen from '@/assets/images/pencil_line_black.svg';
@@ -24,7 +23,7 @@ import shop3 from '@/assets/images/productdetails/ministop.svg';
 import eleven from '@/assets/images/productdetails/eleven.png';
 import qr from '@/assets/images/productdetails/qr.jpg';
 import x from '@/assets/images/x_logo.svg';
-import defaulUser from '@/assets/images/default-user.png';
+import defaultUser from '@/assets/images/default-user.png';
 
 
 const ProductDetailsFree = () => {
@@ -314,7 +313,7 @@ const ProductDetailsFree = () => {
                             className="cursor-pointer hover:opacity-80 transition-opacity"
                             onClick={() => router.visit(`/${product.user.id}`)}
                         >
-                            <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
+                            <img src={product.user.image || defaultUser} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
                         </div>
                         {/* 211 */}
                         <div className="flex flex-col pl-[16px] items-start">
@@ -520,7 +519,7 @@ const ProductDetailsFree = () => {
                                 className="cursor-pointer hover:opacity-80 transition-opacity"
                                 onClick={() => router.visit(`/${product.user.id}`)}
                             >
-                                <img src={product.user.image || defaulUser} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
+                                <img src={product.user.image || defaultUser} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
                             </div>
                             {/* 211 */}
                             <div className="flex flex-col pl-[16px] items-start">
