@@ -365,6 +365,11 @@ Route::post('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccou
         return Inertia::render('ProductDetailsFree');
     });
 
+    // Product details route for free products
+    Route::get('/product/{id}/details', [App\Http\Controllers\ProductBatchController::class, 'showProductDetails'])
+        ->name('product.details')
+        ->where('id', '[0-9]+');
+
     // Direct expand routes (for viewing own products)
     Route::get('/purchasedproductexpand/{id}', [App\Http\Controllers\ProductBatchController::class, 'showPurchasedExpand'])
         ->name('product.purchased.expand')

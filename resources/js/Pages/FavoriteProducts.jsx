@@ -50,7 +50,7 @@ const FavoriteProducts = ({ favoriteProducts = [] }) => {
     <div className="bg-white">
       <Header />
       {/* Main Section */}
-      <main className="hidden md:flex flex-col items-center self-stretch h-[1020px] pb-[60px] bg-white pt-[98px]">
+      <main className="hidden md:flex flex-col items-center self-stretch pb-[60px] bg-white pt-[98px]">
         {/* Frame 1 */}
         <div className="flex flex-col items-start w-[880px] min-w-[880px] max-w-[880px] gap-[32px] ">
           {/* Frame 11 */}
@@ -86,18 +86,18 @@ const FavoriteProducts = ({ favoriteProducts = [] }) => {
                 ) : (
                   products.map((product) => (
                     <div key={product.id} className="flex p-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] relative">
-                                            <div 
+                      <div
                         className="flex w-[112px] h-[112px] p-[2.205px_19.843px_1.323px_19.843px] justify-center items-center rounded-[4.409px] bg-[#F6F6F6] cursor-pointer"
                         onClick={() => handleProductClick(product)}
                       >
-                        <img 
-                          src={product.files?.[0]?.url ? `/storage/${product.files[0].file_path}` : '/default-product-image.jpg'} 
+                        <img
+                          src={product.files?.[0]?.url ? `/storage/${product.files[0].file_path}` : '/default-product-image.jpg'}
                           alt={product.title}
                           className="w-full h-full object-cover rounded-[4.409px]"
                         />
                       </div>
                       {/* Info Block */}
-                      <div 
+                      <div
                         className="flex flex-col h-[118px] pr-[32px] justify-between items-start flex-1 cursor-pointer"
                         onClick={() => handleProductClick(product)}
                       >
@@ -110,12 +110,12 @@ const FavoriteProducts = ({ favoriteProducts = [] }) => {
                           </div>
                           {/* 12121: User Info */}
                           <div className="inline-flex h-[32px] p-[6px_0] flex-row items-center flex-shrink-0 rounded-[3px]">
-                            <img 
-                              src={product.user.image ? `/storage/${product.user.image}` : defaultuser} 
-                              alt={product.user.name} 
-                              className="w-[24px] h-[24px] flex-shrink-0 rounded-full object-cover bg-gray-200" 
+                            <img
+                              src={product.user.image ? product.user.image : defaultuser}
+                              alt={product.user.name}
+                              className="w-[24px] h-[24px] flex-shrink-0 rounded-full object-cover bg-gray-200"
                             />
-                            <span className="ml-2 text-[#222] font-noto text-[16px] leading-[22px] font-normal">{product.user.name}</span>
+                            <span className="ml-2 text-[#222] font-noto text-[16px] leading-[22px] font-normal">{product.user.title}</span>
                           </div>
                         </div>
                         {/* Price */}
@@ -137,7 +137,7 @@ const FavoriteProducts = ({ favoriteProducts = [] }) => {
                         >
                           <img src={heart} alt="heart" className="w-[17px] h-[15.867px] flex-shrink-0" />
                           <span className="text-[#FF2AA1] mt-[-2px] font-noto font-bold text-[12px] leading-[21px]">お気に入り</span>
-                          <span className="text-white mt-[2px] font-['Red Hat Display'] font-bold text-[14px] leading-[15px]">{product.favorite_count}</span>
+                          <span className="text-[#FF2AA1] mt-[2px] font-['Red Hat Display'] font-bold text-[14px] leading-[15px]">{product.favorite_count}</span>
                         </button>
                       </div>
                     </div>
@@ -214,25 +214,25 @@ const FavoriteProducts = ({ favoriteProducts = [] }) => {
                 </div>
               ) : (
                 products.map((product) => (
-                                      <div key={product.id} className="flex gap-4 items-start w-full border-b border-[#E9E9E9] relative pt-[16px]">
-                      {/* Image */}
-                      <div 
-                        className="flex w-[74px] h-[74px] p-[1.26px_11.339px_0.756px_11.339px] justify-center items-center rounded-[2.52px] bg-[#F6F6F6] ml-[16px] cursor-pointer"
+                  <div key={product.id} className="flex gap-4 items-start w-full border-b border-[#E9E9E9] relative pt-[16px]">
+                    {/* Image */}
+                    <div
+                      className="flex w-[74px] h-[74px] p-[1.26px_11.339px_0.756px_11.339px] justify-center items-center rounded-[2.52px] bg-[#F6F6F6] ml-[16px] cursor-pointer"
+                      onClick={() => handleProductClick(product)}
+                    >
+                      <img
+                        src={product.files?.[0]?.url ? `/storage/${product.files[0].file_path}` : '/default-product-image.jpg'}
+                        alt={product.title}
+                        className="w-full h-full object-cover rounded-[2.52px]"
+                      />
+                    </div>
+                    {/* Info Block and 1213 in a column, w-full */}
+                    <div className="flex flex-col items-start w-full">
+                      {/* Info Block (stacked) */}
+                      <div
+                        className="flex flex-col items-start flex-1 min-w-0 gap-[4px] cursor-pointer"
                         onClick={() => handleProductClick(product)}
                       >
-                        <img 
-                          src={product.files?.[0]?.url ? `/storage/${product.files[0].file_path}` : '/default-product-image.jpg'} 
-                          alt={product.title}
-                          className="w-full h-full object-cover rounded-[2.52px]"
-                        />
-                      </div>
-                                          {/* Info Block and 1213 in a column, w-full */}
-                      <div className="flex flex-col items-start w-full">
-                        {/* Info Block (stacked) */}
-                        <div 
-                          className="flex flex-col items-start flex-1 min-w-0 gap-[4px] cursor-pointer"
-                          onClick={() => handleProductClick(product)}
-                        >
                         {/* Title */}
                         <span className="self-stretch text-[#000] font-noto text-[14px] font-normal leading-[21px] truncate overflow-hidden text-ellipsis">{product.title}</span>
                         {/* Badge */}
@@ -241,16 +241,16 @@ const FavoriteProducts = ({ favoriteProducts = [] }) => {
                         </div>
                         {/* User Info */}
                         <div className="flex items-center gap-[8px] mt-[2px]">
-                          <img 
-                            src={product.user.image ? `/storage/${product.user.image}` : '/default-user-image.jpg'} 
-                            alt={product.user.name} 
-                            className="w-[20px] h-[20px] rounded-full object-cover bg-gray-200" 
+                          <img
+                            src={product.user.image ? product.user.image : defaultuser}
+                            alt={product.user.name}
+                            className="w-[20px] h-[20px] rounded-full object-cover bg-gray-200"
                           />
-                          <span className="text-[#222] font-noto text-[14px] font-normal leading-[22px]">{product.user.name}</span>
+                          <span className="text-[#222] font-noto text-[14px] font-normal leading-[22px]">{product.user.title}</span>
                         </div>
                         {/* Price */}
                         <div className="flex items-center gap-[2px] mt-[2px]">
-                          <span className="flex w-[11px] h-[20px] items-center justify-center text-[#363636] font-noto text-[18px] font-bold leading-[40px]">{product.price}</span>
+                          <span className="flex items-center justify-center text-[#363636] font-noto text-[18px] font-bold leading-[40px]">{product.price}</span>
                           <span className="text-[#363636] mt-[4px] font-noto text-[12px] font-bold leading-[32px]">円</span>
                         </div>
                       </div>
@@ -265,11 +265,11 @@ const FavoriteProducts = ({ favoriteProducts = [] }) => {
                             e.stopPropagation();
                             handleRemoveFavorite(product.id);
                           }}
-                          className="flex flex-row items-center gap-[4px] h-[36px] p-[8px] rounded-[6px] border border-[#FF2AA1] bg-[#FF2AA1] hover:opacity-80 transition-opacity"
+                          className="flex flex-row items-center gap-[4px] h-[36px] p-[8px] rounded-[6px] border border-[#FF2AA1] hover:opacity-80 transition-opacity"
                         >
                           <img src={heart} alt="heart" className="w-[18px] h-[18px] object-contain" />
-                          <span className="text-white mt-[-2px] font-noto text-[12px] font-bold leading-[21px]">お気に入り</span>
-                          <span className="text-white mt-[2px] font-['Red Hat Display'] text-[14px] font-bold leading-[15px]">{product.favorite_count}</span>
+                          <span className="text-[#FF2AA1] mt-[-2px] font-noto text-[12px] font-bold leading-[21px]">お気に入り</span>
+                          <span className="text-[#FF2AA1] mt-[2px] font-['Red Hat Display'] text-[14px] font-bold leading-[15px]">{product.favorite_count}</span>
                         </button>
                       </div>
                     </div>

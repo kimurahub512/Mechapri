@@ -78,6 +78,7 @@ class FavoriteProductController extends Controller
                          'id' => $product->user->id,
                          'name' => $product->user->name,
                          'image' => $product->user->image,
+                         'title' => $product->user->shop_title,
                      ],
                      'files' => $product->files->map(function($file) {
                          return [

@@ -1,19 +1,19 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <mask id="mask0_42_42596" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
 <mask id="mask1_42_42596" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="22" height="22">
-<path d="M3 6C3 4.34315 4.34315 3 6 3H20C21.6569 3 23 4.34315 23 6V20C23 21.6569 21.6569 23 20 23H6C4.34315 23 3 21.6569 3 20V6Z" stroke="black" stroke-miterlimit="10"/>
+<path d="M3 6C3 4.34315 4.34315 3 6 3H20C21.6569 3 23 4.34315 23 6V20C23 21.6569 21.6569 23 20 23H6C4.34315 23 3 21.6569 3 20V6Z" stroke="black" strokeMiterlimit="10"/>
 </mask>
 <g mask="url(#mask1_42_42596)">
 <path d="M22.4873 2C23.3227 2.00011 23.9999 2.67731 24 3.5127V22.4873C23.9999 23.3227 23.3227 23.9999 22.4873 24H3.5127C2.67731 23.9999 2.00011 23.3227 2 22.4873V21.7295C2.29446 21.9001 2.63519 22 3 22H20C21.1046 22 22 21.1046 22 20V3C22 2.63536 21.9009 2.29437 21.7305 2H22.4873Z" fill="#767676"/>
 </g>
-<g clip-path="url(#clip0_42_42596)">
+<g clipPath="url(#clip0_42_42596)">
 <mask id="mask2_42_42596" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1" y="4" width="20" height="19">
 <rect x="1" y="4" width="20" height="19" fill="#D9D9D9"/>
 </mask>
 <g mask="url(#mask2_42_42596)">
-<path d="M22 26H0V18L5.01358 11.9179C5.19566 11.6971 5.52566 11.6738 5.73688 11.8671L8.36729 14.2733C8.58256 14.4702 8.92002 14.4418 9.09928 14.2116L14.2874 7.54877C14.4974 7.27909 14.9101 7.29491 15.0988 7.57988L22 18V26Z" stroke="#767676" stroke-miterlimit="10" stroke-linejoin="round"/>
+<path d="M22 26H0V18L5.01358 11.9179C5.19566 11.6971 5.52566 11.6738 5.73688 11.8671L8.36729 14.2733C8.58256 14.4702 8.92002 14.4418 9.09928 14.2116L14.2874 7.54877C14.4974 7.27909 14.9101 7.29491 15.0988 7.57988L22 18V26Z" stroke="#767676" strokeMiterlimit="10" strokeLinejoin="round"/>
 </g>
-<path d="M6.5 3.5C7.59432 3.5 8.5 4.40567 8.5 5.5C8.49999 6.59432 7.59433 7.5 6.5 7.5C5.40568 7.5 4.50001 6.59432 4.5 5.5C4.5 4.40567 5.40568 3.5 6.5 3.5Z" stroke="#767676" stroke-miterlimit="10"/>
+<path d="M6.5 3.5C7.59432 3.5 8.5 4.40567 8.5 5.5C8.49999 6.59432 7.59433 7.5 6.5 7.5C5.40568 7.5 4.50001 6.59432 4.5 5.5C4.5 4.40567 5.40568 3.5 6.5 3.5Z" stroke="#767676" strokeMiterlimit="10"/>
 </g>
 <rect x="1" y="1" width="20" height="20" rx="3" stroke="#767676"/>
 </mask>

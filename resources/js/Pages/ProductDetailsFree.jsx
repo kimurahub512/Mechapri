@@ -1,12 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { usePage, router } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
+import RankingSection from '@/Components/RankingSection';
+import ConfirmationModal from '@/Components/ConfirmationModal';
 import '@/../../resources/css/shopmanagement.css';
 import photo1 from '@/assets/images/productdetails/photo1.jpg';
 import girl from '@/assets/images/favoriteshops/girl.svg';
+import favoriteshop from '@/assets/images/favoriteshop.svg';
+import favoriteshop_white from '@/assets/images/favoriteshop_white.svg';
 import pen from '@/assets/images/pencil_line_black.svg';
 import recyclebin from '@/assets/images/recyclebin.svg';
-import heart from '@/assets/images/heart.png';
+import heart from '@/assets/images/heart_pink.svg';
+import heart_gray from '@/assets/images/heart.png';
 import share from '@/assets/images/share.png';
 import complex from '@/assets/images/complex_black.png';
 import complex_white from '@/assets/images/complex_white.png';
@@ -18,22 +24,112 @@ import shop3 from '@/assets/images/productdetails/ministop.svg';
 import eleven from '@/assets/images/productdetails/eleven.png';
 import qr from '@/assets/images/productdetails/qr.jpg';
 import x from '@/assets/images/x_logo.svg';
-import instagram from '@/assets/images/instagram.svg';
+import defaulUser from '@/assets/images/default-user.png';
 
 
 const ProductDetailsFree = () => {
+    const { product, auth } = usePage().props;
+
+    // Check if current user is the product owner
+    const isOwner = product?.is_owner || false;
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    const handleDelete = async () => {
+        try {
+            setIsDeleting(true);
+            const response = await fetch(route('product-batches.destroy', { productBatch: product?.id }), {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            });
+            const data = await response.json();
+            if (data.success) {
+                const ownerId = auth?.user?.id || product?.user?.id;
+                router.visit(`/${ownerId}`);
+            } else {
+                console.error(data.message || '削除に失敗しました');
+                setIsConfirmOpen(false);
+            }
+        } catch (error) {
+            console.error('Error deleting product:', error);
+            setIsConfirmOpen(false);
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
+    const handleShare = async () => {
+        try {
+            const shareData = {
+                title: product?.title || 'Mechapuri',
+                text: product?.description || '',
+                url: window.location.href,
+            };
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                await navigator.clipboard.writeText(shareData.url);
+                alert('リンクをコピーしました');
+            }
+        } catch (err) {
+            // Ignore cancel/errors
+        }
+    };
+
+    const toggleFollow = async () => {
+        try {
+            const response = await fetch(route('favoriteshops.toggle'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                },
+                body: JSON.stringify({ shop_user_id: product.user.id }),
+            });
+            const data = await response.json();
+            if (data.success) {
+                router.reload();
+            }
+        } catch (error) {
+            console.error('Error toggling shop follow:', error);
+        }
+    };
+
+    const toggleFavoriteProduct = async () => {
+        try {
+            const response = await fetch(route('favoriteproducts.toggle'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                },
+                body: JSON.stringify({ product_id: product.id }),
+            });
+            const data = await response.json();
+            if (data.success) {
+                router.reload();
+            }
+        } catch (error) {
+            console.error('Error toggling favorite:', error);
+        }
+    };
+
     return (
         <div className='product-details-no-footer-gap bg-[#F6F8FA]'>
             <Header />
-            <main className="hidden md:flex flex-col items-center px-[120px] pt-[44px] pb-[176px] w-full bg-[#F6F8FA]">
+            <main className="hidden md:flex flex-col items-center px-[120px] pt-[134px] pb-[176px] w-full bg-[#F6F8FA]">
                 {/* Frame 1 */}
                 <div className="flex flex-col items-center gap-[41px] w-full max-w-[1200px]">
                     {/* 11 */}
                     <div className="flex flex-col items-start gap-[24px] w-full relative">
                         {/* 111: 非公開中の作品です */}
-                        <div className="flex flex-col items-center w-full p-[8px_9px] border border-[#FF8D4E] bg-[#FF2AA1] rounded">
-                            <span className="text-white text-center font-noto text-[14px] font-bold leading-[22px]">非公開中の作品です</span>
-                        </div>
+                        {isOwner && (<div className="flex flex-col items-center w-full p-[8px_9px] border border-[#FF8D4E] bg-[#FF2AA1] rounded">
+                            <span className="text-white text-center font-noto text-[14px] font-bold leading-[22px]">{product?.is_public ? '' : '非'}公開中の作品です</span>
+                        </div>)}
                         {/* 112 */}
                         <div className="flex flex-col justify-center items-start h-[66px] w-full relative">
                             {/* 1121 */}
@@ -42,38 +138,55 @@ const ProductDetailsFree = () => {
                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
                                     {/* 112111 */}
                                     <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
+                                        <img src={product?.user?.image || defaulUser} alt="user" className="w-[64px] h-[64px] rounded-full object-cover" />
                                     </div>
                                 </div>
                                 {/* 11212 */}
                                 <div className="flex flex-col items-start">
-                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
+                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product?.user?.name || 'User'}</span>
                                 </div>
                             </div>
-                            {/* 1122: Edit/Delete buttons */}
+                            {/* 1122: Edit/Delete buttons or Follow/Favorite buttons */}
                             <div className="flex items-center gap-[8px] absolute right-0 top-[15px]">
-                                {/* 11221: Edit */}
-                                <button className="flex items-center gap-[8px] w-[90px] h-[34px] px-[16px] rounded-[5px] bg-[#E9E9E9]">
-                                    <img src={pen} alt="edit" className="w-[20px] h-[20px]" />
-                                    <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">編集</span>
-                                </button>
-                                {/* 11222: Delete */}
-                                <button className="flex items-center gap-[8px] w-[90px] h-[34px] px-[16px] rounded-[5px] bg-[#E9E9E9]">
-                                    <img src={recyclebin} alt="delete" className="w-[20px] h-[20px]" />
-                                    <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">削除</span>
-                                </button>
+                                {isOwner ? (
+                                    <>
+                                        {/* 11221: Edit */}
+                                        <button onClick={() => router.visit(`/myshop/registerproduct/${product?.id}/edit`)} className="flex items-center gap-[8px] w-[90px] h-[34px] px-[16px] rounded-[5px] bg-[#E9E9E9]">
+                                            <img src={pen} alt="edit" className="w-[20px] h-[20px]" />
+                                            <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">編集</span>
+                                        </button>
+                                        {/* 11222: Delete */}
+                                        <button onClick={() => setIsConfirmOpen(true)} className="flex items-center gap-[8px] w-[90px] h-[34px] px-[16px] rounded-[5px] bg-[#E9E9E9]">
+                                            <img src={recyclebin} alt="delete" className="w-[20px] h-[20px]" />
+                                            <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">削除</span>
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        {/* Follow button */}
+                                        <button onClick={toggleFollow} className={`flex items-center gap-[8px] h-[34px] px-[16px] rounded-[8px] bg-[#F6F8FA]  border-[1px] border-[#FF2AA1] hover:opacity-80 transition-opacity ${product?.user?.is_followed_by_current_user ? 'bg-[#FF2AA1]' : 'bg-[#F6F8FA]'}`}>
+                                            <img src={product?.user?.is_followed_by_current_user ? favoriteshop_white : favoriteshop} alt="follow" className="w-[20px] h-[20px]" />
+                                            <span className={`font-noto text-[12px] font-bold leading-[18px] whitespace-nowrap ${product?.user?.is_followed_by_current_user ? 'text-white' : 'text-[#FF2AA1]'}`}>
+                                                {product?.user?.is_followed_by_current_user ? 'フォロー中' : 'フォロー'}
+                                            </span>
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                         {/* 113 */}
+                        {console.log('product', product)}
                         <div className="flex flex-col items-start gap-[8px] w-full">
                             {/* 1131: Title */}
                             <div className="flex flex-col items-start w-[1200px]">
-                                <span className="text-[#363636] font-noto text-[36px] font-bold leading-[54px]">郊外のカフェにて</span>
+                                <span className="text-[#363636] font-noto text-[36px] font-bold leading-[54px]">{product?.title || ''}</span>
                             </div>
                             {/* 1132: Description and Date */}
                             <div className="flex flex-col items-start gap-[4px] w-full">
-                                <span className="text-[#363636] font-noto text-[18px] font-normal leading-[32.4px]">郊外のカフェです</span>
-                                <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">2025/10/05まで販売</span>
+                                <span className="text-[#363636] font-noto text-[18px] font-normal leading-[32.4px]">{product?.description || ''}</span>
+                                <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">
+                                    {product?.sales_deadline ? `${product.sales_deadline}まで販売` : '販売期限なし'}
+                                </span>
                             </div>
                         </div>
                         {/* 114 */}
@@ -81,20 +194,27 @@ const ProductDetailsFree = () => {
                             {/* 1141 */}
                             <div className="flex items-center gap-[10px]">
                                 {/* 11411 */}
-                                <div className="flex flex-col items-start gap-[10px] p-[8px]">
+                                <div className="flex flex-col items-start gap-[10px]">
                                     {/* 114111: Heart, お気に入り, 1000 */}
-                                    <div className="flex items-center gap-[4px]">
-                                        <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                        <span className="text-[#222] font-noto text-[14px] font-bold leading-[21px]">お気に入り</span>
-                                        <span className="text-[#222] font-noto text-[14px] font-bold leading-[21px]">1000</span>
-                                    </div>
+                                    {isOwner ? (
+                                        <div className="flex items-center gap-[4px]">
+                                            <img src={heart_gray} alt="heart" className="w-[20px] h-[20px]" />
+                                            <span className="text-[#363636] font-noto text-[14px] font-normal leading-[21px]">お気に入り</span>
+                                            <span className="text-[#363636] font-noto text-[14px] font-normal leading-[21px]">{product?.favorite_count || 0}</span>
+                                        </div>) : (
+                                        <button onClick={toggleFavoriteProduct} className={`flex items-center gap-[4px] border-[1px] border-[#FF2AA1] rounded-[8px] p-[8px] hover:opacity-80 transition-opacity ${product?.is_favorited ? 'bg-[#FF2AA1]' : 'bg-[#F6F8FA]'}`}>
+                                            <img src={heart} alt="heart" className={`w-[20px] h-[20px] ${product?.is_favorited ? 'invert brightness-0' : ''}`} />
+                                            <span className={`font-noto text-[14px] font-normal leading-[21px] ${product?.is_favorited ? 'text-white' : 'text-[#FF2AA1]'}`}>お気に入り</span>
+                                            <span className={`font-noto text-[14px] font-normal leading-[21px] ${product?.is_favorited ? 'text-white' : 'text-[#FF2AA1]'}`}>{product?.favorite_count || 0}</span>
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                             {/* 1142 */}
                             <div className="flex items-center h-[32px] gap-[4px]">
                                 {/* 11421 */}
                                 <div className="flex flex-col items-start pl-[4px]">
-                                    <div className="flex items-center gap-[4px]">
+                                    <div className="flex items-center gap-[4px] cursor-pointer hover:opacity-80" onClick={handleShare}>
                                         <img src={share} alt="share" className="w-[16px] h-[16px]" />
                                         <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                                     </div>
@@ -105,7 +225,7 @@ const ProductDetailsFree = () => {
                                         <div className="flex items-center justify-end w-full">
                                             <img src={complex} alt="complex" className="w-[20px] h-[20px]" />
                                             <span className="text-[#767676] font-['Hiragino Sans'] text-[14px] font-medium leading-[14px] ml-[4px]">プリント実績</span>
-                                            <span className="text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
+                                            <span className="text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">{product?.printed_count || 0}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +260,7 @@ const ProductDetailsFree = () => {
                                         <span className="text-white font-noto text-[14px] font-bold leading-[14px] ">プリント期限</span>
                                     </div>
                                     <div className="flex flex-col items-start ml-[24px]">
-                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px]">{product?.print_deadline || '2025/10/05'}まで</span>
                                     </div>
                                 </div>
                                 {/* 12122: Print options */}
@@ -158,23 +278,16 @@ const ProductDetailsFree = () => {
                                             </div>
                                             {/*12122112*/}
                                             <div className="relative w-[358px] h-[150px] mt-[12px]">
-                                                <img 
-                                                    src={qr} 
-                                                    alt="qr" 
-                                                    className="absolute top-0 left-0 w-[150px] h-[150px] " 
+                                                <img
+                                                    src={product?.nwps_qr_code_url || qr}
+                                                    alt="qr"
+                                                    className="absolute top-0 left-0 w-[150px] h-[150px] "
                                                 />
                                                 <span className="absolute top-[44.5px] left-[226px] text-[#000] font-noto text-[14px] font-normal leading-[21px]">ユーザー番号</span>
                                                 <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">
-                                                    発行中...
+                                                    {product?.nwps_user_code || '発行中...'}
                                                 </span>
                                             </div>
-                                        </div>
-                                    </div>
-                                    {/* 121222: Seven Eleven */}
-                                    <div className="flex w-[480px] h-[74px] px-[24px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50 ">
-                                        <div className="flex items-center w-[425px] h-[74px] py-[30px] justify-between">
-                                            <span className="font-noto text-[18px] font-bold leading-[20.7px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
-                                            <img src={eleven} alt="eleven" className="w-[59px] h-[59px] rounded-full object-cover ml-[16px]" />
                                         </div>
                                     </div>
                                 </div>
@@ -188,118 +301,28 @@ const ProductDetailsFree = () => {
                             </div>
                         </div>
                         {/* 122: Ranking */}
-                        <div className="flex flex-col items-start w-[960px] px-[66px] py-[32px] gap-[10px] bg-white rounded-[24px] shadow-[0_2px_8px_0_rgba(0,0,0,0.10)]">
-                            {/* 1221: Ranking title and list */}
-                            <div className="flex flex-col items-start gap-[16px] w-full">
-                                <span className="text-[#000] font-noto text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">ランキング</span>
-                                {/* 12211: Ranking list */}
-                                <div className="flex flex-col items-start gap-[24px] w-full">
-                                    {/* 122111: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-noto text-[36px] font-bold leading-[54px]">1</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122112: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-noto text-[28px] font-bold leading-[42px]">2</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122113: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#AB31D3] font-noto text-[28px] font-bold leading-[42px]">3</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122114: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#222] font-noto text-[24px] font-bold leading-[24px]">4</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* 122115: Ranking item example */}
-                                    <div className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                <span className="text-[#222] font-noto text-[24px] font-bold leading-[24px]">5</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <RankingSection topBuyers={product?.top_buyers} isMobile={false} />
                     </section>
                 </div>
             </main>
             {/* Personal Info Footer (Frame 2) */}
-            <section className="hidden md:flex flex-col items-center w-[1440px] pt-[48px] pb-[48px] px-[24px] gap-[24px] bg-[#F6F8FA] mx-auto">
-                <div className="flex w-[1248px] justify-between items-start">
+            <section className="hidden md:flex flex-col items-center py-[48px] px-[96px] w-full bg-[#F6F8FA]">
+                <div className="flex justify-between items-start w-full">
                     {/* Left: 21 */}
-                    <div className="flex w-[400px] max-w-[1248px] items-start flex-shrink-0">
-                        <img src={girl} alt="girl" className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
+                    <div className="flex items-start flex-shrink-0">
+                        <div
+                            className="cursor-pointer hover:opacity-80 transition-opacity"
+                            onClick={() => router.visit(`/${product.user.id}`)}
+                        >
+                            <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
+                        </div>
                         {/* 211 */}
                         <div className="flex flex-col pl-[16px] items-start">
                             <div className="flex flex-col items-start gap-[12px]">
-                                <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy2005</span>
+                                <span
+                                    className="text-[#000] font-noto text-[21px] font-bold leading-[32px] cursor-pointer hover:opacity-80 transition-opacity"
+                                    onClick={() => router.visit(`/${product.user.id}`)}
+                                >{product.user.name}</span>
                                 <div className="flex pt-[10px] gap-[4px]">
                                     <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
                                 </div>
@@ -307,298 +330,236 @@ const ProductDetailsFree = () => {
                         </div>
                     </div>
                     {/* Right: 22 */}
-                    <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
-                        <div className="flex w-[800px] max-w-[1248px] flex-col items-start flex-shrink-0">
-                            <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
-                                こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
-                            </span>
-                        </div>
+                    <div className="flex flex-col w-[55%] items-start flex-shrink-0">
+                        <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
+                            {product.user.description}
+                        </span>
                     </div>
                 </div>
             </section>
             {/* Mobile Main Section */}
-            <div className="flex flex-col gap-[84px]">
-            <section className="flex flex-col items-start gap-[24px] px-4 md:hidden w-full pt-[32px] bg-[#F6F8FA] mt-[-12px]">
-                {/* Frame 11 */}
-                <div className="flex flex-col items-start gap-[24px] w-[343px]">
-                    {/* 111: 非公開中の作品です */}
-                    <div className="flex flex-col justify-center items-center w-full p-[8px_9px] border border-[#FF8D4E] bg-[#FF2AA1]">
-                        <span className="w-full text-white text-center font-noto text-[14px] font-bold leading-[22px]">非公開中の作品です</span>
-                    </div>
-                    {/* 112 */}
-                    <div className="flex flex-col items-start gap-[12px] w-full">
-                        {/* 1121 */}
-                        <div className="flex flex-col items-start gap-[12px] w-full">
-                            {/* 11211 */}
+            <div className="flex flex-col gap-[84px] pt-[74px]">
+                <section className="flex flex-col items-start gap-[24px] px-4 md:hidden w-full pt-[32px] bg-[#F6F8FA] mt-[-12px]">
+                    {/* Frame 11 */}
+                    <div className="flex flex-col items-start gap-[24px] w-[343px]">
+                        {/* 111: 非公開中の作品です */}
+                        {isOwner && (
+                            <div className="flex flex-col justify-center items-center w-full p-[8px_9px] border border-[#FF8D4E] bg-[#FF2AA1]">
+                                <span className="w-full text-white text-center font-noto text-[14px] font-bold leading-[22px]">{product?.is_public ? '' : '非'}公開中の作品です</span>
+                            </div>)}
+                        {/* 112 */}
+                        <div className="flex flex-col items-start gap-[24px] w-full">
+                            {/* 1121 */}
+                            <div className="flex flex-col items-start gap-[12px] w-full">
+                                {/* 11211 */}
+                                <div className="flex items-center w-full">
+                                    {/* 112111 */}
+                                    <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
+                                        <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
+                                            <img src={product?.user?.image || defaulUser} alt="user" className="w-[64px] h-[64px] rounded-full object-cover" />
+                                        </div>
+                                    </div>
+                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product?.user?.name || 'User'}</span>
+                                </div>
+                            </div>
+                            {!isOwner && (
+                                <>
+                                    {/* Follow button (match desktop style) */}
+                                    <button onClick={toggleFollow} className={`flex items-center gap-[8px] rounded-[40px] border border-[#FF2AA1] px-[16px] py-[9px] ${product?.user?.is_followed_by_current_user ? 'bg-[#FF2AA1]' : 'bg-[#F6F8FA]'}`}>
+                                        <img src={product?.user?.is_followed_by_current_user ? favoriteshop_white : favoriteshop} alt="follow" className="w-[20px] h-[20px]" />
+                                        <span className={`font-noto text-[12px] font-bold leading-[18px] ${product?.user?.is_followed_by_current_user ? 'text-white' : 'text-[#FF2AA1]'}`}>
+                                            {product?.user?.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー'}
+                                        </span>
+                                    </button>
+                                </>
+                            )}
+                            <div className="flex flex-col items-start gap-[2px] w-full">
+                                {/* 11221 */}
+                                <div className="flex flex-col justify-center items-start gap-[12px] w-full">
+                                    <span className="text-[#363636] text-left font-noto text-[24px] font-bold leading-[24px] w-full">{product?.title || ''}</span>
+                                </div>
+                                {/* 11222 */}
+                                <div className="flex flex-col items-start gap-[4px] w-full">
+                                    <span className="text-[#363636] font-noto text-[14px] font-bold leading-[14px] w-full">{product?.description || ''}</span>
+                                    <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">
+                                        {product?.sales_deadline ? `${product.sales_deadline}まで販売` : '販売期限なし'}
+                                    </span>
+                                </div>
+                                <div className="flex flex-col items-start gap-[10px] mt-[10px]">
+                                    {isOwner ? (
+                                        <div className="flex items-center gap-[4px]">
+                                            <img src={heart_gray} alt="heart" className="w-[20px] h-[20px]" />
+                                            <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">お気に入り</span>
+                                            <span className="text-[#363636] font-['Red Hat Display'] text-[14px] font-bold leading-[21px]">{product?.favorite_count || 0}</span>
+                                        </div>
+                                    ) : (
+                                        <button onClick={toggleFavoriteProduct} className={`flex items-center gap-[4px] border-[1px] border-[#FF2AA1] rounded-[5px] p-[8px] ${product?.is_favorited ? 'bg-[#FF2AA1]' : 'bg-[#F6F8FA]'}`}>
+                                            <img src={heart} alt="heart" className={`w-[20px] h-[20px] ${product?.is_favorited ? 'invert brightness-0' : ''}`} />
+                                            <span className={`font-noto text-[12px] font-normal leading-[18px] ${product?.is_favorited ? 'text-white' : 'text-[#FF2AA1]'}`}>お気に入り</span>
+                                            <span className={`font-['Red Hat Display'] text-[14px] font-bold leading-[21px] ${product?.is_favorited ? 'text-white' : 'text-[#FF2AA1]'}`}>{product?.favorite_count || 0}</span>
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                            {/* 1123: Edit/Delete or Follow (favorite is in the info block below to match desktop) */}
+                            {isOwner && (
+                                <div className="flex items-center gap-[13px] w-full">
+                                    <>
+                                        {/* 11231: Edit */}
+                                        <button onClick={() => router.visit(`/myshop/registerproduct/${product?.id}/edit`)} className="flex items-center gap-[8px] bg-[#E9E9E9] rounded-[5px] px-[16px] py-[9px]">
+                                            <img src={pen} alt="edit" className="w-[20px] h-[20px]" />
+                                            <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">編集</span>
+                                        </button>
+                                        {/* 11232: Delete */}
+                                        <button onClick={() => setIsConfirmOpen(true)} className="flex items-center gap-[8px] bg-[#E9E9E9] rounded-[5px]  px-[16px] py-[9px]">
+                                            <img src={recyclebin} alt="delete" className="w-[20px] h-[20px]" />
+                                            <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">削除</span>
+                                        </button>
+                                    </>
+                                </div>
+                            )}
+                        </div>
+                        {/* 113 */}
+                        <div className="flex flex-col items-start gap-[8px] w-full pb-[16px] border-b border-[#D1D1D1]">
+                            {/* 1132 */}
                             <div className="flex items-center w-full">
-                                {/* 112111 */}
-                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover" />
-                                    </div>
+                                {/* 11321: Share */}
+                                <div className="flex items-center gap-[4px] cursor-pointer hover:opacity-80" onClick={handleShare}>
+                                    <img src={share} alt="share" className="w-[16px] h-[16px]" />
+                                    <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                                 </div>
-                                <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">anchiy1005</span>
-                            </div>
-                        </div>
-                        {/* 1122 */}
-                        <div className="flex flex-col items-start gap-[10px] w-full">
-                            {/* 11221 */}
-                            <div className="flex flex-col justify-center items-start gap-[12px] w-full">
-                                <span className="text-[#363636] text-left font-noto text-[24px] font-bold leading-[24px] w-full">郊外のカフェにて</span>
-                            </div>
-                            {/* 11222 */}
-                            <div className="flex flex-col items-start gap-[4px] w-full">
-                                <span className="text-[#363636] font-noto text-[14px] font-bold leading-[14px] w-full">郊外のカフェです</span>
-                                <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">2025/10/05まで販売</span>
-                            </div>
-                        </div>
-                        {/* 1123: Edit/Delete */}
-                        <div className="flex items-center gap-[13px] w-full">
-                            {/* 11231: Edit */}
-                            <button className="flex items-center gap-[8px] bg-[#E9E9E9] rounded-[5px] px-[16px] py-[9px]">
-                                <img src={pen} alt="edit" className="w-[20px] h-[20px]" />
-                                <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">編集</span>
-                            </button>
-                            {/* 11232: Delete */}
-                            <button className="flex items-center gap-[8px] bg-[#E9E9E9] rounded-[5px]  px-[16px] py-[9px]">
-                                <img src={recyclebin} alt="delete" className="w-[20px] h-[20px]" />
-                                <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">削除</span>
-                            </button>
-                        </div>
-                    </div>
-                    {/* 113 */}
-                    <div className="flex flex-col items-start gap-[8px] w-full pb-[16px] border-b border-[#D1D1D1]">
-                        {/* 1131 */}
-                        <div className="flex flex-col items-start gap-[10px] p-[8px] rounded-[6px]">
-                            <div className="flex items-center gap-[4px]">
-                                <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">お気に入り</span>
-                                <span className="text-[#363636] font-['Red Hat Display'] text-[14px] font-bold leading-[21px]">1000</span>
-                            </div>
-                        </div>
-                        {/* 1132 */}
-                        <div className="flex items-center w-full">
-                            {/* 11321: Share */}
-                            <div className="flex items-center gap-[4px]">
-                                <img src={share} alt="share" className="w-[16px] h-[16px]" />
-                                <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
-                            </div>
-                            {/* 11322: Print count */}
-                            <div className="flex flex-col items-start ml-[16px]">
-                                <div className="flex items-center justify-end w-full">
-                                    <img src={complex} alt="complex" className="w-[20px] h-[20px]" />
-                                    <span className="text-[#767676] font-['Hiragino Sans'] text-[14px] font-medium leading-[14px] ml-[4px]">プリント実績</span>
-                                    <span className="w-[12px] text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* Mobile Section 12 */}
-                <section className="flex flex-col items-start gap-[32px] w-full mt-[32px]">
-                    {/* 121 */}
-                    <div className="flex flex-col w-full rounded-[10px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] px-4 pb-5">
-                        {/* 1211: Blurred image with overlay */}
-                        <div className="flex w-full px-[16px] py-[10px] justify-center items-center rounded-[10px] bg-[#F6F6F6] mx-auto mt-[24px] relative">
-                            {/* Blurred image */}
-                            <div className="flex w-full max-w-[200px] flex-col justify-center items-center flex-shrink-0 relative">
-                                <img src={photo1} alt="main" className="h-[298px] w-full object-cover rounded-[6px] filter blur-[2px]" />
-                                {/* Overlay 121111 */}
-                                <div className="flex flex-col justify-center items-center w-full h-[298px] absolute right-[0px] top-0 rounded-[8px] bg-black bg-opacity-40">
-                                    <div className="flex flex-col justify-center items-center w-[140px] h-[120px]">
-                                        <img src={question} alt="question" className="w-[48px] h-[48px] mb-[8px]" />
-                                        <span className="flex w-full h-[20px] justify-center items-center text-white text-center font-['Hiragino Sans'] text-[12px] font-normal leading-[15px]">ぼかしフィルター</span>
-                                        <span className="flex w-full h-[20px] justify-center items-center text-white text-center font-['Hiragino Sans'] text-[10px] font-normal leading-[13.6px] whitespace-nowrap">コンビニに行って確認しよう!</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* 1212: Print info blocks */}
-                        <div className="inline-flex flex-col items-start w-full mt-[24px] mx-auto">
-                            {/* 12121: Gradient header */}
-                            <div className="flex px-[44px] py-[13.5px] rounded-t-[16px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] items-center gap-[8px] w-full whitespace-nowrap">
-                                <div className="flex items-center gap-[6px]">
-                                    <img src={complex_white} alt="complex_white" className="w-[20px] h-[20px]" />
-                                    <span className="text-white font-noto text-[14px] font-bold leading-[14px]">プリント期限</span>
-                                </div>
+                                {/* 11322: Print count */}
                                 <div className="flex flex-col items-start ml-[16px]">
-                                    <span className="text-white font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
-                                </div>
-                            </div>
-                            {/* 12122: Print options */}
-                            <div className="flex flex-col items-center gap-[16px] w-full bg-[#F6F6F6] rounded-b-[16px] p-[12px]">
-                                {/* 121221: Famima/Lawson/Ministop */}
-                                <div className="flex w-full px-[16px] justify-between items-center rounded-[10px] bg-white shadow-[0_2px_8px_0_rgba(0,0,0,0.25)]">
-                                    <div className="flex flex-col items-center flex-1">
-                                        <div className="flex h-[60px] py-[20px] justify-between items-center w-full">
-                                            <span className="w-[160px] font-noto text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent whitespace-nowrap">ファミマ・ローソン・<br />ミニストップで印刷する</span>
-                                            <div className="flex items-center gap-[8px] ml-[12px]">
-                                                <img src={shop1} alt="printshop" className="w-[33.2px] h-[24.5px]" />
-                                                <img src={shop2} alt="lawson" className="w-[33.2px] h-[24.4px]" />
-                                                <img src={shop3} alt="ministop" className="w-[33.2px] h-[24.4px]" />
-                                            </div>
-                                        </div>
-                                        {/*12122112*/}
-                                        <div className="relative w-[240px] h-[100px] mt-[8px]">
-                                            <img 
-                                                src={qr} 
-                                                alt="qr" 
-                                                className="absolute top-0 left-0 w-[100px] h-[100px]" 
-                                            />
-                                            <span className="absolute top-[30px] left-[150px] text-[#000] font-noto text-[12px] font-normal leading-[16px]">ユーザー番号</span>
-                                            <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">
-                                                発行中...
-                                            </span>
-                                        </div>
+                                    <div className="flex items-center justify-end w-full">
+                                        <img src={complex} alt="complex" className="w-[20px] h-[20px]" />
+                                        <span className="text-[#767676] font-['Hiragino Sans'] text-[14px] font-medium leading-[14px] ml-[4px]">プリント実績</span>
+                                        <span className="w-[12px] text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">{product?.printed_count || 0}</span>
                                     </div>
                                 </div>
-                                {/* 121222: Seven Eleven */}
-                                <div className="flex w-full h-[60px] px-[16px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50">
-                                    <div className="flex items-center w-full h-[60px] py-[20px] justify-between">
-                                        <span className="font-noto text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
-                                        <img src={eleven} alt="eleven" className="w-[40px] h-[40px] rounded-full object-cover ml-[12px]" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* 1213: Help link */}
-                        <div className="flex flex-col items-center w-full h-[20px] mt-[32px] px-[16px]">
-                            <div className="flex items-center gap-[6px]">
-                                <img src={question_circle} alt="question_circle" className="w-[16px] h-[16px]" />
-                                <span className="text-[#767676] font-noto text-[12px] font-normal leading-[16px] underline cursor-pointer">プリントの方法が分からない時は</span>
                             </div>
                         </div>
                     </div>
-                    {/* 122: Ranking */}
-                    <div className="flex flex-col items-start w-full px-[16px] py-[24px] gap-[8px] bg-white rounded-[16px] shadow-[0_2px_8px_0_rgba(0,0,0,0.10)]">
-                        {/* 1221: Ranking title and list */}
-                        <div className="flex flex-col items-start gap-[12px] w-full">
-                            <span className="text-[#000] font-noto text-[18px] font-bold leading-[24px]">ランキング</span>
-                            {/* 12211: Ranking list */}
-                            <div className="flex flex-col items-start gap-[16px] w-full">
-                                {/* 122111: Ranking item example */}
-                                <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                    <div className="flex items-center gap-[16px]">
-                                        <div className="flex flex-col items-center pb-[8px]">
-                                            <span className="text-[#AB31D3] font-noto text-[24px] font-bold leading-[32px]">1</span>
+                    {/* Mobile Section 12 */}
+                    <section className="flex flex-col items-start gap-[32px] w-full mt-[32px]">
+                        {/* 121 */}
+                        <div className="flex flex-col w-full rounded-[10px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] px-4 pb-5">
+                            {/* 1211: Blurred image with overlay */}
+                            <div className="flex w-full px-[16px] py-[10px] justify-center items-center rounded-[10px] bg-[#F6F6F6] mx-auto mt-[24px] relative">
+                                {/* Blurred image */}
+                                <div className="flex w-full max-w-[200px] flex-col justify-center items-center flex-shrink-0 relative">
+                                    <img src={photo1} alt="main" className="h-[298px] w-full object-cover rounded-[6px] filter blur-[2px]" />
+                                    {/* Overlay 121111 */}
+                                    <div className="flex flex-col justify-center items-center w-full h-[298px] absolute right-[0px] top-0 rounded-[8px] bg-black bg-opacity-40">
+                                        <div className="flex flex-col justify-center items-center w-[140px] h-[120px]">
+                                            <img src={question} alt="question" className="w-[48px] h-[48px] mb-[8px]" />
+                                            <span className="flex w-full h-[20px] justify-center items-center text-white text-center font-['Hiragino Sans'] text-[12px] font-normal leading-[15px]">ぼかしフィルター</span>
+                                            <span className="flex w-full h-[20px] justify-center items-center text-white text-center font-['Hiragino Sans'] text-[10px] font-normal leading-[13.6px] whitespace-nowrap">コンビニに行って確認しよう!</span>
                                         </div>
-                                        <div className="flex items-center">
-                                            <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                    <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
+                                    </div>
+                                </div>
+                            </div>
+                            {/* 1212: Print info blocks */}
+                            <div className="inline-flex flex-col items-start w-full mt-[24px] mx-auto">
+                                {/* 12121: Gradient header */}
+                                <div className="flex px-[44px] py-[13.5px] rounded-t-[16px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] items-center gap-[8px] w-full whitespace-nowrap">
+                                    <div className="flex items-center gap-[6px]">
+                                        <img src={complex_white} alt="complex_white" className="w-[20px] h-[20px]" />
+                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px]">プリント期限</span>
+                                    </div>
+                                    <div className="flex flex-col items-start ml-[16px]">
+                                        <span className="text-white font-noto text-[14px] font-bold leading-[14px]">2025/10/05まで</span>
+                                    </div>
+                                </div>
+                                {/* 12122: Print options */}
+                                <div className="flex flex-col items-center gap-[16px] w-full bg-[#F6F6F6] rounded-b-[16px] p-[12px]">
+                                    {/* 121221: Famima/Lawson/Ministop */}
+                                    <div className="flex w-full px-[16px] justify-between items-center rounded-[10px] bg-white shadow-[0_2px_8px_0_rgba(0,0,0,0.25)]">
+                                        <div className="flex flex-col items-center flex-1">
+                                            <div className="flex h-[60px] py-[20px] justify-between items-center w-full">
+                                                <span className="w-[160px] font-noto text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent whitespace-nowrap">ファミマ・ローソン・<br />ミニストップで印刷する</span>
+                                                <div className="flex items-center gap-[8px] ml-[12px]">
+                                                    <img src={shop1} alt="printshop" className="w-[33.2px] h-[24.5px]" />
+                                                    <img src={shop2} alt="lawson" className="w-[33.2px] h-[24.4px]" />
+                                                    <img src={shop3} alt="ministop" className="w-[33.2px] h-[24.4px]" />
                                                 </div>
                                             </div>
-                                            <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
+                                            {/*12122112*/}
+                                            <div className="relative w-[240px] h-[100px] mt-[8px]">
+                                                <img
+                                                    src={product?.nwps_qr_code_url || qr}
+                                                    alt="qr"
+                                                    className="absolute top-0 left-0 w-[100px] h-[100px]"
+                                                />
+                                                <span className="absolute top-[30px] left-[150px] text-[#000] font-noto text-[12px] font-normal leading-[16px]">ユーザー番号</span>
+                                                <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">
+                                                    {product?.nwps_user_code || '発行中...'}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {/* 122112: Ranking item example */}
-                                <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                    <div className="flex items-center gap-[16px]">
-                                        <div className="flex flex-col items-center pb-[8px]">
-                                            <span className="text-[#AB31D3] font-noto text-[20px] font-bold leading-[28px]">2</span>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                    <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
-                                            </div>
-                                        </div>
+                            </div>
+                            {/* 1213: Help link */}
+                            <div className="flex flex-col items-center w-full h-[20px] mt-[32px] px-[16px]">
+                                <div className="flex items-center gap-[6px]">
+                                    <img src={question_circle} alt="question_circle" className="w-[16px] h-[16px]" />
+                                    <span className="text-[#767676] font-noto text-[12px] font-normal leading-[16px] underline cursor-pointer">プリントの方法が分からない時は</span>
+                                </div>
+                            </div>
+                        </div>
+                        {/* 122: Ranking */}
+                        <RankingSection topBuyers={product?.top_buyers} isMobile={true} />
+                    </section>
+                </section>
+                {/* Mobile Section 2 */}
+                <section className="flex md:hidden flex-col items-start py-[24px] px-[16px] gap-[24px] bg-[#F6F8FA] w-full">
+                    <div className="flex flex-col items-start gap-[24px]">
+                        {/* Left: 21 */}
+                        <div className="flex items-start flex-shrink-0 ">
+                            <div
+                                className="cursor-pointer hover:opacity-80 transition-opacity"
+                                onClick={() => router.visit(`/${product.user.id}`)}
+                            >
+                                <img src={product.user.image || defaulUser} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
+                            </div>
+                            {/* 211 */}
+                            <div className="flex flex-col pl-[16px] items-start">
+                                <div className="flex flex-col items-start gap-[12px]">
+                                    <span
+                                        className="text-[#000] font-noto text-[16px] font-bold leading-[18px] cursor-pointer hover:opacity-80 transition-opacity"
+                                        onClick={() => router.visit(`/${product.user.id}`)}
+                                    >{product.user.name}</span>
+                                    <div className="flex pt-[10px] gap-[4px]">
+                                        <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
                                     </div>
                                 </div>
-                                {/* 122113: Ranking item example */}
-                                <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                    <div className="flex items-center gap-[16px]">
-                                        <div className="flex flex-col items-center pb-[8px]">
-                                            <span className="text-[#AB31D3] font-noto text-[20px] font-bold leading-[28px]">3</span>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                    <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* 122114: Ranking item example */}
-                                <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                    <div className="flex items-center gap-[16px]">
-                                        <div className="flex flex-col items-center pb-[8px]">
-                                            <span className="text-[#222] font-noto text-[18px] font-bold leading-[24px]">4</span>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                    <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* 122115: Ranking item example */}
-                                <div className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                    <div className="flex items-center gap-[16px]">
-                                        <div className="flex flex-col items-center pb-[8px]">
-                                            <span className="text-[#222] font-noto text-[18px] font-bold leading-[24px]">5</span>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                    <img src={girl} alt="girl" className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">anchiy1005</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
+                        {/* Right: 22 */}
+                        <div className="flex flex-col items-start flex-shrink-0 ">
+                            <div className="flex flex-col items-start flex-shrink-0">
+                                <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">
+                                    {product.user.description}
+                                </span>
                             </div>
                         </div>
                     </div>
                 </section>
-            </section>
-            {/* Mobile Section 2 */}
-            <section className="flex md:hidden flex-col items-center py-[24px] px-[16px] gap-[24px] bg-[#F6F8FA] mx-auto mt-21 ">
-                <div className="flex flex-col items-start gap-[24px]">
-                    {/* Left: 21 */}
-                    <div className="flex items-start flex-shrink-0 ">
-                        <img src={girl} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
-                        {/* 211 */}
-                        <div className="flex flex-col pl-[16px] items-start">
-                            <div className="flex flex-col items-start gap-[12px]">
-                                <span className="text-[#000] font-noto text-[16px] font-bold leading-[18px]">anchiy1005</span>
-                                <div className="flex pt-[10px] gap-[4px]">
-                                    <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* Right: 22 */}
-                    <div className="flex flex-col items-start flex-shrink-0 ">
-                        <div className="flex flex-col items-start flex-shrink-0">
-                            <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">
-                                こんにちは！私はSUPERGT🏁の17号車のAstemoアンバサダーです。サッカーではSTVV⚽️の初代と2代目シントトロイデンガールズとしても活動しています。最近、日本レースクイーン大賞2023でメディバンネップリ賞を受賞しました🏆。これからも応援よろしくお願いします！
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </section>
             </div>
             <Footer />
+            {/* Delete confirmation modal */}
+            <ConfirmationModal
+                isOpen={isConfirmOpen}
+                onClose={() => setIsConfirmOpen(false)}
+                onConfirm={handleDelete}
+                title="商品を削除しますか？"
+                message="この操作は取り消せません。"
+                confirmText="削除する"
+                cancelText="キャンセル"
+                confirmButtonClass="bg-red-500 hover:bg-red-600"
+                isLoading={isDeleting}
+                loadingText="削除中..."
+            />
         </div>
     );
 };

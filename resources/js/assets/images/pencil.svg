@@ -1,9 +1,9 @@
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <mask id="mask0_1130_13923" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
-<g clip-path="url(#clip0_1130_13923)">
+<g clipPath="url(#clip0_1130_13923)">
 <mask id="mask1_1130_13923" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
-<g clip-path="url(#clip1_1130_13923)">
-<g clip-path="url(#clip2_1130_13923)">
+<g clipPath="url(#clip1_1130_13923)">
+<g clipPath="url(#clip2_1130_13923)">
 <mask id="mask2_1130_13923" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
 <path d="M16 0H0V16H16V0Z" fill="white"/>
 </mask>

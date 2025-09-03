@@ -304,8 +304,8 @@ const RegisterProduct = () => {
 
             if (result.success) {
                 if (editMode) {
-                    // Redirect back to contents page after successful edit
-                    router.visit('/myshop/contents');
+                    // Redirect to ProductDetailsFree after successful edit
+                    router.visit(`/product/${productBatch.id}/details`);
                 } else {
                     // Store the product data for the modal (only for new products)
                     const productData = result.data;

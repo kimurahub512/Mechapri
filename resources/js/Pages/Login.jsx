@@ -333,7 +333,7 @@ export default function Login({ status }) {
                                     >
                                         {data.remember ? (
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                                            <g clip-path="url(#clip0_1198_790)">
+                                            <g clipPath="url(#clip0_1198_790)">
                                               <path d="M19 3.71973H5C3.89 3.71973 3 4.61973 3 5.71973V19.7197C3 20.8197 3.89 21.7197 5 21.7197H19C20.11 21.7197 21 20.8197 21 19.7197V5.71973C21 4.61973 20.11 3.71973 19 3.71973ZM10 17.7197L5 12.7197L6.41 11.3097L10 14.8897L17.59 7.29973L19 8.71973L10 17.7197Z" fill="url(#paint0_linear_1198_790)"/>
                                             </g>
                                             <defs>

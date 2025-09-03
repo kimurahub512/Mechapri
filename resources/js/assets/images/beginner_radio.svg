@@ -1,9 +1,9 @@
 <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="0.4" y="0.989844" width="15.2" height="15.2" rx="7.6" fill="white"/>
-<rect x="0.4" y="0.989844" width="15.2" height="15.2" rx="7.6" stroke="url(#paint0_linear_268_7036)" stroke-width="0.8"/>
+<rect x="0.4" y="0.989844" width="15.2" height="15.2" rx="7.6" stroke="url(#paint0_linear_268_7036)" strokeWidth="0.8"/>
 <g filter="url(#filter0_d_268_7036)">
 <rect x="2.40039" y="2.98975" width="11.2" height="11.2" rx="5.6" fill="url(#paint1_linear_268_7036)"/>
-<rect x="2.80039" y="3.38975" width="10.4" height="10.4" rx="5.2" stroke="#FFD6ED" stroke-opacity="0.25" stroke-width="0.8"/>
+<rect x="2.80039" y="3.38975" width="10.4" height="10.4" rx="5.2" stroke="#FFD6ED" stroke-opacity="0.25" strokeWidth="0.8"/>
 </g>
 <defs>
 <filter id="filter0_d_268_7036" x="0.800391" y="2.98975" width="14.3992" height="14.4" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">

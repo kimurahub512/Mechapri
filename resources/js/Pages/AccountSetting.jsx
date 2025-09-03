@@ -73,7 +73,7 @@ const AccountSetting = () => {
       false;
     
     const hasFormChanges = nameChanged || notificationsChanged;
-
+    
     setHasChanges(hasFormChanges);
   }, [userData.name, userData.notificationSettings, originalName, originalNotifications]);
 

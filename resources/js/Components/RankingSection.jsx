@@ -106,3 +106,5 @@ const RankingSection = ({ topBuyers, isMobile = false }) => {
 };
 
 export default RankingSection;
+
+

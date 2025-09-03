@@ -223,7 +223,21 @@ const UnpurchasedProductExpand = ({ product }) => {
                             <div className="flex items-center h-[32px] gap-[4px]">
                                 {/* 11421 */}
                                 <div className="flex flex-col items-start pl-[4px]">
-                                    <div className="flex items-center gap-[4px]">
+                                    <div className="flex items-center gap-[4px] cursor-pointer hover:opacity-80" onClick={async () => {
+                                        try {
+                                            const shareData = {
+                                                title: product?.title || 'Mechapuri',
+                                                text: product?.description || '',
+                                                url: window.location.href,
+                                            };
+                                            if (navigator.share) {
+                                                await navigator.share(shareData);
+                                            } else {
+                                                await navigator.clipboard.writeText(shareData.url);
+                                                alert('リンクをコピーしました');
+                                            }
+                                        } catch (e) {}
+                                    }}>
                                         <img src={share} alt="share" className="w-[16px] h-[16px]" />
                                         <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                                     </div>

@@ -65,9 +65,9 @@ const PurchasedProduct = ({ product }) => {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 },
-                body: JSON.stringify({ 
+                body: JSON.stringify({
                     product_id: product.id,
-                    password: password 
+                    password: password
                 }),
             });
             const data = await response.json();
@@ -97,7 +97,7 @@ const PurchasedProduct = ({ product }) => {
                                 {/* 11211 */}
                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
                                     {/* 112111 */}
-                                    <div 
+                                    <div
                                         className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
                                         onClick={() => router.visit(`/${product.user.id}`)}
                                     >
@@ -105,14 +105,14 @@ const PurchasedProduct = ({ product }) => {
                                     </div>
                                 </div>
                                 {/* 11212 */}
-                                <div 
+                                <div
                                     className="flex flex-col items-start cursor-pointer hover:opacity-80 transition-opacity"
                                     onClick={() => router.visit(`/${product.user.id}`)}
                                 >
                                     <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
                                 </div>
                             </div>
-                            {/* 1122: Edit/Delete buttons */}
+
                             <div className="flex items-center absolute right-0 top-[15px]">
                                 <button
                                     onClick={async () => {
@@ -140,21 +140,19 @@ const PurchasedProduct = ({ product }) => {
                                         }
                                     }}
                                     disabled={auth.user.id === product.user.id}
-                                    className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${
-                                        auth.user.id === product.user.id
+                                    className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${auth.user.id === product.user.id
                                             ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
                                             : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.user.is_followed_by_current_user ? 'bg-[#FF2AA1]' : 'bg-white'}`
-                                    }`}
+                                        }`}
                                 >
                                     <img
                                         src={product.user.is_followed_by_current_user ? favoriteshops_follow : favoriteshops}
                                         alt="favoriteshop"
                                     />
-                                    <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${
-                                        auth.user.id === product.user.id
+                                    <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${auth.user.id === product.user.id
                                             ? 'text-[#767676]'
                                             : product.user.is_followed_by_current_user ? 'text-white' : 'text-[#FF2AA1]'
-                                    }`}>
+                                        }`}>
                                         {product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー'}
                                     </span>
                                 </button>
@@ -199,21 +197,18 @@ const PurchasedProduct = ({ product }) => {
                                             }
                                         }}
                                         disabled={auth.user.id === product.user.id}
-                                        className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${
-                                            auth.user.id === product.user.id
+                                        className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${auth.user.id === product.user.id
                                                 ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
                                                 : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
-                                        }`}
+                                            }`}
                                     >
-                                        <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${
-                                            product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
-                                        }`}>
-                                            {product.is_favorited ? 'お気に入り中' : 'お気に入り'}
+                                        <img src={heart} alt="heart" className={`w-[20px] h-[20px] ${product.is_favorited ? 'invert brightness-0' : ''}`} />
+                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                            }`}>
+                                            お気に入り
                                         </span>
-                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${
-                                            product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
-                                        }`}>
+                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                            }`}>
                                             {product.favorite_count}
                                         </span>
                                     </button>
@@ -225,7 +220,21 @@ const PurchasedProduct = ({ product }) => {
                             <div className="flex items-center h-[32px] gap-[4px]">
                                 {/* 11421 */}
                                 <div className="flex flex-col items-start pl-[4px]">
-                                    <div className="flex items-center gap-[4px]">
+                                    <div className="flex items-center gap-[4px] cursor-pointer hover:opacity-80" onClick={async () => {
+                                        try {
+                                            const shareData = {
+                                                title: product?.title || 'Mechapuri',
+                                                text: product?.description || '',
+                                                url: window.location.href,
+                                            };
+                                            if (navigator.share) {
+                                                await navigator.share(shareData);
+                                            } else {
+                                                await navigator.clipboard.writeText(shareData.url);
+                                                alert('リンクをコピーしました');
+                                            }
+                                        } catch (e) {}
+                                    }}>
                                         <img src={share} alt="share" className="w-[16px] h-[16px]" />
                                         <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                                     </div>
@@ -248,114 +257,116 @@ const PurchasedProduct = ({ product }) => {
                         {/* 121 */}
                         <div className="flex flex-col w-full rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] p-0 pb-[60px]">
                             {/* 1211: Blurred image with overlay */}
-                            <div className="flex w-[500px] px-[90px] py-[10px] justify-center items-center rounded-[16px] bg-[#F6F6F6] mx-auto mt-[40px] relative">
-                                {/* Blurred image */}
-                                <div className="flex w-[320px] max-w-[396px] flex-col justify-center items-center flex-shrink-0 relative">
-                                    <div className={`flex h-[480px] max-w-[396px] w-full flex-col justify-center items-center flex-shrink-0 rounded-[8px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
-                                        {product.display_mode === 'normal' ? (
-                                            <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
-                                        ) : product.display_mode === 'gacha' ? (
-                                            <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
-                                                <img src={product.image} alt="ガチャ" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
-                                                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px] rounded-[8px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                    <img src={bubble} alt="bubble" className="w-[42px] h-[42px]" />
-                                                    <span className="text-white text-[15px] font-bold">ガチャ</span>
-                                                    <span className="text-white text-[13px]">ランダムで1枚選定されます</span>
-                                                </div>
-                                            </div>
-                                        ) : product.display_mode === 'blur' ? (
-                                            <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
-                                                <img src={product.image} alt="ぼかしフィルター" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
-                                                <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 filter blur-[4px] rounded-[8px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                    <img src={question} alt="question" className="w-[42px] h-[42px]" />
-                                                    <span className="text-white text-[15px] font-bold">ぼかしフィルター</span>
-                                                    <span className="text-white text-[13px]">印刷して確認しよう！</span>
-                                                </div>
-                                            </div>
-                                        ) : product.display_mode === 'password' && !isUnlocked ? (
-                                            <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
-                                                <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[8px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                    <img src={lock} alt="lock" className="w-[42px] h-[42px]" />
-                                                    <span className="text-[#CDD9EC] text-[15px] font-bold">パスワード</span>
-                                                    <span className="text-[#CDD9EC] text-[13px]">PWを入れて印刷しよう</span>
-                                                    <form onSubmit={handlePasswordSubmit} className="mt-4 flex flex-col items-center gap-2">
-                                                        <input
-                                                            type="password"
-                                                            value={password}
-                                                            onChange={(e) => setPassword(e.target.value)}
-                                                            className={`w-[200px] px-4 py-2 rounded-md border ${passwordError ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#586B88]`}
-                                                            placeholder="パスワードを入力"
-                                                        />
-                                                        {passwordError && (
-                                                            <span className="text-red-500 text-[12px]">パスワードが正しくありません</span>
-                                                        )}
-                                                        <button
-                                                            type="submit"
-                                                            className="mt-2 px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-opacity-90 transition-all"
-                                                        >
-                                                            確認
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        ) : product.display_mode === 'password' && isUnlocked ? (
-                                            <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
-                                        ) : product.display_mode === 'cushion' ? (
-                                            <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
-                                                {!cushionRevealed ? (
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => setCushionRevealed(true)}
-                                                        className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px] cursor-pointer z-10"
-                                                    >
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                    <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
-                                                    <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
-                                                    <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
-                                                </div>
-                                                    </button>
-                                                ) : null}
+                            <div className="flex flex-col items-center gap-[16px]">
+                                <div className="flex w-[500px] px-[90px] py-[10px] justify-center items-center rounded-[16px] bg-[#F6F6F6] mx-auto mt-[40px] relative">
+                                    {/* Blurred image */}
+                                    <div className="flex w-[320px] max-w-[396px] flex-col justify-center items-center flex-shrink-0 relative">
+                                        <div className={`flex h-[480px] max-w-[396px] w-full flex-col justify-center items-center flex-shrink-0 rounded-[8px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
+                                            {product.display_mode === 'normal' ? (
                                                 <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
-                                            </div>
-                                        ) : (
-                                            <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
-                                        )}
+                                            ) : product.display_mode === 'gacha' ? (
+                                                <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                    <img src={product.image} alt="ガチャ" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
+                                                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px] rounded-[8px]" />
+                                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                        <img src={bubble} alt="bubble" className="w-[42px] h-[42px]" />
+                                                        <span className="text-white text-[15px] font-bold">ガチャ</span>
+                                                        <span className="text-white text-[13px]">ランダムで1枚選定されます</span>
+                                                    </div>
+                                                </div>
+                                            ) : product.display_mode === 'blur' ? (
+                                                <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                    <img src={product.image} alt="ぼかしフィルター" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
+                                                    <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 filter blur-[4px] rounded-[8px]" />
+                                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                        <img src={question} alt="question" className="w-[42px] h-[42px]" />
+                                                        <span className="text-white text-[15px] font-bold">ぼかしフィルター</span>
+                                                        <span className="text-white text-[13px]">印刷して確認しよう！</span>
+                                                    </div>
+                                                </div>
+                                            ) : product.display_mode === 'password' && !isUnlocked ? (
+                                                <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                    <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[8px]" />
+                                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                        <img src={lock} alt="lock" className="w-[42px] h-[42px]" />
+                                                        <span className="text-[#CDD9EC] text-[15px] font-bold">パスワード</span>
+                                                        <span className="text-[#CDD9EC] text-[13px]">PWを入れて印刷しよう</span>
+                                                        <form onSubmit={handlePasswordSubmit} className="mt-4 flex flex-col items-center gap-2">
+                                                            <input
+                                                                type="password"
+                                                                value={password}
+                                                                onChange={(e) => setPassword(e.target.value)}
+                                                                className={`w-[200px] px-4 py-2 rounded-md border ${passwordError ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#586B88]`}
+                                                                placeholder="パスワードを入力"
+                                                            />
+                                                            {passwordError && (
+                                                                <span className="text-red-500 text-[12px]">パスワードが正しくありません</span>
+                                                            )}
+                                                            <button
+                                                                type="submit"
+                                                                className="mt-2 px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-opacity-90 transition-all"
+                                                            >
+                                                                確認
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            ) : product.display_mode === 'password' && isUnlocked ? (
+                                                <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                            ) : product.display_mode === 'cushion' ? (
+                                                <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                    {!cushionRevealed ? (
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setCushionRevealed(true)}
+                                                            className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px] cursor-pointer z-10"
+                                                        >
+                                                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                                <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
+                                                                <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
+                                                                <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
+                                                            </div>
+                                                        </button>
+                                                    ) : null}
+                                                    <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                                </div>
+                                            ) : (
+                                                <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                            )}
+                                        </div>
                                     </div>
-                                    {product.images.length > 1 && (product.display_mode !== 'password' || isUnlocked) && (
-                                        <BadgeDisplay
-                                            buttonClassName="px-[16px] py-[8px] gap-[4px] rounded-[10px] border-[1px] border-solid border-[#FF2AA1]"
-                                            textClassName="text-[#FF2AA1] text-[18px] font-medium leading-[18px]"
-                                            images={product.images.slice(0, 3).map((url, index) => ({
-                                                src: url,
-                                                alt: `${product.title} image ${index + 1}`
-                                            }))}
-                                            text={`${product.images.length}点を全て表示`}
-                                            textColor="#E862CB"
-                                            borderColor="#FF2AA1"
-                                            width="32px"
-                                            height="32px"
-                                            onClick={() => {
-                                                const pathParts = window.location.pathname.split('/');
-                                                const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
-                                                
-                                                if (isOnUserShopPage) {
-                                                    const shopUserId = Number(pathParts[1]);
-                                                    router.visit(route('user.product.purchased.expand', { 
-                                                        user_id: shopUserId, 
-                                                        id: product.id 
-                                                    }));
-                                                } else {
-                                                    router.visit(route('product.purchased.expand', { 
-                                                        id: product.id 
-                                                    }));
-                                                }
-                                            }}
-                                        />
-                                    )}
                                 </div>
+                                {product.images.length > 1 && (product.display_mode !== 'password' || isUnlocked) && (
+                                    <BadgeDisplay
+                                        buttonClassName="px-[16px] py-[8px] gap-[4px] rounded-[10px] border-[1px] border-solid border-[#FF2AA1]"
+                                        textClassName="text-[#FF2AA1] text-[18px] font-medium leading-[18px] whitespace-nowrap"
+                                        images={product.images.slice(0, 3).map((url, index) => ({
+                                            src: url,
+                                            alt: `${product.title} image ${index + 1}`
+                                        }))}
+                                        text={`${product.images.length}点を全て表示`}
+                                        textColor="#E862CB"
+                                        borderColor="#FF2AA1"
+                                        width="32px"
+                                        height="32px"
+                                        onClick={() => {
+                                            const pathParts = window.location.pathname.split('/');
+                                            const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
+
+                                            if (isOnUserShopPage) {
+                                                const shopUserId = Number(pathParts[1]);
+                                                router.visit(route('user.product.purchased.expand', {
+                                                    user_id: shopUserId,
+                                                    id: product.id
+                                                }));
+                                            } else {
+                                                router.visit(route('product.purchased.expand', {
+                                                    id: product.id
+                                                }));
+                                            }
+                                        }}
+                                    />
+                                )}
                             </div>
                             {/* 1212: Print info blocks */}
                             <div className="inline-flex flex-col items-start w-[500px] mt-[40px] mx-auto">
@@ -384,10 +395,10 @@ const PurchasedProduct = ({ product }) => {
                                             </div>
                                             {/*12122112*/}
                                             <div className="relative w-[358px] h-[150px] mt-[12px]">
-                                                <img 
-                                                    src={product?.nwps_qr_code_url || qr} 
-                                                    alt="qr" 
-                                                    className="absolute top-0 left-0 w-[150px] h-[150px] " 
+                                                <img
+                                                    src={product?.nwps_qr_code_url || qr}
+                                                    alt="qr"
+                                                    className="absolute top-0 left-0 w-[150px] h-[150px] "
                                                 />
                                                 <span className="absolute top-[44.5px] left-[226px] text-[#000] font-noto text-[14px] font-normal leading-[21px]">ユーザー番号</span>
                                                 <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">
@@ -423,7 +434,7 @@ const PurchasedProduct = ({ product }) => {
                 <div className="flex justify-between items-start w-full">
                     {/* Left: 21 */}
                     <div className="flex items-start flex-shrink-0">
-                        <div 
+                        <div
                             className="cursor-pointer hover:opacity-80 transition-opacity"
                             onClick={() => router.visit(`/${product.user.id}`)}
                         >
@@ -432,7 +443,7 @@ const PurchasedProduct = ({ product }) => {
                         {/* 211 */}
                         <div className="flex flex-col pl-[16px] items-start">
                             <div className="flex flex-col items-start gap-[12px]">
-                                <span 
+                                <span
                                     className="text-[#000] font-noto text-[21px] font-bold leading-[32px] cursor-pointer hover:opacity-80 transition-opacity"
                                     onClick={() => router.visit(`/${product.user.id}`)}
                                 >{product.user.name}</span>
@@ -444,9 +455,9 @@ const PurchasedProduct = ({ product }) => {
                     </div>
                     {/* Right: 22 */}
                     <div className="flex flex-col w-[55%] items-start flex-shrink-0">
-                            <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
-                                {product.user.description}
-                            </span>
+                        <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
+                            {product.user.description}
+                        </span>
                     </div>
                 </div>
             </section>
@@ -463,14 +474,14 @@ const PurchasedProduct = ({ product }) => {
                                 <div className="flex items-center w-full">
                                     {/* 112111 */}
                                     <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                        <div 
+                                        <div
                                             className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
                                             onClick={() => router.visit(`/${product.user.id}`)}
                                         >
                                             <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
                                         </div>
                                     </div>
-                                    <span 
+                                    <span
                                         className="text-[#000] font-noto text-[21px] font-bold leading-[32px] cursor-pointer hover:opacity-80 transition-opacity"
                                         onClick={() => router.visit(`/${product.user.id}`)}
                                     >{product.user.name}</span>
@@ -497,21 +508,19 @@ const PurchasedProduct = ({ product }) => {
                                     }
                                 }}
                                 disabled={auth.user.id === product.user.id}
-                                className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${
-                                    auth.user.id === product.user.id
+                                className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${auth.user.id === product.user.id
                                         ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
                                         : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.user.is_followed_by_current_user ? 'bg-[#FF2AA1]' : 'bg-white'}`
-                                }`}
+                                    }`}
                             >
                                 <img
                                     src={product.user.is_followed_by_current_user ? favoriteshops_follow : favoriteshops}
                                     alt="favoriteshop"
                                 />
-                                <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${
-                                    auth.user.id === product.user.id
+                                <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${auth.user.id === product.user.id
                                         ? 'text-[#767676]'
                                         : product.user.is_followed_by_current_user ? 'text-white' : 'text-[#FF2AA1]'
-                                }`}>
+                                    }`}>
                                     {product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー'}
                                 </span>
                             </button>
@@ -527,7 +536,7 @@ const PurchasedProduct = ({ product }) => {
                                     <span className="text-[#363636] font-noto text-[12px] font-normal leading-[18px]">{product.sales_deadline}まで販売</span>
                                 </div>
                                 {/* 1131 */}
-                                                                    <button
+                                <button
                                     onClick={async () => {
                                         try {
                                             const response = await fetch(route('favoriteproducts.toggle'), {
@@ -547,21 +556,18 @@ const PurchasedProduct = ({ product }) => {
                                         }
                                     }}
                                     disabled={auth.user.id === product.user.id}
-                                    className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${
-                                        auth.user.id === product.user.id
+                                    className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${auth.user.id === product.user.id
                                             ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
                                             : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
-                                    }`}
+                                        }`}
                                 >
-                                        <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                    <span className={`font-noto text-[12px] font-normal leading-[21px] ${
-                                        product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
-                                    }`}>
-                                        {product.is_favorited ? 'お気に入り中' : 'お気に入り'}
+                                    <img src={heart} alt="heart" className={`w-[20px] h-[20px] ${product.is_favorited ? 'invert brightness-0' : ''}`} />
+                                    <span className={`font-noto text-[12px] font-normal leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                        }`}>
+                                        お気に入り
                                     </span>
-                                    <span className={`font-noto text-[14px] font-bold leading-[15px] ${
-                                        product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
-                                    }`}>
+                                    <span className={`font-noto text-[14px] font-bold leading-[15px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                        }`}>
                                         {product.favorite_count}
                                     </span>
                                 </button>
@@ -592,6 +598,8 @@ const PurchasedProduct = ({ product }) => {
                         {/* 121 */}
                         <div className="flex flex-col w-full rounded-[10px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] px-4 pb-5">
                             {/* 1211: Blurred image with overlay */}
+                            <div className="flex flex-col items-center gap-[16px]">
+
                             <div className="flex w-full px-[16px] py-[10px] justify-center items-center rounded-[10px] bg-[#F6F6F6] mx-auto mt-[24px] relative">
                                 {/* Blurred image */}
                                 <div className="flex w-full max-w-[200px] flex-col justify-center items-center flex-shrink-0 relative">
@@ -655,11 +663,11 @@ const PurchasedProduct = ({ product }) => {
                                                         onClick={() => setCushionRevealed(true)}
                                                         className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px] cursor-pointer z-10"
                                                     >
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                    <img src={warning} alt="warning" className="w-[24px] h-[24px]" />
-                                                    <span className="text-[#464F5D] text-[10px] font-bold">WARNING</span>
-                                                    <span className="text-[#464F5D] text-[8px]">クリックして内容を確認</span>
-                                                </div>
+                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                            <img src={warning} alt="warning" className="w-[24px] h-[24px]" />
+                                                            <span className="text-[#464F5D] text-[10px] font-bold">WARNING</span>
+                                                            <span className="text-[#464F5D] text-[8px]">クリックして内容を確認</span>
+                                                        </div>
                                                     </button>
                                                 ) : null}
                                                 <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
@@ -667,11 +675,13 @@ const PurchasedProduct = ({ product }) => {
                                         ) : (
                                             <img src={product.image} alt={product.title} className="h-full w-full object-cover rounded-[6px]" />
                                         )}
-                                    </div>
-                                    {product.images.length > 1 && (product.display_mode !== 'password' || isUnlocked) && (
+                                    </div>                                    
+                                </div>
+                            </div>
+                            {product.images.length > 1 && (product.display_mode !== 'password' || isUnlocked) && (
                                         <BadgeDisplay
                                             buttonClassName="px-[12px] py-[6px] gap-[3px] rounded-[10px] border-[1px] border-solid border-[#E862CB]"
-                                            textClassName="text-[#E862CB] text-[18px] font-medium leading-[18px]"
+                                            textClassName="text-[#E862CB] text-[18px] font-medium leading-[18px] whitespace-nowrap"
                                             images={product.images.slice(0, 3).map((url, index) => ({
                                                 src: url,
                                                 alt: `${product.title} image ${index + 1}`
@@ -682,23 +692,22 @@ const PurchasedProduct = ({ product }) => {
                                             onClick={() => {
                                                 const pathParts = window.location.pathname.split('/');
                                                 const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
-                                                
+
                                                 if (isOnUserShopPage) {
                                                     const shopUserId = Number(pathParts[1]);
-                                                    router.visit(route('user.product.purchased.expand', { 
-                                                        user_id: shopUserId, 
-                                                        id: product.id 
+                                                    router.visit(route('user.product.purchased.expand', {
+                                                        user_id: shopUserId,
+                                                        id: product.id
                                                     }));
                                                 } else {
-                                                    router.visit(route('product.purchased.expand', { 
-                                                        id: product.id 
+                                                    router.visit(route('product.purchased.expand', {
+                                                        id: product.id
                                                     }));
                                                 }
                                             }}
                                         />
                                     )}
-                                </div>
-                            </div>
+                                    </div>
                             {/* 1212: Print info blocks */}
                             <div className="inline-flex flex-col items-start w-full mt-[24px] mx-auto">
                                 {/* 12121: Gradient header */}
@@ -726,10 +735,10 @@ const PurchasedProduct = ({ product }) => {
                                             </div>
                                             {/*12122112*/}
                                             <div className="relative w-[240px] h-[100px] mt-[8px]">
-                                                <img 
-                                                    src={product?.nwps_qr_code_url || qr} 
-                                                    alt="qr" 
-                                                    className="absolute top-0 left-0 w-[100px] h-[100px]" 
+                                                <img
+                                                    src={product?.nwps_qr_code_url || qr}
+                                                    alt="qr"
+                                                    className="absolute top-0 left-0 w-[100px] h-[100px]"
                                                 />
                                                 <span className="absolute top-[30px] left-[150px] text-[#000] font-noto text-[12px] font-normal leading-[16px]">ユーザー番号</span>
                                                 <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">
@@ -764,7 +773,7 @@ const PurchasedProduct = ({ product }) => {
                     <div className="flex flex-col items-start gap-[24px]">
                         {/* Left: 21 */}
                         <div className="flex items-start flex-shrink-0 ">
-                            <div 
+                            <div
                                 className="cursor-pointer hover:opacity-80 transition-opacity"
                                 onClick={() => router.visit(`/${product.user.id}`)}
                             >
@@ -773,7 +782,7 @@ const PurchasedProduct = ({ product }) => {
                             {/* 211 */}
                             <div className="flex flex-col pl-[16px] items-start">
                                 <div className="flex flex-col items-start gap-[12px]">
-                                    <span 
+                                    <span
                                         className="text-[#000] font-noto text-[16px] font-bold leading-[18px] cursor-pointer hover:opacity-80 transition-opacity"
                                         onClick={() => router.visit(`/${product.user.id}`)}
                                     >{product.user.name}</span>

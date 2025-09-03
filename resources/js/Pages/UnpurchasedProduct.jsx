@@ -204,10 +204,10 @@ const UnpurchasedProduct = ({ product }) => {
                                                 : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
                                             }`}
                                     >
-                                        <img src={heart} alt="heart" className={`w-[20px] h-[20px] ${product.is_favorited ? 'filter invert' : ''}`} />
+                                        <img src={heart} alt="heart" className={`w-[20px] h-[20px] ${product.is_favorited ? 'invert brightness-0' : ''}`} />
                                         <span className={`font-noto text-[14px] font-bold leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
                                             }`}>
-                                            {product.is_favorited ? 'お気に入り中' : 'お気に入り'}
+                                            お気に入り
                                         </span>
                                         <span className={`font-noto text-[14px] font-bold leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
                                             }`}>
@@ -222,7 +222,21 @@ const UnpurchasedProduct = ({ product }) => {
                             <div className="flex items-center h-[32px] gap-[4px]">
                                 {/* 11421 */}
                                 <div className="flex flex-col items-start pl-[4px]">
-                                    <div className="flex items-center gap-[4px]">
+                                    <div className="flex items-center gap-[4px] cursor-pointer hover:opacity-80" onClick={async () => {
+                                        try {
+                                            const shareData = {
+                                                title: product?.title || 'Mechapuri',
+                                                text: product?.description || '',
+                                                url: window.location.href,
+                                            };
+                                            if (navigator.share) {
+                                                await navigator.share(shareData);
+                                            } else {
+                                                await navigator.clipboard.writeText(shareData.url);
+                                                alert('リンクをコピーしました');
+                                            }
+                                        } catch (e) {}
+                                    }}>
                                         <img src={share} alt="share" className="w-[16px] h-[16px]" />
                                         <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                                     </div>
@@ -636,10 +650,10 @@ const UnpurchasedProduct = ({ product }) => {
                                             : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
                                         }`}
                                 >
-                                        <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
+                                        <img src={heart} alt="heart" className={`w-[20px] h-[20px] ${product.is_favorited ? 'invert brightness-0' : ''}`} />
                                     <span className={`font-noto text-[12px] font-normal leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
                                         }`}>
-                                        {product.is_favorited ? 'お気に入り中' : 'お気に入り'}
+                                        お気に入り
                                     </span>
                                     <span className={`font-noto text-[14px] font-bold leading-[15px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
                                         }`}>

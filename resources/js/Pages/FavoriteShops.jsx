@@ -21,7 +21,7 @@ const FavoriteShops = ({ favoriteShops }) => {
 
     const renderShopItem = (shop, isMobile = false) => {
         return (
-            <div key={shop.id} className={`flex p-[16px_${isMobile ? '16px' : '8px'}] items-center gap-[32px] ${isMobile ? 'w-full' : 'self-stretch'} border-b border-[#E9E9E9]`}>
+            <div key={shop.id} className={`flex p-[16px_${isMobile ? '16px' : '8px'}] items-center gap-[32px] ${isMobile ? 'w-full  mx-4': 'self-stretch'} border-b border-[#E9E9E9]`}>
                 <div className="flex flex-1">
                     <Link 
                         href={`/${shop.id}`} 
@@ -43,10 +43,18 @@ const FavoriteShops = ({ favoriteShops }) => {
                             <span className={`self-stretch text-[#000] font-normal ${isMobile ? 'text-[12px] leading-[18px]' : 'text-[14px] leading-[21px]'} font-noto mt-[8px]`}>
                                 {shop.shop_description || `${shop.name}'s shop`}
                             </span>
+                            <div className="md:hidden flex h-[48px] justify-end items-center mt-4">
+                                <FavoriteShopButton
+                                    shopUserId={shop.id}
+                                    initialIsFavorited={true}
+                                    isMobile={isMobile}
+                                    refreshOnToggle={false}
+                                />
+                            </div>
                         </div>
                     </Link>
                 </div>
-                <div className="flex h-[48px] justify-end items-center">
+                <div className="hidden md:flex h-[48px] justify-end items-center">
                     <FavoriteShopButton
                         shopUserId={shop.id}
                         initialIsFavorited={true}
@@ -62,7 +70,7 @@ const FavoriteShops = ({ favoriteShops }) => {
         <div className="bg-white">
             <Header />
             {/* Desktop Main Section */}
-            <main className="hidden md:flex flex-col items-center self-stretch min-h-[1020px] pb-[60px] bg-white pt-[98px]">
+            <main className="hidden md:flex flex-col items-center self-stretch pb-[60px] bg-white pt-[98px]">
                 <div className="flex flex-col items-start w-[880px] min-w-[880px] max-w-[880px] gap-[32px]">
                     <div className="flex flex-col items-center h-[118px] p-[40px_0_1px_0] self-stretch border-b border-[#D1D1D1]">
                         <h1 className="text-[#363636] text-center font-bold text-[36px] leading-[54px] font-noto self-stretch">お気に入り</h1>

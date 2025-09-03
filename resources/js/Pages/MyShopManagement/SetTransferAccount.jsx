@@ -95,7 +95,7 @@ const SetTransferAccount = ({ bankAccount = null }) => {
                                     placeholder="銀行名を入力"
                                 />
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M6.5752 1.77637L16.2985 11.4997L6.5752 21.2229" stroke="#363636" stroke-width="2.1" />
+                                    <path d="M6.5752 1.77637L16.2985 11.4997L6.5752 21.2229" stroke="#363636" strokeWidth="2.1" />
                                 </svg>
                             </div>
                         </div>
@@ -199,7 +199,7 @@ const SetTransferAccount = ({ bankAccount = null }) => {
                                         placeholder="銀行名を入力"
                                     />
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M6.5752 1.77637L16.2985 11.4997L6.5752 21.2229" stroke="#363636" stroke-width="2.1" />
+                                        <path d="M6.5752 1.77637L16.2985 11.4997L6.5752 21.2229" stroke="#363636" strokeWidth="2.1" />
                                     </svg>
                                 </div>
                             </div>
