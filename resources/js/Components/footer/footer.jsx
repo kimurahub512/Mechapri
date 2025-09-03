@@ -41,7 +41,7 @@ const Footer = () => {
             </a>
           </div>
           <div className="flex flex-col items-start" style={{...responsivePositionD(0, 813), gap: vwd(32)}}>
-            <a href='/beginner' style={{...responsiveTextD(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>出品をはじめる</a>
+            <a href='/beginner' style={{...responsiveTextD(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>かんたん出品ガイド</a>
           </div>
           <div className="flex flex-col items-start" style={{...responsivePositionD(0, 1018), gap: vwd(32)}}>
             <div className="flex flex-col" style={{gap: vwd(12)}}>
@@ -142,7 +142,7 @@ const Footer = () => {
             </a>
           </div>
           <div className="flex flex-col items-start" style={{...responsivePosition(96, 9), gap: vw(32)}}>
-            <a href='/beginner' style={{...responsiveText(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>出品をはじめる</a>
+            <a href='/beginner' style={{...responsiveText(16, 26, 0.8, 'bold', 'noto', '#FFF')}}>かんたん出品ガイド</a>
           </div>
           <div className="flex flex-col items-start" style={{...responsivePosition(96, 183), gap: vw(32), width: vw(152)}}>            
             <div className="flex flex-col" style={{gap: vw(12)}}>
@@ -244,7 +244,7 @@ const Footer = () => {
             alt="Favorites"
             style={{ ...responsiveMetric(20, 20) }}
           />
-          <a href='/favoriteproducts' style={{ height: vw(26), ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>お気に入り</a>
+          <div style={{ height: vw(26), ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>お気に入り</div>
         </a>
 
         {/* Purchase History */}
@@ -254,7 +254,7 @@ const Footer = () => {
             alt="History"
             style={{ ...responsiveMetric(20, 20) }}
           />
-          <a href='/purchasehistory' style={{ ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>購入履歴</a>
+          <div style={{ ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>購入履歴</div>
         </a>
 
         {/* Cart */}
@@ -283,7 +283,7 @@ const Footer = () => {
             alt="Account"
             style={{ ...responsiveMetric(20, 20) }}
           />
-          <a href='/accountsetting' style={{ height: vw(26), ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>アカウント</a>
+          <div style={{ height: vw(26), ...responsiveText(10, 26, null, 'medium', 'noto', '#363636') }}>アカウント</div>
         </a>
       </div>
     </footer>

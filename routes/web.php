@@ -353,6 +353,7 @@ Route::post('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccou
         
     Route::get('/shoptop', [App\Http\Controllers\ShopTopController::class, 'index'])->name('shoptop');
     Route::get('/shop-newproducts', [App\Http\Controllers\ShopNewProductsController::class, 'index'])->name('shop.newproducts');
+    Route::get('/shop-newproducts/{userId}', [App\Http\Controllers\ShopNewProductsController::class, 'show'])->name('shop.newproducts.user');
 
     Route::get('/shop-newcategory/{categoryId}', [App\Http\Controllers\ShopNewCategoryController::class, 'show'])->name('shop.newcategory');
     

@@ -22,22 +22,22 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
     useEffect(() => {
         console.log('focusPurchaseId:', focusPurchaseId);
         console.log('purchases:', purchases);
-        
+
         if (focusPurchaseId) {
             const p = purchases.find((x) => String(x.id) === String(focusPurchaseId));
             console.log('Found purchase:', p);
-            
+
             if (p) {
                 console.log('Purchase details:', p);
                 console.log('nwps_reservation_no:', p.nwps_reservation_no);
                 console.log('nwps_upload_status:', p.nwps_upload_status);
-                
+
                 setSelectedPurchase(p);
                 // Show overlay if NWPS is processing or not ready yet
                 const shouldShowProgress = p.nwps_upload_status === 'processing' || (!p.nwps_reservation_no && p.nwps_upload_status !== 'ready');
                 console.log('shouldShowProgress:', shouldShowProgress);
                 setShowProgress(shouldShowProgress);
-                
+
                 // Only show QR modal if NWPS is ready
                 if (!shouldShowProgress) {
                     setShowQrModal(true);
@@ -112,51 +112,56 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
 
                         {/* Frame 12 */}
                         <div className="flex flex-col items-start self-stretch">
-                            {/* Favorite Products Content */}
                             {/*frame 121, 122, 123 */}
-                            {purchases.map((p) => (
-                                <div key={p.id} className="flex pt-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] relative">
-                                    <div className="flex w-[112px] h-[112px] p-[2.205px_19.843px_1.323px_19.843px] justify-center items-center rounded-[4.409px] bg-[#F6F6F6]">
-                                        <img src={p.product.image || photo1} alt="notification" />
-                                    </div>
-                                    {/* Info Block */}
-                                    <div className="flex flex-col justify-between items-start flex-1 gap-y-2">
-                                        {/* 1211: Title&Badge and User Info stacked */}
-                                        <div className="flex flex-col pb-[18px]">
-                                            {/* Title & Badge */}
-                                            <div className="inline-flex items-center gap-2">
-                                                <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-noto">{p.product.title}</span>
-                                                <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[13px] leading-[15px] font-noto">3枚セット</span>
-                                            </div>
-                                            {/* 12121: User Info */}
-                                            <div className="inline-flex h-[32px] p-[6px_0] flex-row items-center flex-shrink-0 rounded-[3px]">
-                                                <img src={p.product.user.image || defaultUser} alt="user" className="w-[24px] h-[24px] flex-shrink-0 rounded-full object-cover bg-gray-200" />
-                                                <span className="ml-2 text-[#222] font-noto text-[16px] leading-[22px] font-normal">{p.product.user.name}</span>
-                                            </div>
-                                            {/* 12122: User Info */}
-                                            <div className="inline-flex pt-[6px] flex-row items-center rounded-[3px]">
-                                                <div className="text-[#363636] font-medium text-[14px] leading-[25px] font-noto">
-                                                    <span className="block">枚数：{p.cnt}</span>
-                                                    <span className="block">購入金額： {p.price}円</span>
-                                                    <span className="block">ユーザー番号：{p.nwps_user_code || p.product.nwps_user_code || '発行中...'}</span>
-                                                    <span className="block">印刷期限：{p.print_expires_at || ''}まで</span>
+
+                            {purchases.length === 0 ? (
+                                <div className="text-center py-12 w-full">
+                                    <p className="text-[#363636] text-lg">購入履歴がありません</p>
+                                </div>
+                            ) : (
+                                purchases.map((p) => (
+                                    <div key={p.id} className="flex pt-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] relative">
+                                        <div className="flex w-[112px] h-[112px] p-[2.205px_19.843px_1.323px_19.843px] justify-center items-center rounded-[4.409px] bg-[#F6F6F6]">
+                                            <img src={p.product.image || photo1} alt="notification" />
+                                        </div>
+                                        {/* Info Block */}
+                                        <div className="flex flex-col justify-between items-start flex-1 gap-y-2">
+                                            {/* 1211: Title&Badge and User Info stacked */}
+                                            <div className="flex flex-col pb-[18px]">
+                                                {/* Title & Badge */}
+                                                <div className="inline-flex items-center gap-2">
+                                                    <span className="text-[#363636] font-medium text-[21px] leading-[31.5px] font-noto">{p.product.title}</span>
+                                                    <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[13px] leading-[15px] font-noto">3枚セット</span>
+                                                </div>
+                                                {/* 12121: User Info */}
+                                                <div className="inline-flex h-[32px] p-[6px_0] flex-row items-center flex-shrink-0 rounded-[3px]">
+                                                    <img src={p.product.user.image || defaultUser} alt="user" className="w-[24px] h-[24px] flex-shrink-0 rounded-full object-cover bg-gray-200" />
+                                                    <span className="ml-2 text-[#222] font-noto text-[16px] leading-[22px] font-normal">{p.product.user.name}</span>
+                                                </div>
+                                                {/* 12122: User Info */}
+                                                <div className="inline-flex pt-[6px] flex-row items-center rounded-[3px]">
+                                                    <div className="text-[#363636] font-medium text-[14px] leading-[25px] font-noto">
+                                                        <span className="block">枚数：{p.cnt}</span>
+                                                        <span className="block">購入金額： {p.price}円</span>
+                                                        <span className="block">ユーザー番号：{p.nwps_user_code || p.product.nwps_user_code || '発行中...'}</span>
+                                                        <span className="block">印刷期限：{p.print_expires_at || ''}まで</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        {/* 1213: Date and Favorite */}
+                                        <div className="inline-flex flex-col items-center gap-[10px] mt-[2px] mr-[62px]">
+                                            <span className="text-[#363636] font-noto font-medium text-[14px] leading-[25.2px]">{p.purchase_time}に購入</span>
+                                            <button
+                                                onClick={() => handleQrButtonClick(p)}
+                                                className="inline-flex h-[34px] px-[16px] py-0 items-center gap-[8px] flex-shrink-0 rounded-[5px] border border-[#FF2AA1] bg-white cursor-pointer hover:bg-gray-50"
+                                            >
+                                                <img src={qr} alt="QR" className="w-[17px] h-[15.867px] flex-shrink-0" />
+                                                <span className="text-[#E862CB] mt-[-2px] font-noto font-bold text-[12px] leading-[21px]">QRコードを表示</span>
+                                            </button>
+                                        </div>
                                     </div>
-                                    {/* 1213: Date and Favorite */}
-                                    <div className="inline-flex flex-col items-center gap-[10px] mt-[2px] mr-[62px]">
-                                        <span className="text-[#363636] font-noto font-medium text-[14px] leading-[25.2px]">{p.purchase_time}に購入</span>
-                                        <button
-                                            onClick={() => handleQrButtonClick(p)}
-                                            className="inline-flex h-[34px] px-[16px] py-0 items-center gap-[8px] flex-shrink-0 rounded-[5px] border border-[#FF2AA1] bg-white cursor-pointer hover:bg-gray-50"
-                                        >
-                                            <img src={qr} alt="QR" className="w-[17px] h-[15.867px] flex-shrink-0" />
-                                            <span className="text-[#E862CB] mt-[-2px] font-noto font-bold text-[12px] leading-[21px]">QRコードを表示</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
+                                )))}
 
 
                         </div>
@@ -225,11 +230,11 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                     <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex flex-col items-center z-40 gap-6 md:pt-[200px] pt-[150px]">
                         <span className="text-white text-[22px] md:text-[46px] font-bold font-noto">購入が完了しました！</span>
                         <span className="text-white text-[16px] md:text-[24px] font-normal font-noto">QRコード発行していますのでお待ち下さい</span>
-                        <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            width="70" 
-                            height="20" 
-                            viewBox="0 0 70 20" 
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="70"
+                            height="20"
+                            viewBox="0 0 70 20"
                             fill="none"
                         >
                             <style>
@@ -248,29 +253,29 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                                     }
                                 `}
                             </style>
-                            <circle 
-                                cx="8" 
-                                cy="10" 
-                                r="8" 
-                                fill="white" 
+                            <circle
+                                cx="8"
+                                cy="10"
+                                r="8"
+                                fill="white"
                                 style={{
                                     animation: 'dot1 1.2s ease-in-out infinite'
                                 }}
                             />
-                            <circle 
-                                cx="34" 
-                                cy="10" 
-                                r="8" 
-                                fill="white" 
+                            <circle
+                                cx="34"
+                                cy="10"
+                                r="8"
+                                fill="white"
                                 style={{
                                     animation: 'dot2 1.2s ease-in-out infinite'
                                 }}
                             />
-                            <circle 
-                                cx="60" 
-                                cy="10" 
-                                r="8" 
-                                fill="white" 
+                            <circle
+                                cx="60"
+                                cy="10"
+                                r="8"
+                                fill="white"
                                 style={{
                                     animation: 'dot3 1.2s ease-in-out infinite'
                                 }}

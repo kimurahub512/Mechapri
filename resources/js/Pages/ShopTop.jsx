@@ -15,10 +15,41 @@ import { vwd, vw, responsiveTextD, responsiveText, vwR, responsiveMetricR, respo
 
 const ShopTop = () => {
     const { shopData, latestProducts, categoryProducts, auth } = usePage().props;
-    console.log('categoryProducts', categoryProducts);
-
+    
     // Check if current user has favorited this shop
     const isFavorited = shopData?.is_favorited_by_current_user || false;
+    
+    // Check if user is viewing their own shop
+    const isOwnShop = auth?.user && auth.user.id === shopData?.id;
+    
+    // Generate the correct link for "最新の出品"
+    const getNewProductsLink = () => {
+        if (isOwnShop) {
+            return '/shop-newproducts';
+        } else {
+            return `/shop-newproducts/${shopData?.id}`;
+        }
+    };
+
+    // Transform products to have correct badge structure
+    const transformProducts = (products) => {
+        if (!products || !Array.isArray(products)) return [];
+        
+        return products.map(product => {
+            // ShopTop products now have correct badges array from backend
+            // No transformation needed - just return the product as is
+            return product;
+        });
+    };
+
+    // Transform latest products
+    const transformedLatestProducts = transformProducts(latestProducts);
+    
+    // Transform category products
+    const transformedCategoryProducts = categoryProducts?.map(categorySection => ({
+        ...categorySection,
+        products: transformProducts(categorySection.products)
+    })) || [];
     return (
         <div className="bg-white">
             <Header />
@@ -78,20 +109,20 @@ const ShopTop = () => {
                 {/* Frame 12 */}
                 <div className="flex flex-col items-start w-full" style={{ gap: vw(8) }}>
                     {/* 211: 最新の出品 + arrow */}
-                    <div className="flex items-center w-full" style={{ paddingTop: vw(12), paddingBottom: vw(6), gap: vw(12) }}>
+                    <a href={getNewProductsLink()} className="flex items-center w-full cursor-pointer hover:opacity-80 transition-opacity" style={{ paddingTop: vw(12), paddingBottom: vw(6), gap: vw(12) }}>
                         <span style={{ ...responsiveText(16, 16, null, 'bold', 'noto', '#363636') }}>最新の出品</span>
                         <img src={arrow_right} alt="arrow right" style={{ width: vw(20), height: vw(20) }} />
-                    </div>
+                    </a>
                     {/* 212: Product List */}
                     <ProductCarousel
-                        products={latestProducts || []}
+                        products={transformedLatestProducts}
                         isMobile={true}
                         horizontalScroll={true}
                         currentUserId={auth?.user?.id}
                     />
                 </div>
                 {/* Category Sections */}
-                {categoryProducts.length ? (categoryProducts.map((categorySection, index) => (
+                {transformedCategoryProducts.length ? (transformedCategoryProducts.map((categorySection, index) => (
                     <div key={categorySection.category.id} className="flex flex-col items-start w-full" style={{ gap: vw(8) }}>
                         {/* 211: Category Title + arrow */}
                         <a href={`/shop-newcategory/${categorySection.category.id}`} className="flex items-center w-full cursor-pointer hover:opacity-80 transition-opacity" style={{ paddingTop: vw(12), paddingBottom: vw(6), gap: vw(12) }}>
@@ -163,20 +194,20 @@ const ShopTop = () => {
             <section className="hidden md:flex flex-col items-start w-full bg-white pt-[130px]" style={{ paddingTop: vwd(80), paddingBottom: vwd(80), paddingLeft: vwd(120)}}>
                 <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                     {/* 211: 最新の出品 + arrow */}
-                    <a href='/shop-newproducts' className="flex items-center" style={{ width: vwd(277), paddingTop: vwd(25), paddingRight: 0, paddingBottom: vwd(6), paddingLeft: 0, gap: vwd(12) }}>
+                    <a href={getNewProductsLink()} className="flex items-center" style={{ width: vwd(277), paddingTop: vwd(25), paddingRight: 0, paddingBottom: vwd(6), paddingLeft: 0, gap: vwd(12) }}>
                         <span className="text-[#000] font-noto font-bold" style={{ ...responsiveTextD(24, 24, null, 'bold', 'noto', '#000'), letterSpacing: vwd(1.05) }}>最新の出品</span>
                         <img src={arrow_right} alt="arrow right" style={{ width: vwd(24), height: vwd(24) }} />
                     </a>
                     {/* 212: Product List */}
                     <ProductCarousel
-                        products={latestProducts || []}
+                        products={transformedLatestProducts}
                         isMobile={false}
                         horizontalScroll={true}
                         currentUserId={auth?.user?.id}
                     />
                 </div>
                 {/* Category Sections */}
-                {categoryProducts?.length > 0 ? (categoryProducts.map((categorySection, index) => (
+                {transformedCategoryProducts?.length > 0 ? (transformedCategoryProducts.map((categorySection, index) => (
                     <div key={categorySection.category.id} className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                         {/* 211: Category Title + arrow */}
                         <a href={`/shop-newcategory/${categorySection.category.id}`} className="flex items-center cursor-pointer hover:opacity-80 transition-opacity" style={{ width: vwd(277), paddingTop: vwd(25), paddingRight: 0, paddingBottom: vwd(6), paddingLeft: 0, gap: vwd(12) }}>

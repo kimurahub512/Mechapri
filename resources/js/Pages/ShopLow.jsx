@@ -16,7 +16,7 @@ import arrow_right from '@/assets/images/arrow_right.svg';
 import arrow_left from '@/assets/images/arrow_left.svg';
 import recyclebin from '@/assets/images/recyclebin.svg';
 import pencil_line_black from '@/assets/images/pencil_line_black.svg';
-import share from '@/assets/images/share.svg';
+import share from '@/assets/images/share.png';
 
 // Add this above the return statement in the shoptop component
 const products = [

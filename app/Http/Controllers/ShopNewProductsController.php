@@ -13,11 +13,71 @@ class ShopNewProductsController extends Controller
 {
     public function index(): Response
     {
-        // Get all public product batches with files, ordered by creation date (newest first)
+        // Get all product batches for the current user, ordered by creation date (newest first)
         $currentUser = auth()->user();
         $productBatches = ProductBatch::with(['files' => function($query) {
                 $query->orderBy('sort_order');
             }])
+            ->where('user_id', $currentUser->id)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function($batch) use ($currentUser) {
+                // Calculate time duration from registration
+                $createdAt = Carbon::parse($batch->created_at)->startOfDay();
+                $now = Carbon::now()->startOfDay();
+                $totalDays = $createdAt->diffInDays($now);
+
+                // Format the time duration
+                $badge1 = '';
+                $badge2 = '以内';
+
+                if ($totalDays >= 365) {
+                    $badge1 = (int)($totalDays / 365) . '年';
+                } elseif ($totalDays >= 30) {
+                    $badge1 = (int)($totalDays / 30) . 'ヶ月';
+                } else {
+                    $badge1 = $totalDays . '日';
+                }
+
+                // Get watermarked images for unpurchased products
+                $watermarkedImages = $batch->getWatermarkedImages($currentUser);
+
+                return [
+                    'id' => $batch->id,
+                    'title' => $batch->title,
+                    'description' => $batch->description,
+                    'price' => $batch->price,
+                    'image_cnt' => $batch->image_cnt,
+                    'display_mode' => $batch->display_mode,
+                    'sales_deadline' => $batch->sales_deadline ? $batch->sales_deadline->format('Y-m-d') : null,
+                    'sales_limit' => $batch->sales_limit,
+                    'created_at' => $batch->created_at->format('Y-m-d H:i:s'),
+                    'badge1' => $badge1,
+                    'badge2' => $badge2,
+                    'user' => [
+                        'id' => $batch->user->id,
+                        'name' => $batch->user->name,
+                        'image' => $batch->user->image,
+                        'shop_title' => $batch->user->shop_title,
+                        'follower_count' => $batch->user->favoritedBy()->count(),
+                    ],
+                    'files' => $watermarkedImages,
+                ];
+            });
+
+        return Inertia::render('ShopNewProducts', [
+            'productBatches' => $productBatches,
+        ]);
+    }
+
+    public function show($userId): Response
+    {
+        // Get all public product batches for a specific user
+        $currentUser = auth()->user();
+        $productBatches = ProductBatch::with(['files' => function($query) {
+                $query->orderBy('sort_order');
+            }])
+            ->where('user_id', $userId)
             ->where('is_public', true)
             ->orderBy('created_at', 'desc')
             ->get()

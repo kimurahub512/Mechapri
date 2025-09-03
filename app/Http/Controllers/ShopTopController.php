@@ -216,7 +216,19 @@ class ShopTopController extends Controller
         // Get watermarked images for unpurchased products
         $watermarkedImages = $batch->getWatermarkedImages($currentUser);
         $mainImage = $watermarkedImages[0] ?? null;
-        $additionalImages = array_slice($watermarkedImages, 1, 3);
+        
+        // For badges, we need to show images based on the total count
+        $badgeImages = [];
+        if (count($watermarkedImages) === 1) {
+            // 1 image product: show the main image as badge
+            $badgeImages = [$watermarkedImages[0]];
+        } else if (count($watermarkedImages) === 2) {
+            // 2 image product: show both images as badges
+            $badgeImages = $watermarkedImages;
+        } else if (count($watermarkedImages) > 2) {
+            // 3+ image product: show first 3 images as badges
+            $badgeImages = array_slice($watermarkedImages, 0, 3);
+        }
         
         // Calculate time duration from registration
         $createdAt = \Carbon\Carbon::parse($batch->created_at)->startOfDay();
@@ -240,7 +252,7 @@ class ShopTopController extends Controller
             'user_id' => $batch->user_id,
             'title' => $batch->title,
             'image' => $mainImage ? $mainImage['url'] : null,
-            'badges' => array_map(function($img) { return $img['url']; }, $additionalImages),
+            'badges' => array_map(function($img) { return $img['url']; }, $badgeImages),
             'badgeText' => $batch->image_cnt . '枚セット',
             'price' => $batch->price == 0 ? '無料' : number_format($batch->price) . '円',
             'like' => 0, // Mock data for now

@@ -3,28 +3,22 @@ import { router, usePage } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import '@/../../resources/css/shopmanagement.css';
-import photo1 from '@/assets/images/shopcontents/photo1.jpg';
-import girl from '@/assets/images/favoriteshops/girl.svg';
-import pen from '@/assets/images/pencil_line_black.svg';
-import recyclebin from '@/assets/images/recyclebin.svg';
+
 import heart from '@/assets/images/heart_pink.svg';
-import share from '@/assets/images/share.svg';
-import complex from '@/assets/images/complex_black.svg';
-import complex_white from '@/assets/images/complex_white.svg';
+import share from '@/assets/images/share.png';
+import complex from '@/assets/images/complex_black.png';
+import complex_white from '@/assets/images/complex_white.png';
 import question from '@/assets/images/question.svg';
 import question_circle from '@/assets/images/question_circle.svg';
 import shop1 from '@/assets/images/productdetails/printshop.svg';
 import shop2 from '@/assets/images/productdetails/lawson.svg';
 import shop3 from '@/assets/images/productdetails/ministop.svg';
-import eleven from '@/assets/images/productdetails/eleven.png';
 import qr from '@/assets/images/productdetails/qr.jpg';
 import x from '@/assets/images/x_logo.svg';
-import instagram from '@/assets/images/instagram.svg';
 import favoriteshops from '@/assets/images/favoriteshop.svg';
 import favoriteshops_follow from '@/assets/images/favoriteshop_white.svg';
 import default_user from '@/assets/images/default-user.png';
 import bubble from '@/assets/images/bubble.svg';
-import question_cloud from '@/assets/images/question_cloud.svg';
 import lock from '@/assets/images/lock.svg';
 import warning from '@/assets/images/warning.svg';
 import BadgeDisplay from '@/Components/BadgeDisplay';
@@ -231,7 +225,7 @@ const PurchasedProduct = ({ product }) => {
                                 {/* 11421 */}
                                 <div className="flex flex-col items-start pl-[4px]">
                                     <div className="flex items-center gap-[4px]">
-                                        <img src={share} alt="share" className="w-[20px] h-[20px]" />
+                                        <img src={share} alt="share" className="w-[16px] h-[16px]" />
                                         <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                                     </div>
                                 </div>

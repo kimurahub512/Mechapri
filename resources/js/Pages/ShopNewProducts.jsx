@@ -21,27 +21,48 @@ import arrow_left from '@/assets/images/arrow_left.svg';
 const ShopNewProducts = () => {
     const { productBatches } = usePage().props;
 
+    const handleGoBack = () => {
+        window.history.back();
+    };
+
     // Transform productBatches to match the expected format for ProductCarousel
-    const transformedProducts = productBatches ? productBatches.map(batch => ({
-        id: batch.id,
-        title: batch.title,
-        image: batch.files && batch.files.length > 0 ? batch.files[0].url : photo1,
-        badges: batch.files && batch.files.length > 1 ? batch.files.slice(1, 4).map(file => file.url) : [photo2, photo3, photo4],
-        badgeText: `${batch.image_cnt}枚セット`,
-        price: batch.price == 0 ? '無料' : `${batch.price}円`,
-        like: 0, // We can add likes later if needed
-        badge1: batch.badge1,
-        badge2: batch.badge2,
-        display_mode: batch.display_mode,
-        user: batch.user,
-    })) : [];
+    const transformedProducts = productBatches ? productBatches.map(batch => {
+        const totalImages = batch.files ? batch.files.length : 0;
+        let badges = [];
+        
+        // Show badges based on total number of images
+        if (totalImages === 1) {
+            // 1 image product: show 1 badge (the same image)
+            badges = [batch.files[0].url];
+        } else if (totalImages === 2) {
+            // 2 image product: show 2 badges (both images)
+            badges = batch.files.map(file => file.url);
+        } else if (totalImages > 2) {
+            // More than 2 images: show up to 3 badges (first 3 images)
+            badges = batch.files.slice(0, 3).map(file => file.url);
+        }
+        
+        return {
+            id: batch.id,
+            title: batch.title,
+            image: batch.files && batch.files.length > 0 ? batch.files[0].url : photo1,
+            badges: badges,
+            badgeText: `${batch.image_cnt}枚セット`,
+            price: batch.price == 0 ? '無料' : `${batch.price}円`,
+            like: 0, // We can add likes later if needed
+            badge1: batch.badge1,
+            badge2: batch.badge2,
+            display_mode: batch.display_mode,
+            user: batch.user,
+        };
+    }) : [];
 
     return (
         <div className="bg-white">
             <Header />
             {/* Section 1 (Mobile) */}
-            <section className="flex flex-col items-start py-[32px] px-[16px] gap-[16px] w-full bg-white md:hidden ">
-                <div className="flex flex-row items-center gap-[4px] py-[4px] self-stretch">
+            <section className="flex flex-col items-start py-[32px] pt-[84px] px-[16px] gap-[16px] w-full bg-white md:hidden ">
+                <div className="flex flex-row items-center gap-[4px] py-[4px] self-stretch cursor-pointer" onClick={handleGoBack}>
                     <div className="flex flex-row items-center justify-center w-[20px] h-[15px] p-[1.25px_1px_0.625px_0.625px]">
                         <img src={arrow_left} alt="arrow left" className="w-[18.375px] h-[13.125px]" />
                     </div>
@@ -62,14 +83,14 @@ const ShopNewProducts = () => {
                 
             </section>
             {/* Section 1 (Desktop) */}
-            <section className="hidden md:flex flex-col justify-center items-start pt-[32px] pb-[80px] px-[120px] gap-[10px] bg-white ">
+            <section className="hidden md:flex flex-col justify-center items-start pt-[124px] pb-[80px] px-[120px] gap-[10px] bg-white ">
                 {/* Frame 11 */}
-                <a href="/myshop/category" className="flex flex-row items-center gap-[4px] py-[4px] self-stretch">
+                <div className="flex flex-row items-center gap-[4px] py-[4px] self-stretch cursor-pointer" onClick={handleGoBack}>
                     <div className="flex flex-row items-center justify-center w-[20px] h-[15px] p-[1.25px_1px_0.625px_0.625px]">
                         <img src={arrow_left} alt="arrow left" className="w-[18.375px] h-[13.125px]" />
                     </div>
                     <span className="text-[#000] font-noto text-[16px] font-normal leading-[24px]">ショップに戻る</span>
-                </a>
+                </div>
                 <div className="flex flex-col items-start gap-[8px] self-stretch">
                     {/* 211: 最新の出品 + arrow */}
                     <div className="flex w-[277px] py-[25px] pr-0 pb-[6px] pl-0 items-center gap-[12px]">

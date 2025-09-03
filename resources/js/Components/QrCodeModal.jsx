@@ -9,7 +9,7 @@ import shop3 from '@/assets/images/productdetails/ministop.svg';
 import eleven from '@/assets/images/productdetails/eleven.png';
 import question_circle from '@/assets/images/question_circle.svg';
 import default_user from '@/assets/images/default-user.png';
-import complex_white from '@/assets/images/complex_white.svg';
+import complex_white from '@/assets/images/complex_white.png';
 import close from '@/assets/images/close_gray.svg';
 
 const QrCodeModal = ({ onClose, purchase }) => {
