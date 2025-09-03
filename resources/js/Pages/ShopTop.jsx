@@ -25,12 +25,19 @@ const ShopTop = () => {
     // Share function
     const handleShare = async () => {
         try {
-            const shopUrl = window.location.href;
-            await navigator.clipboard.writeText(shopUrl);
-            alert('ショップURLをコピーしました！');
+            const shareData = {
+                title: shopData?.name || 'Mechapuri Shop',
+                text: shopData?.shop_description || '',
+                url: window.location.href,
+            };
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                await navigator.clipboard.writeText(shareData.url);
+                alert('ショップURLをコピーしました！');
+            }
         } catch (err) {
-            console.error('Failed to copy URL:', err);
-            alert('URLのコピーに失敗しました');
+            // Ignore cancel/errors
         }
     };
 
