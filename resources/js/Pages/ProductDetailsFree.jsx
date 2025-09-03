@@ -137,7 +137,7 @@ const ProductDetailsFree = () => {
                                 <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
                                     {/* 112111 */}
                                     <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                        <img src={product?.user?.image || defaulUser} alt="user" className="w-[64px] h-[64px] rounded-full object-cover" />
+                                        <img src={product?.user?.image || defaultUser} alt="user" className="w-[64px] h-[64px] rounded-full object-cover" />
                                     </div>
                                 </div>
                                 {/* 11212 */}
@@ -355,7 +355,7 @@ const ProductDetailsFree = () => {
                                     {/* 112111 */}
                                     <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
                                         <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                            <img src={product?.user?.image || defaulUser} alt="user" className="w-[64px] h-[64px] rounded-full object-cover" />
+                                            <img src={product?.user?.image || defaultUser} alt="user" className="w-[64px] h-[64px] rounded-full object-cover" />
                                         </div>
                                     </div>
                                     <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product?.user?.name || 'User'}</span>
