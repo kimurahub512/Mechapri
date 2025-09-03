@@ -22,6 +22,18 @@ const ShopTop = () => {
     // Check if user is viewing their own shop
     const isOwnShop = auth?.user && auth.user.id === shopData?.id;
 
+    // Share function
+    const handleShare = async () => {
+        try {
+            const shopUrl = window.location.href;
+            await navigator.clipboard.writeText(shopUrl);
+            alert('ショップURLをコピーしました！');
+        } catch (err) {
+            console.error('Failed to copy URL:', err);
+            alert('URLのコピーに失敗しました');
+        }
+    };
+
     // Generate the correct link for "最新の出品"
     const getNewProductsLink = () => {
         if (isOwnShop) {
@@ -104,10 +116,13 @@ const ShopTop = () => {
                                 </>
                             ) : (
                                 <>
-                                    <div className="flex items-center gap-[4px] pr-[12px]">
+                                    <button 
+                                        onClick={handleShare}
+                                        className="flex items-center gap-[4px] pr-[12px] cursor-pointer hover:opacity-80 transition-opacity"
+                                    >
                                         <img src={share} alt="share" className="w-[16px] h-[16px]" />
                                         <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
-                                    </div>
+                                    </button>
                                     <button onClick={() => {
                                         router.visit(`/myshop/edit`);
                                     }}
@@ -205,10 +220,13 @@ const ShopTop = () => {
                                 </>
                             ) : (
                                 <>
-                                    <div className="flex items-center gap-[4px] pr-[16px]">
+                                    <button 
+                                        onClick={handleShare}
+                                        className="flex items-center gap-[4px] pr-[16px] cursor-pointer hover:opacity-80 transition-opacity"
+                                    >
                                         <img src={share} alt="share" className="w-[16px] h-[16px]" />
                                         <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
-                                    </div>
+                                    </button>
                                     <button onClick={() => {
                                         router.visit(`/myshop/edit`);
                                     }}
