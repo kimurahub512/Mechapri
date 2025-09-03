@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { usePage } from '@inertiajs/react';
+import { usePage, router } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import ProductCarousel from '@/Components/ProductCarousel';
 import FavoriteShopButton from '@/Components/FavoriteShopButton';
 import '@/../../resources/css/shopmanagement.css';
 import default_user from '@/assets/images/default-user.png';
-import instagram from '@/assets/images/instagram.svg';
+import share from '@/assets/images/share.png';
 import x from '@/assets/images/x_logo.svg';
 import favoriteshop from '@/assets/images/favoriteshop.svg';
 import arrow_right from '@/assets/images/arrow_right.svg';
@@ -15,13 +15,13 @@ import { vwd, vw, responsiveTextD, responsiveText, vwR, responsiveMetricR, respo
 
 const ShopTop = () => {
     const { shopData, latestProducts, categoryProducts, auth } = usePage().props;
-    
+
     // Check if current user has favorited this shop
     const isFavorited = shopData?.is_favorited_by_current_user || false;
-    
+
     // Check if user is viewing their own shop
     const isOwnShop = auth?.user && auth.user.id === shopData?.id;
-    
+
     // Generate the correct link for "最新の出品"
     const getNewProductsLink = () => {
         if (isOwnShop) {
@@ -34,7 +34,7 @@ const ShopTop = () => {
     // Transform products to have correct badge structure
     const transformProducts = (products) => {
         if (!products || !Array.isArray(products)) return [];
-        
+
         return products.map(product => {
             // ShopTop products now have correct badges array from backend
             // No transformation needed - just return the product as is
@@ -44,7 +44,7 @@ const ShopTop = () => {
 
     // Transform latest products
     const transformedLatestProducts = transformProducts(latestProducts);
-    
+
     // Transform category products
     const transformedCategoryProducts = categoryProducts?.map(categorySection => ({
         ...categorySection,
@@ -88,15 +88,34 @@ const ShopTop = () => {
                         </div>
                         {/* 1112 */}
                         <div className="flex justify-end items-center self-stretch" style={{ gap: vw(8) }}>
-                            <span style={{ ...responsiveText(16, 16, null, 'normal', 'noto', '#000') }}>{shopData?.follower_count || 0}人が登録</span>
-                            {/* 11121: Follow button */}
-                            <FavoriteShopButton
-                                shopUserId={shopData?.id}
-                                initialIsFavorited={isFavorited}
-                                isMobile={true}
-                                refreshOnToggle={true}
-                                disable={auth?.user && auth.user.id === shopData?.id}
-                            />
+
+                            {auth?.user && auth.user.id !== shopData?.id ? (
+                                <>
+                                    <span style={{ ...responsiveText(16, 16, null, 'normal', 'noto', '#000') }}>
+                                        {shopData?.follower_count || 0}人が登録
+                                    </span>
+                                    <FavoriteShopButton
+                                        shopUserId={shopData?.id}
+                                        initialIsFavorited={isFavorited}
+                                        isMobile={true}
+                                        refreshOnToggle={true}
+                                        disable={auth?.user && auth.user.id === shopData?.id}
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    <div className="flex items-center gap-[4px] pr-[12px]">
+                                        <img src={share} alt="share" className="w-[16px] h-[16px]" />
+                                        <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
+                                    </div>
+                                    <button onClick={() => {
+                                        router.visit(`/myshop/edit`);
+                                    }}
+                                    className="flex items-center justify-center w-[144px] h-[34px] rounded-[5px] border-[1px] border-[#E862CB]">
+                                        <span className="text-[#E862CB] font-noto text-[12px] font-bold leading-[18px]">ショップ情報編集</span>
+                                    </button>
+                                </>
+                            )}
                         </div>
                         {/* 112: Description */}
                         <div className="flex flex-col items-start self-stretch" style={{ maxWidth: vw(1248) }}>
@@ -170,15 +189,34 @@ const ShopTop = () => {
                     </div>
                     {/* 115: Follower count + 1151 */}
                     <div className="absolute inline-flex items-center" style={{ top: vwd(106), right: vwd(16), gap: vwd(8) }}>
-                        <span className="text-[#000] font-noto font-normal" style={{ ...responsiveTextD(16, 16, null, 'normal', 'noto', '#000') }}>{shopData?.follower_count || 0}人が登録</span>
-                        {/* 1151: Follow button */}
-                        <FavoriteShopButton
-                            shopUserId={shopData?.id}
-                            initialIsFavorited={isFavorited}
-                            isMobile={false}
-                            refreshOnToggle={true}
-                            disable={auth?.user && auth.user.id === shopData?.id}
-                        />
+                        
+                    {auth?.user && auth.user.id !== shopData?.id ? (
+                                <>
+                                    <span style={{ ...responsiveTextD(16, 32, null, 'normal', 'noto', '#000') }}>
+                                        {shopData?.follower_count || 0}人が登録
+                                    </span>
+                                    <FavoriteShopButton
+                                        shopUserId={shopData?.id}
+                                        initialIsFavorited={isFavorited}
+                                        isMobile={false}
+                                        refreshOnToggle={true}
+                                        disable={auth?.user && auth.user.id === shopData?.id}
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    <div className="flex items-center gap-[4px] pr-[16px]">
+                                        <img src={share} alt="share" className="w-[16px] h-[16px]" />
+                                        <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
+                                    </div>
+                                    <button onClick={() => {
+                                        router.visit(`/myshop/edit`);
+                                    }}
+                                    className="flex items-center justify-center w-[165px] h-[34px] rounded-[5px] border-[1px] border-[#E862CB]">
+                                        <span className="text-[#E862CB] font-noto text-[14px] font-bold leading-[22px]">ショップ情報編集</span>
+                                    </button>
+                                </>
+                            )}
                     </div>
                     {/* 116: Description */}
                     <div className="absolute flex flex-col items-start self-stretch" style={{ top: vwd(194), left: vwd(16), maxWidth: vwd(1248) }}>
@@ -191,7 +229,7 @@ const ShopTop = () => {
                 </div>
             </section>
             {/* Section 2 (Desktop) */}
-            <section className="hidden md:flex flex-col items-start w-full bg-white pt-[130px]" style={{ paddingTop: vwd(80), paddingBottom: vwd(80), paddingLeft: vwd(120)}}>
+            <section className="hidden md:flex flex-col items-start w-full bg-white pt-[130px]" style={{ paddingTop: vwd(80), paddingBottom: vwd(80), paddingLeft: vwd(120) }}>
                 <div className="flex flex-col items-start self-stretch" style={{ gap: vwd(8) }}>
                     {/* 211: 最新の出品 + arrow */}
                     <a href={getNewProductsLink()} className="flex items-center" style={{ width: vwd(277), paddingTop: vwd(25), paddingRight: 0, paddingBottom: vwd(6), paddingLeft: 0, gap: vwd(12) }}>

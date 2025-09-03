@@ -3,6 +3,7 @@ import { router, usePage } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import BadgeDisplay from '@/Components/BadgeDisplay';
+import RankingSection from '@/Components/RankingSection';
 import '@/../../resources/css/shopmanagement.css';
 import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 import girl from '@/assets/images/favoriteshops/girl.svg';
@@ -222,7 +223,7 @@ const UnpurchasedProduct = ({ product }) => {
                                 {/* 11421 */}
                                 <div className="flex flex-col items-start pl-[4px]">
                                     <div className="flex items-center gap-[4px]">
-                                        <img src={share} alt="share" className="w-[20px] h-[20px]" />
+                                        <img src={share} alt="share" className="w-[16px] h-[16px]" />
                                         <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                                     </div>
                                 </div>
@@ -492,43 +493,7 @@ const UnpurchasedProduct = ({ product }) => {
                             </div>
                         </div>
                         {/* 122: Ranking */}
-                        <div className="flex flex-col items-start w-[960px] px-[66px] py-[32px] gap-[10px] bg-white rounded-[24px] shadow-[0_2px_8px_0_rgba(0,0,0,0.10)]">
-                            {/* 1221: Ranking title and list */}
-                            <div className="flex flex-col items-start gap-[16px] w-full">
-                                <span className="text-[#000] font-noto text-[24px] font-bold leading-[37.8px] tracking-[1.05px]">ランキング</span>
-                                {/* 12211: Ranking list */}
-                                <div className="flex flex-col items-start gap-[24px] w-full">
-                                    {product.top_buyers.map((buyer, index) => (
-                                        <div key={index} className="flex w-[784px] pb-[16px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[24px]">
-                                            <div className="flex flex-col items-center pb-[12px]">
-                                                    <span className={`font-noto font-bold ${
-                                                        index === 0 ? 'text-[36px] leading-[54px]' :
-                                                        index <= 2 ? 'text-[28px] leading-[42px]' :
-                                                        'text-[24px] leading-[24px]'
-                                                    } ${index <= 2 ? 'text-[#AB31D3]' : 'text-[#222]'}`}>
-                                                        {index + 1}
-                                                    </span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[16px] w-[82px] h-[66px] min-w-[64px] min-h-[48px]">
-                                                    <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
-                                                            <img src={buyer.user.image || default_user} alt={buyer.user.name} className="w-[64px] h-[64px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[158px] pr-[62px]">
-                                                        <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{buyer.user.name}</span>
-                                                </div>
-                                                    <div className="flex flex-col items-end">
-                                                        <span className="text-[#767676] font-noto text-[14px] font-bold leading-[21px]">{buyer.total_quantity}点</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                            </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
+                        <RankingSection topBuyers={product.top_buyers} isMobile={false} />
                     </section>
                 </div>
             </main>
@@ -689,7 +654,7 @@ const UnpurchasedProduct = ({ product }) => {
                             <div className="flex items-center w-full">
                                 {/* 11321: Share */}
                                 <div className="flex items-center gap-[4px]">
-                                    <img src={share} alt="share" className="w-[20px] h-[20px]" />
+                                    <img src={share} alt="share" className="w-[16px] h-[16px]" />
                                     <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                                 </div>
                                 {/* 11322: Print count */}
@@ -878,9 +843,9 @@ const UnpurchasedProduct = ({ product }) => {
                                     >
                                         <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-noto whitespace-nowrap">すぐにプリントコード購入</span>
                                     </button>
-                                    </div>
                                 </div>
-                                
+                            </div>
+                            
                             {/* 1216: Explanation section */}
                             <div className="flex flex-col justify-center items-center self-stretch border-t mt-[24px]" style={{ borderTop: '1px solid #E9E9E9' }}>
                                 {/* 12161 */}
@@ -934,43 +899,7 @@ const UnpurchasedProduct = ({ product }) => {
                             </div>
                         </div>
                         {/* 122: Ranking */}
-                        <div className="flex flex-col items-start w-full px-[16px] py-[24px] gap-[8px] bg-white rounded-[16px] shadow-[0_2px_8px_0_rgba(0,0,0,0.10)]">
-                            {/* 1221: Ranking title and list */}
-                            <div className="flex flex-col items-start gap-[12px] w-full">
-                                <span className="text-[#000] font-noto text-[18px] font-bold leading-[24px]">ランキング</span>
-                                {/* 12211: Ranking list */}
-                                <div className="flex flex-col items-start gap-[16px] w-full">
-                                    {product.top_buyers.map((buyer, index) => (
-                                        <div key={index} className="flex w-full pb-[12px] justify-between items-center border-b border-[#D1D1D1]">
-                                        <div className="flex items-center gap-[16px]">
-                                            <div className="flex flex-col items-center pb-[8px]">
-                                                    <span className={`font-noto font-bold ${
-                                                        index === 0 ? 'text-[24px] leading-[32px]' :
-                                                        index <= 2 ? 'text-[20px] leading-[28px]' :
-                                                        'text-[18px] leading-[24px]'
-                                                    } ${index <= 2 ? 'text-[#AB31D3]' : 'text-[#222]'}`}>
-                                                        {index + 1}
-                                                    </span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <div className="flex flex-col items-start pr-[12px] w-[60px] h-[50px] min-w-[48px] min-h-[36px]">
-                                                    <div className="flex w-[48px] h-[48px] justify-center items-center flex-shrink-0">
-                                                            <img src={buyer.user.image || default_user} alt={buyer.user.name} className="w-[48px] h-[48px] rounded-full object-cover" />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col items-start w-[120px] pr-[40px]">
-                                                        <span className="text-[#000] font-noto text-[16px] font-bold leading-[24px]">{buyer.user.name}</span>
-                                                </div>
-                                                    <div className="flex flex-col items-end">
-                                                        <span className="text-[#767676] font-noto text-[12px] font-bold leading-[18px]">{buyer.total_quantity}点</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                            </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
+                        <RankingSection topBuyers={product.top_buyers} isMobile={true} />
                     </section>
                 </section>
                 {/* Mobile Section 2 */}

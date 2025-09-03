@@ -13,12 +13,7 @@ const HomeLogin = ({
     purchaseHistory = [],
     recommendedProducts = []
 }) => {
-    // Debug logging to check if props are received
-    console.log('HomeLogin props:', {
-        favoriteShopsNewProducts: favoriteShopsNewProducts,
-        purchaseHistory: purchaseHistory,
-        recommendedProducts: recommendedProducts
-    });
+
     const handleProductClick = (product) => {
         router.visit(`/user/${product.user.id}/unpurchasedproduct/${product.id}`);
     };
@@ -116,7 +111,7 @@ const HomeLogin = ({
                                 onClick={() => handleProductClick(purchase)}
                             >
                                 <img
-                                    src={purchase.files?.[0]?.url ? `/storage/${purchase.files[0].file_path}` : '/default-product-image.jpg'}
+                                    src={purchase.files?.[0]?.url ? `/storage/${purchase.files[0].file_path}` : '/default-product-image.svg'}
                                     alt={purchase.title}
                                     className="w-full h-full object-cover rounded-[8.976px]"
                                 />
@@ -166,6 +161,7 @@ const HomeLogin = ({
                     <ProductCarousel
                         products={recommendedProducts}
                         isMobile={true}
+                        haveAccount={true}
                     />
                 </div> */}
                 <div className="md:hidden flex flex-col items-start gap-[8px] w-full pt-[60px]">
@@ -189,6 +185,7 @@ const HomeLogin = ({
                         <ProductCarousel
                             products={favoriteShopsNewProducts}
                             isMobile={true}
+                            haveAccount={true}
                         />
                     </div>
                 </div>
@@ -222,7 +219,7 @@ const HomeLogin = ({
                                         onClick={() => handleProductClick(purchase)}
                                     >
                                         <img
-                                            src={purchase.files?.[0]?.url ? `/storage/${purchase.files[0].file_path}` : '/default-product-image.jpg'}
+                                            src={purchase.files?.[0]?.url ? `/storage/${purchase.files[0].file_path}` : '/default-product-image.svg'}
                                             alt={purchase.title}
                                             className="w-full h-full object-cover rounded-[2.52px]"
                                         />

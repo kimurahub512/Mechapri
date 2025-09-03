@@ -427,6 +427,7 @@ class ProductBatchController extends Controller
                             'image' => $purchase->user->image,
                         ],
                         'total_quantity' => $purchase->total_quantity,
+                        'pt_score' => $purchase->pt_score,
                     ];
                 }),
             ]
@@ -517,6 +518,7 @@ class ProductBatchController extends Controller
                             'image' => $purchase->user->image,
                         ],
                         'total_quantity' => $purchase->total_quantity,
+                        'pt_score' => $purchase->pt_score,
                     ];
                 }),
             ]
@@ -614,6 +616,7 @@ class ProductBatchController extends Controller
                             'image' => $purchase->user->image,
                         ],
                         'total_quantity' => $purchase->total_quantity,
+                        'pt_score' => $purchase->pt_score,
                     ];
                 }),
             ]
@@ -705,6 +708,7 @@ class ProductBatchController extends Controller
                             'image' => $purchase->user->image,
                         ],
                         'total_quantity' => $purchase->total_quantity,
+                        'pt_score' => $purchase->pt_score,
                     ];
                 }),
             ]

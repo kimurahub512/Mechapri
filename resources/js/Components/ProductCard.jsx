@@ -85,7 +85,12 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                     {/* 2121111: Main Image */}
                     <div className={`flex h-[149.489px] max-w-[157.372px] px-[26.277px] py-[2.919px] flex-col justify-center items-center flex-shrink-0 self-stretch rounded-[5.839px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
                         {product.display_mode === 'normal' ? (
-                            <img src={product.image} alt="product" className="object-cover" style={{ ...responsiveMetric(95.766, 143.65), borderRadius: vw(4) }} />
+                            <img 
+                                src={product.image || '/default-product-image.svg'} 
+                                alt="product" 
+                                className="object-cover" 
+                                style={{ ...responsiveMetric(95.766, 143.65), borderRadius: vw(4) }} 
+                            />
                         ) : product.display_mode === 'gacha' ? (
                             <div className="flex relative overflow-hidden" style={{ ...responsiveMetric(95.766, 143.65), borderRadius: vw(4) }}>
                                 <img src={product.image} alt="ガチャ" className="object-cover filter blur-[4px]" style={{ ...responsiveMetric(95.766, 143.65), borderRadius: vw(4) }} />
@@ -125,7 +130,7 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                                 </div>
                             </div>
                         ) : (
-                            <img src={product.image} alt="product" className="object-cover" style={{ ...responsiveMetric(95.766, 143.65), borderRadius: vw(4) }} />
+                            <img src={product.image || '/default-product-image.svg'} alt="product" className="object-cover" style={{ ...responsiveMetric(95.766, 143.65), borderRadius: vw(4) }} />
                         )}
                     </div>
                     {/* 2121112: Time duration badge */}
@@ -188,7 +193,12 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                 {/* 2121111: Main Image */}
                                  <div className={`flex h-[256px] max-w-[269.5px] px-[45px] py-[5px] flex-col justify-center items-center flex-shrink-0 self-stretch rounded-[10px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
                      {product.display_mode === 'normal' ? (
-                         <img src={product.image} alt="product" className="object-cover" style={{ ...responsiveMetricD(164, 246), borderRadius: vwd(4) }} />
+                         <img 
+                             src={product.image || '/default-product-image.svg'} 
+                             alt="product" 
+                             className="object-cover" 
+                             style={{ ...responsiveMetricD(164, 246), borderRadius: vwd(4) }} 
+                         />
                      ) : product.display_mode === 'gacha' ? (
                          <div className="flex relative overflow-hidden" style={{ ...responsiveMetricD(164, 246), borderRadius: vwd(12)}}>
                              <img src={product.image} alt="ガチャ" className="object-cover filter blur-[4px]" style={{ ...responsiveMetricD(164, 246), borderRadius: vwd(4) }} />
@@ -228,7 +238,7 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                              </div>
                     </div>
                      ) : (
-                        <img src={product.image} alt="product" className="w-[164px] h-[246px] flex-shrink-0 aspect-[2/3] object-cover" />
+                        <img src={product.image || '/default-product-image.svg'} alt="product" className="w-[164px] h-[246px] flex-shrink-0 aspect-[2/3] object-cover" />
                      )}
                  </div>
                 {/* 2121112: Time duration badge */}
@@ -243,8 +253,14 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
                         <div className="flex flex-col items-start gap-[8px]">
                             {haveAccount && (
                                 <div className="flex flex-row items-start gap-[5px] mb-[-8px]">
-                                    <img src={girl} alt="girl" className="w-[24px] h-[24px] rounded-full" />
-                                    <span className="flex items-center text-[#222] font-noto text-[16px] font-normal leading-[22px]">アカウント</span>
+                                    <img 
+                                        src={product.user?.image ? (product.user.image.startsWith('http') ? product.user.image : product.user.image.startsWith('/storage/') ? product.user.image : `/storage/${product.user.image}`) : girl} 
+                                        alt="user" 
+                                        className="w-[24px] h-[24px] rounded-full object-cover" 
+                                    />
+                                    <span className="flex items-center text-[#222] font-noto text-[16px] font-normal leading-[22px]">
+                                        {product.user?.shop_title || 'アカウント'}
+                                    </span>
                                 </div>
                             )}
                             <span className="flex w-[246px] h-[32px] items-center text-[#363636] font-noto text-[18px] font-bold leading-[18px]">{product.title}</span>

@@ -95,7 +95,7 @@ const ProductDetailsFree = () => {
                                 {/* 11421 */}
                                 <div className="flex flex-col items-start pl-[4px]">
                                     <div className="flex items-center gap-[4px]">
-                                        <img src={share} alt="share" className="w-[20px] h-[20px]" />
+                                        <img src={share} alt="share" className="w-[16px] h-[16px]" />
                                         <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@ const ProductDetailsFree = () => {
                                         <div className="flex items-center justify-end w-full">
                                             <img src={complex} alt="complex" className="w-[20px] h-[20px]" />
                                             <span className="text-[#767676] font-['Hiragino Sans'] text-[14px] font-medium leading-[14px] ml-[4px]">プリント実績</span>
-                                            <span className="text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">{product?.printed_count || 0}</span>
+                                            <span className="text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
                                         </div>
                                     </div>
                                 </div>
@@ -159,13 +159,13 @@ const ProductDetailsFree = () => {
                                             {/*12122112*/}
                                             <div className="relative w-[358px] h-[150px] mt-[12px]">
                                                 <img 
-                                                    src={product?.nwps_qr_code_url || qr} 
+                                                    src={qr} 
                                                     alt="qr" 
                                                     className="absolute top-0 left-0 w-[150px] h-[150px] " 
                                                 />
                                                 <span className="absolute top-[44.5px] left-[226px] text-[#000] font-noto text-[14px] font-normal leading-[21px]">ユーザー番号</span>
                                                 <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">
-                                                    {product?.nwps_user_code || '発行中...'}
+                                                    発行中...
                                                 </span>
                                             </div>
                                         </div>
@@ -380,7 +380,7 @@ const ProductDetailsFree = () => {
                         <div className="flex items-center w-full">
                             {/* 11321: Share */}
                             <div className="flex items-center gap-[4px]">
-                                <img src={share} alt="share" className="w-[20px] h-[20px]" />
+                                <img src={share} alt="share" className="w-[16px] h-[16px]" />
                                 <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
                             </div>
                             {/* 11322: Print count */}
@@ -388,7 +388,7 @@ const ProductDetailsFree = () => {
                                 <div className="flex items-center justify-end w-full">
                                     <img src={complex} alt="complex" className="w-[20px] h-[20px]" />
                                     <span className="text-[#767676] font-['Hiragino Sans'] text-[14px] font-medium leading-[14px] ml-[4px]">プリント実績</span>
-                                    <span className="w-[12px] text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">{product?.printed_count || 0}</span>
+                                    <span className="w-[12px] text-[#767676] text-right font-noto text-[14px] font-bold leading-[21px] ml-[4px]">0</span>
                                 </div>
                             </div>
                         </div>
@@ -441,13 +441,13 @@ const ProductDetailsFree = () => {
                                         {/*12122112*/}
                                         <div className="relative w-[240px] h-[100px] mt-[8px]">
                                             <img 
-                                                src={product?.nwps_qr_code_url || qr} 
+                                                src={qr} 
                                                 alt="qr" 
                                                 className="absolute top-0 left-0 w-[100px] h-[100px]" 
                                             />
                                             <span className="absolute top-[30px] left-[150px] text-[#000] font-noto text-[12px] font-normal leading-[16px]">ユーザー番号</span>
                                             <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">
-                                                {product?.nwps_user_code || '発行中...'}
+                                                発行中...
                                             </span>
                                         </div>
                                     </div>

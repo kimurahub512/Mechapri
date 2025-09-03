@@ -54,9 +54,11 @@ class UserPurchasedProduct extends Model
         return static::where('batch_id', $productId)
             ->select('user_id')
             ->selectRaw('SUM(cnt) as total_quantity')
+            ->selectRaw('SUM(price * cnt) as total_purchase_amount')
+            ->selectRaw('(SUM(cnt) * 10 + SUM(price * cnt)) as pt_score')
             ->with('user:id,name,image')
             ->groupBy('user_id')
-            ->orderByDesc('total_quantity')
+            ->orderByDesc('pt_score')
             ->limit($limit)
             ->get();
     }
