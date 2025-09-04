@@ -12,7 +12,7 @@ import default_user from '@/assets/images/default-user.png';
 import complex_white from '@/assets/images/complex_white.png';
 import close from '@/assets/images/close_gray.svg';
 
-const QrCodeModal = ({ onClose, purchase }) => {
+const QrCodeModal = ({ onClose, purchase, errorMessage = null }) => {
     // Debug logging to see what data we're getting
     console.log('QrCodeModal purchase data:', purchase);
     console.log('QR Code URL:', purchase?.nwps_qr_code_url);
@@ -57,6 +57,15 @@ const QrCodeModal = ({ onClose, purchase }) => {
                 >
                     <img src={close} alt="close" className="w-[40px] h-[40px]" />
                 </button>
+
+                {/* Error Message Display */}
+                {errorMessage && (
+                    <div className="flex flex-col items-center justify-center px-[32px] py-[16px] mx-[32px] mt-[16px] bg-red-50 border border-red-200 rounded-[8px]">
+                        <div className="text-red-600 text-center font-noto text-[16px] font-medium leading-[24px]">
+                            {errorMessage}
+                        </div>
+                    </div>
+                )}
 
                 <div className="flex pt-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[226px] mt-[32px] relative">
                     {/* <div className="flex items-center gap-[16px]"> */}
@@ -149,6 +158,15 @@ const QrCodeModal = ({ onClose, purchase }) => {
                 >
                     <img src={close} alt="close" className="w-[20px] h-[20px]" />
                 </button>
+
+                {/* Error Message Display - Mobile */}
+                {errorMessage && (
+                    <div className="flex flex-col items-center justify-center px-[16px] py-[12px] mx-[16px] mt-[12px] bg-red-50 border border-red-200 rounded-[8px]">
+                        <div className="text-red-600 text-center font-noto text-[14px] font-medium leading-[20px]">
+                            {errorMessage}
+                        </div>
+                    </div>
+                )}
                 <div className="flex flex-row pt-[16px] pb-[40px] pl-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[14px] mt-[16px] relative">
                     {/* photo1 */}
                     <div className="flex w-[64px] h-[64px] p-[1.26px_11.339px_0.756px_11.339px] justify-center items-center rounded-[2.52px] bg-[#F6F6F6]">

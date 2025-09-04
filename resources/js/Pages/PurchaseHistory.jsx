@@ -18,6 +18,7 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
     const [showQrModal, setShowQrModal] = useState(false);
     const [selectedPurchase, setSelectedPurchase] = useState(null);
     const [showProgress, setShowProgress] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     useEffect(() => {
         console.log('focusPurchaseId:', focusPurchaseId);
@@ -66,6 +67,13 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                 }
             } catch (e) {
                 console.error('Polling error:', e);
+                // Check if it's a 503 error or MOO1 maintenance error
+                if (e.response?.status === 503 || e.response?.data?.error === 'MOO1') {
+                    console.log('NWPS server error detected, finishing progress and showing QR modal');
+                    setErrorMessage('印刷サービスが応答していません。QRコードは後ほど購入履歴から取得できます。');
+                    setShowProgress(false);
+                    setShowQrModal(true);
+                }
             }
         }, 3000);
         return () => clearInterval(interval);
@@ -81,12 +89,14 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
 
     const handleQrButtonClick = (purchase) => {
         setSelectedPurchase(purchase);
+        setErrorMessage(null);
         setShowQrModal(true);
     };
 
     const handleCloseModal = () => {
         console.log('handleCloseModal called');
         setShowQrModal(false);
+        setErrorMessage(null);
     };
 
     const handleBackdropClick = (e) => {
@@ -221,7 +231,7 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                         onClick={handleBackdropClick}
                     >
                         <div onClick={(e) => e.stopPropagation()} className="flex justify-center my-8">
-                            <QrCodeModal onClose={handleCloseModal} purchase={selectedPurchase} />
+                            <QrCodeModal onClose={handleCloseModal} purchase={selectedPurchase} errorMessage={errorMessage} />
                         </div>
                     </div>
                 )}

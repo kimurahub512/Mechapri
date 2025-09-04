@@ -74,9 +74,9 @@ class ProcessProductNWPSJob implements ShouldQueue
             // Check for NWPS maintenance mode or other errors
             if (isset($login['result_code']) && $login['result_code'] === 'M001') {
                 // file_put_contents(storage_path('nwps_debug.log'), 
-                    date('Y-m-d H:i:s') . " - NWPS maintenance mode detected (M001) for product {$product->id}\n", 
-                    // FILE_APPEND
-                );
+                //     date('Y-m-d H:i:s') . " - NWPS maintenance mode detected (M001) for product {$product->id}\n", 
+                //     FILE_APPEND
+                // );
                 
                 // Mark product as failed and schedule retry
                 $product->update(['nwps_upload_status' => 'failed']);
@@ -115,9 +115,9 @@ class ProcessProductNWPSJob implements ShouldQueue
                     $fileId = $registered['file_id'] ?? $fileId;
                 } catch (\Exception $e) {
                     // file_put_contents(storage_path('nwps_debug.log'), 
-                        date('Y-m-d H:i:s') . " - File registration failed: " . $e->getMessage() . "\n", 
-                        // FILE_APPEND
-                    );
+                    //     date('Y-m-d H:i:s') . " - File registration failed: " . $e->getMessage() . "\n", 
+                    //     FILE_APPEND
+                    // );
                     //Log::info('File registration failed: ' . $e->getMessage());
                     throw $e;
                 }
@@ -125,23 +125,23 @@ class ProcessProductNWPSJob implements ShouldQueue
 
             if (!$fileId) {
                 // file_put_contents(storage_path('nwps_debug.log'), 
-                    date('Y-m-d H:i:s') . " - No file ID received from NWPS registration for product\n", 
-                    // FILE_APPEND
-                );
+                //     date('Y-m-d H:i:s') . " - No file ID received from NWPS registration for product\n", 
+                //     FILE_APPEND
+                // );
                 //Log::info('No file ID received from NWPS registration for product');
                 return;
             }
             
             // file_put_contents(storage_path('nwps_debug.log'), 
-                date('Y-m-d H:i:s') . " - Product file registration successful, file_id: {$fileId}\n", 
-                // FILE_APPEND
-            );
+            //     date('Y-m-d H:i:s') . " - Product file registration successful, file_id: {$fileId}\n", 
+            //     FILE_APPEND
+            // );
 
             // 3) Get QR code for convenience store login
             // file_put_contents(storage_path('nwps_debug.log'), 
-                date('Y-m-d H:i:s') . " - Getting QR code for product login\n", 
-                // FILE_APPEND
-            );
+            //     date('Y-m-d H:i:s') . " - Getting QR code for product login\n", 
+            //     FILE_APPEND
+            // );
             
             try {
                 $qrCodeData = $nwps->getLoginQrCode($token);
@@ -160,26 +160,26 @@ class ProcessProductNWPSJob implements ShouldQueue
                     ]);
                     
                     // file_put_contents(storage_path('nwps_debug.log'), 
-                        date('Y-m-d H:i:s') . " - Product NWPS upload completed successfully\n", 
-                        // FILE_APPEND
-                    );
+                    //     date('Y-m-d H:i:s') . " - Product NWPS upload completed successfully\n", 
+                    //     FILE_APPEND
+                    // );
                 } else {
                     // file_put_contents(storage_path('nwps_debug.log'), 
-                        date('Y-m-d H:i:s') . " - Failed to get QR code for product: " . json_encode($qrCodeData) . "\n", 
-                        // FILE_APPEND
-                    );
+                    //     date('Y-m-d H:i:s') . " - Failed to get QR code for product: " . json_encode($qrCodeData) . "\n", 
+                    //     FILE_APPEND
+                    // );
                 }
             } catch (\Exception $e) {
                 // file_put_contents(storage_path('nwps_debug.log'), 
-                    date('Y-m-d H:i:s') . " - Failed to get QR code for product: " . $e->getMessage() . "\n", 
-                    // FILE_APPEND
-                );
+                //     date('Y-m-d H:i:s') . " - Failed to get QR code for product: " . $e->getMessage() . "\n", 
+                //     FILE_APPEND
+                // );
             }
         } catch (\Throwable $e) {
             // file_put_contents(storage_path('nwps_debug.log'), 
-                date('Y-m-d H:i:s') . " - Product NWPS upload failed: " . $e->getMessage() . "\n", 
-                // FILE_APPEND
-            );
+            //     date('Y-m-d H:i:s') . " - Product NWPS upload failed: " . $e->getMessage() . "\n", 
+            //     FILE_APPEND
+            // );
             
             // Mark product as failed and schedule retry
             $product->update(['nwps_upload_status' => 'failed']);
@@ -194,17 +194,17 @@ class ProcessProductNWPSJob implements ShouldQueue
     {
         if ($this->attempts() < $this->tries) {
             // file_put_contents(storage_path('nwps_debug.log'), 
-                date('Y-m-d H:i:s') . " - Scheduling retry for product {$this->productId} (attempt {$this->attempts()}/{$this->tries})\n", 
-                // FILE_APPEND
-            );
+            //     date('Y-m-d H:i:s') . " - Scheduling retry for product {$this->productId} (attempt {$this->attempts()}/{$this->tries})\n", 
+            //     FILE_APPEND
+            // );
             
             // Schedule retry with delay
             $this->release($this->backoff);
         } else {
             // file_put_contents(storage_path('nwps_debug.log'), 
-                date('Y-m-d H:i:s') . " - Max retry attempts reached for product {$this->productId}\n", 
-                // FILE_APPEND
-            );
+            //     date('Y-m-d H:i:s') . " - Max retry attempts reached for product {$this->productId}\n", 
+            //     FILE_APPEND
+            // );
         }
     }
 }

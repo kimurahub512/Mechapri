@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import ShopSidebar from '@/Components/ShopSidebar';
@@ -12,6 +12,7 @@ const SetTransferAccount = ({ bankAccount = null }) => {
     const [showModal, setShowModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
+    const [hasChanges, setHasChanges] = useState(false);
     const [formData, setFormData] = useState({
         bank_name: bankAccount?.bank_name || '',
         account_type: bankAccount?.account_type || '普通',
@@ -20,6 +21,24 @@ const SetTransferAccount = ({ bankAccount = null }) => {
         account_holder_sei: bankAccount?.account_holder_sei || '',
         account_holder_mei: bankAccount?.account_holder_mei || '',
     });
+
+    // Check if form has changes
+    useEffect(() => {
+        const originalData = {
+            bank_name: bankAccount?.bank_name || '',
+            account_type: bankAccount?.account_type || '普通',
+            branch_code: bankAccount?.branch_code || '',
+            account_number: bankAccount?.account_number || '',
+            account_holder_sei: bankAccount?.account_holder_sei || '',
+            account_holder_mei: bankAccount?.account_holder_mei || '',
+        };
+        
+        const hasFormChanges = Object.keys(formData).some(key => {
+            return formData[key] !== originalData[key];
+        });
+        
+        setHasChanges(hasFormChanges);
+    }, [formData, bankAccount]);
 
     const handleInputChange = (field, value) => {
         setFormData(prev => ({
@@ -49,6 +68,7 @@ const SetTransferAccount = ({ bankAccount = null }) => {
 
             if (response.ok) {
                 setSubmitStatus('success');
+                setHasChanges(false); // Reset changes state after successful submission
                 // Close modal after a short delay to show success
                 setTimeout(() => {
                     setShowModal(false);
@@ -173,8 +193,8 @@ const SetTransferAccount = ({ bankAccount = null }) => {
                             </div>
                         </div>
                         <div className="flex flex-col items-center w-full">
-                            <div className="flex w-[240px] p-[17px] flex-col justify-center items-center rounded-[8px] shadow-[0px_4px_8px_0px_rgba(255, 42, 161, 0.20)] bg-[#E9EEF1] cursor-pointer" onClick={handleSubmit}>
-                                <span className="text-[#969696] text-center font-noto text-[18px] font-bold leading-[21px]">登録する</span>
+                            <div className={`flex w-[240px] p-[17px] flex-col justify-center items-center rounded-[8px] shadow-[0px_4px_8px_0px_rgba(255, 42, 161, 0.20)] ${hasChanges ? 'bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]' : 'bg-[#E9EEF1]'} ${hasChanges ? 'cursor-pointer' : 'cursor-not-allowed'}`} onClick={hasChanges ? handleSubmit : undefined}>
+                                <span className={`text-center font-noto text-[18px] font-bold leading-[21px] ${hasChanges ? 'text-white' : 'text-[#969696] opacity-60'}`}>登録する</span>
                             </div>
                         </div>
                     </div>
@@ -277,8 +297,8 @@ const SetTransferAccount = ({ bankAccount = null }) => {
                                 </div>
                             </div>
                             <div className="flex flex-col items-center w-full">
-                                <div className="flex w-full p-[17px] flex-col justify-center items-center rounded-[8px] shadow-[0px_4px_8px_0px_rgba(255, 42, 161, 0.20)] bg-[#E9EEF1] cursor-pointer" onClick={handleSubmit}>
-                                    <span className="text-[#969696] text-center font-noto text-[18px] font-bold leading-[21px]">登録する</span>
+                                <div className={`flex w-full p-[17px] flex-col justify-center items-center rounded-[8px] shadow-[0px_4px_8px_0px_rgba(255, 42, 161, 0.20)] ${hasChanges ? 'bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]' : 'bg-[#E9EEF1]'} ${hasChanges ? 'cursor-pointer' : 'cursor-not-allowed'}`} onClick={hasChanges ? handleSubmit : undefined}>
+                                    <span className={`text-center font-noto text-[18px] font-bold leading-[21px] ${hasChanges ? 'text-white' : 'text-[#969696] opacity-60'}`}>登録する</span>
                                 </div>
                             </div>
                         </div>
