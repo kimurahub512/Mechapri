@@ -37,9 +37,16 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                 console.log('nwps_upload_status:', p.nwps_upload_status);
 
                 setSelectedPurchase(p);
+                
+                // Check if NWPS is ready (has QR code URL or status is ready)
+                const hasQrCode = p.nwps_qr_code_url && p.nwps_qr_code_url.trim() !== '';
+                const isStatusReady = p.nwps_upload_status === 'ready';
+                const isReady = isStatusReady || hasQrCode;
+                
                 // Show overlay if NWPS is processing or not ready yet
-                const shouldShowProgress = p.nwps_upload_status === 'processing' || (!p.nwps_reservation_no && p.nwps_upload_status !== 'ready');
+                const shouldShowProgress = !isReady && (p.nwps_upload_status === 'processing' || p.nwps_upload_status === 'pending' || !p.nwps_upload_status);
                 console.log('shouldShowProgress:', shouldShowProgress);
+                console.log('isReady:', isReady, 'hasQrCode:', hasQrCode, 'isStatusReady:', isStatusReady);
                 setShowProgress(shouldShowProgress);
 
                 // Only show QR modal if NWPS is ready
@@ -58,13 +65,49 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
     useEffect(() => {
         if (!showProgress || !selectedPurchase?.id) return;
         console.log('Starting polling for purchase:', selectedPurchase.id);
-        const interval = setInterval(async () => {
+        
+        let pollCount = 0;
+        const maxPolls = 20; // Maximum 20 polls (60 seconds)
+        let intervalId = null;
+        
+        // Set a maximum timeout of 2 minutes as a safety net
+        const timeoutId = setTimeout(() => {
+            console.log('Polling timeout reached, forcing stop');
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+            setErrorMessage('QRコードの生成に時間がかかっています。後ほど購入履歴から取得できます。');
+            setShowProgress(false);
+            setShowQrModal(true);
+        }, 120000); // 2 minutes
+        
+        intervalId = setInterval(async () => {
+            pollCount++;
+            console.log(`Polling attempt ${pollCount}/${maxPolls} for purchase:`, selectedPurchase.id);
+            
             try {
                 const { data } = await axios.get(`/api/purchasehistory/${selectedPurchase.id}`);
                 console.log('Polling result:', data);
+                console.log('nwps_upload_status:', data.nwps_upload_status);
+                console.log('nwps_qr_code_url:', data.nwps_qr_code_url);
+                
                 setSelectedPurchase(data);
-                if (data.nwps_upload_status === 'ready') {
+                
+                // Check if NWPS is ready (has QR code URL or status is ready)
+                const isReady = data.nwps_upload_status === 'ready' || 
+                               (data.nwps_qr_code_url && data.nwps_qr_code_url.trim() !== '');
+                
+                if (isReady) {
                     console.log('NWPS ready, hiding overlay and showing QR modal');
+                    clearTimeout(timeoutId);
+                    clearInterval(intervalId);
+                    setShowProgress(false);
+                    setShowQrModal(true);
+                } else if (pollCount >= maxPolls) {
+                    console.log('Max polls reached, stopping polling and showing QR modal');
+                    clearTimeout(timeoutId);
+                    clearInterval(intervalId);
+                    setErrorMessage('QRコードの生成に時間がかかっています。後ほど購入履歴から取得できます。');
                     setShowProgress(false);
                     setShowQrModal(true);
                 }
@@ -73,13 +116,28 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                 // Check if it's a 503 error or MOO1 maintenance error
                 if (e.response?.status === 503 || e.response?.data?.error === 'MOO1') {
                     console.log('NWPS server error detected, finishing progress and showing QR modal');
+                    clearTimeout(timeoutId);
+                    clearInterval(intervalId);
                     setErrorMessage('印刷サービスが応答していません。QRコードは後ほど購入履歴から取得できます。');
+                    setShowProgress(false);
+                    setShowQrModal(true);
+                } else if (pollCount >= maxPolls) {
+                    console.log('Max polls reached with errors, stopping polling');
+                    clearTimeout(timeoutId);
+                    clearInterval(intervalId);
+                    setErrorMessage('QRコードの生成に時間がかかっています。後ほど購入履歴から取得できます。');
                     setShowProgress(false);
                     setShowQrModal(true);
                 }
             }
         }, 3000);
-        return () => clearInterval(interval);
+        
+        return () => {
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+            clearTimeout(timeoutId);
+        };
     }, [showProgress, selectedPurchase?.id]);
 
     const handleTabChange = (tabId) => {
