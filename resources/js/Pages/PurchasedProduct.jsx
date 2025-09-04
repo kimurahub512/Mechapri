@@ -397,17 +397,11 @@ const PurchasedProduct = ({ product }) => {
                                                 </div>
                                             </div>
                                             {/*12122112*/}
-                                            <div className="relative w-[358px] h-[150px] mt-[12px]">
-                                                <img
-                                                    src={product?.nwps_qr_code_url || qr}
-                                                    alt="qr"
-                                                    className="absolute top-0 left-0 w-[150px] h-[150px] "
-                                                />
-                                                <span className="absolute top-[44.5px] left-[226px] text-[#000] font-noto text-[14px] font-normal leading-[21px]">ユーザー番号</span>
-                                                <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">
-                                                    {product?.nwps_user_code || '発行中...'}
-                                                </span>
-                                            </div>
+                                            <QRCodeDisplay 
+                                                product={product} 
+                                                isMobile={false}
+                                                className="w-[358px] h-[150px] mt-[12px]"
+                                            />
                                         </div>
                                     </div>
                                     {/* 121222: Seven Eleven */}

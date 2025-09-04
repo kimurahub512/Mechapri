@@ -183,7 +183,7 @@ ${productData.title}
                                 <div className="text-[#363636] font-medium text-[14px] leading-[25px] font-noto">
                                     <span className="block">枚数：{productData?.files_count || 0}</span>
                                     <span className="block">購入金額： {productData?.price ? `${parseInt(productData.price)}円` : '0円'}</span>
-                                    <span className="block">印刷番号：{productData?.sn || (productData?.id ? `PB${productData.id.toString().padStart(6, '0')}` : 'N/A')}</span>
+                                    {/* <span className="block">印刷番号：{productData?.sn || (productData?.id ? `PB${productData.id.toString().padStart(6, '0')}` : 'N/A')}</span> */}
                                     <span className="block">販売期限：{productData?.sales_deadline ? (() => {
                                         try {
                                             const date = new Date(productData.sales_deadline);
@@ -335,7 +335,7 @@ ${productData.title}
 
                             <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">枚数：{productData?.files_count || 0}</span>
                             <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">購入金額： {productData?.price ? `${parseInt(productData.price)}円` : '0円'}</span>
-                            <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷番号：{productData?.sn || (productData?.id ? `PB${productData.id.toString().padStart(6, '0')}` : 'N/A')}</span>
+                            {/* <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">印刷番号：{productData?.sn || (productData?.id ? `PB${productData.id.toString().padStart(6, '0')}` : 'N/A')}</span> */}
                             <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">販売期限：{productData?.sales_deadline ? (() => {
                                 try {
                                     const date = new Date(productData.sales_deadline);

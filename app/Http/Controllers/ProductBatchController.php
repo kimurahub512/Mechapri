@@ -80,10 +80,8 @@ class ProductBatchController extends Controller
             
             $productBatch = $this->productBatchService->create($request->validated(), auth()->user(), $files);
 
-            // If this is a free product, trigger NWPS processing immediately
-            if ($productBatch->price == 0) {
-                \App\Jobs\ProcessFreeProductNWPSJob::dispatch($productBatch->id);
-            }
+            // Trigger NWPS processing immediately for all products
+            \App\Jobs\ProcessProductNWPSJob::dispatch($productBatch->id);
 
             return response()->json([
                 'success' => true,
@@ -419,7 +417,7 @@ class ProductBatchController extends Controller
                 // NWPS data - prioritize purchase record over product batch for free products
                 'nwps_qr_code_url' => $purchase ? $purchase->nwps_qr_code_url : $product->nwps_qr_code_url,
                 'nwps_user_code' => $purchase ? $purchase->nwps_user_code : $product->nwps_user_code,
-                'nwps_upload_status' => $purchase ? $purchase->nwps_upload_status : null,
+                'nwps_upload_status' => $purchase ? $purchase->nwps_upload_status : $product->nwps_upload_status,
                 'top_buyers' => UserPurchasedProduct::getTopBuyersForProduct($product->id)->map(function($purchase) {
                     return [
                         'user' => [
@@ -610,7 +608,7 @@ class ProductBatchController extends Controller
                 // NWPS data - prioritize purchase record over product batch for free products
                 'nwps_qr_code_url' => $purchase ? $purchase->nwps_qr_code_url : $product->nwps_qr_code_url,
                 'nwps_user_code' => $purchase ? $purchase->nwps_user_code : $product->nwps_user_code,
-                'nwps_upload_status' => $purchase ? $purchase->nwps_upload_status : null,
+                'nwps_upload_status' => $purchase ? $purchase->nwps_upload_status : $product->nwps_upload_status,
                 'top_buyers' => UserPurchasedProduct::getTopBuyersForProduct($product->id)->map(function($purchase) {
                     return [
                         'user' => [

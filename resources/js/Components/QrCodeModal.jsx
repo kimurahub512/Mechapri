@@ -208,7 +208,7 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                             alt="qr"
                                             className="absolute top-0 left-0 w-[100px] h-[100px]"
                                         />
-                                        <div className="absolute top-[30px] left-[150px] flex flex-col items-center">
+                                        <div className="absolute top-[30px] left-[120px] flex flex-col items-center">
                                             <span className="text-[#000] font-noto text-[12px] font-normal leading-[16px]">ユーザー番号</span>
                                             <span className="text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">{purchase?.nwps_user_code || purchase?.product?.nwps_user_code}</span>
                                         </div>

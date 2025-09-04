@@ -769,7 +769,7 @@ const RegisterProduct = () => {
                                 {/* 123421: 3 photo options, aligned */}
                                 <div className="flex flex-row justify-center items-start w-full" style={{ gap: vwd(14) }}>
                                     {/* 1234211: 設定しない */}
-                                    <div className="flex flex-col items-start cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => handleDisplayModeChange('normal')}>
+                                    <div className={`flex flex-col items-start ${editMode ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`} style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={editMode ? undefined : () => handleDisplayModeChange('normal')}>
                                         <img src={photo1} alt="設定しない" className="object-cover" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }} />
                                         <div className="flex items-center w-full" style={{ gap: vwd(10) }}>
                                             {displayMode === 'normal' ? (
@@ -781,7 +781,7 @@ const RegisterProduct = () => {
                                         </div>
                                     </div>
                                     {/* 1234212: ガチャ */}
-                                    <div className="flex flex-col items-start cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => handleDisplayModeChange('gacha')}>
+                                    <div className={`flex flex-col items-start ${editMode ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`} style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={editMode ? undefined : () => handleDisplayModeChange('gacha')}>
                                         <div className="flex relative overflow-hidden" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12), backgroundColor: '#A0A5AC' }}>
                                             <img src={photo1} alt="ガチャ" className="object-cover filter blur-[4px]" style={{ ...responsiveMetricD(256, 106), borderRadius: vwd(4) }} />
                                             <div className="absolute top-0 left-0 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px]" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }} />
@@ -810,7 +810,7 @@ const RegisterProduct = () => {
                                         )}
                                     </div>
                                     {/* 1234213: ぼかしフィルター */}
-                                    <div className="flex flex-col items-end cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => handleDisplayModeChange('blur')}>
+                                    <div className={`flex flex-col items-end ${editMode ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`} style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={editMode ? undefined : () => handleDisplayModeChange('blur')}>
                                         <div className="flex relative overflow-hidden" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12), backgroundColor: '#A0A5AC' }}>
                                             <img src={photo1} alt="ぼかしフィルター" className="object-cover filter blur-[4px]" style={{ ...responsiveMetricD(256, 106), borderRadius: vwd(4) }} />
                                             <div className="absolute top-0 left-0 bg-black opacity-50 filter blur-[4px]" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }} />
@@ -837,7 +837,7 @@ const RegisterProduct = () => {
                                 {/* 123422: 2 options, stacked below */}
                                 <div className="flex flex-row justify-left items-start w-full" style={{ gap: vwd(14) }}>
                                     {/* 1234221: パスワード */}
-                                    <div className="flex flex-col items-start cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => handleDisplayModeChange('password')}>
+                                    <div className={`flex flex-col items-start ${editMode ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`} style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={editMode ? undefined : () => handleDisplayModeChange('password')}>
                                         <div className="flex relative overflow-hidden" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }}>
                                             <div className="absolute top-0 left-0 bg-[#586B88]" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12) }} />
                                             <div className="flex flex-col items-center" style={{ ...responsivePositionD(21, 92) }}>
@@ -870,7 +870,7 @@ const RegisterProduct = () => {
                                         )}
                                     </div>
                                     {/* 1234222: ワンクッション with overlay */}
-                                    <div className="flex flex-col items-end cursor-pointer" style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={() => handleDisplayModeChange('cushion')}>
+                                    <div className={`flex flex-col items-end ${editMode ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`} style={{ gap: vwd(5), ...responsiveMetricD(258, 250) }} onClick={editMode ? undefined : () => handleDisplayModeChange('cushion')}>
                                         <div className="flex relative items-center justify-center bg-[#A0A5AC]" style={{ ...responsiveMetricD(258, 106), borderRadius: vwd(12)}}>
                                             <div className="flex flex-col items-center">
                                                 <img src={warning} alt="question" style={{ ...responsiveMetricD(36, 36), marginBottom: vwd(5) }} />
@@ -1323,7 +1323,7 @@ const RegisterProduct = () => {
                                         {/* 123421: 2 photo options, aligned */}
                                         <div className="flex flex-row justify-center items-start w-full" style={{ gap: vw(14) }}>
                                             {/* 1234211: 設定しない */}
-                                            <div className="flex flex-col items-start cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 220) }} onClick={() => handleDisplayModeChange('normal')}>
+                                            <div className={`flex flex-col items-start ${editMode ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`} style={{ gap: vw(5), ...responsiveMetric(148, 220) }} onClick={editMode ? undefined : () => handleDisplayModeChange('normal')}>
                                                 <img src={photo1_m} alt="設定しない" className="object-cover" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
                                                 <div className="flex items-center w-full" style={{ gap: vw(10) }}>
                                                     {displayMode === 'normal' ? (
@@ -1335,7 +1335,7 @@ const RegisterProduct = () => {
                                                 </div>
                                             </div>
                                             {/* 1234212: ガチャ */}
-                                            <div className="flex flex-col items-start cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 220) }} onClick={() => handleDisplayModeChange('gacha')}>
+                                            <div className={`flex flex-col items-start ${editMode ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`} style={{ gap: vw(5), ...responsiveMetric(148, 220) }} onClick={editMode ? undefined : () => handleDisplayModeChange('gacha')}>
                                                 <div className="flex relative overflow-hidden" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12), backgroundColor: '#A0A5AC' }}>
                                                     <img src={photo1} alt="ぼかしフィルター" className="object-cover filter blur-[4px]" style={{ ...responsiveMetric(213, 88), borderRadius: vw(4) }} />
                                                     <div className="absolute top-0 left-0 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px]" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
@@ -1367,7 +1367,7 @@ const RegisterProduct = () => {
                                         {/* 123422: 2 options, aligned */}
                                         <div className="flex flex-row justify-left items-start w-full" style={{ gap: vw(14) }}>
                                             {/* 1234213: ぼかしフィルター */}
-                                            <div className="flex flex-col items-end cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 250), paddingTop: vw(10) }} onClick={() => handleDisplayModeChange('blur')}>
+                                            <div className={`flex flex-col items-end ${editMode ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`} style={{ gap: vw(5), ...responsiveMetric(148, 250), paddingTop: vw(10) }} onClick={editMode ? undefined : () => handleDisplayModeChange('blur')}>
                                                 <div className="flex relative overflow-hidden" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12), backgroundColor: '#A0A5AC' }}>
                                                     <img src={photo1} alt="ぼかしフィルター" className="object-cover filter blur-[4px]" style={{ ...responsiveMetric(213, 88), borderRadius: vw(4) }} />
                                                     <div className="absolute top-0 left-0 bg-black opacity-50 filter blur-[4px]" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
@@ -1392,7 +1392,7 @@ const RegisterProduct = () => {
                                                 </div>
                                             </div>
                                             {/* 1234221: パスワード */}
-                                            <div className="flex flex-col items-start cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 262), paddingTop: vw(10) }} onClick={() => handleDisplayModeChange('password')}>
+                                            <div className={`flex flex-col items-start ${editMode ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`} style={{ gap: vw(5), ...responsiveMetric(148, 262), paddingTop: vw(10) }} onClick={editMode ? undefined : () => handleDisplayModeChange('password')}>
                                                 <div className="flex relative overflow-hidden" style={{ ...responsiveMetric(148, 88), borderRadius: vw(4) }}>
                                                     <div className="absolute top-0 left-0 bg-[#586B88]" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
                                                     <div className="flex flex-col items-center" style={{ gap: vw(4), ...responsivePosition(12, 26) }}>
@@ -1426,7 +1426,7 @@ const RegisterProduct = () => {
                                             </div>
                                         </div>
                                         {/* 1234213: warning */}
-                                        <div className="flex flex-col items-end cursor-pointer" style={{ gap: vw(5), ...responsiveMetric(148, 220), paddingTop: vw(10) }} onClick={() => handleDisplayModeChange('cushion')}>
+                                        <div className={`flex flex-col items-end ${editMode ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`} style={{ gap: vw(5), ...responsiveMetric(148, 220), paddingTop: vw(10) }} onClick={editMode ? undefined : () => handleDisplayModeChange('cushion')}>
                                             <div className="flex relative overflow-hidden" style={{ ...responsiveMetric(148, 88), borderRadius: vw(4) }}>
                                                 <div className="absolute top-0 left-0 bg-[#A0A5AC]" style={{ ...responsiveMetric(148, 88), borderRadius: vw(12) }} />
                                                 <div className="flex flex-col items-center" style={{ gap: vw(4), ...responsivePosition(12, 26) }}>
