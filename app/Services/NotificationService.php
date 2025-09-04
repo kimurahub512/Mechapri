@@ -18,6 +18,14 @@ use Illuminate\Support\Facades\Log;
 class NotificationService
 {
     /**
+     * Check if email is a LINE local email that shouldn't receive emails
+     */
+    private static function isLineLocalEmail($email)
+    {
+        return str_ends_with($email, '@line.local');
+    }
+
+    /**
      * Create a purchase notification
      */
     public static function createPurchaseNotification(User $seller, UserPurchasedProduct $purchase)
@@ -46,8 +54,8 @@ class NotificationService
             ],
         ]);
 
-        // Send email notification if enabled
-        if ($seller->email_notification_purchase) {
+        // Send email notification if enabled and not a LINE local email
+        if ($seller->email_notification_purchase && !self::isLineLocalEmail($seller->email)) {
             try {
                 Mail::to($seller->email)->send(new PurchaseNotificationMail($notification));
             } catch (\Exception $e) {
@@ -79,8 +87,8 @@ class NotificationService
             ],
         ]);
 
-        // Send email notification if enabled
-        if ($seller->email_notification_relist) {
+        // Send email notification if enabled and not a LINE local email
+        if ($seller->email_notification_relist && !self::isLineLocalEmail($seller->email)) {
             try {
                 Mail::to($seller->email)->send(new RelistNotificationMail($notification));
             } catch (\Exception $e) {
@@ -110,8 +118,8 @@ class NotificationService
             ],
         ]);
 
-        // Send email notification if enabled
-        if ($followedUser->email_notification_follow) {
+        // Send email notification if enabled and not a LINE local email
+        if ($followedUser->email_notification_follow && !self::isLineLocalEmail($followedUser->email)) {
             try {
                 Mail::to($followedUser->email)->send(new FollowNotificationMail($notification));
             } catch (\Exception $e) {
@@ -144,8 +152,8 @@ class NotificationService
                 ],
             ]);
 
-            // Send email notification if enabled
-            if ($follower->email_notification_new_item) {
+            // Send email notification if enabled and not a LINE local email
+            if ($follower->email_notification_new_item && !self::isLineLocalEmail($follower->email)) {
                 try {
                     Mail::to($follower->email)->send(new NewItemNotificationMail($notification));
                 } catch (\Exception $e) {
@@ -173,8 +181,8 @@ class NotificationService
             'data' => $data,
         ]);
 
-        // Send email notification if enabled
-        if ($user->email_notification_medi_panel) {
+        // Send email notification if enabled and not a LINE local email
+        if ($user->email_notification_medi_panel && !self::isLineLocalEmail($user->email)) {
             try {
                 Mail::to($user->email)->send(new MediPanelNotificationMail($notification));
             } catch (\Exception $e) {
@@ -238,9 +246,9 @@ class NotificationService
                         default => null,
                     };
                     
-                    // Check email notification preference
+                    // Check email notification preference and not a LINE local email
                     $emailField = "email_notification_{$type}";
-                    if (isset($user->$emailField) && $user->$emailField && $mailClass) {
+                    if (isset($user->$emailField) && $user->$emailField && $mailClass && !self::isLineLocalEmail($user->email)) {
                         Mail::to($user->email)->send(new $mailClass($notification));
                     }
                 } catch (\Exception $e) {
@@ -276,8 +284,8 @@ class NotificationService
             ],
         ]);
 
-        // Send email notification if enabled
-        if ($buyer->email_notification_purchase) {
+        // Send email notification if enabled and not a LINE local email
+        if ($buyer->email_notification_purchase && !self::isLineLocalEmail($buyer->email)) {
             try {
                 Mail::to($buyer->email)->send(new BuyerPurchaseNotificationMail($notification));
             } catch (\Exception $e) {

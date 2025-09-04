@@ -203,6 +203,13 @@ class ProfileController extends Controller
         try {
             $email = $request->email;
             
+            // Don't send verification codes to LINE local emails
+            if (str_ends_with($email, '@line.local')) {
+                return response()->json([
+                    'message' => 'LINEユーザーはメール認証が不要です。'
+                ], 400);
+            }
+            
             // Generate 6-digit code
             $code = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
             
