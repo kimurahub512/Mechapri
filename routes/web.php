@@ -251,6 +251,7 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
 
     // NWPS API routes
     Route::get('/api/nwps/login-qrcode', [App\Http\Controllers\NWPSController::class, 'getLoginQrCode'])->name('api.nwps.login-qrcode');
+    Route::post('/api/retry-free-product-nwps', [App\Http\Controllers\NWPSRetryController::class, 'retryProductNWPS'])->name('api.retry-free-product-nwps');
     
     // Shop Statistics API routes
     Route::get('/api/shop-statistics', [App\Http\Controllers\ShopStatisticsController::class, 'getShopStatistics'])->name('shop.statistics');

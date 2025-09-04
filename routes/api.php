@@ -20,33 +20,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route to retry product NWPS processing
-Route::middleware('auth:sanctum')->post('/retry-product-nwps', function (Request $request) {
-    $productId = $request->input('product_id');
-    
-    if (!$productId) {
-        return response()->json(['error' => 'Product ID is required'], 400);
-    }
-    
-    $product = \App\Models\ProductBatch::find($productId);
-    if (!$product) {
-        return response()->json(['error' => 'Product not found'], 404);
-    }
-    
-    // Check if user owns this product
-    if ($product->user_id !== auth()->id()) {
-        return response()->json(['error' => 'Unauthorized'], 403);
-    }
-    
-    // Dispatch the job again for any product (free or paid)
-    \App\Jobs\ProcessProductNWPSJob::dispatch($productId);
-    
-    return response()->json(['success' => true, 'message' => 'Retry job dispatched']);
-});
 
 // Test route to verify API routes are working
 Route::get('/test-watermark', function() {
     return response('API routes are working!');
+});
+
+// Test route for retry functionality
+Route::get('/test-retry', function() {
+    return response('Retry route is working!');
 });
 
 // Route to serve watermarked images directly

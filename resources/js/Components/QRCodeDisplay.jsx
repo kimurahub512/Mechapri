@@ -24,28 +24,15 @@ const QRCodeDisplay = ({
         setRetryCount(prev => prev + 1);
         
         try {
-            // Trigger retry by dispatching the appropriate job
-            if (product?.price === 0) {
-                // Free product - retry ProcessProductNWPSJob
-                await fetch('/api/retry-product-nwps', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({ product_id: product.id })
-                });
-            } else {
-                // Paid product - retry ProcessProductNWPSJob
-                await fetch('/api/retry-product-nwps', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({ product_id: product.id })
-                });
-            }
+            // Trigger retry by dispatching the appropriate job for any product
+            await fetch('/api/retry-free-product-nwps', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ product_id: product.id })
+            });
             
             // Refresh the page after a short delay to get updated data
             setTimeout(() => {
