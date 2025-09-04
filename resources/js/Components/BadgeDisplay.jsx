@@ -1,4 +1,8 @@
 import React from 'react';
+import bubble from '@/assets/images/bubble.svg';
+import question from '@/assets/images/question_cloud.svg';
+import lock from '@/assets/images/lock.svg';
+import warning from '@/assets/images/warning.svg';
 
 const BadgeDisplay = ({ 
   images = [], 
@@ -7,8 +11,85 @@ const BadgeDisplay = ({
   textClassName = "",
   width = "24px",
   height = "24px",
+  displayMode = "normal",
   onClick
 }) => {
+  const renderBadgeImage = (image, index) => {
+    const imageStyle = {
+      width: width,
+      height: height,
+    };
+
+    if (displayMode === 'normal') {
+      return (
+        <img 
+          key={index}
+          src={image.src} 
+          alt={image.alt || `badge${index + 1}`} 
+          style={imageStyle}
+          className={`rounded-full object-cover ${index > 0 ? '-ml-[7px]' : ''}`}
+        />
+      );
+    }
+
+    if (displayMode === 'cushion') {
+      return (
+        <div 
+          key={index}
+          style={imageStyle}
+          className={`rounded-full bg-gray-400 ${index > 0 ? '-ml-[7px]' : ''}`}
+        />
+      );
+    }
+
+    if (displayMode === 'gacha') {
+      return (
+        <div 
+          key={index}
+          style={imageStyle}
+          className={`rounded-full bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] flex items-center justify-center ${index > 0 ? '-ml-[7px]' : ''}`}
+        >
+          <img src={bubble} alt="bubble" className="w-3 h-3" />
+        </div>
+      );
+    }
+
+    if (displayMode === 'blur') {
+      return (
+        <div 
+          key={index}
+          style={imageStyle}
+          className={`rounded-full bg-black flex items-center justify-center ${index > 0 ? '-ml-[7px]' : ''}`}
+        >
+          <img src={question} alt="question" className="w-3 h-3" />
+        </div>
+      );
+    }
+
+    if (displayMode === 'password') {
+      return (
+        <div 
+          key={index}
+          style={imageStyle}
+          className={`rounded-full bg-[#586B88] flex items-center justify-center ${index > 0 ? '-ml-[7px]' : ''}`}
+        >
+          <img src={lock} alt="lock" className="w-3 h-3" />
+        </div>
+      );
+    }
+
+    // Default fallback
+    return (
+      <img 
+        key={index}
+        src={image.src} 
+        alt={image.alt || `badge${index + 1}`} 
+        style={imageStyle}
+        className={`rounded-full object-cover ${index > 0 ? '-ml-[7px]' : ''}`}
+      />
+    );
+  };
+
   return (
     <button 
       type="button"
@@ -16,14 +97,7 @@ const BadgeDisplay = ({
       className={`flex items-center ${buttonClassName}`}>
       {/* Images */}
       <div className="flex items-center">
-        {images.map((image, index) => (
-          <img 
-            key={index}
-            src={image.src} 
-            alt={image.alt || `badge${index + 1}`} 
-            className={`w-[${width}] h-[${height}] rounded-full ${index > 0 ? '-ml-[7px]' : ''}`}
-          />
-        ))}
+        {images.map((image, index) => renderBadgeImage(image, index))}
       </div>
       <span 
         className={`font-noto ${textClassName}`}

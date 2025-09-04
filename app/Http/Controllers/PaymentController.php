@@ -30,16 +30,38 @@ class PaymentController extends Controller
             $stripeCustomer = $request->user()->createOrGetStripeCustomer();
             $cartItemId = $cartItem ? (int)$cartItem : null;
             
+            // Determine quantity and total amount
+            $quantity = 1; // Default quantity
+            $totalAmount = $product->price;
+            
+            if ($cartItemId) {
+                // For cart purchases, get quantity from cart item
+                $cartItemModel = \App\Models\CartItem::find($cartItemId);
+                if ($cartItemModel && $cartItemModel->user_id === $request->user()->id) {
+                    $quantity = $cartItemModel->quantity;
+                    $totalAmount = $product->price * $quantity;
+                }
+            } else {
+                // For direct purchases, get quantity from request parameter
+                $requestQuantity = $request->get('quantity', 1);
+                if (is_numeric($requestQuantity) && $requestQuantity > 0) {
+                    $quantity = (int)$requestQuantity;
+                    $totalAmount = $product->price * $quantity;
+                }
+            }
+            
             // Debug logging
             \Illuminate\Support\Facades\Log::info('Checkout called with cart item ID', [
                 'cart_item_id' => $cartItemId,
                 'product_id' => $product->id,
-                'user_id' => $request->user()->id
+                'user_id' => $request->user()->id,
+                'quantity' => $quantity,
+                'total_amount' => $totalAmount
             ]);
 
             // Create Payment Intent
             $paymentIntent = PaymentIntent::create([
-                'amount' => $product->price * 100, // Convert to cents
+                'amount' => $totalAmount * 100, // Convert to cents
                 'currency' => 'jpy',
                 'customer' => $stripeCustomer->id,
                 'automatic_payment_methods' => [
@@ -49,6 +71,7 @@ class PaymentController extends Controller
                     'product_id' => $product->id,
                     'user_id' => $request->user()->id,
                     'cart_item_id' => $cartItemId,
+                    'quantity' => $quantity,
                 ],
             ]);
 
@@ -58,7 +81,7 @@ class PaymentController extends Controller
                 'product_batch_id' => $product->id,
                 'stripe_payment_id' => $paymentIntent->id,
                 'stripe_customer_id' => $stripeCustomer->id,
-                'amount' => $product->price,
+                'amount' => $totalAmount,
                 'currency' => 'jpy',
                 'status' => 'pending',
                 'cart_item_id' => $cartItemId,
@@ -73,6 +96,8 @@ class PaymentController extends Controller
                 'product' => $product,
                 'clientSecret' => $paymentIntent->client_secret,
                 'stripeKey' => config('services.stripe.key'),
+                'quantity' => $quantity,
+                'totalAmount' => $totalAmount,
             ]);
 
         } catch (ApiErrorException $e) {
@@ -101,6 +126,15 @@ class PaymentController extends Controller
                     try {
                         $product = ProductBatch::find($payment->product_batch_id);
                         if ($product) {
+                            // Get quantity from payment metadata or calculate from amount
+                            $quantity = 1;
+                            if (isset($paymentIntent->metadata['quantity'])) {
+                                $quantity = (int)$paymentIntent->metadata['quantity'];
+                            } else {
+                                // Fallback: calculate quantity from amount
+                                $quantity = (int)($payment->amount / $product->price);
+                            }
+
                             $purchase = UserPurchasedProduct::firstOrCreate(
                                 [
                                     'user_id' => $payment->user_id,
@@ -117,10 +151,10 @@ class PaymentController extends Controller
                             );
 
                             if ($purchase->wasRecentlyCreated) {
-                                $purchase->cnt = 1;
+                                $purchase->cnt = $quantity;
                                 $purchase->save();
                             } else {
-                                $purchase->increment('cnt');
+                                $purchase->increment('cnt', $quantity);
                                 $purchase->update([
                                     'purchase_time' => now(),
                                     'print_expires_at' => now()->addDays(30),
@@ -253,11 +287,20 @@ class PaymentController extends Controller
                         try {
                             $product = ProductBatch::find($payment->product_batch_id);
                             if ($product) {
+                                // Get quantity from payment metadata or calculate from amount
+                                $quantity = 1;
+                                if (isset($paymentIntent->metadata['quantity'])) {
+                                    $quantity = (int)$paymentIntent->metadata['quantity'];
+                                } else {
+                                    // Fallback: calculate quantity from amount
+                                    $quantity = (int)($payment->amount / $product->price);
+                                }
+
                                 $purchase = UserPurchasedProduct::create([
                                     'user_id' => $payment->user_id,
                                     'batch_id' => $product->id,
                                     'price' => $payment->amount,
-                                    'cnt' => 1,
+                                    'cnt' => $quantity,
                                     'purchase_time' => now(),
                                     'nwps_upload_status' => 'pending',
                                     'print_status' => 'not_printed',

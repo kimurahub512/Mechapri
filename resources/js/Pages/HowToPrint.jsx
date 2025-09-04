@@ -5,7 +5,7 @@ import '@/../../resources/css/shopmanagement.css';
 import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 import girl from '@/assets/images/favoriteshops/girl.svg';
 import pen from '@/assets/images/pencil_line_black.svg';
-import recyclebin from '@/assets/images/recyclebin.svg';
+import recyclebin from '@/assets/images/recyclebin.png';
 import heart from '@/assets/images/heart_pink.svg';
 import share from '@/assets/images/share.png';
 import complex from '@/assets/images/complex_black.png';

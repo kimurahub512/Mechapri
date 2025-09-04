@@ -362,7 +362,7 @@ class ProductBatchController extends Controller
         // If this is a direct route (no user_id) and the product isn't owned by the current user,
         // redirect to the user-scoped route
         $userId = $request->route('user_id');
-        if (!$userId && $product->user_id !== auth()->id()) {
+        if (!$userId && auth()->check() && $product->user_id !== auth()->id()) {
             return redirect()->route('user.product.purchased', [
                 'user_id' => $product->user_id,
                 'id' => $product->id
@@ -409,7 +409,7 @@ class ProductBatchController extends Controller
                     'name' => $product->user->name,
                     'image' => $product->user->image,
                     'description' => $product->user->shop_description,
-                    'is_followed_by_current_user' => auth()->user()->hasFavoritedShop($product->user->id),
+                    'is_followed_by_current_user' => auth()->check() ? auth()->user()->hasFavoritedShop($product->user->id) : false,
                 ],
                 'created_at' => $product->created_at,
                 'is_favorited' => $product->isFavoritedBy(auth()->user()),
@@ -461,7 +461,7 @@ class ProductBatchController extends Controller
         // If this is a direct route (no user_id) and the product isn't owned by the current user,
         // redirect to the user-scoped route
         $userId = $request->route('user_id');
-        if (!$userId && $product->user_id !== auth()->id()) {
+        if (!$userId && auth()->check() && $product->user_id !== auth()->id()) {
             return redirect()->route('user.product.unpurchased', [
                 'user_id' => $product->user_id,
                 'id' => $product->id
@@ -503,7 +503,7 @@ class ProductBatchController extends Controller
                     'name' => $product->user->name,
                     'image' => $product->user->image,
                     'description' => $product->user->shop_description,
-                    'is_followed_by_current_user' => auth()->user()->hasFavoritedShop($product->user->id),
+                    'is_followed_by_current_user' => auth()->check() ? auth()->user()->hasFavoritedShop($product->user->id) : false,
                 ],
                 'created_at' => $product->created_at,
                 'is_favorited' => $product->isFavoritedBy(auth()->user()),
@@ -552,7 +552,7 @@ class ProductBatchController extends Controller
         // If this is a direct route (no user_id) and the product isn't owned by the current user,
         // redirect to the user-scoped route
         $userId = $request->route('user_id');
-        if (!$userId && $product->user_id !== auth()->id()) {
+        if (!$userId && auth()->check() && $product->user_id !== auth()->id()) {
             return redirect()->route('user.product.purchased.expand', [
                 'user_id' => $product->user_id,
                 'id' => $product->id
@@ -598,7 +598,7 @@ class ProductBatchController extends Controller
                     'name' => $product->user->name,
                     'image' => $product->user->image,
                     'description' => $product->user->shop_description,
-                    'is_followed_by_current_user' => auth()->user()->hasFavoritedShop($product->user->id),
+                    'is_followed_by_current_user' => auth()->check() ? auth()->user()->hasFavoritedShop($product->user->id) : false,
                 ],
                 'created_at' => $product->created_at,
                 'is_favorited' => $product->isFavoritedBy(auth()->user()),
@@ -650,7 +650,7 @@ class ProductBatchController extends Controller
         // If this is a direct route (no user_id) and the product isn't owned by the current user,
         // redirect to the user-scoped route
         $userId = $request->route('user_id');
-        if (!$userId && $product->user_id !== auth()->id()) {
+        if (!$userId && auth()->check() && $product->user_id !== auth()->id()) {
             return redirect()->route('user.product.unpurchased.expand', [
                 'user_id' => $product->user_id,
                 'id' => $product->id
@@ -693,7 +693,7 @@ class ProductBatchController extends Controller
                     'name' => $product->user->name,
                     'image' => $product->user->image,
                     'description' => $product->user->shop_description,
-                    'is_followed_by_current_user' => auth()->user()->hasFavoritedShop($product->user->id),
+                    'is_followed_by_current_user' => auth()->check() ? auth()->user()->hasFavoritedShop($product->user->id) : false,
                 ],
                 'created_at' => $product->created_at,
                 'is_favorited' => $product->isFavoritedBy(auth()->user()),
@@ -777,6 +777,73 @@ class ProductBatchController extends Controller
                     ];
                 }),
                 'is_owner' => $isOwner,
+            ]
+        ]);
+    }
+
+    /**
+     * Show the product details free expand page.
+     */
+    public function showProductDetailsFreeExpand(Request $request, $id)
+    {
+        // Find the product
+        $product = ProductBatch::with(['user', 'files' => function($query) {
+            $query->orderBy('sort_order');
+        }])->findOrFail($id);
+
+        $currentUser = auth()->user();
+        $isOwner = $currentUser && $currentUser->id === $product->user_id;
+
+        // If viewer is not the owner and the product is not free, redirect based on purchase status
+        if (!$isOwner && $product->price != 0) {
+            if ($product->isPurchasedBy($currentUser)) {
+                return redirect()->route('product.purchased.expand', ['id' => $product->id]);
+            } else {
+                return redirect()->route('product.unpurchased.expand', ['id' => $product->id]);
+            }
+        }
+
+        // Get printed count from NWPS
+        $printedCount = $this->getPrintedCount($product);
+
+        return Inertia::render('ProductDetailsFreeExpand', [
+            'product' => [
+                'id' => $product->id,
+                'title' => $product->title,
+                'description' => $product->description,
+                'is_public' => $product->is_public,
+                'price' => $product->price,
+                'sales_deadline' => $product->sales_deadline ? $product->sales_deadline->format('Y/m/d') : null,
+                'sales_limit' => $product->sales_limit,
+                'display_mode' => $product->display_mode,
+                'image' => $product->getWatermarkedImageUrl($currentUser),
+                'images' => collect($product->getWatermarkedImages($currentUser))->pluck('url'),
+                'user' => [
+                    'id' => $product->user->id,
+                    'name' => $product->user->name,
+                    'image' => $product->user->image,
+                    'description' => $product->user->shop_description,
+                    'is_followed_by_current_user' => $currentUser ? $currentUser->hasFavoritedShop($product->user->id) : false,
+                ],
+                'created_at' => $product->created_at,
+                'is_favorited' => $currentUser ? $product->isFavoritedBy($currentUser) : false,
+                'favorite_count' => $product->favorite_count,
+                'print_deadline' => now()->addDays(30)->format('Y/m/d'),
+                'printed_count' => $printedCount,
+                'nwps_qr_code_url' => $product->nwps_qr_code_url,
+                'nwps_user_code' => $product->nwps_user_code,
+                'is_owner' => $isOwner,
+                'top_buyers' => UserPurchasedProduct::getTopBuyersForProduct($product->id)->map(function($purchase) {
+                    return [
+                        'user' => [
+                            'id' => $purchase->user->id,
+                            'name' => $purchase->user->name,
+                            'image' => $purchase->user->image,
+                        ],
+                        'total_quantity' => $purchase->total_quantity,
+                        'pt_score' => $purchase->pt_score,
+                    ];
+                }),
             ]
         ]);
     }

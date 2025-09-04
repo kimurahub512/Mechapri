@@ -157,8 +157,6 @@ Route::get('/api/watermarked-image-b64/{path}', function($path) {
     }
 })->where('path', '.*')->name('watermarked.image.encoded');
 
-
-
 // Test route to check if routing is working
 Route::get('/api/test', function() {
     return response('Test route working!');
@@ -169,9 +167,7 @@ Route::get('/api/watermark-test', function() {
     return response('Watermark test route working!');
 });
 
-Route::get('/', function () {
-    return inertia('Home');
-})->name('home');
+Route::get('/', [App\Http\Controllers\StaticPageController::class, 'home'])->name('home');
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {
@@ -215,65 +211,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
 
     
-    Route::get('/shop-management', function(){
-        $user = auth()->user();
-        
-        // Get all product batches created by the current user
-        $userProductBatchIds = \App\Models\ProductBatch::where('user_id', $user->id)->pluck('id');
-        
-        // Get current month start and end dates
-        $currentMonthStart = \Carbon\Carbon::now()->startOfMonth();
-        $currentMonthEnd = \Carbon\Carbon::now()->endOfMonth();
-        
-        // Get all purchases of the user's products
-        $allPurchases = \App\Models\UserPurchasedProduct::whereIn('batch_id', $userProductBatchIds)
-            ->with(['productBatch'])
-            ->get();
-        
-        // Calculate current month statistics
-        $currentMonthPurchases = $allPurchases->filter(function($purchase) use ($currentMonthStart, $currentMonthEnd) {
-            return $purchase->purchase_time >= $currentMonthStart && $purchase->purchase_time <= $currentMonthEnd;
-        });
-        
-        // Calculate current month sales revenue
-        $currentMonthSalesRevenue = $currentMonthPurchases->sum(function($purchase) {
-            return $purchase->price * $purchase->cnt;
-        });
-        
-        // Calculate total sales revenue (all time)
-        $totalSalesRevenue = $allPurchases->sum(function($purchase) {
-            return $purchase->price * $purchase->cnt;
-        });
-        
-        // For initial load, we'll set print counts to 0 and let the API handle the real data
-        // This prevents slow page loads due to multiple NWPS API calls
-        $currentMonthPrintCount = 0;
-        $totalPrintCount = 0;
-        
-        // Calculate balance (after 15% commission)
-        $commissionRate = 0.15; // 15%
-        $currentMonthBalance = $currentMonthSalesRevenue * (1 - $commissionRate);
-        $totalBalance = $totalSalesRevenue * (1 - $commissionRate);
-        
-        $statistics = [
-            'current_month' => [
-                'sales_revenue' => (int)$currentMonthSalesRevenue,
-                'print_count' => (int)$currentMonthPrintCount,
-                'balance' => (int)$currentMonthBalance,
-            ],
-            'total' => [
-                'sales_revenue' => (int)$totalSalesRevenue,
-                'print_count' => (int)$totalPrintCount,
-                'balance' => (int)$totalBalance,
-            ],
-            'commission_rate' => $commissionRate * 100, // 15%
-            'payment_threshold' => 5000, // 5000円
-        ];
-        
-        return Inertia::render('MyShopManagement/ShopManagement', [
-            'statistics' => $statistics
-        ]);
-    });
+    Route::get('/shop-management', [App\Http\Controllers\ShopManagementController::class, 'index']);
     Route::get('/myshop/edit', [App\Http\Controllers\ShopController::class, 'edit'])->name('shop.edit');
     Route::post('/myshop/update', [App\Http\Controllers\ShopController::class, 'update'])->name('shop.update');
     Route::get('/myshop/contents', [App\Http\Controllers\MyContentsController::class, 'index'])->name('myshop.contents');
@@ -291,21 +229,12 @@ Route::patch('/myshop/category/{category}/toggle-public', [App\Http\Controllers\
 Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController::class, 'reorder'])->name('myshop.category.reorder');
     Route::get('/myshop/transaction', [App\Http\Controllers\TransactionController::class, 'index'])->name('myshop.transaction');
     Route::get('/myshop/saleshistory', [App\Http\Controllers\SalesHistoryController::class, 'index'])->name('myshop.saleshistory');
-    Route::get('/myshop/registerproduct', function(){
-        $user = auth()->user();
-        $categories = $user->categories()->orderBy('created_at', 'desc')->get();
-        
-        return Inertia::render('MyShopManagement/RegisterProduct', [
-            'categories' => $categories,
-        ]);
-    });
+    Route::get('/myshop/registerproduct', [App\Http\Controllers\ShopManagementController::class, 'registerProduct']);
     Route::get('/myshop/registerproduct/{id}/edit', [App\Http\Controllers\MyContentsController::class, 'edit']);    
 
-    Route::get('/myshop/categoryedit', function(){  
-        return Inertia::render('MyShopManagement/CategoryEdit');
-    });
+    Route::get('/myshop/categoryedit', [App\Http\Controllers\StaticPageController::class, 'categoryEdit']);
     Route::get('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccountController::class, 'index'])->name('myshop.settransferaccount');
-Route::post('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccountController::class, 'store'])->name('myshop.settransferaccount.store');
+    Route::post('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccountController::class, 'store'])->name('myshop.settransferaccount.store');
     
     Route::get('/notification', [App\Http\Controllers\NotificationController::class, 'index'])->name('notification.index');
     
@@ -316,9 +245,7 @@ Route::post('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccou
     Route::delete('/api/notifications/{id}', [App\Http\Controllers\NotificationController::class, 'delete'])->name('notification.delete');
     Route::get('/api/notifications/unread-count', [App\Http\Controllers\NotificationController::class, 'getUnreadCount'])->name('notification.unread-count');
 
-    Route::get('/accountsetting', function(){
-        return Inertia::render('AccountSetting');
-    });
+    Route::get('/accountsetting', [App\Http\Controllers\StaticPageController::class, 'accountSetting']);
 
     Route::get('/favoriteproducts', [App\Http\Controllers\FavoriteProductController::class, 'index'])->name('favoriteproducts.index');
 
@@ -357,17 +284,12 @@ Route::post('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccou
 
     Route::get('/shop-newcategory/{categoryId}', [App\Http\Controllers\ShopNewCategoryController::class, 'show'])->name('shop.newcategory');
     
-    Route::get('/shoplow', function(){
-        return Inertia::render('ShopLow');
-    });
+    Route::get('/shoplow', [App\Http\Controllers\StaticPageController::class, 'shopLow']);
     
-    Route::get('/productdetailsfree', function(){
-        return Inertia::render('ProductDetailsFree');
-    });
+    Route::get('/productdetailsfree', [App\Http\Controllers\StaticPageController::class, 'productDetailsFree']);
 
-    // Product details route for free products
-    Route::get('/product/{id}/details', [App\Http\Controllers\ProductBatchController::class, 'showProductDetails'])
-        ->name('product.details')
+    Route::get('/productdetailsfreeexpand/{id}', [App\Http\Controllers\ProductBatchController::class, 'showProductDetailsFreeExpand'])
+        ->name('product.details.free.expand')
         ->where('id', '[0-9]+');
 
     // Direct expand routes (for viewing own products)
@@ -383,12 +305,6 @@ Route::post('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccou
     Route::get('/user/{user_id}/purchasedproductexpand/{id}', [App\Http\Controllers\ProductBatchController::class, 'showPurchasedExpand'])
         ->name('user.product.purchased.expand')
         ->where(['user_id' => '[0-9]+', 'id' => '[0-9]+']);
-
-    Route::get('/user/{user_id}/unpurchasedproductexpand/{id}', [App\Http\Controllers\ProductBatchController::class, 'showUnpurchasedExpand'])
-        ->name('user.product.unpurchased.expand')
-        ->where(['user_id' => '[0-9]+', 'id' => '[0-9]+']);
-
-
 
     Route::get('/homelogin', [App\Http\Controllers\HomeLoginController::class, 'index'])->name('homelogin');
 
@@ -427,26 +343,13 @@ Route::post('/myshop/settransferaccount', [App\Http\Controllers\SetTransferAccou
     })->middleware('throttle:6,1')->name('verification.send');
 });
 
-Route::get('/beginner', function(){
-    return Inertia::render('Beginner');
-});
-
-Route::get('/howtoprint', function(){
-    return Inertia::render('HowToPrint');
-});
+Route::get('/beginner', [App\Http\Controllers\StaticPageController::class, 'beginner']);
+Route::get('/howtoprint', [App\Http\Controllers\StaticPageController::class, 'howToPrint']);
 
     // Legal Document Routes
-    Route::get('/tokushoho', function(){
-        return Inertia::render('Legal/Tokushoho');
-    });
-
-    Route::get('/privacy', function(){
-        return Inertia::render('Legal/Privacy');
-    });
-
-    Route::get('/terms', function(){
-        return Inertia::render('Legal/Terms');
-    });
+Route::get('/tokushoho', [App\Http\Controllers\StaticPageController::class, 'tokushoho']);
+Route::get('/privacy', [App\Http\Controllers\StaticPageController::class, 'privacy']);
+Route::get('/terms', [App\Http\Controllers\StaticPageController::class, 'terms']);
 
 // Email verification routes (for registration - no auth required)
 Route::post('/api/send-verification-code', [ProfileController::class, 'sendVerificationCode'])->name('email.send-code');
@@ -490,9 +393,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     
     Route::post('/upload-image', [\App\Http\Controllers\ImageUploadController::class, 'upload'])->name('image.upload');
-    Route::get('/idol/upload', function () {
-        return Inertia::render('Idol/ImageUpload');
-    })->middleware('auth');
+    Route::get('/idol/upload', [App\Http\Controllers\StaticPageController::class, 'idolUpload'])->middleware('auth');
 
     // Product Password Routes
     Route::post('/api/product/verify-password', [App\Http\Controllers\ProductPasswordController::class, 'verify'])->name('product.verify.password');
@@ -533,16 +434,20 @@ Route::middleware(['auth'])->group(function () {
         ->name('user.product.purchased')
         ->where(['user_id' => '[0-9]+', 'id' => '[0-9]+']);
 
-    Route::get('/user/{user_id}/unpurchasedproduct/{id}', [App\Http\Controllers\ProductBatchController::class, 'showUnpurchased'])
-        ->name('user.product.unpurchased')
-        ->where(['user_id' => '[0-9]+', 'id' => '[0-9]+']);
 });
+    
+    // Product details route for free products
+Route::get('/product/{id}/details', [App\Http\Controllers\ProductBatchController::class, 'showProductDetails'])
+    ->name('product.details')
+    ->where('id', '[0-9]+');
+    
+Route::get('/user/{user_id}/unpurchasedproduct/{id}', [App\Http\Controllers\ProductBatchController::class, 'showUnpurchased'])
+    ->name('user.product.unpurchased')
+    ->where(['user_id' => '[0-9]+', 'id' => '[0-9]+']);
 
-
-
-
-
-
+Route::get('/user/{user_id}/unpurchasedproductexpand/{id}', [App\Http\Controllers\ProductBatchController::class, 'showUnpurchasedExpand'])
+    ->name('user.product.unpurchased.expand')
+    ->where(['user_id' => '[0-9]+', 'id' => '[0-9]+']);
 
 // User shop route - must be at the end to avoid conflicts with other routes
 Route::get('/{user_id}', [App\Http\Controllers\ShopTopController::class, 'show'])

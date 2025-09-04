@@ -31,7 +31,7 @@ import lock from '@/assets/images/lock.svg';
 import warning from '@/assets/images/warning.svg';
 
 
-const ProductDetailsFree = () => {
+const ProductDetailsFreeExpand = () => {
     const { product, auth } = usePage().props;
 
     // Check if current user is the product owner
@@ -288,82 +288,73 @@ const ProductDetailsFree = () => {
                     {/* Section 12 */}
                     <section className="flex flex-col items-start gap-[32px] w-[960px] mt-[60px]">
                         {/* 121 */}
-                        <div className="flex flex-col h-[1070px] w-full rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] p-0">
-                            {/* 1211: Blurred image with overlay */}
-                            <div className="flex w-[500px] px-[90px] py-[10px] justify-center items-center rounded-[16px] bg-[#F6F6F6] mx-auto mt-[40px] relative">
-                                {/* Blurred image */}
-                                <div className="flex w-[320px] max-w-[396px] flex-col justify-center items-center flex-shrink-0 relative">
-                                    <div className={`flex h-[480px] max-w-[396px] w-full flex-col justify-center items-center flex-shrink-0 rounded-[8px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
-                                        {product.display_mode === 'normal' ? (
-                                            <img src={product?.image || photo1} alt={product?.title || 'main'} className="h-full w-full object-cover rounded-[8px]" />
-                                        ) : product.display_mode === 'gacha' ? (
-                                            <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
-                                                <img src={product?.image || photo1} alt="ガチャ" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
-                                                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px] rounded-[8px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                    <img src={bubble} alt="bubble" className="w-[42px] h-[42px]" />
-                                                    <span className="text-white text-[15px] font-bold">ガチャ</span>
-                                                    <span className="text-white text-[13px]">ランダムで1枚選定されます</span>
+                        <div className="flex flex-col w-full rounded-[40px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] p-[70px_40px_20px_40px] lg:p-[70px_70px_20px_70px]">
+                            <div className="flex flex-col items-center gap-[24px] w-full">
+                                <div className={`flex flex-wrap justify-center gap-[16px] lg:gap-[20px] xl:gap-[24px] w-full ${product.images.length >= 3 ? 'max-w-none' : product.images.length === 1 ? 'max-w-[360px]' : 'max-w-[752px] xl:max-w-[800px]'}`}>
+                                    {product.images.map((image, index) => (
+                                        <div key={index} className="flex w-[360px] h-[362.835px] box-border px-[63.78px] py-[7.087px] flex-col justify-center items-center rounded-[14.173px] bg-[#F6F6F6] relative">
+                                            <div className="flex w-[232.441px] h-[348.661px] flex-col justify-center items-center flex-shrink-0 relative">
+                                                <div className={`flex w-[232.441px] h-[348.661px] flex-col justify-center items-center flex-shrink-0 rounded-[8px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
+                                                    {product.display_mode === 'normal' ? (
+                                                        <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                                    ) : product.display_mode === 'gacha' ? (
+                                                        <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                            <img src={image} alt="ガチャ" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
+                                                            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px] rounded-[8px]" />
+                                                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                                <img src={bubble} alt="bubble" className="w-[42px] h-[42px]" />
+                                                                <span className="text-white text-[15px] font-bold">ガチャ</span>
+                                                                <span className="text-white text-[13px]">ランダムで1枚選定されます</span>
+                                                            </div>                                                            
+                                                        </div>
+                                                    ) : product.display_mode === 'blur' ? (
+                                                        <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                            <img src={image} alt="ぼかしフィルター" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
+                                                            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 filter blur-[4px] rounded-[8px]" />
+                                                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                                <img src={question} alt="question" className="w-[42px] h-[42px]" />
+                                                                <span className="text-white text-[15px] font-bold">ぼかしフィルター</span>
+                                                                <span className="text-white text-[13px]">印刷して確認しよう！</span>
+                                                            </div>
+                                                        </div>
+                                                    ) : product.display_mode === 'password' ? (
+                                                        <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                            <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[8px]" />
+                                                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                                <img src={lock} alt="lock" className="w-[42px] h-[42px]" />
+                                                                <span className="text-[#CDD9EC] text-[15px] font-bold">パスワード</span>
+                                                                <span className="text-[#CDD9EC] text-[13px]">PWを入れて印刷しよう</span>
+                                                            </div>
+                                                        </div>
+                                                    ) : product.display_mode === 'cushion' ? (
+                                                        <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
+                                                            <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px]" />
+                                                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                                <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
+                                                                <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
+                                                                <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="relative h-full w-full">
+                                                            <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
-                                        ) : product.display_mode === 'blur' ? (
-                                            <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
-                                                <img src={product?.image || photo1} alt="ぼかしフィルター" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
-                                                <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 filter blur-[4px] rounded-[8px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                    <img src={question} alt="question" className="w-[42px] h-[42px]" />
-                                                    <span className="text-white text-[15px] font-bold">ぼかしフィルター</span>
-                                                    <span className="text-white text-[13px]">印刷して確認しよう！</span>
-                                                </div>
-                                            </div>
-                                        ) : product.display_mode === 'password' ? (
-                                            <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
-                                                <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[8px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                    <img src={lock} alt="lock" className="w-[42px] h-[42px]" />
-                                                    <span className="text-[#CDD9EC] text-[15px] font-bold">パスワード</span>
-                                                    <span className="text-[#CDD9EC] text-[13px]">PWを入れて印刷しよう</span>
-                                                </div>
-                                            </div>
-                                        ) : product.display_mode === 'cushion' ? (
-                                            <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
-                                                <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[8px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
-                                                    <img src={warning} alt="warning" className="w-[42px] h-[42px]" />
-                                                    <span className="text-[#464F5D] text-[15px] font-bold">WARNING</span>
-                                                    <span className="text-[#464F5D] text-[13px]">クリックして内容を確認</span>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <img src={product?.image || photo1} alt={product?.title || 'main'} className="h-full w-full object-cover rounded-[8px]" />
-                                        )}
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="flex flex-col items-center gap-[4px] mt-[36px]">
+                                    <span className="text-black font-noto text-[18px] leading-[32px] text-center px-4">
+                                        {product.sales_limit ? `${product.sales_limit}個限定` : ''} {product.sales_deadline} まで購入できます
+                                    </span>
+                                    <div className="flex flex-row items-center">
+                                        <span className="text-black font-noto font-bold text-[46px] leading-[54px]">{product.price}</span>
+                                        <span className="text-black font-noto font-bold text-[24px] leading-[24px]">円</span>
                                     </div>
                                 </div>
                             </div>
-                            {/* BadgeDisplay for multiple images */}
-                            {product.images && product.images.length > 1 && (
-                                <div className="flex justify-center w-full mt-[16px]">
-                                    <BadgeDisplay
-                                        buttonClassName="px-[16px] py-[8px] gap-[4px] rounded-[10px] border-[1px] border-solid border-[#FF2AA1]"
-                                        textClassName="text-[#FF2AA1] text-[18px] font-medium leading-[18px]"
-                                        images={product.images.slice(0, 3).map((url, index) => ({
-                                            src: url,
-                                            alt: `${product.title} image ${index + 1}`
-                                        }))}
-                                        text={`${product.images.length}点を全て表示`}
-                                        textColor="#E862CB"
-                                        borderColor="#FF2AA1"
-                                        width="32px"
-                                        height="32px"
-                                        displayMode={product.display_mode}
-                                        onClick={() => {
-                                            router.visit(route('product.details.free.expand', {
-                                                id: product.id
-                                            }));
-                                        }}
-                                    />
-                                </div>
-                            )}
                             {/* 1212: Print info blocks */}
                             <div className="inline-flex flex-col items-start w-[500px] mt-[40px] mx-auto">
                                 {/* 12121: Gradient header */}
@@ -533,80 +524,71 @@ const ProductDetailsFree = () => {
                     {/* Mobile Section 12 */}
                     <section className="flex flex-col items-start gap-[32px] w-full mt-[32px]">
                         {/* 121 */}
-                        <div className="flex flex-col w-full rounded-[10px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] px-4 pb-5">
-                            {/* 1211: Blurred image with overlay */}
-                            <div className="flex w-full px-[16px] py-[10px] justify-center items-center rounded-[10px] bg-[#F6F6F6] mx-auto mt-[24px] relative">
-                                {/* Blurred image */}
-                                <div className="flex w-full max-w-[200px] flex-col justify-center items-center flex-shrink-0 relative">
-                                    <div className={`flex h-[298px] w-full flex-col justify-center items-center flex-shrink-0 rounded-[6px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
-                                        {product.display_mode === 'normal' ? (
-                                            <img src={product?.image || photo1} alt={product?.title || 'main'} className="h-full w-full object-cover rounded-[6px]" />
-                                        ) : product.display_mode === 'gacha' ? (
-                                            <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
-                                                <img src={product?.image || photo1} alt="ガチャ" className="h-full w-full object-cover filter blur-[2px] rounded-[6px]" />
-                                                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[2px] rounded-[6px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[3px]">
-                                                    <img src={bubble} alt="bubble" className="w-[32px] h-[32px]" />
-                                                    <span className="text-white text-[12px] font-bold">ガチャ</span>
-                                                    <span className="text-white text-[10px]">ランダムで1枚選定されます</span>
-                                                </div>
+                        <div className="flex flex-col w-full rounded-[10px] bg-white shadow-[0_4px_36px_0_rgba(0,0,0,0.10)] px-4 py-4">
+                            {/* 1211: Mobile image carousel */}
+                            <div className="flex flex-wrap justify-center gap-[7px] py-[16px]">
+                                {product.images.map((image, index) => (
+                                    <div key={index} className="flex w-[152px] h-[153.197px] px-[26.93px] py-[2.992px] flex-col justify-center items-center rounded-[5.984px] bg-[#F6F6F6] relative">
+                                        <div className="flex w-[98.142px] h-[147.213px] flex-col justify-center items-center flex-shrink-0 relative">
+                                            <div className={`flex w-[98.142px] h-[147.213px] flex-col justify-center items-center flex-shrink-0 rounded-[6px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
+                                                {product.display_mode === 'normal' ? (
+                                                    <img src={image} alt={product.title} className="w-[98.142px] h-[147.213px] object-cover rounded-[6px]" />
+                                                ) : product.display_mode === 'gacha' ? (
+                                                    <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
+                                                        <img src={image} alt="ガチャ" className="h-full w-full object-cover filter blur-[4px] rounded-[6px]" />
+                                                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px] rounded-[6px]" />
+                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                            <img src={bubble} alt="bubble" className="w-[32px] h-[32px]" />
+                                                            <span className="text-white text-[12px] font-bold">ガチャ</span>
+                                                            <span className="text-white text-[10px]">ランダムで1枚選定されます</span>
+                                                        </div>
+                                                    </div>
+                                                ) : product.display_mode === 'blur' ? (
+                                                    <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
+                                                        <img src={image} alt="ぼかしフィルター" className="h-full w-full object-cover filter blur-[4px] rounded-[6px]" />
+                                                        <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 filter blur-[4px] rounded-[6px]" />
+                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                            <img src={question} alt="question" className="w-[32px] h-[32px]" />
+                                                            <span className="text-white text-[12px] font-bold">ぼかしフィルター</span>
+                                                            <span className="text-white text-[10px]">印刷して確認しよう！</span>
+                                                        </div>
+                                                    </div>
+                                                ) : product.display_mode === 'password' ? (
+                                                    <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
+                                                        <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[6px]" />
+                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                            <img src={lock} alt="lock" className="w-[32px] h-[32px]" />
+                                                            <span className="text-[#CDD9EC] text-[12px] font-bold">パスワード</span>
+                                                            <span className="text-[#CDD9EC] text-[10px]">PWを入れて印刷しよう</span>
+                                                        </div>
+                                                    </div>
+                                                ) : product.display_mode === 'cushion' ? (
+                                                    <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
+                                                        <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px]" />
+                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                            <img src={warning} alt="warning" className="w-[32px] h-[32px]" />
+                                                            <span className="text-[#464F5D] text-[12px] font-bold">WARNING</span>
+                                                            <span className="text-[#464F5D] text-[10px]">クリックして内容を確認</span>
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <img src={image} alt={product.title} className="h-[147px] w-[98px] object-cover rounded-[6px]" />
+                                                )}
                                             </div>
-                                        ) : product.display_mode === 'blur' ? (
-                                            <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
-                                                <img src={product?.image || photo1} alt="ぼかしフィルター" className="h-full w-full object-cover filter blur-[2px] rounded-[6px]" />
-                                                <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 filter blur-[2px] rounded-[6px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[3px]">
-                                                    <img src={question} alt="question" className="w-[32px] h-[32px]" />
-                                                    <span className="text-white text-[12px] font-bold">ぼかしフィルター</span>
-                                                    <span className="text-white text-[10px]">印刷して確認しよう！</span>
-                                                </div>
-                                            </div>
-                                        ) : product.display_mode === 'password' ? (
-                                            <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
-                                                <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[6px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[3px]">
-                                                    <img src={lock} alt="lock" className="w-[32px] h-[32px]" />
-                                                    <span className="text-[#CDD9EC] text-[12px] font-bold">パスワード</span>
-                                                    <span className="text-[#CDD9EC] text-[10px]">PWを入れて印刷しよう</span>
-                                                </div>
-                                            </div>
-                                        ) : product.display_mode === 'cushion' ? (
-                                            <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
-                                                <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px]" />
-                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[3px]">
-                                                    <img src={warning} alt="warning" className="w-[32px] h-[32px]" />
-                                                    <span className="text-[#464F5D] text-[12px] font-bold">WARNING</span>
-                                                    <span className="text-[#464F5D] text-[10px]">クリックして内容を確認</span>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <img src={product?.image || photo1} alt={product?.title || 'main'} className="h-full w-full object-cover rounded-[6px]" />
-                                        )}
+                                        </div>
                                     </div>
+                                ))}
+                            </div>
+                            {/* 1213: Price and purchase info */}
+                            <div className="flex flex-col items-center gap-[4px] mt-[24px]">
+                                <span className="text-black font-noto text-[16px] leading-[27px]">
+                                    {product.sales_limit ? `${product.sales_limit}個限定` : ''} {product.sales_deadline} まで購入できます
+                                </span>
+                                <div className="flex flex-row items-center gap-[4px]">
+                                    <span className="text-[#363636] font-noto font-bold text-[36px] leading-[48px]">{product.price}</span>
+                                    <span className="text-[#363636] font-noto font-bold text-[20px] leading-[23px]">円</span>
                                 </div>
                             </div>
-                            {/* BadgeDisplay for multiple images */}
-                            {product.images && product.images.length > 1 && (
-                                <div className="flex justify-center w-full mt-[16px]">
-                                    <BadgeDisplay
-                                        buttonClassName="px-[12px] py-[6px] gap-[3px] rounded-[10px] border-[1px] border-solid border-[#E862CB]"
-                                        textClassName="text-[#E862CB] text-[18px] font-medium leading-[18px]"
-                                        images={product.images.slice(0, 3).map((url, index) => ({
-                                            src: url,
-                                            alt: `${product.title} image ${index + 1}`
-                                        }))}
-                                        text={`${product.images.length}点を全て表示`}
-                                        width="24px"
-                                        height="24px"
-                                        displayMode={product.display_mode}
-                                        onClick={() => {
-                                            router.visit(route('product.details.free.expand', {
-                                                id: product.id
-                                            }));
-                                        }}
-                                    />
-                                </div>
-                            )}
                             {/* 1212: Print info blocks */}
                             <div className="inline-flex flex-col items-start w-full mt-[24px] mx-auto">
                                 {/* 12121: Gradient header */}
@@ -679,4 +661,4 @@ const ProductDetailsFree = () => {
     );
 };
 
-export default ProductDetailsFree;
+export default ProductDetailsFreeExpand;

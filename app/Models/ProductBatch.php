@@ -103,7 +103,9 @@ class ProductBatch extends Model
      */
     public function isFavoritedBy(?User $user): bool
     {
-        if (!$user) return false;
+        if (!$user) {
+            return false;
+        }
         return $this->favoritedBy()->where('user_id', $user->id)->exists();
     }
 
@@ -175,10 +177,15 @@ class ProductBatch extends Model
     /**
      * Check if the product batch is purchased by a specific user.
      */
-    public function isPurchasedBy(User $user): bool
+    public function isPurchasedBy(?User $user): bool
     {
+        if (!$user) {
+            return false;
+        }
         return $this->purchases()->where('user_id', $user->id)->exists();
     }
+
+
 
     /**
      * Get watermarked image URLs for unpurchased products

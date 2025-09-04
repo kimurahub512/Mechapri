@@ -194,22 +194,30 @@ const CategoryEdit = () => {
         if (!showProductSelection) return null;
         
         return (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style={{padding: vwR(16, 64)}}>
-                <div className="bg-white rounded-[16px] w-full overflow-y-auto" style={{
-                    height: vwR(400, 700)
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[10004]" style={{padding: vwR(8, 64)}}>
+                <div className="bg-white rounded-[16px] w-full max-h-[90vh] overflow-y-auto" style={{
+                    height: vwR(500, 700),
+                    maxHeight: '90vh',
+                    minHeight: '400px'
                 }}>
-                    <div className="p-6" style={{padding: vwR(16, 32)}}>
-                        <div className="flex justify-between items-center" style={{marginBottom: vwR(16, 32)}}>
-                            <h2 style={responsiveTextR(24, 24, 'bold', 32, 32, 'bold', 'noto', '#363636')}>
-                                商品を選択
-                            </h2>
-                            <button 
-                                onClick={() => setShowProductSelection(false)}
-                                className="text-[#ACACAC] hover:text-[#363636]"
-                            >
-                                ✕
-                            </button>
+                    <div className="flex flex-col h-full">
+                        {/* Header - Fixed */}
+                        <div className="flex-shrink-0 p-6 border-b border-gray-100" style={{padding: vwR(16, 32)}}>
+                            <div className="flex justify-between items-center">
+                                <h2 style={responsiveTextR(24, 24, 'bold', 32, 32, 'bold', 'noto', '#363636')}>
+                                    商品を選択
+                                </h2>
+                                <button 
+                                    onClick={() => setShowProductSelection(false)}
+                                    className="text-[#ACACAC] hover:text-[#363636]"
+                                >
+                                    ✕
+                                </button>
+                            </div>
                         </div>
+                        
+                        {/* Content - Scrollable */}
+                        <div className="flex-1 overflow-y-auto p-6" style={{padding: vwR(16, 32)}}>
                         
                         {productBatches && productBatches.length > 0 ? (
                             <div className="grid grid-cols-3 mb-6" style={{gap: vwR(16, 32), marginBottom: vwR(16, 32)}}>
@@ -256,26 +264,30 @@ const CategoryEdit = () => {
                                 商品がありません
                             </div>
                         )}
+                        </div>
                         
-                        <div className="flex flex-col md:flex-row justify-between items-center" style={{gap: vwR(16, 32)}}>
-                            <div style={responsiveTextR(12, 24, 'normal', 18, 24, 'normal', 'noto', '#363636')}>
-                                選択済み: {selectedProducts.length}件
-                            </div>
-                            <div className="flex" style={{gap: vwR(16, 32)}}>
-                                <button 
-                                    onClick={() => setShowProductSelection(false)}
-                                    className="border border-[#E9E9E9] rounded-[8px] text-[#363636] hover:bg-[#F6F6F6]"
-                                    style={{padding: vwR(16, 16)}}
-                                >
-                                    キャンセル
-                                </button>
-                                <button 
-                                    onClick={() => setShowProductSelection(false)}
-                                    className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] text-white rounded-[8px] hover:opacity-90"
-                                    style={{padding: vwR(16, 16)}}
-                                >
-                                    保存 ({selectedProducts.length})
-                                </button>
+                        {/* Footer - Fixed */}
+                        <div className="flex-shrink-0 p-6 border-t border-gray-100" style={{padding: vwR(16, 32)}}>
+                            <div className="flex flex-col md:flex-row justify-between items-center" style={{gap: vwR(16, 32)}}>
+                                <div style={responsiveTextR(12, 24, 'normal', 18, 24, 'normal', 'noto', '#363636')}>
+                                    選択済み: {selectedProducts.length}件
+                                </div>
+                                <div className="flex" style={{gap: vwR(16, 32)}}>
+                                    <button 
+                                        onClick={() => setShowProductSelection(false)}
+                                        className="border border-[#E9E9E9] rounded-[8px] text-[#363636] hover:bg-[#F6F6F6]"
+                                        style={{padding: vwR(16, 16)}}
+                                    >
+                                        キャンセル
+                                    </button>
+                                    <button 
+                                        onClick={() => setShowProductSelection(false)}
+                                        className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] text-white rounded-[8px] hover:opacity-90"
+                                        style={{padding: vwR(16, 16)}}
+                                    >
+                                        保存 ({selectedProducts.length})
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

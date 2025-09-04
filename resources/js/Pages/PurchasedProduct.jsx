@@ -3,6 +3,7 @@ import { router, usePage } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import RankingSection from '@/Components/RankingSection';
+import PersonalInfoSection from '@/Components/PersonalInfoSection';
 import '@/../../resources/css/shopmanagement.css';
 
 import heart from '@/assets/images/heart_pink.svg';
@@ -349,6 +350,7 @@ const PurchasedProduct = ({ product }) => {
                                         borderColor="#FF2AA1"
                                         width="32px"
                                         height="32px"
+                                        displayMode={product.display_mode}
                                         onClick={() => {
                                             const pathParts = window.location.pathname.split('/');
                                             const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
@@ -429,38 +431,8 @@ const PurchasedProduct = ({ product }) => {
                     </section>
                 </div>
             </main>
-            {/* Personal Info Footer (Frame 2) */}
-            <section className="hidden md:flex flex-col items-center py-[48px] px-[96px] w-full bg-[#F6F8FA]">
-                <div className="flex justify-between items-start w-full">
-                    {/* Left: 21 */}
-                    <div className="flex items-start flex-shrink-0">
-                        <div
-                            className="cursor-pointer hover:opacity-80 transition-opacity"
-                            onClick={() => router.visit(`/${product.user.id}`)}
-                        >
-                            <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
-                        </div>
-                        {/* 211 */}
-                        <div className="flex flex-col pl-[16px] items-start">
-                            <div className="flex flex-col items-start gap-[12px]">
-                                <span
-                                    className="text-[#000] font-noto text-[21px] font-bold leading-[32px] cursor-pointer hover:opacity-80 transition-opacity"
-                                    onClick={() => router.visit(`/${product.user.id}`)}
-                                >{product.user.name}</span>
-                                <div className="flex pt-[10px] gap-[4px]">
-                                    <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* Right: 22 */}
-                    <div className="flex flex-col w-[55%] items-start flex-shrink-0">
-                        <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
-                            {product.user.description}
-                        </span>
-                    </div>
-                </div>
-            </section>
+            {/* Personal Info Footer */}
+            <PersonalInfoSection user={product.user} defaultUserImage={default_user} />
             {/* Mobile Main Section */}
             <div className="flex flex-col gap-[45px] pt-[84px]">
                 <section className="flex flex-col items-start gap-[24px] px-4 md:hidden w-full pt-[32px] bg-[#FFF] mt-[-12px]">
@@ -689,6 +661,7 @@ const PurchasedProduct = ({ product }) => {
                                             text={`${product.images.length}点を全て表示`}
                                             width="24px"
                                             height="24px"
+                                            displayMode={product.display_mode}
                                             onClick={() => {
                                                 const pathParts = window.location.pathname.split('/');
                                                 const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
@@ -767,40 +740,6 @@ const PurchasedProduct = ({ product }) => {
                         {/* 122: Ranking */}
                         <RankingSection topBuyers={product.top_buyers} isMobile={true} />
                     </section>
-                </section>
-                {/* Mobile Section 2 */}
-                <section className="flex md:hidden flex-col items-start py-[24px] px-[16px] gap-[24px] bg-[#F6F8FA] w-full">
-                    <div className="flex flex-col items-start gap-[24px]">
-                        {/* Left: 21 */}
-                        <div className="flex items-start flex-shrink-0 ">
-                            <div
-                                className="cursor-pointer hover:opacity-80 transition-opacity"
-                                onClick={() => router.visit(`/${product.user.id}`)}
-                            >
-                                <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
-                            </div>
-                            {/* 211 */}
-                            <div className="flex flex-col pl-[16px] items-start">
-                                <div className="flex flex-col items-start gap-[12px]">
-                                    <span
-                                        className="text-[#000] font-noto text-[16px] font-bold leading-[18px] cursor-pointer hover:opacity-80 transition-opacity"
-                                        onClick={() => router.visit(`/${product.user.id}`)}
-                                    >{product.user.name}</span>
-                                    <div className="flex pt-[10px] gap-[4px]">
-                                        <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Right: 22 */}
-                        <div className="flex flex-col items-start flex-shrink-0 ">
-                            <div className="flex flex-col items-start flex-shrink-0">
-                                <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">
-                                    {product.user.description}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
                 </section>
             </div>
             <Footer />

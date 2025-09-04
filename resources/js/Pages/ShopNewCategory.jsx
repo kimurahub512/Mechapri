@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePage, router } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import ProductCarousel from '@/Components/ProductCarousel';
+import ConfirmationModal from '@/Components/ConfirmationModal';
 import '@/../../resources/css/shopmanagement.css';
 import photo1 from '@/assets/images/shoptop/photo4.png';
 import photo2 from '@/assets/images/shoptop/photo1.png';
 import photo3 from '@/assets/images/shoptop/photo2.png';
 import photo4 from '@/assets/images/shoptop/photo3.png';
 import pencil from '@/assets/images/pencil.svg';
-import recyclebin from '@/assets/images/recyclebin.svg';
+import recyclebin from '@/assets/images/recyclebin.png';
 import girl from '@/assets/images/favoriteshops/girl.svg';
 import share from '@/assets/images/share.png';
 import arrow_left from '@/assets/images/arrow_left.svg';
@@ -18,10 +19,79 @@ import {vwd, vw, responsiveTextD, responsiveText, vwR, responsiveMetricR, respon
 
 
 const ShopNewCategory = () => {
-    const { productBatches, category } = usePage().props;
+    const { productBatches, category, auth } = usePage().props;
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+    
     const handleGoBack = () => {
         window.history.back();
+    };
+
+    // Check if current user is the category owner
+    // Try both user_id and user.id properties
+    const categoryOwnerId = category?.user_id || category?.user?.id;
+    const isOwner = auth?.user && categoryOwnerId === auth.user.id;
+    
+    // Debug logging (remove in production)
+    // console.log('Debug - auth:', auth);
+    // console.log('Debug - category:', category);
+    // console.log('Debug - isOwner:', isOwner);
+    // console.log('Debug - auth.user.id:', auth?.user?.id);
+    // console.log('Debug - category.user_id:', category?.user_id);
+    // console.log('Debug - category.user.id:', category?.user?.id);
+    // console.log('Debug - categoryOwnerId:', categoryOwnerId);
+
+    // Handle category deletion
+    const handleDelete = () => {
+        setShowDeleteModal(true);
+    };
+
+    const confirmDelete = async () => {
+        if (!category?.id) return;
+        
+        setIsDeleting(true);
+        try {
+            await router.delete(`/myshop/category/${category.id}`);
+            // The page will automatically refresh with the redirect
+        } catch (error) {
+            console.error('Delete failed:', error);
+            alert('削除に失敗しました。');
+        } finally {
+            setIsDeleting(false);
+            setShowDeleteModal(false);
+        }
+    };
+
+    const cancelDelete = () => {
+        setShowDeleteModal(false);
+    };
+
+    // Handle category editing
+    const handleEdit = () => {
+        if (category?.id) {
+            router.visit(route('myshop.category.edit', { category: category.id }));
+        }
+    };
+
+    // Handle category sharing
+    const handleShare = async () => {
+        try {
+            const shareData = {
+                title: category?.title || 'Mechapuri Category',
+                text: `${category?.title || 'カテゴリ'} - ${productBatches?.length || 0}点の商品`,
+                url: window.location.href,
+            };
+
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                await navigator.clipboard.writeText(shareData.url);
+                alert('カテゴリURLをコピーしました！');
+            }
+        } catch (err) {
+            console.error('Failed to share category:', err);
+        }
     };
     // Transform productBatches to match the expected format for ProductCarousel
     const transformedProducts = productBatches ? productBatches.map(batch => {
@@ -70,18 +140,42 @@ const ShopNewCategory = () => {
                         <span style={{...responsiveTextR(16, 18, 'bold', 21, 32, 'bold', 'noto', '#000')}}>{category?.user?.shop_title || category?.user?.name || 'Shop'}</span>
                     </div>
                     <div className='flex flex-row items-center' style={{gap: vwR(28, 28)}}>
-                        <div className='flex flex-row items-center' style={{gap: vwR(4, 4)}}>
-                            <img src={recyclebin} alt="recyclebin" style={{...responsiveMetricR(16, 16, 16, 16)}}/>
-                            <span style={{...responsiveTextR(12, 18, 'normal', 12, 18, 'normal', 'noto', '#000')}}>削除</span>
-                        </div>
-                        <div className='flex flex-row items-center' style={{gap: vwR(4, 4)}}>
-                            <img src={pencil} alt="pencil" style={{...responsiveMetricR(16, 16, 16, 16)}}/>
-                            <span style={{...responsiveTextR(12, 18, 'normal', 12, 18, 'normal', 'noto', '#000')}}>編集</span>
-                        </div>
-                        <div className='flex flex-row items-center' style={{gap: vwR(4, 4)}}>
+                        {/* Delete Button - Only show for category owner */}
+                        {isOwner && (
+                            <button 
+                                onClick={handleDelete}
+                                disabled={isDeleting}
+                                className='flex flex-row items-center hover:opacity-70 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed'
+                                style={{gap: vwR(4, 4)}}
+                            >
+                                <img src={recyclebin} alt="recyclebin" style={{...responsiveMetricR(16, 16, 16, 16)}}/>
+                                <span style={{...responsiveTextR(12, 18, 'normal', 12, 18, 'normal', 'noto', '#000')}}>
+                                    {isDeleting ? '削除中...' : '削除'}
+                                </span>
+                            </button>
+                        )}
+                        
+                        {/* Edit Button - Only show for category owner */}
+                        {isOwner && (
+                            <button 
+                                onClick={handleEdit}
+                                className='flex flex-row items-center hover:opacity-70 transition-opacity'
+                                style={{gap: vwR(4, 4)}}
+                            >
+                                <img src={pencil} alt="pencil" style={{...responsiveMetricR(16, 16, 16, 16)}}/>
+                                <span style={{...responsiveTextR(12, 18, 'normal', 12, 18, 'normal', 'noto', '#000')}}>編集</span>
+                            </button>
+                        )}
+                        
+                        {/* Share Button - Available for everyone */}
+                        <button 
+                            onClick={handleShare}
+                            className='flex flex-row items-center hover:opacity-70 transition-opacity'
+                            style={{gap: vwR(4, 4)}}
+                        >
                             <img src={share} alt="share" style={{...responsiveMetricR(16, 16, 16, 16)}}/>
                             <span style={{...responsiveTextR(12, 18, 'normal', 12, 18, 'normal', 'noto', '#000')}}>シェア</span>
-                        </div>
+                        </button>
                     </div>
                 </div>
                 <div className="flex flex-col items-start gap-[8px] self-stretch">
@@ -99,6 +193,24 @@ const ShopNewCategory = () => {
                 </div>
             </section>
             {/* </section> */}
+
+            {/* Delete Confirmation Modal */}
+            <ConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={cancelDelete}
+                onConfirm={confirmDelete}
+                title="カテゴリの削除"
+                message={`「${category?.title}」を削除しますか？${
+                    productBatches?.length > 0 
+                        ? `\n\nこのカテゴリには${productBatches.length}個の商品が含まれています。削除すると、商品はカテゴリから外されますが、商品自体は削除されません。`
+                        : ''
+                }`}
+                confirmText="削除する"
+                cancelText="キャンセル"
+                confirmButtonClass="bg-red-500 hover:bg-red-600"
+                isLoading={isDeleting}
+                loadingText="削除中..."
+            />
 
             <Footer />
         </div>

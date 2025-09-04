@@ -8,10 +8,12 @@ import cart from '@/assets/images/icon-cart.png';
 import man from '@/assets/images/icon-man.svg';
 import shop from '@/assets/images/Slider_03.svg'
 import bell from '@/assets/images/bell.svg'
+import { useNotification } from '@/Contexts/NotificationContext';
 import '@/../../resources/css/header.css';
 
 const Header = ({ authButton }) => {
-  const { auth, cartCount, unreadNotificationCount } = usePage().props;
+  const { auth, cartCount } = usePage().props;
+  const { unreadNotificationCount } = useNotification();
 
   return (
     <>

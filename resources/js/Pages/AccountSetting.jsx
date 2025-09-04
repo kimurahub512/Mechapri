@@ -4,7 +4,7 @@ import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import '@/../../resources/css/shopmanagement.css';
 import logout from '@/assets/images/logout.svg';
-import recyclebin from '@/assets/images/recyclebin.svg';
+import recyclebin from '@/assets/images/recyclebin.png';
 import { vw, vwd, responsiveText, responsivePosition, responsiveMetric, responsiveTextD, responsivePositionD, responsiveMetricD } from '@/lib/utils';
 
 const AccountSetting = () => {

@@ -7,7 +7,7 @@ import ShopMobileTopBlock from '@/Components/ShopMobileTopBlocks';
 import ConfirmationModal from '@/Components/ConfirmationModal';
 import CategoryReorderModal from '@/Components/CategoryReorderModal';
 import '@/../../resources/css/shopmanagement.css';
-import recyclebin from '@/assets/images/recyclebin.svg';
+import recyclebin from '@/assets/images/recyclebin.png';
 import list from '@/assets/images/list_unordered.png';
 import arrow from '@/assets/images/arrow_right.svg';
 import file_add from '@/assets/images/file_add.svg';
@@ -17,16 +17,25 @@ import { vw, vwd, responsiveText, responsiveTextD, responsiveMetric, responsiveM
 const Category = () => {
     const { categories, totalBatches, auth, flash } = usePage().props;
 
-    // Success message state
-    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+    // Message state
+    const [showMessage, setShowMessage] = useState(false);
+    const [messageType, setMessageType] = useState('success');
+    const [messageText, setMessageText] = useState('');
 
-    // Show success message if it exists in flash
+    // Show message if it exists in flash
     useEffect(() => {
         if (flash?.success) {
-            setShowSuccessMessage(true);
-            setTimeout(() => setShowSuccessMessage(false), 3000);
+            setMessageType('success');
+            setMessageText(flash.success);
+            setShowMessage(true);
+            setTimeout(() => setShowMessage(false), 5000);
+        } else if (flash?.error) {
+            setMessageType('error');
+            setMessageText(flash.error);
+            setShowMessage(true);
+            setTimeout(() => setShowMessage(false), 5000);
         }
-    }, [flash?.success]);
+    }, [flash?.success, flash?.error]);
 
     // Confirmation modal state
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -94,10 +103,12 @@ const Category = () => {
         <>
             <Header />
 
-            {/* Success Message */}
-            {showSuccessMessage && (
-                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg font-['Noto_Sans_JP']">
-                    {flash?.success}
+            {/* Message Display */}
+            {showMessage && (
+                <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg font-['Noto_Sans_JP'] ${
+                    messageType === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                }`}>
+                    {messageText}
                 </div>
             )}
 
@@ -448,7 +459,11 @@ const Category = () => {
                 onClose={cancelDelete}
                 onConfirm={confirmDelete}
                 title="カテゴリの削除"
-                message={`「${categoryToDelete?.title}」を削除しますか？`}
+                message={`「${categoryToDelete?.title}」を削除しますか？${
+                    categoryToDelete?.batch_cnt > 0 
+                        ? `\n\nこのカテゴリには${categoryToDelete.batch_cnt}個の商品が含まれています。削除すると、商品はカテゴリから外されますが、商品自体は削除されません。`
+                        : ''
+                }`}
                 confirmText="削除する"
                 cancelText="キャンセル"
                 confirmButtonClass="bg-red-500 hover:bg-red-600"

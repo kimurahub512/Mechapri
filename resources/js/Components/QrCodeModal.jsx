@@ -122,12 +122,12 @@ const QrCodeModal = ({ onClose, purchase }) => {
                             </div>
                         </div>
                         {/* 121222: Seven Eleven */}
-                        <div className="flex w-[480px] h-[74px] px-[24px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50 ">
+                        {/* <div className="flex w-[480px] h-[74px] px-[24px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50 ">
                             <div className="flex items-center w-[425px] h-[74px] py-[30px] justify-between">
                                 <span className="font-noto text-[18px] font-bold leading-[20.7px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
                                 <img src={eleven} alt="eleven" className="w-[59px] h-[59px] rounded-full object-cover ml-[16px]" />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 {/* 1213: Help link */}
@@ -216,12 +216,12 @@ const QrCodeModal = ({ onClose, purchase }) => {
                                 </div>
                             </div>
                             {/* 121222: Seven Eleven */}
-                            <div className="flex w-full h-[60px] px-[16px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50">
+                            {/* <div className="flex w-full h-[60px] px-[16px] justify-between items-center rounded-[10px] border border-[#D1D1D1] bg-white bg-opacity-50">
                                 <div className="flex items-center w-full h-[60px] py-[20px] justify-between">
                                     <span className="font-noto text-[12px] font-bold leading-[16px] bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] bg-clip-text text-transparent">セブンイレブンで印刷する</span>
                                     <img src={eleven} alt="eleven" className="w-[40px] h-[40px] rounded-full object-cover ml-[12px]" />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     {/* 1213: Help link */}

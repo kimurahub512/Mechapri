@@ -5,7 +5,7 @@ import Footer from '@/Components/footer/footer';
 import ShopSidebar from '@/Components/ShopSidebar';
 import ShopMobileTopBlock from '@/Components/ShopMobileTopBlocks';
 import '@/../../resources/css/shopmanagement.css';
-import recyclebin from '@/assets/images/recyclebin.svg';
+import recyclebin from '@/assets/images/recyclebin.png';
 import question from '@/assets/images/question_cloud.svg';
 import lock from '@/assets/images/lock.svg';
 import bubble from '@/assets/images/bubble.svg';

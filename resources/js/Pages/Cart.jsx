@@ -4,7 +4,7 @@ import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import QuantityControl from '@/Components/QuantityControl';
 import '@/../../resources/css/shopmanagement.css';
-import recyclebin from '@/assets/images/recyclebin.svg';
+import recyclebin from '@/assets/images/recyclebin.png';
 import sub from '@/assets/images/sub.svg';
 import add from '@/assets/images/add.svg';
 import applepay from '@/assets/images/apple_pay.svg';
@@ -236,7 +236,7 @@ const Cart = ({ cartItems = [] }) => {
                                 {/* Purchase button */}
                                 <button 
                                     onClick={() => router.visit(`/payment/checkout/${item.product_batch.id}/${item.id}`)}
-                                    className="flex w-[240px] h-[40px] px-[24px] justify-between items-center flex-shrink-0 rounded-[10px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] mt-[16px] mx-auto"
+                                    className="flex w-[240px] h-[40px] px-[24px] justify-center items-center flex-shrink-0 rounded-[10px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] mt-[16px] mx-auto"
                                 >
                                     <span className="text-white text-center font-noto font-bold text-[12px] leading-[12px]">すぐにプリントコード購入</span>
                                 </button>

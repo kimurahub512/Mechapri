@@ -30,6 +30,7 @@ class NewItemNotificationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new \Illuminate\Mail\Mailables\Address(config('mail.from.address'), 'めちゃプリ運営'),
             subject: '「' . $this->notification->data['seller_name'] . '」から新しい写真が届きました！',
         );
     }

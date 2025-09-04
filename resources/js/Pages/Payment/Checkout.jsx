@@ -16,7 +16,7 @@ function getStripePromise(stripeKeyFromProps) {
     return stripePromise;
 }
 
-const CheckoutForm = ({ product, clientSecret }) => {
+const CheckoutForm = ({ product, clientSecret, quantity, totalAmount }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState(null);
@@ -49,7 +49,12 @@ const CheckoutForm = ({ product, clientSecret }) => {
             <div className="mb-8">
                 <h2 className="text-2xl font-bold mb-2">{product.title}</h2>
                 <p className="text-gray-600 mb-4">{product.description}</p>
-                <div className="text-xl font-bold text-[#FF2AA1]">¥{product.price}</div>
+                {quantity > 1 && (
+                    <div className="text-sm text-gray-600 mb-2">
+                        数量: {quantity}個
+                    </div>
+                )}
+                <div className="text-xl font-bold text-[#FF2AA1]">¥{totalAmount.toLocaleString()}</div>
             </div>
 
             <PaymentElement />
@@ -73,7 +78,7 @@ const CheckoutForm = ({ product, clientSecret }) => {
     );
 };
 
-const Checkout = ({ product, clientSecret, stripeKey }) => {
+const Checkout = ({ product, clientSecret, stripeKey, quantity, totalAmount }) => {
     const options = {
         clientSecret,
         appearance: {
@@ -108,7 +113,7 @@ const Checkout = ({ product, clientSecret, stripeKey }) => {
                 <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
                     <h1 className="text-3xl font-bold text-center mb-8">お支払い</h1>
                     <Elements stripe={stripe} options={options}>
-                        <CheckoutForm product={product} clientSecret={clientSecret} />
+                        <CheckoutForm product={product} clientSecret={clientSecret} quantity={quantity} totalAmount={totalAmount} />
                     </Elements>
                 </div>
             </main>

@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { usePage, router } from '@inertiajs/react';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
+import { useNotification } from '@/Contexts/NotificationContext';
 import '@/../../resources/css/shopmanagement.css';
 import default_user from '@/assets/images/default-user.png';
 
 const Notification = () => {
     const { notifications = [] } = usePage().props;
     const [localNotifications, setLocalNotifications] = useState(notifications);
+    const { markAllAsRead: markAllAsReadContext } = useNotification();
 
     const handleMarkAsRead = async (notificationId) => {
         try {
@@ -48,6 +50,8 @@ const Notification = () => {
                 setLocalNotifications(prev => 
                     prev.map(notification => ({ ...notification, read: true, read_at: new Date().toISOString() }))
                 );
+                // Update the global notification count to hide the badge
+                markAllAsReadContext();
             }
         } catch (error) {
             console.error('Error marking all notifications as read:', error);

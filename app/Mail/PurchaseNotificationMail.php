@@ -30,6 +30,7 @@ class PurchaseNotificationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new \Illuminate\Mail\Mailables\Address(config('mail.from.address'), 'めちゃプリ運営'),
             subject: 'あなたの商品が購入されました！',
         );
     }

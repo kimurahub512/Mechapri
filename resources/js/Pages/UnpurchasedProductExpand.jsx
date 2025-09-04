@@ -4,6 +4,7 @@ import default_user from '@/assets/images/default-user.png';
 import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import RankingSection from '@/Components/RankingSection';
+import PersonalInfoSection from '@/Components/PersonalInfoSection';
 import '@/../../resources/css/shopmanagement.css';
 import heart from '@/assets/images/heart_pink.svg';
 import share from '@/assets/images/share.png';
@@ -65,6 +66,12 @@ const UnpurchasedProductExpand = ({ product }) => {
     };
 
     const handleAddToCart = async () => {
+        // Check if user is authenticated
+        if (!auth?.user) {
+            router.visit('/login');
+            return;
+        }
+
         try {
             const response = await fetch(route('cart.add'), {
                 method: 'POST',
@@ -77,6 +84,16 @@ const UnpurchasedProductExpand = ({ product }) => {
                     quantity: quantities.cart
                 }),
             });
+            
+            if (!response.ok) {
+                if (response.status === 401) {
+                    // Unauthorized - redirect to login
+                    router.visit('/login');
+                    return;
+                }
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
             const data = await response.json();
             if (data.success) {
                 // Show success message or redirect to cart
@@ -88,7 +105,15 @@ const UnpurchasedProductExpand = ({ product }) => {
     };
 
     const handleDirectPurchase = () => {
-        router.visit(route('payment.checkout', { product: product.id }));
+        // Check if user is authenticated
+        if (!auth?.user) {
+            router.visit('/login');
+            return;
+        }
+        
+        router.visit(route('payment.checkout', { product: product.id }), {
+            data: { quantity: quantities.direct }
+        });
     };
 
     return (
@@ -126,6 +151,12 @@ const UnpurchasedProductExpand = ({ product }) => {
                             <div className="flex items-center absolute right-0 top-[15px]">
                                 <button
                                     onClick={async () => {
+                                        // Check if user is authenticated
+                                        if (!auth?.user) {
+                                            router.visit('/login');
+                                            return;
+                                        }
+                                        
                                         try {
                                             const response = await fetch(route('favoriteshops.toggle'), {
                                                 method: 'POST',
@@ -135,6 +166,16 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                 },
                                                 body: JSON.stringify({ shop_user_id: product.user.id }),
                                             });
+                                            
+                                            if (!response.ok) {
+                                                if (response.status === 401) {
+                                                    // Unauthorized - redirect to login
+                                                    router.visit('/login');
+                                                    return;
+                                                }
+                                                throw new Error(`HTTP error! status: ${response.status}`);
+                                            }
+                                            
                                             const data = await response.json();
                                             if (data.success) {
                                                 router.reload();
@@ -143,8 +184,8 @@ const UnpurchasedProductExpand = ({ product }) => {
                                             console.error('Error toggling shop follow:', error);
                                         }
                                     }}
-                                    disabled={auth.user.id === product.user.id}
-                                    className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${auth.user.id === product.user.id
+                                    disabled={!auth?.user || auth.user.id === product.user.id}
+                                    className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${!auth?.user || auth.user.id === product.user.id
                                             ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
                                             : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.user.is_followed_by_current_user ? 'bg-[#FF2AA1]' : 'bg-white'}`
                                         }`}
@@ -153,11 +194,11 @@ const UnpurchasedProductExpand = ({ product }) => {
                                         src={product.user.is_followed_by_current_user ? favoriteshops_follow : favoriteshops}
                                         alt="favoriteshop"
                                     />
-                                    <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${auth.user.id === product.user.id
+                                    <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${!auth?.user || auth.user.id === product.user.id
                                             ? 'text-[#767676]'
                                             : product.user.is_followed_by_current_user ? 'text-white' : 'text-[#FF2AA1]'
                                         }`}>
-                                        {product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー'}
+                                        {!auth?.user ? 'ログインして' : (product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー')}
                                     </span>
                                 </button>
                             </div>
@@ -182,6 +223,12 @@ const UnpurchasedProductExpand = ({ product }) => {
                                     {/* 114111: Heart, お気に入り, 1000 */}
                                     <button
                                         onClick={async () => {
+                                            // Check if user is authenticated
+                                            if (!auth?.user) {
+                                                router.visit('/login');
+                                                return;
+                                            }
+                                            
                                             try {
                                                 const response = await fetch(route('favoriteproducts.toggle'), {
                                                     method: 'POST',
@@ -191,6 +238,16 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                     },
                                                     body: JSON.stringify({ product_id: product.id }),
                                                 });
+                                                
+                                                if (!response.ok) {
+                                                    if (response.status === 401) {
+                                                        // Unauthorized - redirect to login
+                                                        router.visit('/login');
+                                                        return;
+                                                    }
+                                                    throw new Error(`HTTP error! status: ${response.status}`);
+                                                }
+                                                
                                                 const data = await response.json();
                                                 if (data.success) {
                                                     router.reload();
@@ -199,18 +256,18 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                 console.error('Error toggling favorite:', error);
                                             }
                                         }}
-                                        disabled={auth.user.id === product.user.id}
-                                        className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${auth.user.id === product.user.id
+                                        disabled={!auth?.user || auth.user.id === product.user.id}
+                                        className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${!auth?.user || auth.user.id === product.user.id
                                                 ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
                                                 : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
                                             }`}
                                     >
                                         <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${!auth?.user || product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
                                             }`}>
-                                            {product.is_favorited ? 'お気に入り中' : 'お気に入り'}
+                                            {!auth?.user ? 'ログインして' : (product.is_favorited ? 'お気に入り中' : 'お気に入り')}
                                         </span>
-                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${!auth?.user || product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
                                             }`}>
                                             {product.favorite_count}
                                         </span>
@@ -299,19 +356,6 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                     ) : product.display_mode === 'password' && isUnlocked ? (
                                                         <div className="relative h-full w-full">
                                                             <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
-                                                            {/* Watermark Overlay for Password (unlocked) */}
-                                                            <div className="absolute inset-0 pointer-events-none">
-                                                                <div className="absolute inset-0 opacity-30">
-                                                                    <div className="absolute top-[15%] left-[-20%] transform -rotate-45 flex gap-6">
-                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
-                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
-                                                                    </div>
-                                                                    <div className="absolute top-[55%] left-[-15%] transform -rotate-45 flex gap-6">
-                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
-                                                                        <img src={logo} alt="watermark" className="w-20 h-3 opacity-50" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                     ) : product.display_mode === 'cushion' ? (
                                                         <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
@@ -333,41 +377,6 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                     ) : (
                                                         <div className="relative h-full w-full">
                                                             <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
-                                                            {/* Watermark Overlay - Always show for unpurchased products */}
-                                                            <div className="absolute inset-0 pointer-events-none">
-                                                                <div className="absolute inset-0 opacity-40">
-                                                                    <div className="absolute top-[10%] left-[-20%] transform -rotate-45 flex gap-8">
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                    </div>
-                                                                    <div className="absolute top-[30%] left-[-10%] transform -rotate-45 flex gap-8">
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                    </div>
-                                                                    <div className="absolute top-[50%] left-[-5%] transform -rotate-45 flex gap-8">
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                    </div>
-                                                                    <div className="absolute top-[70%] left-[-15%] transform -rotate-45 flex gap-8">
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                    </div>
-                                                                    <div className="absolute top-[90%] left-[-25%] transform -rotate-45 flex gap-8">
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                        <img src={logo} alt="watermark" className="w-24 h-4 opacity-60" />
-                                                                    </div>
-                                                                </div>
-                                                                <div className="absolute inset-0 flex items-center justify-center">
-                                                                    <div className="bg-black bg-opacity-30 rounded-lg px-4 py-2">
-                                                                        <span className="text-white text-sm font-bold">めちゃプリ</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                     )}
                                                 </div>
@@ -487,38 +496,8 @@ const UnpurchasedProductExpand = ({ product }) => {
                     </section>
                 </div>
             </main>
-            {/* Personal Info Footer (Frame 2) */}
-            <section className="hidden md:flex flex-col items-center py-[48px] px-[96px] w-full bg-[#F6F8FA]">
-                <div className="flex justify-between items-start w-full">
-                    {/* Left: 21 */}
-                    <div className="flex items-start flex-shrink-0">
-                        <div 
-                            className="cursor-pointer hover:opacity-80 transition-opacity"
-                            onClick={() => router.visit(`/${product.user.id}`)}
-                        >
-                            <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
-                        </div>
-                        {/* 211 */}
-                        <div className="flex flex-col pl-[16px] items-start">
-                            <div className="flex flex-col items-start gap-[12px]">
-                                <span 
-                                    className="text-[#000] font-noto text-[21px] font-bold leading-[32px] cursor-pointer hover:opacity-80 transition-opacity"
-                                    onClick={() => router.visit(`/${product.user.id}`)}
-                                >{product.user.name}</span>
-                                <div className="flex pt-[10px] gap-[4px]">
-                                    <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* Right: 22 */}
-                    <div className="flex flex-col w-[55%] items-start flex-shrink-0">
-                            <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
-                                {product.user.description}
-                            </span>
-                    </div>
-                </div>
-            </section>
+            {/* Personal Info Footer */}
+            <PersonalInfoSection user={product.user} defaultUserImage={default_user} />
             {/* Mobile Main Section */}
             <div className="flex flex-col pt-[84px] gap-[45px]">
                 <section className="flex flex-col items-start gap-[24px] px-4 md:hidden w-full pt-[32px] bg-[#FFF] mt-[-12px]">
@@ -547,6 +526,12 @@ const UnpurchasedProductExpand = ({ product }) => {
                             </div>
                             <button
                                 onClick={async () => {
+                                    // Check if user is authenticated
+                                    if (!auth?.user) {
+                                        router.visit('/login');
+                                        return;
+                                    }
+                                    
                                     try {
                                         const response = await fetch(route('favoriteshops.toggle'), {
                                             method: 'POST',
@@ -556,6 +541,16 @@ const UnpurchasedProductExpand = ({ product }) => {
                                             },
                                             body: JSON.stringify({ shop_user_id: product.user.id }),
                                         });
+                                        
+                                        if (!response.ok) {
+                                            if (response.status === 401) {
+                                                // Unauthorized - redirect to login
+                                                router.visit('/login');
+                                                return;
+                                            }
+                                            throw new Error(`HTTP error! status: ${response.status}`);
+                                        }
+                                        
                                         const data = await response.json();
                                         if (data.success) {
                                             router.reload();
@@ -564,8 +559,8 @@ const UnpurchasedProductExpand = ({ product }) => {
                                         console.error('Error toggling shop follow:', error);
                                     }
                                 }}
-                                disabled={auth.user.id === product.user.id}
-                                className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${auth.user.id === product.user.id
+                                disabled={!auth?.user || auth.user.id === product.user.id}
+                                className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${!auth?.user || auth.user.id === product.user.id
                                     ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
                                     : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.user.is_followed_by_current_user ? 'bg-[#FF2AA1]' : 'bg-white'}`
                                     }`}
@@ -574,11 +569,11 @@ const UnpurchasedProductExpand = ({ product }) => {
                                     src={product.user.is_followed_by_current_user ? favoriteshops_follow : favoriteshops}
                                     alt="favoriteshop"
                                 />
-                                <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${auth.user.id === product.user.id
+                                <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${!auth?.user || auth.user.id === product.user.id
                                     ? 'text-[#767676]'
                                     : product.user.is_followed_by_current_user ? 'text-white' : 'text-[#FF2AA1]'
                                     }`}>
-                                    {product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー'}
+                                    {!auth?.user ? 'ログインして' : (product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー')}
                                 </span>
                             </button>
                             {/* 1122 */}
@@ -595,6 +590,12 @@ const UnpurchasedProductExpand = ({ product }) => {
                                 {/* 1131 */}
                                 <button
                                     onClick={async () => {
+                                        // Check if user is authenticated
+                                        if (!auth?.user) {
+                                            router.visit('/login');
+                                            return;
+                                        }
+                                        
                                         try {
                                             const response = await fetch(route('favoriteproducts.toggle'), {
                                                 method: 'POST',
@@ -604,6 +605,16 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                 },
                                                 body: JSON.stringify({ product_id: product.id }),
                                             });
+                                            
+                                            if (!response.ok) {
+                                                if (response.status === 401) {
+                                                    // Unauthorized - redirect to login
+                                                    router.visit('/login');
+                                                    return;
+                                                }
+                                                throw new Error(`HTTP error! status: ${response.status}`);
+                                            }
+                                            
                                             const data = await response.json();
                                             if (data.success) {
                                                 router.reload();
@@ -612,18 +623,18 @@ const UnpurchasedProductExpand = ({ product }) => {
                                             console.error('Error toggling favorite:', error);
                                         }
                                     }}
-                                    disabled={auth.user.id === product.user.id}
-                                    className={`flex flex-col items-start gap-[10px] p-[8px] rounded-[6px] border-[1px] border-solid transition-opacity ${auth.user.id === product.user.id
+                                    disabled={!auth?.user || auth.user.id === product.user.id}
+                                    className={`flex flex-col items-start gap-[10px] p-[8px] rounded-[6px] border-[1px] border-solid transition-opacity ${!auth?.user || auth.user.id === product.user.id
                                         ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
                                         : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
                                         }`}
                                 >
                                     <div className="flex items-center gap-[4px]">
                                         <img src={heart} alt="heart" className="w-[20px] h-[20px]" />
-                                        <span className={`font-noto text-[12px] font-normal leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'}`}>
-                                            {product.is_favorited ? 'お気に入り中' : 'お気に入り'}
+                                        <span className={`font-noto text-[12px] font-normal leading-[21px] ${!auth?.user || product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'}`}>
+                                            {!auth?.user ? 'ログインして' : (product.is_favorited ? 'お気に入り中' : 'お気に入り')}
                                         </span>
-                                        <span className={`font-['Red Hat Display'] text-[14px] font-bold leading-[15px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'}`}>
+                                        <span className={`font-['Red Hat Display'] text-[14px] font-bold leading-[15px] ${!auth?.user || product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'}`}>
                                             {product.favorite_count}
                                         </span>
                                     </div>
@@ -816,40 +827,6 @@ const UnpurchasedProductExpand = ({ product }) => {
                         {/* 122: Ranking */}
                         <RankingSection topBuyers={product.top_buyers} isMobile={true} />
                     </section>
-                </section>
-                {/* Mobile Section 2 */}
-                <section className="flex md:hidden flex-col items-start py-[24px] px-[16px] gap-[24px] bg-[#F6F8FA] w-full">
-                    <div className="flex flex-col items-start gap-[24px]">
-                        {/* Left: 21 */}
-                        <div className="flex items-start flex-shrink-0 ">
-                            <div 
-                                className="cursor-pointer hover:opacity-80 transition-opacity"
-                                onClick={() => router.visit(`/${product.user.id}`)}
-                            >
-                                <img src={product.user.image || default_user} alt={product.user.name} className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
-                            </div>
-                            {/* 211 */}
-                            <div className="flex flex-col pl-[16px] items-start">
-                                <div className="flex flex-col items-start gap-[12px]">
-                                    <span 
-                                        className="text-[#000] font-noto text-[16px] font-bold leading-[18px] cursor-pointer hover:opacity-80 transition-opacity"
-                                        onClick={() => router.visit(`/${product.user.id}`)}
-                                    >{product.user.name}</span>
-                                    <div className="flex pt-[10px] gap-[4px]">
-                                        <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Right: 22 */}
-                        <div className="flex flex-col items-start flex-shrink-0 ">
-                            <div className="flex flex-col items-start flex-shrink-0">
-                                <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">
-                                    {product.user.description}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
                 </section>
             </div>
             <Footer />

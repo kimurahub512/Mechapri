@@ -4,29 +4,20 @@ import Header from '@/Components/header/header';
 import Footer from '@/Components/footer/footer';
 import BadgeDisplay from '@/Components/BadgeDisplay';
 import RankingSection from '@/Components/RankingSection';
+import PersonalInfoSection from '@/Components/PersonalInfoSection';
 import '@/../../resources/css/shopmanagement.css';
-import photo1 from '@/assets/images/shopcontents/photo1.jpg';
-import girl from '@/assets/images/favoriteshops/girl.svg';
 import heart from '@/assets/images/heart_pink.svg';
 import share from '@/assets/images/share.png';
 import complex from '@/assets/images/complex.svg';
 import complex_black from '@/assets/images/complex_black.png';
 import question_circle from '@/assets/images/question_circle.svg';
-import shop1 from '@/assets/images/productdetails/printshop.svg';
-import shop2 from '@/assets/images/productdetails/lawson.svg';
-import shop3 from '@/assets/images/productdetails/ministop.svg';
-import eleven from '@/assets/images/productdetails/eleven.png';
-import qr from '@/assets/images/productdetails/qr.jpg';
 import x from '@/assets/images/x_logo.svg';
 import instagram from '@/assets/images/instagram.svg';
 import favoriteshops from '@/assets/images/favoriteshop.svg';
 import favoriteshops_follow from '@/assets/images/favoriteshop_white.svg';
-import logo from '@/assets/images/logo_white.svg';
-import cart from '@/assets/images/icon-cart.png';
+import cart from '@/assets/images/cart_white.png';
 import QuantityControl from '@/Components/QuantityControl';
-import photo2 from '@/assets/images/shoptop/photo1.png';
-import photo3 from '@/assets/images/shoptop/photo2.png';
-import photo4 from '@/assets/images/shoptop/photo3.png';
+
 import purchase_qr from '@/assets/images/purchase_qr.svg';
 import print_qr from '@/assets/images/print_qr.svg';
 import default_user from '@/assets/images/default-user.png';
@@ -118,6 +109,13 @@ const UnpurchasedProduct = ({ product }) => {
                                 <button
                                     onClick={async (e) => {
                                         e.preventDefault();
+                                        
+                                        // Check if user is authenticated
+                                        if (!auth?.user) {
+                                            router.visit('/login');
+                                            return;
+                                        }
+                                        
                                         try {
                                             const response = await fetch(route('favoriteshops.toggle'), {
                                                 method: 'POST',
@@ -127,22 +125,26 @@ const UnpurchasedProduct = ({ product }) => {
                                                 },
                                                 body: JSON.stringify({ shop_user_id: product.user.id }),
                                             });
+                                            
+                                            if (!response.ok) {
+                                                if (response.status === 401) {
+                                                    // Unauthorized - redirect to login
+                                                    router.visit('/login');
+                                                    return;
+                                                }
+                                                throw new Error(`HTTP error! status: ${response.status}`);
+                                            }
+                                            
                                             const data = await response.json();
                                             if (data.success) {
                                                 router.reload();
                                             }
                                         } catch (error) {
                                             console.error('Error toggling shop follow:', error);
-                                            console.error('Error details:', {
-                                                error,
-                                                csrf: document.querySelector('meta[name="csrf-token"]')?.content,
-                                                productUserId: product.user.id,
-                                                authUserId: auth.user.id
-                                            });
                                         }
                                     }}
-                                    disabled={auth.user.id === product.user.id}
-                                    className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${auth.user.id === product.user.id
+                                    disabled={auth?.user && auth.user.id === product.user.id}
+                                    className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${!auth?.user || auth.user.id === product.user.id
                                             ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
                                             : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.user.is_followed_by_current_user ? 'bg-[#FF2AA1]' : 'bg-white'}`
                                         }`}
@@ -151,11 +153,9 @@ const UnpurchasedProduct = ({ product }) => {
                                         src={product.user.is_followed_by_current_user ? favoriteshops_follow : favoriteshops}
                                         alt="favoriteshop"
                                     />
-                                    <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${auth.user.id === product.user.id
-                                            ? 'text-[#767676]'
-                                            : product.user.is_followed_by_current_user ? 'text-white' : 'text-[#FF2AA1]'
+                                    <span className={`text-center font-bold text-[14px] leading-[21px] font-noto ${product.user.is_followed_by_current_user ? 'text-white' : 'text-[#FF2AA1]'
                                         }`}>
-                                        {product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー'}
+                                        {!auth?.user ? 'ログインして' : (product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー')}
                                     </span>
                                 </button>
                             </div>
@@ -181,6 +181,12 @@ const UnpurchasedProduct = ({ product }) => {
                                     {/* Favorite button */}
                                     <button
                                         onClick={async () => {
+                                            // Check if user is authenticated
+                                            if (!auth?.user) {
+                                                router.visit('/login');
+                                                return;
+                                            }
+                                            
                                             try {
                                                 const response = await fetch(route('favoriteproducts.toggle'), {
                                                     method: 'POST',
@@ -190,6 +196,16 @@ const UnpurchasedProduct = ({ product }) => {
                                                     },
                                                     body: JSON.stringify({ product_id: product.id }),
                                                 });
+                                                
+                                                if (!response.ok) {
+                                                    if (response.status === 401) {
+                                                        // Unauthorized - redirect to login
+                                                        router.visit('/login');
+                                                        return;
+                                                    }
+                                                    throw new Error(`HTTP error! status: ${response.status}`);
+                                                }
+                                                
                                                 const data = await response.json();
                                                 if (data.success) {
                                                     router.reload();
@@ -198,8 +214,8 @@ const UnpurchasedProduct = ({ product }) => {
                                                 console.error('Error toggling favorite:', error);
                                             }
                                         }}
-                                        disabled={auth.user.id === product.user.id}
-                                        className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${auth.user.id === product.user.id
+                                        disabled={auth?.user && auth.user.id === product.user.id}
+                                        className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${!auth?.user || auth.user.id === product.user.id
                                                 ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
                                                 : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
                                             }`}
@@ -207,9 +223,9 @@ const UnpurchasedProduct = ({ product }) => {
                                         <img src={heart} alt="heart" className={`w-[20px] h-[20px] ${product.is_favorited ? 'invert brightness-0' : ''}`} />
                                         <span className={`font-noto text-[14px] font-bold leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
                                             }`}>
-                                            お気に入り
+                                            {!auth?.user ? 'ログインして' : 'お気に入り'}
                                         </span>
-                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
+                                        <span className={`font-noto text-[14px] font-bold leading-[21px] ${ product.is_favorited ? 'text-white' : 'text-[#FF2AA1]'
                                             }`}>
                                             {product.favorite_count}
                                         </span>
@@ -357,6 +373,7 @@ const UnpurchasedProduct = ({ product }) => {
                                         borderColor="#FF2AA1"
                                         width="32px"
                                         height="32px"
+                                        displayMode={product.display_mode}
                                             onClick={() => {
                                                 const pathParts = window.location.pathname.split('/');
                                                 const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
@@ -393,6 +410,12 @@ const UnpurchasedProduct = ({ product }) => {
                             </div>
                                         <button 
                                             onClick={async () => {
+                                                // Check if user is authenticated
+                                                if (!auth?.user) {
+                                                    router.visit('/login');
+                                                    return;
+                                                }
+                                                
                                                 try {
                                                     const response = await fetch(route('cart.add'), {
                                                         method: 'POST',
@@ -405,6 +428,16 @@ const UnpurchasedProduct = ({ product }) => {
                                                             quantity: quantities.cart
                                                         }),
                                                     });
+                                                    
+                                                    if (!response.ok) {
+                                                        if (response.status === 401) {
+                                                            // Unauthorized - redirect to login
+                                                            router.visit('/login');
+                                                            return;
+                                                        }
+                                                        throw new Error(`HTTP error! status: ${response.status}`);
+                                                    }
+                                                    
                                                     const data = await response.json();
                                                     if (data.success) {
                                                         // Show success message or redirect to cart
@@ -416,9 +449,10 @@ const UnpurchasedProduct = ({ product }) => {
                                             }}
                                             className="flex w-[240px] h-[74px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] ml-auto hover:opacity-90 transition-opacity"
                                         >
-                                            <img src={cart} alt="favoriteshop" style={{ filter: 'brightness(0) invert(1)' }} />
-                                            <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-noto">カートに入れる</span>
+                                            <img src={cart} alt="cart" className="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] lg:w-[20px] lg:h-[20px]" />
+                                            <span className="text-[#FFF] text-center font-bold text-[14px] sm:text-[16px] lg:text-[18px] leading-[16px] sm:leading-[18px] lg:leading-[20px] font-noto">カートに入れる</span>
                                         </button>
+                                        
                                     </div>
                                     <div className="flex flex-row items-center px-[24px] w-full">
                                         <div className="mr-auto">
@@ -433,7 +467,17 @@ const UnpurchasedProduct = ({ product }) => {
                                             whitespace-nowrap">すぐにプリントコード購入</span>
                                         </button> */}
                                         <button
-                                            onClick={() => router.visit(route('payment.checkout', { product: product.id }))}
+                                            onClick={() => {
+                                                // Check if user is authenticated
+                                                if (!auth?.user) {
+                                                    router.visit('/login');
+                                                    return;
+                                                }
+                                                
+                                                router.visit(route('payment.checkout', { product: product.id }), {
+                                                    data: { quantity: quantities.direct }
+                                                });
+                                            }}
                                             className="flex w-[240px] h-[74px] px-[24px] justify-center items-center rounded-[10px] bg-[#AB31D3] ml-auto hover:bg-opacity-90 transition-all"
                                         >
                                             <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-noto whitespace-nowrap">すぐにプリントコード購入</span>
@@ -511,38 +555,8 @@ const UnpurchasedProduct = ({ product }) => {
                     </section>
                 </div>
             </main>
-            {/* Personal Info Footer (Frame 2) */}
-            <section className="hidden md:flex flex-col items-center py-[48px] px-[96px] w-full bg-[#F6F8FA]">
-                <div className="flex justify-between items-start w-full">
-                    {/* Left: 21 */}
-                    <div className="flex items-start flex-shrink-0">
-                        <div 
-                            className="cursor-pointer hover:opacity-80 transition-opacity"
-                            onClick={() => router.visit(`/${product.user.id}`)}
-                        >
-                            <img src={product.user.image || default_user} alt={product.user.name} className="w-[120px] h-[120px] rounded-full object-cover flex-shrink-0" />
-                        </div>
-                        {/* 211 */}
-                        <div className="flex flex-col pl-[16px] items-start">
-                            <div className="flex flex-col items-start gap-[12px]">
-                                <span 
-                                    className="text-[#000] font-noto text-[21px] font-bold leading-[32px] cursor-pointer hover:opacity-80 transition-opacity"
-                                    onClick={() => router.visit(`/${product.user.id}`)}
-                                >{product.user.name}</span>
-                                <div className="flex pt-[10px] gap-[4px]">
-                                    <img src={x} alt="x" className="w-[46.429px] h-[46.429px] opacity-100" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* Right: 22 */}
-                    <div className="flex flex-col w-[55%] items-start flex-shrink-0">
-                            <span className="text-[#000] font-noto text-[16px] font-normal leading-[27.2px]">
-                                {product.user.description}
-                            </span>
-                    </div>
-                </div>
-            </section>
+            {/* Personal Info Footer */}
+            <PersonalInfoSection user={product.user} defaultUserImage={default_user} />
             {/* Mobile Main Section */}
             <div className="flex flex-col pt-[74px] gap-[45px]">
                 <section className="flex flex-col items-start gap-[24px] px-4 md:hidden w-full pt-[32px] bg-[#FFF] mt-[-12px]">
@@ -592,12 +606,12 @@ const UnpurchasedProduct = ({ product }) => {
                                             error,
                                             csrf: document.querySelector('meta[name="csrf-token"]')?.content,
                                             productUserId: product.user.id,
-                                            authUserId: auth.user.id
+                                            authUserId: auth?.user?.id
                                         });
                                     }
                                 }}
-                                disabled={auth.user.id === product.user.id}
-                                className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${auth.user.id === product.user.id
+                                disabled={!auth?.user || auth.user.id === product.user.id}
+                                className={`flex p-[7px_16px] items-center gap-[8px] rounded-[40px] border transition-opacity ${!auth?.user || auth.user.id === product.user.id
                                         ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
                                         : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.user.is_followed_by_current_user ? 'bg-[#FF2AA1]' : 'bg-white'}`
                                     }`}
@@ -606,11 +620,11 @@ const UnpurchasedProduct = ({ product }) => {
                                     src={product.user.is_followed_by_current_user ? favoriteshops_follow : favoriteshops}
                                     alt="favoriteshop"
                                 />
-                                <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${auth.user.id === product.user.id
+                                <span className={`text-center font-medium text-[14px] leading-[21px] font-noto ${!auth?.user || auth.user.id === product.user.id
                                         ? 'text-[#767676]'
                                         : product.user.is_followed_by_current_user ? 'text-white' : 'text-[#FF2AA1]'
                                     }`}>
-                                    {product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー'}
+                                    {!auth?.user ? 'ログインして' : (product.user.is_followed_by_current_user ? 'フォロー中' : 'ショップをフォロー')}
                                 </span>
                             </button>
                             {/* 1122 */}
@@ -644,8 +658,8 @@ const UnpurchasedProduct = ({ product }) => {
                                             console.error('Error toggling favorite:', error);
                                         }
                                     }}
-                                    disabled={auth.user.id === product.user.id}
-                                    className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${auth.user.id === product.user.id
+                                    disabled={!auth?.user || auth.user.id === product.user.id}
+                                    className={`flex items-center gap-[4px] border-[1px] border-solid rounded-[6px] p-[8px] transition-opacity ${!auth?.user || auth.user.id === product.user.id
                                             ? 'border-[#D1D1D1] bg-[#F6F6F6] cursor-not-allowed'
                                             : `border-[#FF2AA1] cursor-pointer hover:opacity-80 ${product.is_favorited ? 'bg-[#FF2AA1]' : 'bg-white'}`
                                         }`}
@@ -779,6 +793,7 @@ const UnpurchasedProduct = ({ product }) => {
                                         text={`${product.images.length}点を全て表示`}
                                     width="24px"
                                     height="24px"
+                                    displayMode={product.display_mode}
                                         onClick={() => {
                                             const pathParts = window.location.pathname.split('/');
                                             const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
@@ -817,6 +832,12 @@ const UnpurchasedProduct = ({ product }) => {
                                     </div>
                                     <button 
                                         onClick={async () => {
+                                            // Check if user is authenticated
+                                            if (!auth?.user) {
+                                                router.visit('/login');
+                                                return;
+                                            }
+                                            
                                             try {
                                                 const response = await fetch(route('cart.add'), {
                                                     method: 'POST',
@@ -828,7 +849,17 @@ const UnpurchasedProduct = ({ product }) => {
                                                         product_batch_id: product.id,
                                                         quantity: quantities.mobileCart
                                                     }),
-                                                                                                    });
+                                                });
+                                                
+                                                if (!response.ok) {
+                                                    if (response.status === 401) {
+                                                        // Unauthorized - redirect to login
+                                                        router.visit('/login');
+                                                        return;
+                                                    }
+                                                    throw new Error(`HTTP error! status: ${response.status}`);
+                                                }
+                                                
                                                 const data = await response.json();
                                                 if (data.success) {
                                                     // Show success message or redirect to cart
@@ -840,7 +871,7 @@ const UnpurchasedProduct = ({ product }) => {
                                         }}
                                         className="flex w-[160px] h-[40px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] mr-auto hover:opacity-90 transition-opacity"
                                     >
-                                        <img src={cart} alt="cart" style={{ filter: 'brightness(0) invert(1)' }} className="w-[20px] h-[19px]" />
+                                        <img src={cart} alt="cart" className="w-[20px] h-[19px]" />
                                         <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-noto whitespace-nowrap">カートに入れる</span>
                                     </button>
                                 </div>
@@ -852,7 +883,17 @@ const UnpurchasedProduct = ({ product }) => {
                                         />
                                     </div>
                                     <button
-                                        onClick={() => router.visit(route('payment.checkout', { product: product.id }))}
+                                        onClick={() => {
+                                            // Check if user is authenticated
+                                            if (!auth?.user) {
+                                                router.visit('/login');
+                                                return;
+                                            }
+                                            
+                                            router.visit(route('payment.checkout', { product: product.id }), {
+                                                data: { quantity: quantities.mobileDirect }
+                                            });
+                                        }}
                                         className="flex w-[160px] h-[40px] px-[16px] justify-center items-center rounded-[10px] bg-[#AB31D3] mr-auto hover:bg-opacity-90 transition-all"
                                     >
                                         <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-noto whitespace-nowrap">すぐにプリントコード購入</span>
@@ -915,40 +956,6 @@ const UnpurchasedProduct = ({ product }) => {
                         {/* 122: Ranking */}
                         <RankingSection topBuyers={product.top_buyers} isMobile={true} />
                     </section>
-                </section>
-                {/* Mobile Section 2 */}
-                <section className="flex md:hidden flex-col items-start py-[24px] px-[16px] gap-[24px] bg-[#F6F8FA] w-full">
-                    <div className="flex flex-col items-start gap-[24px]">
-                        {/* Left: 21 */}
-                        <div className="flex items-start flex-shrink-0 ">
-                            <div 
-                                className="cursor-pointer hover:opacity-80 transition-opacity"
-                                onClick={() => router.visit(`/${product.user.id}`)}
-                            >
-                                <img src={product.user.image || default_user} alt="girl" className="w-[64px] h-[64px] rounded-full object-cover flex-shrink-0" />
-                            </div>
-                            {/* 211 */}
-                            <div className="flex flex-col pl-[16px] items-start ">
-                                <div className="flex flex-col items-start gap-[12px]">
-                                    <span 
-                                        className="text-[#000] font-noto text-[16px] font-bold leading-[18px] cursor-pointer hover:opacity-80 transition-opacity"
-                                        onClick={() => router.visit(`/${product.user.id}`)}
-                                    >{product.user.name}</span>
-                                    <div className="flex gap-[4px]">
-                                        <img src={x} alt="x" className="w-[40px] h-[40px] opacity-100" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Right: 22 */}
-                        <div className="flex flex-col items-start flex-shrink-0 ">
-                            <div className="flex flex-col items-start flex-shrink-0">
-                                <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">
-                                    {product.user.description}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
                 </section>
             </div>
             <Footer />

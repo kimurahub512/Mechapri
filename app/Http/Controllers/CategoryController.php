@@ -219,7 +219,7 @@ class CategoryController extends Controller
             $category->productBatches()->detach();
         }
 
-        return redirect()->route('myshop.category')->with('success', 'カテゴリが更新されました。');
+        return redirect()->route('shop.newcategory', ['categoryId' => $category->id])->with('success', 'カテゴリが更新されました。');
     }
 
     /**
@@ -232,12 +232,18 @@ class CategoryController extends Controller
             abort(403);
         }
 
-        // Check if category has any product batches
-        if ($category->productBatches()->count() > 0) {
-            return redirect()->route('myshop.category')->with('error', '商品が含まれているカテゴリは削除できません。');
-        }
-
+        // Get product count before deletion
+        $productCount = $category->productBatches()->count();
+        
+        // Detach all products from this category
+        $category->productBatches()->detach();
+        
+        // Delete the category
         $category->delete();
+
+        if ($productCount > 0) {
+            return redirect()->route('myshop.category')->with('success', "カテゴリが削除されました。{$productCount}個の商品がカテゴリから外されました。");
+        }
 
         return redirect()->route('myshop.category')->with('success', 'カテゴリが削除されました。');
     }

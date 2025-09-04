@@ -14,7 +14,7 @@ import favoriteshop from '@/assets/images/favoriteshop.svg';
 import heart from '@/assets/images/heart.png';
 import arrow_right from '@/assets/images/arrow_right.svg';
 import arrow_left from '@/assets/images/arrow_left.svg';
-import recyclebin from '@/assets/images/recyclebin.svg';
+import recyclebin from '@/assets/images/recyclebin.png';
 import pencil_line_black from '@/assets/images/pencil_line_black.svg';
 import share from '@/assets/images/share.png';
 

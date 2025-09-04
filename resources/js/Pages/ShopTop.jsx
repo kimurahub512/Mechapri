@@ -109,21 +109,8 @@ const ShopTop = () => {
                         <div className="flex justify-end items-center self-stretch" style={{ gap: vw(8) }}>
 
                             {auth?.user && auth.user.id !== shopData?.id ? (
-                                <>
-                                    <span style={{ ...responsiveText(16, 16, null, 'normal', 'noto', '#000') }}>
-                                        {shopData?.follower_count || 0}人が登録
-                                    </span>
-                                    <FavoriteShopButton
-                                        shopUserId={shopData?.id}
-                                        initialIsFavorited={isFavorited}
-                                        isMobile={true}
-                                        refreshOnToggle={true}
-                                        disable={auth?.user && auth.user.id === shopData?.id}
-                                    />
-                                </>
-                            ) : (
-                                <>
-                                    <button 
+                                <>                                    
+                                    <button
                                         onClick={handleShare}
                                         className="flex items-center gap-[4px] pr-[12px] cursor-pointer hover:opacity-80 transition-opacity"
                                     >
@@ -133,9 +120,22 @@ const ShopTop = () => {
                                     <button onClick={() => {
                                         router.visit(`/myshop/edit`);
                                     }}
-                                    className="flex items-center justify-center w-[144px] h-[34px] rounded-[5px] border-[1px] border-[#E862CB]">
+                                        className="flex items-center justify-center w-[144px] h-[34px] rounded-[5px] border-[1px] border-[#E862CB]">
                                         <span className="text-[#E862CB] font-noto text-[12px] font-bold leading-[18px]">ショップ情報編集</span>
                                     </button>
+                                </>
+                            ) : (
+                                <>
+                                   <span style={{ ...responsiveText(16, 16, null, 'normal', 'noto', '#000') }}>
+                                        {shopData?.follower_count || 0}人が登録
+                                    </span>
+                                    <FavoriteShopButton
+                                        shopUserId={shopData?.id}
+                                        initialIsFavorited={isFavorited}
+                                        isMobile={true}
+                                        refreshOnToggle={true}
+                                        disable={auth?.user && auth.user.id === shopData?.id}
+                                    />         
                                 </>
                             )}
                         </div>
@@ -211,37 +211,37 @@ const ShopTop = () => {
                     </div>
                     {/* 115: Follower count + 1151 */}
                     <div className="absolute inline-flex items-center" style={{ top: vwd(106), right: vwd(16), gap: vwd(8) }}>
-                        
-                    {auth?.user && auth.user.id !== shopData?.id ? (
-                                <>
-                                    <span style={{ ...responsiveTextD(16, 32, null, 'normal', 'noto', '#000') }}>
-                                        {shopData?.follower_count || 0}人が登録
-                                    </span>
-                                    <FavoriteShopButton
-                                        shopUserId={shopData?.id}
-                                        initialIsFavorited={isFavorited}
-                                        isMobile={false}
-                                        refreshOnToggle={true}
-                                        disable={auth?.user && auth.user.id === shopData?.id}
-                                    />
-                                </>
-                            ) : (
-                                <>
-                                    <button 
-                                        onClick={handleShare}
-                                        className="flex items-center gap-[4px] pr-[16px] cursor-pointer hover:opacity-80 transition-opacity"
-                                    >
-                                        <img src={share} alt="share" className="w-[16px] h-[16px]" />
-                                        <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
-                                    </button>
-                                    <button onClick={() => {
-                                        router.visit(`/myshop/edit`);
-                                    }}
+
+                        {auth?.user && auth.user.id === shopData?.id ? (
+                            <>
+                                <button
+                                    onClick={handleShare}
+                                    className="flex items-center gap-[4px] pr-[16px] cursor-pointer hover:opacity-80 transition-opacity"
+                                >
+                                    <img src={share} alt="share" className="w-[16px] h-[16px]" />
+                                    <span className="text-[#222] font-noto text-[12px] font-normal leading-[13.8px]">シェア</span>
+                                </button>
+                                <button onClick={() => {
+                                    router.visit(`/myshop/edit`);
+                                }}
                                     className="flex items-center justify-center w-[165px] h-[34px] rounded-[5px] border-[1px] border-[#E862CB]">
-                                        <span className="text-[#E862CB] font-noto text-[14px] font-bold leading-[22px]">ショップ情報編集</span>
-                                    </button>
-                                </>
-                            )}
+                                    <span className="text-[#E862CB] font-noto text-[14px] font-bold leading-[22px]">ショップ情報編集</span>
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <span style={{ ...responsiveTextD(16, 32, null, 'normal', 'noto', '#000') }}>
+                                    {shopData?.follower_count || 0}人が登録
+                                </span>
+                                <FavoriteShopButton
+                                    shopUserId={shopData?.id}
+                                    initialIsFavorited={isFavorited}
+                                    isMobile={false}
+                                    refreshOnToggle={true}
+                                    disable={auth?.user && auth.user.id === shopData?.id}
+                                />
+                            </>
+                        )}
                     </div>
                     {/* 116: Description */}
                     <div className="absolute flex flex-col items-start self-stretch" style={{ top: vwd(194), left: vwd(16), maxWidth: vwd(1248) }}>
