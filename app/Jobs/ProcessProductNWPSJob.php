@@ -27,32 +27,32 @@ class ProcessProductNWPSJob implements ShouldQueue
 
     public function handle(NWPSService $nwps): void
     {
-        // Debug logging
-        try {
-            file_put_contents(storage_path('nwps_debug.log'), 
-                date('Y-m-d H:i:s') . " - Product NWPS Job started for product_id: {$this->productId}\n", 
-                FILE_APPEND
-            );
-        } catch (\Exception $e) {
-            file_put_contents('/tmp/nwps_debug.log', 
-                date('Y-m-d H:i:s') . " - Product NWPS Job started for product_id: {$this->productId} (storage write failed)\n", 
-                FILE_APPEND
-            );
-        }
+        // Debug logging disabled for production
+        // try {
+        //     // file_put_contents(storage_path('nwps_debug.log'), 
+        //         date('Y-m-d H:i:s') . " - Product NWPS Job started for product_id: {$this->productId}\n", 
+        //         // FILE_APPEND
+        //     );
+        // } catch (\Exception $e) {
+        //     file_put_contents('/tmp/nwps_debug.log', 
+        //         date('Y-m-d H:i:s') . " - Product NWPS Job started for product_id: {$this->productId} (storage write failed)\n", 
+        //         // FILE_APPEND
+        //     );
+        // }
         
         $product = ProductBatch::with('files')->find($this->productId);
         if (!$product) {
-            file_put_contents(storage_path('nwps_debug.log'), 
-                date('Y-m-d H:i:s') . " - Product not found: {$this->productId}\n", 
-                FILE_APPEND
-            );
+            // // file_put_contents(storage_path('nwps_debug.log'), 
+            //     date('Y-m-d H:i:s') . " - Product not found: {$this->productId}\n", 
+            //     // FILE_APPEND
+            // );
             return;
         }
 
-        file_put_contents(storage_path('nwps_debug.log'), 
-            date('Y-m-d H:i:s') . " - Found product {$product->id} with {$product->files->count()} files (price: {$product->price})\n", 
-            FILE_APPEND
-        );
+        // // file_put_contents(storage_path('nwps_debug.log'), 
+        //     date('Y-m-d H:i:s') . " - Found product {$product->id} with {$product->files->count()} files (price: {$product->price})\n", 
+        //     // FILE_APPEND
+        // );
 
         try {
             // 1) Guest login
@@ -73,9 +73,9 @@ class ProcessProductNWPSJob implements ShouldQueue
             
             // Check for NWPS maintenance mode or other errors
             if (isset($login['result_code']) && $login['result_code'] === 'M001') {
-                file_put_contents(storage_path('nwps_debug.log'), 
+                // file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - NWPS maintenance mode detected (M001) for product {$product->id}\n", 
-                    FILE_APPEND
+                    // FILE_APPEND
                 );
                 
                 // Mark product as failed and schedule retry
@@ -114,9 +114,9 @@ class ProcessProductNWPSJob implements ShouldQueue
                     //Log::info('File registration response: ' . json_encode($registered));
                     $fileId = $registered['file_id'] ?? $fileId;
                 } catch (\Exception $e) {
-                    file_put_contents(storage_path('nwps_debug.log'), 
+                    // file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - File registration failed: " . $e->getMessage() . "\n", 
-                        FILE_APPEND
+                        // FILE_APPEND
                     );
                     //Log::info('File registration failed: ' . $e->getMessage());
                     throw $e;
@@ -124,23 +124,23 @@ class ProcessProductNWPSJob implements ShouldQueue
             }
 
             if (!$fileId) {
-                file_put_contents(storage_path('nwps_debug.log'), 
+                // file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - No file ID received from NWPS registration for product\n", 
-                    FILE_APPEND
+                    // FILE_APPEND
                 );
                 //Log::info('No file ID received from NWPS registration for product');
                 return;
             }
             
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Product file registration successful, file_id: {$fileId}\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
 
             // 3) Get QR code for convenience store login
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Getting QR code for product login\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             
             try {
@@ -159,26 +159,26 @@ class ProcessProductNWPSJob implements ShouldQueue
                         'nwps_upload_status' => 'ready',
                     ]);
                     
-                    file_put_contents(storage_path('nwps_debug.log'), 
+                    // file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - Product NWPS upload completed successfully\n", 
-                        FILE_APPEND
+                        // FILE_APPEND
                     );
                 } else {
-                    file_put_contents(storage_path('nwps_debug.log'), 
+                    // file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - Failed to get QR code for product: " . json_encode($qrCodeData) . "\n", 
-                        FILE_APPEND
+                        // FILE_APPEND
                     );
                 }
             } catch (\Exception $e) {
-                file_put_contents(storage_path('nwps_debug.log'), 
+                // file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - Failed to get QR code for product: " . $e->getMessage() . "\n", 
-                    FILE_APPEND
+                    // FILE_APPEND
                 );
             }
         } catch (\Throwable $e) {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Product NWPS upload failed: " . $e->getMessage() . "\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             
             // Mark product as failed and schedule retry
@@ -193,17 +193,17 @@ class ProcessProductNWPSJob implements ShouldQueue
     private function scheduleRetry(): void
     {
         if ($this->attempts() < $this->tries) {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Scheduling retry for product {$this->productId} (attempt {$this->attempts()}/{$this->tries})\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             
             // Schedule retry with delay
             $this->release($this->backoff);
         } else {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Max retry attempts reached for product {$this->productId}\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
         }
     }

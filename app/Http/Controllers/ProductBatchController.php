@@ -385,7 +385,8 @@ class ProductBatchController extends Controller
         }
 
         // Get the purchase record for this user and product to include NWPS data
-        $purchase = UserPurchasedProduct::where('user_id', auth()->id())
+        $currentUser = auth()->user();
+        $purchase = UserPurchasedProduct::where('user_id', $currentUser->id)
             ->where('batch_id', $product->id)
             ->first();
 
@@ -400,18 +401,18 @@ class ProductBatchController extends Controller
                 'description' => $product->description,
                 'price' => $product->price,
                 'display_mode' => $product->display_mode,
-                'image' => $product->getWatermarkedImageUrl(auth()->user()),
-                'images' => collect($product->getWatermarkedImages(auth()->user()))->pluck('url'),
+                'image' => $product->getWatermarkedImageUrl($currentUser),
+                'images' => collect($product->getWatermarkedImages($currentUser))->pluck('url'),
                 'user' => [
                     'id' => $product->user->id,
                     'name' => $product->user->name,
                     'image' => $product->user->image,
                     'xlink' => $product->user->xlink,
                     'description' => $product->user->shop_description,
-                    'is_followed_by_current_user' => auth()->check() ? auth()->user()->hasFavoritedShop($product->user->id) : false,
+                    'is_followed_by_current_user' => $currentUser->hasFavoritedShop($product->user->id),
                 ],
                 'created_at' => $product->created_at,
-                'is_favorited' => $product->isFavoritedBy(auth()->user()),
+                'is_favorited' => $product->isFavoritedBy($currentUser),
                 'favorite_count' => $product->favorite_count,
                 'print_deadline' => now()->addDays(30)->format('Y/m/d'),
                 // NWPS data - prioritize purchase record over product batch for free products
@@ -487,6 +488,8 @@ class ProductBatchController extends Controller
         // Get printed count from NWPS for unpurchased products
         $printedCount = $this->getPrintedCount($product);
 
+        $currentUser = auth()->user();
+        
         return Inertia::render('UnpurchasedProduct', [
             'product' => [
                 'id' => $product->id,
@@ -495,18 +498,18 @@ class ProductBatchController extends Controller
                 'sales_deadline' => $product->sales_deadline ? $product->sales_deadline->format('Y/m/d') : null,
                 'price' => $product->price,
                 'display_mode' => $product->display_mode,
-                'image' => $product->getWatermarkedImageUrl(auth()->user()),
-                'images' => collect($product->getWatermarkedImages(auth()->user()))->pluck('url'),
+                'image' => $product->getWatermarkedImageUrl($currentUser),
+                'images' => collect($product->getWatermarkedImages($currentUser))->pluck('url'),
                 'user' => [
                     'id' => $product->user->id,
                     'name' => $product->user->name,
                     'image' => $product->user->image,
                     'xlink' => $product->user->xlink,
                     'description' => $product->user->shop_description,
-                    'is_followed_by_current_user' => auth()->check() ? auth()->user()->hasFavoritedShop($product->user->id) : false,
+                    'is_followed_by_current_user' => $currentUser ? $currentUser->hasFavoritedShop($product->user->id) : false,
                 ],
                 'created_at' => $product->created_at,
-                'is_favorited' => $product->isFavoritedBy(auth()->user()),
+                'is_favorited' => $product->isFavoritedBy($currentUser),
                 'favorite_count' => $product->favorite_count,
                 'print_deadline' => now()->addDays(30)->format('Y/m/d'),
                 'printed_count' => $printedCount,
@@ -577,7 +580,8 @@ class ProductBatchController extends Controller
         }
 
         // Get the purchase record for this user and product to include NWPS data
-        $purchase = UserPurchasedProduct::where('user_id', auth()->id())
+        $currentUser = auth()->user();
+        $purchase = UserPurchasedProduct::where('user_id', $currentUser->id)
             ->where('batch_id', $product->id)
             ->first();
 
@@ -591,18 +595,18 @@ class ProductBatchController extends Controller
                 'description' => $product->description,
                 'price' => $product->price,
                 'display_mode' => $product->display_mode,
-                'image' => $product->getWatermarkedImageUrl(auth()->user()),
-                'images' => collect($product->getWatermarkedImages(auth()->user()))->pluck('url'),
+                'image' => $product->getWatermarkedImageUrl($currentUser),
+                'images' => collect($product->getWatermarkedImages($currentUser))->pluck('url'),
                 'user' => [
                     'id' => $product->user->id,
                     'name' => $product->user->name,
                     'image' => $product->user->image,
                     'xlink' => $product->user->xlink,
                     'description' => $product->user->shop_description,
-                    'is_followed_by_current_user' => auth()->check() ? auth()->user()->hasFavoritedShop($product->user->id) : false,
+                    'is_followed_by_current_user' => $currentUser->hasFavoritedShop($product->user->id),
                 ],
                 'created_at' => $product->created_at,
-                'is_favorited' => $product->isFavoritedBy(auth()->user()),
+                'is_favorited' => $product->isFavoritedBy($currentUser),
                 'favorite_count' => $product->favorite_count,
                 'print_deadline' => now()->addDays(30)->format('Y/m/d'),
                 // NWPS data - prioritize purchase record over product batch for free products
@@ -677,6 +681,7 @@ class ProductBatchController extends Controller
 
         // Get printed count from NWPS for unpurchased products
         $printedCount = $this->getPrintedCount($product);
+        $currentUser = auth()->user();
 
         return Inertia::render('UnpurchasedProductExpand', [
             'product' => [
@@ -687,18 +692,18 @@ class ProductBatchController extends Controller
                 'sales_limit' => $product->sales_limit,
                 'sales_deadline' => $product->sales_deadline ? $product->sales_deadline->format('Y/m/d') : null,
                 'display_mode' => $product->display_mode,
-                'image' => $product->getWatermarkedImageUrl(auth()->user()),
-                'images' => collect($product->getWatermarkedImages(auth()->user()))->pluck('url'),
+                'image' => $product->getWatermarkedImageUrl($currentUser),
+                'images' => collect($product->getWatermarkedImages($currentUser))->pluck('url'),
                 'user' => [
                     'id' => $product->user->id,
                     'name' => $product->user->name,
                     'image' => $product->user->image,
                     'xlink' => $product->user->xlink,
                     'description' => $product->user->shop_description,
-                    'is_followed_by_current_user' => auth()->check() ? auth()->user()->hasFavoritedShop($product->user->id) : false,
+                    'is_followed_by_current_user' => $currentUser ? $currentUser->hasFavoritedShop($product->user->id) : false,
                 ],
                 'created_at' => $product->created_at,
-                'is_favorited' => $product->isFavoritedBy(auth()->user()),
+                'is_favorited' => $product->isFavoritedBy($currentUser),
                 'favorite_count' => $product->favorite_count,
                 'print_deadline' => now()->addDays(30)->format('Y/m/d'),
                 'printed_count' => $printedCount,

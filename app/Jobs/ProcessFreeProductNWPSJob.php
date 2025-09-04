@@ -29,38 +29,38 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
     {
         // Debug logging
         try {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Free Product NWPS Job started for product_id: {$this->productId}\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
         } catch (\Exception $e) {
             file_put_contents('/tmp/nwps_debug.log', 
                 date('Y-m-d H:i:s') . " - Free Product NWPS Job started for product_id: {$this->productId} (storage write failed)\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
         }
         
         $product = ProductBatch::with('files')->find($this->productId);
         if (!$product) {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Free product not found: {$this->productId}\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             return;
         }
 
         // Check if product is free
         if ($product->price > 0) {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Product is not free (price: {$product->price}), skipping NWPS processing\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             return;
         }
         
-        file_put_contents(storage_path('nwps_debug.log'), 
+        // file_put_contents(storage_path('nwps_debug.log'), 
             date('Y-m-d H:i:s') . " - Found free product {$product->id} with {$product->files->count()} files\n", 
-            FILE_APPEND
+            // FILE_APPEND
         );
 
         try {
@@ -82,9 +82,9 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
             
             // Check for NWPS maintenance mode or other errors
             if (isset($login['result_code']) && $login['result_code'] === 'M001') {
-                file_put_contents(storage_path('nwps_debug.log'), 
+                // file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - NWPS maintenance mode detected (M001) for free product {$product->id}\n", 
-                    FILE_APPEND
+                    // FILE_APPEND
                 );
                 
                 // Mark product as failed and schedule retry
@@ -96,9 +96,9 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
             $token = $login['token'] ?? ($login['access_token'] ?? null);
             $userCode = $login['user_code'] ?? null;
             if (!$token) {
-                // file_put_contents(storage_path('nwps_debug.log'), 
+                // // file_put_contents(storage_path('nwps_debug.log'), 
                 //     date('Y-m-d H:i:s') . " - No token received from NWPS login for free product. Response: " . json_encode($login) . "\n", 
-                //     FILE_APPEND
+                //     // FILE_APPEND
                 // );
                 //Log::info('Free product NWPS login failed: ' . json_encode($login));
                 
@@ -108,22 +108,22 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
                 return;
             }
             
-            // file_put_contents(storage_path('nwps_debug.log'), 
+            // // file_put_contents(storage_path('nwps_debug.log'), 
             //     date('Y-m-d H:i:s') . " - Free product NWPS login successful, token received\n", 
-            //     FILE_APPEND
+            //     // FILE_APPEND
             // );
 
             // // 2) Register image(s) by URL (filesfromurl/image) - NO printing_limit for free products
-            // file_put_contents(storage_path('nwps_debug.log'), 
+            // // file_put_contents(storage_path('nwps_debug.log'), 
             //     date('Y-m-d H:i:s') . " - Starting file registration for free product {$product->id}\n", 
-            //     FILE_APPEND
+            //     // FILE_APPEND
             // );
             //Log::info('2. Starting file registration for free product ' . $product->id);
             $fileId = null;
             foreach ($product->files as $index => $file) {
-                // file_put_contents(storage_path('nwps_debug.log'), 
+                // // file_put_contents(storage_path('nwps_debug.log'), 
                 //     date('Y-m-d H:i:s') . " - Registering file: {$file->original_name} (URL: {$file->url})\n", 
-                //     FILE_APPEND
+                //     // FILE_APPEND
                 // );
                 
                 $data = [
@@ -136,16 +136,16 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
                 
                 try {
                     $registered = $nwps->registerFileFromUrl($token, $data);
-                    // file_put_contents(storage_path('nwps_debug.log'), 
+                    // // file_put_contents(storage_path('nwps_debug.log'), 
                     //     date('Y-m-d H:i:s') . " - File registration response: " . json_encode($registered) . "\n", 
-                    //     FILE_APPEND
+                    //     // FILE_APPEND
                     // );
                     $fileId = $registered['file_id'] ?? $fileId;
                     //Log::info('File registration response: ' . json_encode($registered));
                 } catch (\Exception $e) {
-                    file_put_contents(storage_path('nwps_debug.log'), 
+                    // file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - File registration failed: " . $e->getMessage() . "\n", 
-                        FILE_APPEND
+                        // FILE_APPEND
                     );
                     //Log::info('File registration failed: ' . $e->getMessage());
                     throw $e;
@@ -153,23 +153,23 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
             }
 
             if (!$fileId) {
-                file_put_contents(storage_path('nwps_debug.log'), 
+                // file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - No file ID received from NWPS registration for free product\n", 
-                    FILE_APPEND
+                    // FILE_APPEND
                 );
                 //Log::info('No file ID received from NWPS registration for free product');
                 return;
             }
             
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Free product file registration successful, file_id: {$fileId}\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
 
             // 3) Get QR code for convenience store login
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Getting QR code for free product login\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             
             try {
@@ -188,30 +188,30 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
                         'nwps_qr_code_url' => $qrCodeUrl,
                     ]);
                     
-                    file_put_contents(storage_path('nwps_debug.log'), 
+                    // file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - Free product {$product->id} updated with QR code\n", 
-                        FILE_APPEND
+                        // FILE_APPEND
                     );
-                    file_put_contents(storage_path('nwps_debug.log'), 
+                    // file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - QR Code URL: " . ($qrCodeUrl ?? 'NULL') . "\n", 
-                        FILE_APPEND
+                        // FILE_APPEND
                     );
                 } else {
-                    file_put_contents(storage_path('nwps_debug.log'), 
+                    // file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - Failed to get QR code for free product: " . json_encode($qrCodeData) . "\n", 
-                        FILE_APPEND
+                        // FILE_APPEND
                     );
                 }
             } catch (\Exception $e) {
-                file_put_contents(storage_path('nwps_debug.log'), 
+                // file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - Failed to get QR code for free product: " . $e->getMessage() . "\n", 
-                    FILE_APPEND
+                    // FILE_APPEND
                 );
             }
         } catch (\Throwable $e) {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Free product NWPS upload failed: " . $e->getMessage() . "\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             
             // Mark product as failed and schedule retry
@@ -226,17 +226,17 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
     private function scheduleRetry(): void
     {
         if ($this->attempts() < $this->tries) {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Scheduling retry for free product {$this->productId} (attempt {$this->attempts()}/{$this->tries})\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             
             // Schedule retry with delay
             $this->release($this->backoff);
         } else {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Max retry attempts reached for free product {$this->productId}\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
         }
     }

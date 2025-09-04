@@ -30,39 +30,39 @@ class UploadToNWPSJob implements ShouldQueue
     {
         // Very early debug logging to see if job starts
         try {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - NWPS Job started for purchase_id: {$this->purchaseId}\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
         } catch (\Exception $e) {
             // If we can't write to the log, at least try to write to a different location
             file_put_contents('/tmp/nwps_debug.log', 
                 date('Y-m-d H:i:s') . " - NWPS Job started for purchase_id: {$this->purchaseId} (storage write failed)\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
         }
         
         $purchase = UserPurchasedProduct::find($this->purchaseId);
         if (!$purchase) {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Purchase not found: {$this->purchaseId}\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             return;
         }
 
         $product = ProductBatch::with('files')->find($purchase->batch_id);
         if (!$product) {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Product not found: {$purchase->batch_id}\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             return;
         }
         
-        file_put_contents(storage_path('nwps_debug.log'), 
+        // file_put_contents(storage_path('nwps_debug.log'), 
             date('Y-m-d H:i:s') . " - Found purchase {$purchase->id} and product {$product->id} with {$product->files->count()} files\n", 
-            FILE_APPEND
+            // FILE_APPEND
         );
         
         // \Illuminate\Support\Facades\Log::info('Found product and purchase', [
@@ -84,9 +84,9 @@ class UploadToNWPSJob implements ShouldQueue
 
             // Check for NWPS maintenance mode or other errors
             if (isset($login['result_code']) && $login['result_code'] === 'M001') {
-                file_put_contents(storage_path('nwps_debug.log'), 
+                // file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - NWPS maintenance mode detected (M001) for purchase {$purchase->id}\n", 
-                    FILE_APPEND
+                    // FILE_APPEND
                 );
                 
                 // Mark purchase as failed and schedule retry
@@ -98,18 +98,18 @@ class UploadToNWPSJob implements ShouldQueue
             $token = $login['token'] ?? ($login['access_token'] ?? null);
             $userCode = $login['user_code'] ?? null;
             if (!$token) {
-                file_put_contents(storage_path('nwps_debug.log'), 
+                // file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - No token received from NWPS login. Response: " . json_encode($login) . "\n", 
-                    FILE_APPEND
+                    // FILE_APPEND
                 );
                 $purchase->update(['nwps_upload_status' => 'failed']);
                 $this->scheduleRetry();
                 return;
             }
             
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - NWPS login successful, token received\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             
             // \Illuminate\Support\Facades\Log::info('Token received, updating purchase', ['token' => $token]);
@@ -129,9 +129,9 @@ class UploadToNWPSJob implements ShouldQueue
                 $selectedFile = $files->first();
                 
                 if ($selectedFile) {
-                    file_put_contents(storage_path('nwps_debug.log'), 
+                    // file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - Gacha product: randomly selected file {$selectedFile->id}\n", 
-                        FILE_APPEND
+                        // FILE_APPEND
                     );
                     
                     $data = [
@@ -148,9 +148,9 @@ class UploadToNWPSJob implements ShouldQueue
                     $registered = $nwps->registerFileFromUrl($token, $data);
                     $fileId = $registered['file_id'] ?? null;
                     
-                    file_put_contents(storage_path('nwps_debug.log'), 
+                    // file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - Gacha file registration response: " . json_encode($registered) . "\n", 
-                        FILE_APPEND
+                        // FILE_APPEND
                     );
                 }
             } else {
@@ -179,17 +179,17 @@ class UploadToNWPSJob implements ShouldQueue
             }
 
             if (!$fileId) {
-                file_put_contents(storage_path('nwps_debug.log'), 
+                // file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - No file ID received from NWPS registration\n", 
-                    FILE_APPEND
+                    // FILE_APPEND
                 );
                 $purchase->update(['nwps_upload_status' => 'failed']);
                 return;
             }
             
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - File registration successful, file_id: {$fileId}\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
 
             $purchase->update([
@@ -198,9 +198,9 @@ class UploadToNWPSJob implements ShouldQueue
             ]);
 
             // 3) Get QR code for convenience store login
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Getting QR code for login\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             
             try {
@@ -215,37 +215,37 @@ class UploadToNWPSJob implements ShouldQueue
                     ]);
                     
                     // Temporary debug logging
-                    file_put_contents(storage_path('nwps_debug.log'), 
+                    // file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - Purchase {$purchase->id} updated with QR code\n", 
-                        FILE_APPEND
+                        // FILE_APPEND
                     );
-                    file_put_contents(storage_path('nwps_debug.log'), 
+                    // file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - QR Code URL: " . ($qrCodeUrl ?? 'NULL') . "\n", 
-                        FILE_APPEND
+                        // FILE_APPEND
                     );
-                    file_put_contents(storage_path('nwps_debug.log'), 
+                    // file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - Full QR Code Data: " . json_encode($qrCodeData) . "\n", 
-                        FILE_APPEND
+                        // FILE_APPEND
                     );
                 } else {
-                    file_put_contents(storage_path('nwps_debug.log'), 
+                    // file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - Failed to get QR code: " . json_encode($qrCodeData) . "\n", 
-                        FILE_APPEND
+                        // FILE_APPEND
                     );
                     $purchase->update(['nwps_upload_status' => 'failed']);
                 }
             } catch (\Exception $e) {
-                file_put_contents(storage_path('nwps_debug.log'), 
+                // file_put_contents(storage_path('nwps_debug.log'), 
                     date('Y-m-d H:i:s') . " - Failed to get QR code: " . $e->getMessage() . "\n", 
-                    FILE_APPEND
+                    // FILE_APPEND
                 );
                 $purchase->update(['nwps_upload_status' => 'failed']);
             }
         } catch (\Throwable $e) {
             // \Illuminate\Support\Facades\Log::error('NWPS upload failed: ' . $e->getMessage());
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - NWPS upload failed for purchase {$purchase->id}: " . $e->getMessage() . "\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             $purchase->update(['nwps_upload_status' => 'failed']);
             $this->scheduleRetry();
@@ -258,17 +258,17 @@ class UploadToNWPSJob implements ShouldQueue
     private function scheduleRetry(): void
     {
         if ($this->attempts() < $this->tries) {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Scheduling retry for purchase {$this->purchaseId} (attempt {$this->attempts()}/{$this->tries})\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
             
             // Schedule retry with delay
             $this->release($this->backoff);
         } else {
-            file_put_contents(storage_path('nwps_debug.log'), 
+            // file_put_contents(storage_path('nwps_debug.log'), 
                 date('Y-m-d H:i:s') . " - Max retry attempts reached for purchase {$this->purchaseId}\n", 
-                FILE_APPEND
+                // FILE_APPEND
             );
         }
     }
