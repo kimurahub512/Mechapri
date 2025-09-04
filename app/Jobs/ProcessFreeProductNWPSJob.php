@@ -78,7 +78,7 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
                 'model' => php_uname('n') ?: 'Server',
             ], $days);
           
-            Log::info('1Free product NWPS login response: ' . json_encode($login));
+            //Log::info('1Free product NWPS login response: ' . json_encode($login));
             
             // Check for NWPS maintenance mode or other errors
             if (isset($login['result_code']) && $login['result_code'] === 'M001') {
@@ -100,7 +100,7 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
                 //     date('Y-m-d H:i:s') . " - No token received from NWPS login for free product. Response: " . json_encode($login) . "\n", 
                 //     FILE_APPEND
                 // );
-                Log::info('Free product NWPS login failed: ' . json_encode($login));
+                //Log::info('Free product NWPS login failed: ' . json_encode($login));
                 
                 // Mark product as failed and schedule retry
                 $product->update(['nwps_upload_status' => 'failed']);
@@ -118,7 +118,7 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
             //     date('Y-m-d H:i:s') . " - Starting file registration for free product {$product->id}\n", 
             //     FILE_APPEND
             // );
-            Log::info('2. Starting file registration for free product ' . $product->id);
+            //Log::info('2. Starting file registration for free product ' . $product->id);
             $fileId = null;
             foreach ($product->files as $index => $file) {
                 // file_put_contents(storage_path('nwps_debug.log'), 
@@ -141,13 +141,13 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
                     //     FILE_APPEND
                     // );
                     $fileId = $registered['file_id'] ?? $fileId;
-                    Log::info('File registration response: ' . json_encode($registered));
+                    //Log::info('File registration response: ' . json_encode($registered));
                 } catch (\Exception $e) {
                     file_put_contents(storage_path('nwps_debug.log'), 
                         date('Y-m-d H:i:s') . " - File registration failed: " . $e->getMessage() . "\n", 
                         FILE_APPEND
                     );
-                    Log::info('File registration failed: ' . $e->getMessage());
+                    //Log::info('File registration failed: ' . $e->getMessage());
                     throw $e;
                 }
             }
@@ -157,7 +157,7 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
                     date('Y-m-d H:i:s') . " - No file ID received from NWPS registration for free product\n", 
                     FILE_APPEND
                 );
-                Log::info('No file ID received from NWPS registration for free product');
+                //Log::info('No file ID received from NWPS registration for free product');
                 return;
             }
             
@@ -174,7 +174,7 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
             
             try {
                 $qrCodeData = $nwps->getLoginQrCode($token);
-                Log::info('QR code data: ' . json_encode($qrCodeData));
+                //Log::info('QR code data: ' . json_encode($qrCodeData));
                 if ($qrCodeData['success'] ?? false) {
                     $qrCodeUrl = $qrCodeData['qr_code_url'];
                     
