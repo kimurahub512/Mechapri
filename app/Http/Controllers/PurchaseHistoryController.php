@@ -15,7 +15,11 @@ class PurchaseHistoryController extends Controller
             ->where('user_id', $request->user()->id)
             ->orderByDesc('purchase_time')
             ->get()
-            ->map(function ($p) {
+            ->map(function ($p) use ($request) {
+                // Get watermarked images for the product
+                $watermarkedImages = $p->productBatch->getWatermarkedImages($request->user());
+                $mainImage = $watermarkedImages[0] ?? null;
+                
                 return [
                     'id' => $p->id,
                     'cnt' => $p->cnt,
@@ -31,20 +35,14 @@ class PurchaseHistoryController extends Controller
                         'title' => $p->productBatch->title,
                         'sn' => $p->productBatch->sn,
                         'nwps_qr_code_url' => $p->productBatch->nwps_qr_code_url,
-                        'image' => optional($p->productBatch->files->first())->url,
-                        'files' => $p->productBatch->files->map(function($file) {
-                            return [
-                                'id' => $file->id,
-                                'url' => $file->url,
-                                'filename' => $file->filename,
-                                'original_name' => $file->original_name,
-                                'sort_order' => $file->sort_order
-                            ];
-                        }),
+                        'display_mode' => $p->productBatch->display_mode,
+                        'image' => $mainImage ? $mainImage['url'] : null,
+                        'files' => $watermarkedImages,
                         'user' => [
                             'id' => $p->productBatch->user->id,
                             'name' => $p->productBatch->user->name,
                             'image' => $p->productBatch->user->image,
+                            'title' => $p->productBatch->user->shop_title ?: $p->productBatch->user->name . "'s SHOP",
                         ],
                     ],
                 ];
@@ -90,6 +88,10 @@ class PurchaseHistoryController extends Controller
             ->where('user_id', $request->user()->id)
             ->findOrFail($id);
 
+        // Get watermarked images for the product
+        $watermarkedImages = $p->productBatch->getWatermarkedImages($request->user());
+        $mainImage = $watermarkedImages[0] ?? null;
+
         return response()->json([
             'id' => $p->id,
             'cnt' => $p->cnt,
@@ -105,16 +107,9 @@ class PurchaseHistoryController extends Controller
                 'title' => $p->productBatch->title,
                 'sn' => $p->productBatch->sn,
                 'nwps_qr_code_url' => $p->productBatch->nwps_qr_code_url,
-                'image' => optional($p->productBatch->files->first())->url,
-                'files' => $p->productBatch->files->map(function($file) {
-                    return [
-                        'id' => $file->id,
-                        'url' => $file->url,
-                        'filename' => $file->filename,
-                        'original_name' => $file->original_name,
-                        'sort_order' => $file->sort_order
-                    ];
-                }),
+                'display_mode' => $p->productBatch->display_mode,
+                'image' => $mainImage ? $mainImage['url'] : null,
+                'files' => $watermarkedImages,
                 'user' => [
                     'id' => $p->productBatch->user->id,
                     'name' => $p->productBatch->user->name,

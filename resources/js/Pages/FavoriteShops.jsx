@@ -6,7 +6,7 @@ import TabButtons from '@/Components/TabButtons';
 import TabButtonsDesktop from '@/Components/TabButtonsDesktop';
 import FavoriteShopButton from '@/Components/FavoriteShopButton';
 import '@/../../resources/css/shopmanagement.css';
-import girl from '@/assets/images/favoriteshops/girl.svg';
+import default_user from '@/assets/images/default-user.png';
 
 const FavoriteShops = ({ favoriteShops }) => {
     const [activeTab, setActiveTab] = useState('follow'); // Default to follow tab
@@ -30,7 +30,7 @@ const FavoriteShops = ({ favoriteShops }) => {
                         <div className="flex w-[82px] h-[66px] pr-[16px] flex-col items-start">
                             <div className="flex w-[64px] h-[64px] justify-center items-center flex-shrink-0">
                                 <img 
-                                    src={shop.image || girl} 
+                                    src={shop.image || default_user} 
                                     alt={shop.name} 
                                     className="w-full h-full object-cover rounded-full"
                                 />

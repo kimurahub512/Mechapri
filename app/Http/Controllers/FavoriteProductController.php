@@ -65,8 +65,12 @@ class FavoriteProductController extends Controller
             ->with(['user', 'files'])
             ->orderBy('created_at', 'desc')
             ->get()
-            ->map(function($product) {
-                                 return [
+            ->map(function($product) use ($user) {
+                // Get watermarked images for the product
+                $watermarkedImages = $product->getWatermarkedImages($user);
+                $mainImage = $watermarkedImages[0] ?? null;
+                
+                return [
                      'id' => $product->id,
                      'title' => $product->title,
                      'price' => $product->price,
@@ -74,19 +78,15 @@ class FavoriteProductController extends Controller
                      'image_cnt' => $product->image_cnt,
                      'favorite_count' => $product->favorite_count,
                      'is_favorited' => true, // Since these are from favoriteProducts relationship
+                     'display_mode' => $product->display_mode,
+                     'image' => $mainImage ? $mainImage['url'] : null,
                      'user' => [
                          'id' => $product->user->id,
                          'name' => $product->user->name,
                          'image' => $product->user->image,
                          'title' => $product->user->shop_title,
                      ],
-                     'files' => $product->files->map(function($file) {
-                         return [
-                             'id' => $file->id,
-                             'file_path' => $file->file_path,
-                             'url' => $file->url,
-                         ];
-                     }),
+                     'files' => $watermarkedImages,
                  ];
             });
 

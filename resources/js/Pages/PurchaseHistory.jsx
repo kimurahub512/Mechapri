@@ -10,7 +10,10 @@ import '@/../../resources/css/shopmanagement.css';
 import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 import qr from '@/assets/images/qr.svg';
 import defaultUser from '@/assets/images/default-user.png';
-import girl from '@/assets/images/favoriteproducts/girl.svg';
+import question_cloud from '@/assets/images/question_cloud.svg';
+import bubble from '@/assets/images/bubble.svg';
+import lock from '@/assets/images/lock.svg';
+import warning from '@/assets/images/warning.svg';
 import axios from 'axios';
 
 const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
@@ -132,7 +135,45 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                                 purchases.map((p) => (
                                     <div key={p.id} className="flex pt-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] relative">
                                         <div className="flex w-[112px] h-[112px] p-[2.205px_19.843px_1.323px_19.843px] justify-center items-center rounded-[4.409px] bg-[#F6F6F6]">
-                                            <img src={p.product.image || photo1} alt="notification" />
+                                            {p.product.display_mode === 'normal' ? (
+                                                <img src={p.product.image} alt="notification" className="w-full h-full object-cover rounded-[4.409px]" />
+                                            ) : p.product.display_mode === 'gacha' ? (
+                                                <div className="flex relative overflow-hidden w-full h-full rounded-[4.409px]">
+                                                    <img src={p.product.image} alt="ガチャ" className="object-cover filter blur-[4px] w-full h-full" />
+                                                    <div className="absolute top-0 left-0 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px] w-full h-full" />
+                                                    <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                                        <img src={bubble} alt="bubble" className="w-6 h-6" />
+                                                        <span className="text-white font-bold text-xs">ガチャ</span>
+                                                    </div>
+                                                </div>
+                                            ) : p.product.display_mode === 'blur' ? (
+                                                <div className="flex relative overflow-hidden w-full h-full rounded-[4.409px]">
+                                                    <img src={p.product.image} alt="ぼかしフィルター" className="object-cover filter blur-[4px] w-full h-full" />
+                                                    <div className="absolute top-0 left-0 bg-black opacity-50 filter blur-[4px] w-full h-full" />
+                                                    <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                                        <img src={question_cloud} alt="question" className="w-6 h-6" />
+                                                    </div>
+                                                </div>
+                                            ) : p.product.display_mode === 'password' ? (
+                                                <div className="flex relative overflow-hidden w-full h-full rounded-[4.409px]">
+                                                    <div className="absolute top-0 left-0 bg-[#586B88] w-full h-full rounded-[4.409px]" />
+                                                    <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                                        <img src={lock} alt="lock" className="w-6 h-6" />
+                                                        <span className="text-[#CDD9EC] font-bold text-xs">パスワード</span>
+                                                        <span className="text-[#CDD9EC] text-xs">PWを入れて印刷しよう</span>
+                                                    </div>
+                                                </div>
+                                            ) : p.product.display_mode === 'cushion' ? (
+                                                <div className="flex relative overflow-hidden w-full h-full rounded-[4.409px]">
+                                                    <div className="absolute top-0 left-0 bg-[#A0A5AC] w-full h-full rounded-[4.409px]" />
+                                                    <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                                        <img src={warning} alt="warning" className="w-6 h-6" />
+                                                        <span className="text-[#464F5D] font-bold text-xs">WARNING</span>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <img src={p.product.image || photo1} alt="notification" className="w-full h-full object-cover rounded-[4.409px]" />
+                                            )}
                                         </div>
                                         {/* Info Block */}
                                         <div className="flex flex-col justify-between items-start flex-1 gap-y-2">
@@ -146,7 +187,7 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                                                 {/* 12121: User Info */}
                                                 <div className="inline-flex h-[32px] p-[6px_0] flex-row items-center flex-shrink-0 rounded-[3px]">
                                                     <img src={p.product.user.image || defaultUser} alt="user" className="w-[24px] h-[24px] flex-shrink-0 rounded-full object-cover bg-gray-200" />
-                                                    <span className="ml-2 text-[#222] font-noto text-[16px] leading-[22px] font-normal">{p.product.user.name}</span>
+                                                    <span className="ml-2 text-[#222] font-noto text-[16px] leading-[22px] font-normal">{p.product.user.title}</span>
                                                 </div>
                                                 {/* 12122: User Info */}
                                                 <div className="inline-flex pt-[6px] flex-row items-center rounded-[3px]">
@@ -189,7 +230,44 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                             <div key={p.id} className="relative w-[360px] h-[270px] bg-white rounded-[8px] border-b border-[#E9E9E9]">
                                 {/* photo1 */}
                                 <div className="absolute top-[16px] left-[16px] flex w-[64px] h-[64px] p-[1.26px_11.339px_0.756px_11.339px] justify-center items-center rounded-[2.52px] bg-[#F6F6F6]">
-                                    <img src={p.product.image || photo1} alt="notification" />
+                                    {p.product.display_mode === 'normal' ? (
+                                        <img src={p.product.image || photo1} alt="notification" className="w-full h-full object-cover rounded-[2.52px]" />
+                                    ) : p.product.display_mode === 'gacha' ? (
+                                        <div className="flex relative overflow-hidden w-full h-full rounded-[2.52px]">
+                                            <img src={p.product.image} alt="ガチャ" className="object-cover filter blur-[4px] w-full h-full" />
+                                            <div className="absolute top-0 left-0 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px] w-full h-full" />
+                                            <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                                <img src={bubble} alt="bubble" className="w-4 h-4" />
+                                                <span className="text-white font-bold text-xs">ガチャ</span>
+                                            </div>
+                                        </div>
+                                    ) : p.product.display_mode === 'blur' ? (
+                                        <div className="flex relative overflow-hidden w-full h-full rounded-[2.52px]">
+                                            <img src={p.product.image} alt="ぼかしフィルター" className="object-cover filter blur-[4px] w-full h-full" />
+                                            <div className="absolute top-0 left-0 bg-black opacity-50 filter blur-[4px] w-full h-full" />
+                                            <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                                <img src={question_cloud} alt="question" className="w-4 h-4" />
+                                            </div>
+                                        </div>
+                                    ) : p.product.display_mode === 'password' ? (
+                                        <div className="flex relative overflow-hidden w-full h-full rounded-[2.52px]">
+                                            <div className="absolute top-0 left-0 bg-[#586B88] w-full h-full rounded-[2.52px]" />
+                                            <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                                <img src={lock} alt="lock" className="w-4 h-4" />
+                                                <span className="text-[#CDD9EC] font-bold text-xs">パスワード</span>
+                                                <span className="text-[#CDD9EC] text-xs">PWを入れて印刷しよう</span>
+                                            </div>
+                                        </div>
+                                    ) : p.product.display_mode === 'cushion' ? (
+                                        <div className="flex relative overflow-hidden w-full h-full rounded-[2.52px]">
+                                            <div className="absolute top-0 left-0 bg-[#A0A5AC] w-full h-full rounded-[2.52px]" />
+                                            <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                                <img src={warning} alt="warning" className="w-4 h-4" />
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <img src={p.product.image || photo1} alt="notification" className="w-full h-full object-cover rounded-[2.52px]" />
+                                    )}
                                 </div>
                                 {/* 1211 */}
                                 <div className="absolute top-[16px] left-[96px] flex flex-col justify-between items-start">
@@ -199,7 +277,7 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                                         <span className="flex items-center gap-1 px-2 py-1 rounded-[30px] bg-[#FF2AA1] text-white font-bold text-[11px] leading-[15px]">3枚セット</span>
                                         <div className="flex items-center gap-[5px] m-[4px]">
                                             <img src={p.product.user.image || defaultUser} alt="user" className="w-[20px] h-[20px] rounded-full object-cover bg-gray-200" />
-                                            <span className="text-[#222] font-noto text-[13px] leading-[20px] font-normal">{p.product.user.name}</span>
+                                            <span className="text-[#222] font-noto text-[13px] leading-[20px] font-normal">{p.product.user.title}</span>
                                         </div>
                                         <span className="text-[#363636] font-noto font-medium text-[14px] leading-[25px] mb-[4px]">{p.purchase_time}に購入</span>
                                         <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">枚数：{p.cnt}</span>

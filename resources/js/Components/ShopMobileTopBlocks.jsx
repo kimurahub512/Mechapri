@@ -35,144 +35,148 @@ const ShopMobileTopBlocks = () => {
       <div className="shopmanagement-mobile-nav md:hidden bg-white">
         <div className="shopmanagement-mobile-nav-list">
           <div className="shopmanagement-mobile-nav-item">
-            <div
-              className="shopmanagement-mobile-nav-item-content"
-              style={isMyContents ? {
-                display: 'flex',
-                height: '48px',
-                padding: '12px 8px',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '8px',
-                background: '#FFEFF8'
-              } : {}}
-            >
-              <img src={mountain} alt="mountain" className="shopmanagement-mobile-nav-icon" />
-              <a 
-                href="/myshop/contents" 
-                className="shopmanagement-mobile-nav-text"
+            <a href="/myshop/contents" style={{ textDecoration: 'none' }}>
+              <div
+                className="shopmanagement-mobile-nav-item-content"
                 style={isMyContents ? {
-                  textDecoration: 'none',
-                  fontFamily: 'Noto Sans JP',
-                  fontSize: '9px',
-                  fontWeight: 400,
-                  lineHeight: '10px',
-                  background: 'linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  color: 'transparent',
-                  WebkitTextFillColor: 'transparent',
-                } : { textDecoration: 'none' }}
+                  display: 'flex',
+                  height: '48px',
+                  padding: '12px 8px',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: '8px',
+                  background: '#FFEFF8'
+                } : {}}
               >
-                商品管理
-              </a>
-            </div>
+                <img src={mountain} alt="mountain" className="shopmanagement-mobile-nav-icon" />
+                <span 
+                  className="shopmanagement-mobile-nav-text"
+                  style={isMyContents ? {
+                    textDecoration: 'none',
+                    fontFamily: 'Noto Sans JP',
+                    fontSize: '9px',
+                    fontWeight: 400,
+                    lineHeight: '10px',
+                    background: 'linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    color: 'transparent',
+                    WebkitTextFillColor: 'transparent',
+                  } : { textDecoration: 'none' }}
+                >
+                  商品管理
+                </span>
+              </div>
+            </a>
           </div>
           <div className="shopmanagement-mobile-nav-item">
-            <div
-              className="shopmanagement-mobile-nav-item-content"
-              style={isCategory ? {
-                display: 'flex',
-                height: '48px',
-                padding: '12px 8px',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '8px',
-                background: '#FFEFF8'
-              } : {}}
-            >
-              <img src={list_unordered} alt="Category" className="shopmanagement-mobile-nav-icon" />
-              <a 
-                href="/myshop/category" 
-                className="shopmanagement-mobile-nav-text"
+            <a href="/myshop/category" style={{ textDecoration: 'none' }}>
+              <div
+                className="shopmanagement-mobile-nav-item-content"
                 style={isCategory ? {
-                  textDecoration: 'none',
-                  fontFamily: 'Noto Sans JP',
-                  fontSize: '9px',
-                  fontWeight: 400,
-                  lineHeight: '10px',
-                  background: 'linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  color: 'transparent',
-                  WebkitTextFillColor: 'transparent',
-                } : { textDecoration: 'none' }}
+                  display: 'flex',
+                  height: '48px',
+                  padding: '12px 8px',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: '8px',
+                  background: '#FFEFF8'
+                } : {}}
               >
-                商品カテゴリ
-              </a>
-            </div>
+                <img src={list_unordered} alt="Category" className="shopmanagement-mobile-nav-icon" />
+                <span 
+                  className="shopmanagement-mobile-nav-text"
+                  style={isCategory ? {
+                    textDecoration: 'none',
+                    fontFamily: 'Noto Sans JP',
+                    fontSize: '9px',
+                    fontWeight: 400,
+                    lineHeight: '10px',
+                    background: 'linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    color: 'transparent',
+                    WebkitTextFillColor: 'transparent',
+                  } : { textDecoration: 'none' }}
+                >
+                  商品カテゴリ
+                </span>
+              </div>
+            </a>
           </div>
           <div className="shopmanagement-mobile-nav-item">
-            <div
-              className="shopmanagement-mobile-nav-item-content"
-              style={isTransaction ? {
-                display: 'flex',
-                height: '48px',
-                padding: '12px 8px',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '8px',
-                background: '#FFEFF8'
-              } : {}}
-            >
-              <img src={p_circle} alt="Payout" className="shopmanagement-mobile-nav-icon" />
-              <a 
-                href="/myshop/transaction" 
-                className="shopmanagement-mobile-nav-text"
+            <a href="/myshop/transaction" style={{ textDecoration: 'none' }}>
+              <div
+                className="shopmanagement-mobile-nav-item-content"
                 style={isTransaction ? {
-                  textDecoration: 'none',
-                  fontFamily: 'Noto Sans JP',
-                  fontSize: '9px',
-                  fontWeight: 400,
-                  lineHeight: '10px',
-                  background: 'linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  color: 'transparent',
-                  WebkitTextFillColor: 'transparent',
-                } : { textDecoration: 'none' }}
+                  display: 'flex',
+                  height: '48px',
+                  padding: '12px 8px',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: '8px',
+                  background: '#FFEFF8'
+                } : {}}
               >
-                出金・売上
-              </a>
-            </div>
+                <img src={p_circle} alt="Payout" className="shopmanagement-mobile-nav-icon" />
+                <span 
+                  className="shopmanagement-mobile-nav-text"
+                  style={isTransaction ? {
+                    textDecoration: 'none',
+                    fontFamily: 'Noto Sans JP',
+                    fontSize: '9px',
+                    fontWeight: 400,
+                    lineHeight: '10px',
+                    background: 'linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    color: 'transparent',
+                    WebkitTextFillColor: 'transparent',
+                  } : { textDecoration: 'none' }}
+                >
+                  出金・売上
+                </span>
+              </div>
+            </a>
           </div>
           <div className="shopmanagement-mobile-nav-item">
-            <div
-              className="shopmanagement-mobile-nav-item-content"
-              style={isSalesHistory ? {
-                display: 'flex',
-                height: '48px',
-                padding: '12px 8px',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '8px',
-                background: '#FFEFF8'
-              } : {}}
-            >
-              <img src={clock} alt="History" className="shopmanagement-mobile-nav-icon" style={isSalesHistory ? { filter: 'brightness(0) saturate(100%) invert(36%) sepia(99%) saturate(7492%) hue-rotate(292deg) brightness(101%) contrast(101%)' } : {}} />
-              <a 
-                href="/myshop/saleshistory" 
-                className="shopmanagement-mobile-nav-text"
+            <a href="/myshop/saleshistory" style={{ textDecoration: 'none' }}>
+              <div
+                className="shopmanagement-mobile-nav-item-content"
                 style={isSalesHistory ? {
-                  textDecoration: 'none',
-                  fontFamily: 'Noto Sans JP',
-                  fontSize: '9px',
-                  fontWeight: 400,
-                  lineHeight: '10px',
-                  background: 'linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  color: 'transparent',
-                  WebkitTextFillColor: 'transparent',
-                } : { textDecoration: 'none' }}
+                  display: 'flex',
+                  height: '48px',
+                  padding: '12px 8px',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: '8px',
+                  background: '#FFEFF8'
+                } : {}}
               >
-                販売履歴
-              </a>
-            </div>
+                <img src={clock} alt="History" className="shopmanagement-mobile-nav-icon" style={isSalesHistory ? { filter: 'brightness(0) saturate(100%) invert(36%) sepia(99%) saturate(7492%) hue-rotate(292deg) brightness(101%) contrast(101%)' } : {}} />
+                <span 
+                  className="shopmanagement-mobile-nav-text"
+                  style={isSalesHistory ? {
+                    textDecoration: 'none',
+                    fontFamily: 'Noto Sans JP',
+                    fontSize: '9px',
+                    fontWeight: 400,
+                    lineHeight: '10px',
+                    background: 'linear-gradient(270deg, #FF2AA1 0%, #AB31D3 100%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    color: 'transparent',
+                    WebkitTextFillColor: 'transparent',
+                  } : { textDecoration: 'none' }}
+                >
+                  販売履歴
+                </span>
+              </div>
+            </a>
           </div>
           <div className="shopmanagement-mobile-nav-item">
             <a href="/myshop/edit" style={{ textDecoration: 'none' }}>

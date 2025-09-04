@@ -8,6 +8,11 @@ import TabButtonsDesktop from '@/Components/TabButtonsDesktop';
 import '@/../../resources/css/shopmanagement.css';
 import heart from '@/assets/images/heart_pink.svg';
 import defaultuser from '@/assets/images/default-user.png';
+import question_cloud from '@/assets/images/question_cloud.svg';
+import bubble from '@/assets/images/bubble.svg';
+import lock from '@/assets/images/lock.svg';
+import warning from '@/assets/images/warning.svg';
+
 
 const FavoriteProducts = ({ favoriteProducts = [] }) => {
   const [activeTab, setActiveTab] = useState('favorite'); // or 'follow'
@@ -90,11 +95,53 @@ const FavoriteProducts = ({ favoriteProducts = [] }) => {
                         className="flex w-[112px] h-[112px] p-[2.205px_19.843px_1.323px_19.843px] justify-center items-center rounded-[4.409px] bg-[#F6F6F6] cursor-pointer"
                         onClick={() => handleProductClick(product)}
                       >
-                        <img
-                          src={product.files?.[0]?.url ? `/storage/${product.files[0].file_path}` : '/default-product-image.jpg'}
-                          alt={product.title}
-                          className="w-full h-full object-cover rounded-[4.409px]"
-                        />
+                        {product.display_mode === 'normal' ? (
+                          <img
+                            src={product.image || '/default-product-image.jpg'}
+                            alt={product.title}
+                            className="w-full h-full object-cover rounded-[4.409px]"
+                          />
+                        ) : product.display_mode === 'gacha' ? (
+                          <div className="flex relative overflow-hidden w-full h-full rounded-[4.409px]">
+                            <img src={product.image} alt="ガチャ" className="object-cover filter blur-[4px] w-full h-full" />
+                            <div className="absolute top-0 left-0 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px] w-full h-full" />
+                            <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                              <img src={bubble} alt="bubble" className="w-6 h-6" />
+                              <span className="text-white font-bold text-xs">ガチャ</span>
+                            </div>
+                          </div>
+                        ) : product.display_mode === 'blur' ? (
+                          <div className="flex relative overflow-hidden w-full h-full rounded-[4.409px]">
+                            <img src={product.image} alt="ぼかしフィルター" className="object-cover filter blur-[4px] w-full h-full" />
+                            <div className="absolute top-0 left-0 bg-black opacity-50 filter blur-[4px] w-full h-full" />
+                            <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                              <img src={question_cloud} alt="question" className="w-6 h-6" />
+                            </div>
+                          </div>
+                        ) : product.display_mode === 'password' ? (
+                          <div className="flex relative overflow-hidden w-full h-full rounded-[4.409px]">
+                            <div className="absolute top-0 left-0 bg-[#586B88] w-full h-full rounded-[4.409px]" />
+                            <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                              <img src={lock} alt="lock" className="w-6 h-6" />
+                              <span className="text-[#CDD9EC] font-bold text-xs">パスワード</span>
+                              <span className="text-[#CDD9EC] text-xs">PWを入れて印刷しよう</span>
+                            </div>
+                          </div>
+                        ) : product.display_mode === 'cushion' ? (
+                          <div className="flex relative overflow-hidden w-full h-full rounded-[4.409px]">
+                            <div className="absolute top-0 left-0 bg-[#A0A5AC] w-full h-full rounded-[4.409px]" />
+                            <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                              <img src={warning} alt="warning" className="w-6 h-6" />
+                              <span className="text-[#464F5D] font-bold text-xs">WARNING</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <img
+                            src={product.image || '/default-product-image.jpg'}
+                            alt={product.title}
+                            className="w-full h-full object-cover rounded-[4.409px]"
+                          />
+                        )}
                       </div>
                       {/* Info Block */}
                       <div
@@ -220,11 +267,53 @@ const FavoriteProducts = ({ favoriteProducts = [] }) => {
                       className="flex w-[74px] h-[74px] p-[1.26px_11.339px_0.756px_11.339px] justify-center items-center rounded-[2.52px] bg-[#F6F6F6] ml-[16px] cursor-pointer"
                       onClick={() => handleProductClick(product)}
                     >
-                      <img
-                        src={product.files?.[0]?.url ? `/storage/${product.files[0].file_path}` : '/default-product-image.jpg'}
-                        alt={product.title}
-                        className="w-full h-full object-cover rounded-[2.52px]"
-                      />
+                      {product.display_mode === 'normal' ? (
+                        <img
+                          src={product.image || '/default-product-image.jpg'}
+                          alt={product.title}
+                          className="w-full h-full object-cover rounded-[2.52px]"
+                        />
+                      ) : product.display_mode === 'gacha' ? (
+                        <div className="flex relative overflow-hidden w-full h-full rounded-[2.52px]">
+                          <img src={product.image} alt="ガチャ" className="object-cover filter blur-[4px] w-full h-full" />
+                          <div className="absolute top-0 left-0 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] opacity-50 filter blur-[4px] w-full h-full" />
+                          <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <img src={bubble} alt="bubble" className="w-4 h-4" />
+                            <span className="text-white font-bold text-xs">ガチャ</span>
+                          </div>
+                        </div>
+                      ) : product.display_mode === 'blur' ? (
+                        <div className="flex relative overflow-hidden w-full h-full rounded-[2.52px]">
+                          <img src={product.image} alt="ぼかしフィルター" className="object-cover filter blur-[4px] w-full h-full" />
+                          <div className="absolute top-0 left-0 bg-black opacity-50 filter blur-[4px] w-full h-full" />
+                          <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <img src={question_cloud} alt="question" className="w-4 h-4" />
+                            <span className="text-white font-bold text-xs">?</span>
+                          </div>
+                        </div>
+                      ) : product.display_mode === 'password' ? (
+                        <div className="flex relative overflow-hidden w-full h-full rounded-[2.52px]">
+                          <div className="absolute top-0 left-0 bg-[#586B88] w-full h-full rounded-[2.52px]" />
+                          <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <img src={lock} alt="lock" className="w-4 h-4" />
+                            <span className="text-[#CDD9EC] font-bold text-xs">パスワード</span>
+                            <span className="text-[#CDD9EC] text-xs">PWを入れて印刷しよう</span>
+                          </div>
+                        </div>
+                      ) : product.display_mode === 'cushion' ? (
+                        <div className="flex relative overflow-hidden w-full h-full rounded-[2.52px]">
+                          <div className="absolute top-0 left-0 bg-[#A0A5AC] w-full h-full rounded-[2.52px]" />
+                          <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <img src={warning} alt="warning" className="w-4 h-4" />
+                          </div>
+                        </div>
+                      ) : (
+                        <img
+                          src={product.image || '/default-product-image.jpg'}
+                          alt={product.title}
+                          className="w-full h-full object-cover rounded-[2.52px]"
+                        />
+                      )}
                     </div>
                     {/* Info Block and 1213 in a column, w-full */}
                     <div className="flex flex-col items-start w-full">
