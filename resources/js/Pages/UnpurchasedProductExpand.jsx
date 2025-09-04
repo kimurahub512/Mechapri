@@ -29,6 +29,8 @@ const UnpurchasedProductExpand = ({ product }) => {
     const { auth } = usePage().props;
     const [isUnlocked, setIsUnlocked] = useState(false);
     const [cushionRevealed, setCushionRevealed] = useState(false);
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState(false);
 
     useEffect(() => {
         const checkPassword = async () => {
@@ -52,6 +54,33 @@ const UnpurchasedProductExpand = ({ product }) => {
             checkPassword();
         }
     }, [product.id, product.display_mode]);
+
+    const handlePasswordSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch(route('product.verify.password'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                },
+                body: JSON.stringify({
+                    product_id: product.id,
+                    password: password
+                }),
+            });
+            const data = await response.json();
+            if (data.success) {
+                setIsUnlocked(true);
+                setPasswordError(false);
+            } else {
+                setPasswordError(true);
+            }
+        } catch (error) {
+            console.error('Error verifying password:', error);
+            setPasswordError(true);
+        }
+    };
 
     const [quantities, setQuantities] = useState({
         cart: 1,
@@ -351,6 +380,24 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                                 <img src={lock} alt="lock" className="w-[42px] h-[42px]" />
                                                                 <span className="text-[#CDD9EC] text-[15px] font-bold">パスワード</span>
                                                                 <span className="text-[#CDD9EC] text-[13px]">PWを入れて印刷しよう</span>
+                                                                <form onSubmit={handlePasswordSubmit} className="mt-4 flex flex-col items-center gap-2">
+                                                                    <input
+                                                                        type="password"
+                                                                        value={password}
+                                                                        onChange={(e) => setPassword(e.target.value)}
+                                                                        className={`w-[200px] px-4 py-2 rounded-md border ${passwordError ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#586B88]`}
+                                                                        placeholder="パスワードを入力"
+                                                                    />
+                                                                    {passwordError && (
+                                                                        <span className="text-red-500 text-[12px]">パスワードが正しくありません</span>
+                                                                    )}
+                                                                    <button
+                                                                        type="submit"
+                                                                        className="mt-2 px-4 py-2 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] text-white rounded-md hover:bg-opacity-90 transition-all"
+                                                                    >
+                                                                        確認
+                                                                    </button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     ) : product.display_mode === 'password' && isUnlocked ? (
@@ -496,8 +543,6 @@ const UnpurchasedProductExpand = ({ product }) => {
                     </section>
                 </div>
             </main>
-            {/* Personal Info Footer */}
-            <PersonalInfoSection user={product.user} defaultUserImage={default_user} />
             {/* Mobile Main Section */}
             <div className="flex flex-col pt-[84px] gap-[45px]">
                 <section className="flex flex-col items-start gap-[24px] px-4 md:hidden w-full pt-[32px] bg-[#FFF] mt-[-12px]">
@@ -696,10 +741,28 @@ const UnpurchasedProductExpand = ({ product }) => {
                                                 ) : product.display_mode === 'password' && !isUnlocked ? (
                                                     <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
                                                         <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[6px]" />
-                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
+                                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[3px]">
                                                             <img src={lock} alt="lock" className="w-[32px] h-[32px]" />
                                                             <span className="text-[#CDD9EC] text-[12px] font-bold">パスワード</span>
                                                             <span className="text-[#CDD9EC] text-[10px]">PWを入れて印刷しよう</span>
+                                                            <form onSubmit={handlePasswordSubmit} className="mt-4 flex flex-col items-center gap-2">
+                                                                <input
+                                                                    type="password"
+                                                                    value={password}
+                                                                    onChange={(e) => setPassword(e.target.value)}
+                                                                    className={`w-[150px] px-3 py-1.5 rounded-md border ${passwordError ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#586B88] text-[12px]`}
+                                                                    placeholder="パスワードを入力"
+                                                                />
+                                                                {passwordError && (
+                                                                    <span className="text-red-500 text-[10px]">パスワードが正しくありません</span>
+                                                                )}
+                                                                <button
+                                                                    type="submit"
+                                                                    className="mt-2 px-3 py-1.5 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] text-white rounded-md hover:bg-opacity-90 transition-all text-[12px]"
+                                                                >
+                                                                    確認
+                                                                </button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 ) : product.display_mode === 'password' && isUnlocked ? (
@@ -829,6 +892,8 @@ const UnpurchasedProductExpand = ({ product }) => {
                     </section>
                 </section>
             </div>
+            {/* Personal Info Footer */}
+            <PersonalInfoSection user={product.user} defaultUserImage={default_user} />
             <Footer />
         </div>
     );

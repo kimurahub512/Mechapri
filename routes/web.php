@@ -16,20 +16,15 @@ use Illuminate\Auth\Access\AuthorizationException;
 
 // Route to serve watermarked images directly - MUST BE FIRST
 Route::get('/api/watermarked-image/{path}', function($path) {
-    Log::info('Watermark route called with path: ' . $path);
-    Log::info('Request URL: ' . request()->url());
-    Log::info('Request method: ' . request()->method());
     
     // Handle both encoded and unencoded paths
     $decodedPath = urldecode($path);
-    Log::info('Decoded path: ' . $decodedPath);
     
     // Also try the original path in case it's already unencoded
     $originalPath = $path;
     
     // Validate the path to prevent directory traversal
     if (str_contains($decodedPath, '..') || !str_starts_with($decodedPath, 'product-batches/')) {
-        Log::info('Path validation failed');
         return response('Invalid path: ' . $decodedPath, 404);
     }
     
@@ -38,20 +33,16 @@ Route::get('/api/watermarked-image/{path}', function($path) {
         $finalPath = null;
         if (Storage::disk('public')->exists($decodedPath)) {
             $finalPath = $decodedPath;
-            Log::info('Using decoded path: ' . $decodedPath);
         } elseif (Storage::disk('public')->exists($originalPath)) {
             $finalPath = $originalPath;
-            Log::info('Using original path: ' . $originalPath);
         } else {
             Log::error('Original image file not found for both paths: ' . $decodedPath . ' and ' . $originalPath);
             return response('Original image not found: ' . $decodedPath, 404);
         }
         
-        Log::info('Original image exists, creating watermarked version');
         $watermarkService = app(\App\Services\ImageWatermarkService::class);
         $watermarkedPath = $watermarkService->createWatermarkedImage($finalPath);
         
-        Log::info('Watermark service returned path: ' . ($watermarkedPath ?: 'null'));
         
         if ($watermarkedPath && Storage::disk('public')->exists($watermarkedPath)) {
             $fullPath = Storage::disk('public')->path($watermarkedPath);
@@ -66,7 +57,6 @@ Route::get('/api/watermarked-image/{path}', function($path) {
                 default => 'image/jpeg'
             };
             
-            Log::info('Serving watermarked image: ' . $watermarkedPath);
             return response()->file($fullPath, [
                 'Content-Type' => $mimeType,
                 'Cache-Control' => 'no-cache, no-store, must-revalidate',
@@ -85,11 +75,9 @@ Route::get('/api/watermarked-image/{path}', function($path) {
 
 // Catch-all route for watermarked images with base64 encoded paths
 Route::get('/api/watermarked-image-b64/{path}', function($path) {
-    Log::info('Base64 watermark route called with path: ' . $path);
     
     // Decode base64 path
     $decodedPath = base64_decode($path);
-    Log::info('Base64 decoded path: ' . $decodedPath);
     
     // Validate the path to prevent directory traversal
     if (str_contains($decodedPath, '..') || !str_starts_with($decodedPath, 'product-batches/')) {
@@ -104,7 +92,6 @@ Route::get('/api/watermarked-image-b64/{path}', function($path) {
             return response('Original image not found: ' . $decodedPath, 404);
         }
         
-        Log::info('Original image exists, creating watermarked version');
         $watermarkService = app(\App\Services\ImageWatermarkService::class);
         $watermarkedPath = $watermarkService->createWatermarkedImage($decodedPath);
 
@@ -125,7 +112,6 @@ Route::get('/api/watermarked-image-b64/{path}', function($path) {
             }
         }
 
-        Log::info('Watermark service returned path: ' . ($watermarkedPath ?: 'null'));
         
         if ($watermarkedPath && Storage::disk('public')->exists($watermarkedPath)) {
             $fullPath = Storage::disk('public')->path($watermarkedPath);
@@ -140,7 +126,6 @@ Route::get('/api/watermarked-image-b64/{path}', function($path) {
                 default => 'image/jpeg'
             };
             
-            Log::info('Serving watermarked image: ' . $watermarkedPath);
             return response()->file($fullPath, [
                 'Content-Type' => $mimeType,
                 'Cache-Control' => 'no-cache, no-store, must-revalidate',
@@ -288,9 +273,7 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
     
     Route::get('/productdetailsfree', [App\Http\Controllers\StaticPageController::class, 'productDetailsFree']);
 
-    Route::get('/productdetailsfreeexpand/{id}', [App\Http\Controllers\ProductBatchController::class, 'showProductDetailsFreeExpand'])
-        ->name('product.details.free.expand')
-        ->where('id', '[0-9]+');
+
 
     // Direct expand routes (for viewing own products)
     Route::get('/purchasedproductexpand/{id}', [App\Http\Controllers\ProductBatchController::class, 'showPurchasedExpand'])

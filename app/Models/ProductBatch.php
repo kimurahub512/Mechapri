@@ -41,6 +41,7 @@ class ProductBatch extends Model
         'nwps_token_expires_at',
         'nwps_file_id',
         'nwps_qr_code_url',
+        'nwps_upload_status',
     ];
 
     /**

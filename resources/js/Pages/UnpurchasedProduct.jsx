@@ -324,7 +324,7 @@ const UnpurchasedProduct = ({ product }) => {
                                                                 )}
                                                                 <button
                                                                     type="submit"
-                                                                    className="mt-2 px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-opacity-90 transition-all"
+                                                                    className="mt-2 px-4 py-2 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] text-white rounded-md hover:bg-opacity-90 transition-all"
                                                                 >
                                                                     確認
                                                                 </button>
@@ -374,6 +374,7 @@ const UnpurchasedProduct = ({ product }) => {
                                         width="32px"
                                         height="32px"
                                         displayMode={product.display_mode}
+                                        isUnlocked={isUnlocked}
                                             onClick={() => {
                                                 const pathParts = window.location.pathname.split('/');
                                                 const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
@@ -401,88 +402,92 @@ const UnpurchasedProduct = ({ product }) => {
                                     </div>
                                 </div>
                                 <div className="flex flex-col items-center gap-[16px] w-full">
-                                    <div className="flex flex-row items-center px-[24px] w-full">
-                                        <div className="mr-auto">
-                                            <QuantityControl
-                                                    quantity={quantities.cart}
-                                                    onQuantityChange={(newQuantity) => handleQuantityChange('cart', newQuantity)}
-                                            />
-                            </div>
-                                        <button 
-                                            onClick={async () => {
-                                                // Check if user is authenticated
-                                                if (!auth?.user) {
-                                                    router.visit('/login');
-                                                    return;
-                                                }
-                                                
-                                                try {
-                                                    const response = await fetch(route('cart.add'), {
-                                                        method: 'POST',
-                                                        headers: {
-                                                            'Content-Type': 'application/json',
-                                                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                                                        },
-                                                        body: JSON.stringify({
-                                                            product_batch_id: product.id,
-                                                            quantity: quantities.cart
-                                                        }),
-                                                    });
+                                    {product.display_mode !== 'password' || isUnlocked ? (
+                                        <div className="flex flex-row items-center px-[24px] w-full">
+                                            <div className="mr-auto">
+                                                <QuantityControl
+                                                        quantity={quantities.cart}
+                                                        onQuantityChange={(newQuantity) => handleQuantityChange('cart', newQuantity)}
+                                                />
+                                </div>
+                                            <button 
+                                                onClick={async () => {
+                                                    // Check if user is authenticated
+                                                    if (!auth?.user) {
+                                                        router.visit('/login');
+                                                        return;
+                                                    }
                                                     
-                                                    if (!response.ok) {
-                                                        if (response.status === 401) {
-                                                            // Unauthorized - redirect to login
-                                                            router.visit('/login');
-                                                            return;
+                                                    try {
+                                                        const response = await fetch(route('cart.add'), {
+                                                            method: 'POST',
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                                            },
+                                                            body: JSON.stringify({
+                                                                product_batch_id: product.id,
+                                                                quantity: quantities.cart
+                                                            }),
+                                                        });
+                                                        
+                                                        if (!response.ok) {
+                                                            if (response.status === 401) {
+                                                                // Unauthorized - redirect to login
+                                                                router.visit('/login');
+                                                                return;
+                                                            }
+                                                            throw new Error(`HTTP error! status: ${response.status}`);
                                                         }
-                                                        throw new Error(`HTTP error! status: ${response.status}`);
+                                                        
+                                                        const data = await response.json();
+                                                        if (data.success) {
+                                                            // Show success message or redirect to cart
+                                                            router.visit(route('cart.index'));
+                                                        }
+                                                    } catch (error) {
+                                                        console.error('Error adding to cart:', error);
+                                                    }
+                                                }}
+                                                className="flex w-[240px] h-[74px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] ml-auto hover:opacity-90 transition-opacity"
+                                            >
+                                                <img src={cart} alt="cart" className="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] lg:w-[20px] lg:h-[20px]" />
+                                                <span className="text-[#FFF] text-center font-bold text-[14px] sm:text-[16px] lg:text-[18px] leading-[16px] sm:leading-[18px] lg:leading-[20px] font-noto">カートに入れる</span>
+                                            </button>
+                                            
+                                        </div>
+                                    ) : null}
+                                    {product.display_mode !== 'password' || isUnlocked ? (
+                                        <div className="flex flex-row items-center px-[24px] w-full">
+                                            <div className="mr-auto">
+                                                <QuantityControl
+                                                        quantity={quantities.direct}
+                                                        onQuantityChange={(newQuantity) => handleQuantityChange('direct', newQuantity)}
+                                                />
+                                            </div>
+                                            {/* <button className="flex w-[240px] h-[74px] px-[24px] justify-center items-center rounded-[10px] bg-[#AB31D3] 
+                                            ml-auto">
+                                                <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-noto 
+                                                whitespace-nowrap">すぐにプリントコード購入</span>
+                                            </button> */}
+                                            <button
+                                                onClick={() => {
+                                                    // Check if user is authenticated
+                                                    if (!auth?.user) {
+                                                        router.visit('/login');
+                                                        return;
                                                     }
                                                     
-                                                    const data = await response.json();
-                                                    if (data.success) {
-                                                        // Show success message or redirect to cart
-                                                        router.visit(route('cart.index'));
-                                                    }
-                                                } catch (error) {
-                                                    console.error('Error adding to cart:', error);
-                                                }
-                                            }}
-                                            className="flex w-[240px] h-[74px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] ml-auto hover:opacity-90 transition-opacity"
-                                        >
-                                            <img src={cart} alt="cart" className="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] lg:w-[20px] lg:h-[20px]" />
-                                            <span className="text-[#FFF] text-center font-bold text-[14px] sm:text-[16px] lg:text-[18px] leading-[16px] sm:leading-[18px] lg:leading-[20px] font-noto">カートに入れる</span>
-                                        </button>
-                                        
-                                    </div>
-                                    <div className="flex flex-row items-center px-[24px] w-full">
-                                        <div className="mr-auto">
-                                            <QuantityControl
-                                                    quantity={quantities.direct}
-                                                    onQuantityChange={(newQuantity) => handleQuantityChange('direct', newQuantity)}
-                                            />
+                                                    router.visit(route('payment.checkout', { product: product.id }), {
+                                                        data: { quantity: quantities.direct }
+                                                    });
+                                                }}
+                                                className="flex w-[240px] h-[74px] px-[24px] justify-center items-center rounded-[10px] bg-[#AB31D3] ml-auto hover:bg-opacity-90 transition-all"
+                                            >
+                                                <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-noto whitespace-nowrap">すぐにプリントコード購入</span>
+                                            </button>
                                         </div>
-                                        {/* <button className="flex w-[240px] h-[74px] px-[24px] justify-center items-center rounded-[10px] bg-[#AB31D3] 
-                                        ml-auto">
-                                            <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-noto 
-                                            whitespace-nowrap">すぐにプリントコード購入</span>
-                                        </button> */}
-                                        <button
-                                            onClick={() => {
-                                                // Check if user is authenticated
-                                                if (!auth?.user) {
-                                                    router.visit('/login');
-                                                    return;
-                                                }
-                                                
-                                                router.visit(route('payment.checkout', { product: product.id }), {
-                                                    data: { quantity: quantities.direct }
-                                                });
-                                            }}
-                                            className="flex w-[240px] h-[74px] px-[24px] justify-center items-center rounded-[10px] bg-[#AB31D3] ml-auto hover:bg-opacity-90 transition-all"
-                                        >
-                                            <span className="text-[#FFF] text-center font-bold text-[18px] leading-[20px] font-noto whitespace-nowrap">すぐにプリントコード購入</span>
-                                        </button>
-                                    </div>
+                                    ) : null}
                                 </div>
                                 {/*explanation*/}
                                 {/* 1211: Explanation Section */}
@@ -555,8 +560,6 @@ const UnpurchasedProduct = ({ product }) => {
                     </section>
                 </div>
             </main>
-            {/* Personal Info Footer */}
-            <PersonalInfoSection user={product.user} defaultUserImage={default_user} />
             {/* Mobile Main Section */}
             <div className="flex flex-col pt-[74px] gap-[45px]">
                 <section className="flex flex-col items-start gap-[24px] px-4 md:hidden w-full pt-[32px] bg-[#FFF] mt-[-12px]">
@@ -747,7 +750,7 @@ const UnpurchasedProduct = ({ product }) => {
                                                         )}
                                                         <button
                                                             type="submit"
-                                                            className="mt-2 px-3 py-1.5 bg-[#586B88] text-white rounded-md hover:bg-opacity-90 transition-all text-[12px]"
+                                                            className="mt-2 px-3 py-1.5 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] text-white rounded-md hover:bg-opacity-90 transition-all text-[12px]"
                                                         >
                                                             確認
                                                         </button>
@@ -794,6 +797,7 @@ const UnpurchasedProduct = ({ product }) => {
                                     width="24px"
                                     height="24px"
                                     displayMode={product.display_mode}
+                                    isUnlocked={isUnlocked}
                                         onClick={() => {
                                             const pathParts = window.location.pathname.split('/');
                                             const isOnUserShopPage = pathParts.length > 0 && /^\d+$/.test(pathParts[1]);
@@ -823,82 +827,86 @@ const UnpurchasedProduct = ({ product }) => {
                             </div>
                             {/* 1214: Quantity controls and action buttons */}
                             <div className="flex flex-col items-center gap-[16px] w-full mt-[24px] ">
-                                <div className="flex flex-row items-center w-full">
-                                    <div className="ml-auto">
-                                        <QuantityControl
-                                                quantity={quantities.mobileCart}
-                                                onQuantityChange={(newQuantity) => handleQuantityChange('mobileCart', newQuantity)}
-                                        />
-                                    </div>
-                                    <button 
-                                        onClick={async () => {
-                                            // Check if user is authenticated
-                                            if (!auth?.user) {
-                                                router.visit('/login');
-                                                return;
-                                            }
-                                            
-                                            try {
-                                                const response = await fetch(route('cart.add'), {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'Content-Type': 'application/json',
-                                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                                                    },
-                                                    body: JSON.stringify({
-                                                        product_batch_id: product.id,
-                                                        quantity: quantities.mobileCart
-                                                    }),
-                                                });
+                                {product.display_mode !== 'password' || isUnlocked ? (
+                                    <div className="flex flex-row items-center w-full">
+                                        <div className="ml-auto">
+                                            <QuantityControl
+                                                    quantity={quantities.mobileCart}
+                                                    onQuantityChange={(newQuantity) => handleQuantityChange('mobileCart', newQuantity)}
+                                            />
+                                        </div>
+                                        <button 
+                                            onClick={async () => {
+                                                // Check if user is authenticated
+                                                if (!auth?.user) {
+                                                    router.visit('/login');
+                                                    return;
+                                                }
                                                 
-                                                if (!response.ok) {
-                                                    if (response.status === 401) {
-                                                        // Unauthorized - redirect to login
-                                                        router.visit('/login');
-                                                        return;
+                                                try {
+                                                    const response = await fetch(route('cart.add'), {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                                        },
+                                                        body: JSON.stringify({
+                                                            product_batch_id: product.id,
+                                                            quantity: quantities.mobileCart
+                                                        }),
+                                                    });
+                                                    
+                                                    if (!response.ok) {
+                                                        if (response.status === 401) {
+                                                            // Unauthorized - redirect to login
+                                                            router.visit('/login');
+                                                            return;
+                                                        }
+                                                        throw new Error(`HTTP error! status: ${response.status}`);
                                                     }
-                                                    throw new Error(`HTTP error! status: ${response.status}`);
+                                                    
+                                                    const data = await response.json();
+                                                    if (data.success) {
+                                                        // Show success message or redirect to cart
+                                                        router.visit(route('cart.index'));
+                                                    }
+                                                } catch (error) {
+                                                    console.error('Error adding to cart:', error);
+                                                }
+                                            }}
+                                            className="flex w-[160px] h-[40px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] mr-auto hover:opacity-90 transition-opacity"
+                                        >
+                                            <img src={cart} alt="cart" className="w-[20px] h-[19px]" />
+                                            <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-noto whitespace-nowrap">カートに入れる</span>
+                                        </button>
+                                    </div>
+                                ) : null}
+                                {product.display_mode !== 'password' || isUnlocked ? (
+                                    <div className="flex flex-row items-center w-full">
+                                        <div className="ml-auto">
+                                            <QuantityControl
+                                                    quantity={quantities.mobileDirect}
+                                                    onQuantityChange={(newQuantity) => handleQuantityChange('mobileDirect', newQuantity)}
+                                            />
+                                        </div>
+                                        <button
+                                            onClick={() => {
+                                                // Check if user is authenticated
+                                                if (!auth?.user) {
+                                                    router.visit('/login');
+                                                    return;
                                                 }
                                                 
-                                                const data = await response.json();
-                                                if (data.success) {
-                                                    // Show success message or redirect to cart
-                                                    router.visit(route('cart.index'));
-                                                }
-                                            } catch (error) {
-                                                console.error('Error adding to cart:', error);
-                                            }
-                                        }}
-                                        className="flex w-[160px] h-[40px] px-[24px] justify-center items-center gap-[10px] rounded-[10px] bg-[#FF2AA1] mr-auto hover:opacity-90 transition-opacity"
-                                    >
-                                        <img src={cart} alt="cart" className="w-[20px] h-[19px]" />
-                                        <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-noto whitespace-nowrap">カートに入れる</span>
-                                    </button>
-                                </div>
-                                <div className="flex flex-row items-center w-full">
-                                    <div className="ml-auto">
-                                        <QuantityControl
-                                                quantity={quantities.mobileDirect}
-                                                onQuantityChange={(newQuantity) => handleQuantityChange('mobileDirect', newQuantity)}
-                                        />
+                                                router.visit(route('payment.checkout', { product: product.id }), {
+                                                    data: { quantity: quantities.mobileDirect }
+                                                });
+                                            }}
+                                            className="flex w-[160px] h-[40px] px-[16px] justify-center items-center rounded-[10px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] mr-auto hover:bg-opacity-90 transition-all"
+                                        >
+                                            <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-noto whitespace-nowrap">すぐにプリントコード購入</span>
+                                        </button>
                                     </div>
-                                    <button
-                                        onClick={() => {
-                                            // Check if user is authenticated
-                                            if (!auth?.user) {
-                                                router.visit('/login');
-                                                return;
-                                            }
-                                            
-                                            router.visit(route('payment.checkout', { product: product.id }), {
-                                                data: { quantity: quantities.mobileDirect }
-                                            });
-                                        }}
-                                        className="flex w-[160px] h-[40px] px-[16px] justify-center items-center rounded-[10px] bg-[#AB31D3] mr-auto hover:bg-opacity-90 transition-all"
-                                    >
-                                        <span className="text-[#FFF] text-center font-bold text-[12px] leading-[12px] font-noto whitespace-nowrap">すぐにプリントコード購入</span>
-                                    </button>
-                                </div>
+                                ) : null}
                             </div>
                             
                             {/* 1216: Explanation section */}
@@ -958,6 +966,8 @@ const UnpurchasedProduct = ({ product }) => {
                     </section>
                 </section>
             </div>
+            {/* Personal Info Footer */}
+            <PersonalInfoSection user={product.user} defaultUserImage={default_user} />
             <Footer />
         </div>
     );

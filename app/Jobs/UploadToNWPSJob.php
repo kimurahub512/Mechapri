@@ -17,6 +17,9 @@ class UploadToNWPSJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $purchaseId;
+    public int $tries = 3; // Maximum number of attempts
+    public int $backoff = 30; // Seconds to wait between retries
+    public int $timeout = 300; // 5 minutes timeout for NWPS operations
 
     public function __construct(int $purchaseId)
     {
@@ -79,6 +82,19 @@ class UploadToNWPSJob implements ShouldQueue
             
             // \Illuminate\Support\Facades\Log::info('NWPS guest login response', ['login' => $login]);
 
+            // Check for NWPS maintenance mode or other errors
+            if (isset($login['result_code']) && $login['result_code'] === 'M001') {
+                file_put_contents(storage_path('nwps_debug.log'), 
+                    date('Y-m-d H:i:s') . " - NWPS maintenance mode detected (M001) for purchase {$purchase->id}\n", 
+                    FILE_APPEND
+                );
+                
+                // Mark purchase as failed and schedule retry
+                $purchase->update(['nwps_upload_status' => 'failed']);
+                $this->scheduleRetry();
+                return;
+            }
+
             $token = $login['token'] ?? ($login['access_token'] ?? null);
             $userCode = $login['user_code'] ?? null;
             if (!$token) {
@@ -87,6 +103,7 @@ class UploadToNWPSJob implements ShouldQueue
                     FILE_APPEND
                 );
                 $purchase->update(['nwps_upload_status' => 'failed']);
+                $this->scheduleRetry();
                 return;
             }
             
@@ -231,6 +248,28 @@ class UploadToNWPSJob implements ShouldQueue
                 FILE_APPEND
             );
             $purchase->update(['nwps_upload_status' => 'failed']);
+            $this->scheduleRetry();
+        }
+    }
+    
+    /**
+     * Schedule a retry if we haven't exceeded max attempts
+     */
+    private function scheduleRetry(): void
+    {
+        if ($this->attempts() < $this->tries) {
+            file_put_contents(storage_path('nwps_debug.log'), 
+                date('Y-m-d H:i:s') . " - Scheduling retry for purchase {$this->purchaseId} (attempt {$this->attempts()}/{$this->tries})\n", 
+                FILE_APPEND
+            );
+            
+            // Schedule retry with delay
+            $this->release($this->backoff);
+        } else {
+            file_put_contents(storage_path('nwps_debug.log'), 
+                date('Y-m-d H:i:s') . " - Max retry attempts reached for purchase {$this->purchaseId}\n", 
+                FILE_APPEND
+            );
         }
     }
 }

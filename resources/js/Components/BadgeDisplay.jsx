@@ -12,6 +12,7 @@ const BadgeDisplay = ({
   width = "24px",
   height = "24px",
   displayMode = "normal",
+  isUnlocked = false,
   onClick
 }) => {
   const renderBadgeImage = (image, index) => {
@@ -67,15 +68,27 @@ const BadgeDisplay = ({
     }
 
     if (displayMode === 'password') {
-      return (
-        <div 
-          key={index}
-          style={imageStyle}
-          className={`rounded-full bg-[#586B88] flex items-center justify-center ${index > 0 ? '-ml-[7px]' : ''}`}
-        >
-          <img src={lock} alt="lock" className="w-3 h-3" />
-        </div>
-      );
+      if (isUnlocked) {
+        return (
+          <img 
+            key={index}
+            src={image.src} 
+            alt={image.alt || `badge${index + 1}`} 
+            style={imageStyle}
+            className={`rounded-full object-cover ${index > 0 ? '-ml-[7px]' : ''}`}
+          />
+        );
+      } else {
+        return (
+          <div 
+            key={index}
+            style={imageStyle}
+            className={`rounded-full bg-[#586B88] flex items-center justify-center ${index > 0 ? '-ml-[7px]' : ''}`}
+          >
+            <img src={lock} alt="lock" className="w-3 h-3" />
+          </div>
+        );
+      }
     }
 
     // Default fallback

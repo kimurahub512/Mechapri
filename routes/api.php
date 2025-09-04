@@ -20,6 +20,35 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Route to retry free product NWPS processing
+Route::middleware('auth:sanctum')->post('/retry-free-product-nwps', function (Request $request) {
+    $productId = $request->input('product_id');
+    
+    if (!$productId) {
+        return response()->json(['error' => 'Product ID is required'], 400);
+    }
+    
+    $product = \App\Models\ProductBatch::find($productId);
+    if (!$product) {
+        return response()->json(['error' => 'Product not found'], 404);
+    }
+    
+    // Check if user owns this product
+    if ($product->user_id !== auth()->id()) {
+        return response()->json(['error' => 'Unauthorized'], 403);
+    }
+    
+    // Only retry if it's a free product
+    if ($product->price > 0) {
+        return response()->json(['error' => 'Only free products can be retried'], 400);
+    }
+    
+    // Dispatch the job again
+    \App\Jobs\ProcessFreeProductNWPSJob::dispatch($productId);
+    
+    return response()->json(['success' => true, 'message' => 'Retry job dispatched']);
+});
+
 // Test route to verify API routes are working
 Route::get('/test-watermark', function() {
     return response('API routes are working!');

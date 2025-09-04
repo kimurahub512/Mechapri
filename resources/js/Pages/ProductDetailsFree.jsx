@@ -6,6 +6,7 @@ import RankingSection from '@/Components/RankingSection';
 import ConfirmationModal from '@/Components/ConfirmationModal';
 import BadgeDisplay from '@/Components/BadgeDisplay';
 import PersonalInfoSection from '@/Components/PersonalInfoSection';
+import QRCodeDisplay from '@/Components/QRCodeDisplay';
 import '@/../../resources/css/shopmanagement.css';
 import photo1 from '@/assets/images/productdetails/photo1.jpg';
 import favoriteshop from '@/assets/images/favoriteshop.svg';
@@ -38,6 +39,37 @@ const ProductDetailsFree = () => {
     const isOwner = product?.is_owner || false;
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [password, setPassword] = useState('');
+    const [isUnlocked, setIsUnlocked] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [cushionRevealed, setCushionRevealed] = useState(false);
+
+    const handlePasswordSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch(route('product.verify.password'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                },
+                body: JSON.stringify({
+                    product_id: product.id,
+                    password: password
+                }),
+            });
+            const data = await response.json();
+            if (data.success) {
+                setIsUnlocked(true);
+                setPasswordError(false);
+            } else {
+                setPasswordError(true);
+            }
+        } catch (error) {
+            console.error('Error verifying password:', error);
+            setPasswordError(true);
+        }
+    };
 
     const handleDelete = async () => {
         try {
@@ -316,14 +348,36 @@ const ProductDetailsFree = () => {
                                                     <span className="text-white text-[13px]">印刷して確認しよう！</span>
                                                 </div>
                                             </div>
-                                        ) : product.display_mode === 'password' ? (
+                                        ) : product.display_mode === 'password' && !isUnlocked ? (
                                             <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
                                                 <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[8px]" />
                                                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[5px]">
                                                     <img src={lock} alt="lock" className="w-[42px] h-[42px]" />
                                                     <span className="text-[#CDD9EC] text-[15px] font-bold">パスワード</span>
                                                     <span className="text-[#CDD9EC] text-[13px]">PWを入れて印刷しよう</span>
+                                                    <form onSubmit={handlePasswordSubmit} className="mt-4 flex flex-col items-center gap-2">
+                                                        <input
+                                                            type="password"
+                                                            value={password}
+                                                            onChange={(e) => setPassword(e.target.value)}
+                                                            className={`w-[200px] px-4 py-2 rounded-md border ${passwordError ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#586B88]`}
+                                                            placeholder="パスワードを入力"
+                                                        />
+                                                        {passwordError && (
+                                                            <span className="text-red-500 text-[12px]">パスワードが正しくありません</span>
+                                                        )}
+                                                        <button
+                                                            type="submit"
+                                                            className="mt-2 px-4 py-2 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] text-white rounded-md hover:bg-opacity-90 transition-all"
+                                                        >
+                                                            確認
+                                                        </button>
+                                                    </form>
                                                 </div>
+                                            </div>
+                                        ) : product.display_mode === 'password' && isUnlocked ? (
+                                            <div className="relative h-full w-full">
+                                                <img src={product?.image || photo1} alt={product?.title || 'main'} className="h-full w-full object-cover rounded-[8px]" />
                                             </div>
                                         ) : product.display_mode === 'cushion' ? (
                                             <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
@@ -341,7 +395,7 @@ const ProductDetailsFree = () => {
                                 </div>
                             </div>
                             {/* BadgeDisplay for multiple images */}
-                            {product.images && product.images.length > 1 && (
+                            {product.images && product.images.length > 1 && (product.display_mode !== 'password' || isUnlocked) && (
                                 <div className="flex justify-center w-full mt-[16px]">
                                     <BadgeDisplay
                                         buttonClassName="px-[16px] py-[8px] gap-[4px] rounded-[10px] border-[1px] border-solid border-[#FF2AA1]"
@@ -356,6 +410,7 @@ const ProductDetailsFree = () => {
                                         width="32px"
                                         height="32px"
                                         displayMode={product.display_mode}
+                                        isUnlocked={isUnlocked}
                                         onClick={() => {
                                             router.visit(route('product.details.free.expand', {
                                                 id: product.id
@@ -390,17 +445,11 @@ const ProductDetailsFree = () => {
                                                 </div>
                                             </div>
                                             {/*12122112*/}
-                                            <div className="relative w-[358px] h-[150px] mt-[12px]">
-                                                <img
-                                                    src={product?.nwps_qr_code_url || qr}
-                                                    alt="qr"
-                                                    className="absolute top-0 left-0 w-[150px] h-[150px] "
-                                                />
-                                                <span className="absolute top-[44.5px] left-[226px] text-[#000] font-noto text-[14px] font-normal leading-[21px]">ユーザー番号</span>
-                                                <span className="absolute top-[73.5px] left-[180px] text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">
-                                                    {product?.nwps_user_code || '発行中...'}
-                                                </span>
-                                            </div>
+                                            <QRCodeDisplay 
+                                                product={product} 
+                                                isMobile={false}
+                                                className="w-[358px] h-[150px] mt-[12px]"
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -418,8 +467,6 @@ const ProductDetailsFree = () => {
                     </section>
                 </div>
             </main>
-            {/* Personal Info Footer */}
-            <PersonalInfoSection user={product.user} defaultUserImage={defaultUser} />
             {/* Mobile Main Section */}
             <div className="flex flex-col gap-[84px] pt-[74px]">
                 <section className="flex flex-col items-start gap-[24px] px-4 md:hidden w-full pt-[32px] bg-[#F6F8FA] mt-[-12px]">
@@ -561,15 +608,35 @@ const ProductDetailsFree = () => {
                                                     <span className="text-white text-[10px]">印刷して確認しよう！</span>
                                                 </div>
                                             </div>
-                                        ) : product.display_mode === 'password' ? (
+                                        ) : product.display_mode === 'password' && !isUnlocked ? (
                                             <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
                                                 <div className="absolute top-0 left-0 w-full h-full bg-[#586B88] rounded-[6px]" />
                                                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-[3px]">
                                                     <img src={lock} alt="lock" className="w-[32px] h-[32px]" />
                                                     <span className="text-[#CDD9EC] text-[12px] font-bold">パスワード</span>
                                                     <span className="text-[#CDD9EC] text-[10px]">PWを入れて印刷しよう</span>
+                                                    <form onSubmit={handlePasswordSubmit} className="mt-4 flex flex-col items-center gap-2">
+                                                        <input
+                                                            type="password"
+                                                            value={password}
+                                                            onChange={(e) => setPassword(e.target.value)}
+                                                            className={`w-[150px] px-3 py-1.5 rounded-md border ${passwordError ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#586B88] text-[12px]`}
+                                                            placeholder="パスワードを入力"
+                                                        />
+                                                        {passwordError && (
+                                                            <span className="text-red-500 text-[10px]">パスワードが正しくありません</span>
+                                                        )}
+                                                        <button
+                                                            type="submit"
+                                                            className="mt-2 px-3 py-1.5 bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3]  text-white rounded-md hover:bg-opacity-90 transition-all text-[12px]"
+                                                        >
+                                                            確認
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
+                                        ) : product.display_mode === 'password' && isUnlocked ? (
+                                            <img src={product?.image || photo1} alt={product?.title || 'main'} className="h-full w-full object-cover rounded-[6px]" />
                                         ) : product.display_mode === 'cushion' ? (
                                             <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
                                                 <div className="absolute top-0 left-0 w-full h-full bg-[#A0A5AC] rounded-[6px]" />
@@ -586,7 +653,7 @@ const ProductDetailsFree = () => {
                                 </div>
                             </div>
                             {/* BadgeDisplay for multiple images */}
-                            {product.images && product.images.length > 1 && (
+                            {product.images && product.images.length > 1 && (product.display_mode !== 'password' || isUnlocked) && (
                                 <div className="flex justify-center w-full mt-[16px]">
                                     <BadgeDisplay
                                         buttonClassName="px-[12px] py-[6px] gap-[3px] rounded-[10px] border-[1px] border-solid border-[#E862CB]"
@@ -599,6 +666,7 @@ const ProductDetailsFree = () => {
                                         width="24px"
                                         height="24px"
                                         displayMode={product.display_mode}
+                                        isUnlocked={isUnlocked}
                                         onClick={() => {
                                             router.visit(route('product.details.free.expand', {
                                                 id: product.id
@@ -633,17 +701,11 @@ const ProductDetailsFree = () => {
                                                 </div>
                                             </div>
                                             {/*12122112*/}
-                                            <div className="relative w-[240px] h-[100px] mt-[8px]">
-                                                <img
-                                                    src={product?.nwps_qr_code_url || qr}
-                                                    alt="qr"
-                                                    className="absolute top-0 left-0 w-[100px] h-[100px]"
-                                                />
-                                                <span className="absolute top-[30px] left-[150px] text-[#000] font-noto text-[12px] font-normal leading-[16px]">ユーザー番号</span>
-                                                <span className="absolute top-[50px] left-[120px] text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">
-                                                    {product?.nwps_user_code || '発行中...'}
-                                                </span>
-                                            </div>
+                                            <QRCodeDisplay 
+                                                product={product} 
+                                                isMobile={true}
+                                                className="w-[240px] h-[100px] mt-[8px]"
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -661,6 +723,8 @@ const ProductDetailsFree = () => {
                     </section>
                 </section>
             </div>
+            {/* Personal Info Footer */}
+            <PersonalInfoSection user={product.user} defaultUserImage={defaultUser} />
             <Footer />
             {/* Delete confirmation modal */}
             <ConfirmationModal

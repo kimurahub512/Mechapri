@@ -27,7 +27,6 @@ class MyContentsController extends Controller
             ->get();
             
         // Debug: Log the raw data
-        Log::info('Raw product batches:', $productBatches->toArray());
         
         $productBatches = $productBatches->map(function($batch) {
                 return [
