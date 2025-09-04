@@ -252,20 +252,17 @@ const MyShopEdit = () => {
                                 </div>
                             </div>
                             
-                            {/* Frame 215 */}
-                            <div className="flex flex-col items-start w-full" style={{ width: vwd(802), height: vwd(115.99), gap: vwd(4) }}>
-                                {/* Frame 2151 */}
+                            {/* instagram */}
+                            {/* <div className="flex flex-col items-start w-full" style={{ width: vwd(802), height: vwd(115.99), gap: vwd(4) }}>
                                 <div className="flex items-center self-stretch" style={{ gap: vwd(12), padding: vwd(25), paddingTop: vwd(25), paddingBottom: vwd(6) }}>
                                     <span style={{ ...responsiveTextD(21, 27, null, 'bold', 'noto', '#363636') }}>
                                         Instagram
                                     </span>
                                 </div>
-                                {/* Frame 2152 */}
                                 <div className="flex items-center self-stretch" style={{ width: vwd(802), gap: vwd(12), paddingBottom: vwd(8) }}>
                                     <span style={{ ...responsiveTextD(14, 14, null, 'normal', 'noto', '#ACACAC') }}>
                                         @https://instagram.com/
                                     </span>
-                                    {/* Frame 21523 */}
                                     <div className="flex flex-col items-start flex-1 w-full" style={{ height: vwd(45.99) }}>
                                         <input
                                             type="text"
@@ -277,22 +274,19 @@ const MyShopEdit = () => {
                                         />
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             
-                            {/* Frame 216 */}
-                            <div className="flex flex-col items-start w-full" style={{ width: vwd(802), height: vwd(115.99), gap: vwd(4) }}>
-                                {/* Frame 2161 */}
+                            {/* YouTube */}
+                            {/* <div className="flex flex-col items-start w-full" style={{ width: vwd(802), height: vwd(115.99), gap: vwd(4) }}>
                                 <div className="flex items-center self-stretch" style={{ gap: vwd(12), padding: vwd(25), paddingTop: vwd(25), paddingBottom: vwd(6) }}>
                                     <span style={{ ...responsiveTextD(21, 27, null, 'bold', 'noto', '#363636') }}>
                                         YouTube
                                     </span>
                                 </div>
-                                {/* Frame 2162 */}
                                 <div className="flex items-center self-stretch" style={{ width: vwd(802), gap: vwd(12), paddingBottom: vwd(8) }}>
                                     <span style={{ ...responsiveTextD(14, 14, null, 'normal', 'noto', '#ACACAC') }}>
                                         @https://youtube.com/
                                     </span>
-                                    {/* Frame 21623 */}
                                     <div className="flex flex-col items-start flex-1 w-full" style={{ height: vwd(45.99) }}>
                                         <input
                                             type="text"
@@ -304,7 +298,7 @@ const MyShopEdit = () => {
                                         />
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             
                             {/* Frame 217 */}
                             <div className="w-full">
@@ -445,20 +439,17 @@ const MyShopEdit = () => {
                             </div>
                         </div>
                         
-                        {/* Frame 215 */}
-                        <div className="flex flex-col items-start w-full" style={{ gap: vw(4) }}>
-                            {/* Frame 2151 */}
+                        {/* instagram */}
+                        {/* <div className="flex flex-col items-start w-full" style={{ gap: vw(4) }}>
                             <div className="flex items-center self-stretch" style={{ gap: vw(12), paddingTop: vw(12), paddingBottom: vw(6) }}>
                                 <span style={{ ...responsiveText(14, 14, null, 'bold', 'noto', '#363636') }}>
                                     Instagram
                                 </span>
                             </div>
-                            {/* Frame 2152 */}
                             <div className="flex items-center w-full" style={{ width: vw(311), gap: vw(12), paddingBottom: vw(8) }}>
                                 <span style={{ ...responsiveText(14, 14, null, 'normal', 'noto', '#ACACAC') }}>
                                     @https://instagram.com/
                                 </span>
-                                {/* Frame 21523 */}
                                 <div className="flex flex-col items-start flex-1 w-full">
                                     <input
                                         type="text"
@@ -470,22 +461,19 @@ const MyShopEdit = () => {
                                     />
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         
-                        {/* Frame 216 */}
-                        <div className="flex flex-col items-start w-full" style={{ gap: vw(4) }}>
-                            {/* Frame 2161 */}
+                        {/* YouTube */}
+                        {/* <div className="flex flex-col items-start w-full" style={{ gap: vw(4) }}>
                             <div className="flex items-center self-stretch" style={{ gap: vw(12), paddingTop: vw(12), paddingBottom: vw(6) }}>
                                 <span style={{ ...responsiveText(14, 14, null, 'bold', 'noto', '#363636') }}>
                                     YouTube
                                 </span>
                             </div>
-                            {/* Frame 2162 */}
                             <div className="flex items-center w-full" style={{ width: vw(311), gap: vw(12), paddingBottom: vw(8) }}>
                                 <span style={{ ...responsiveText(14, 14, null, 'normal', 'noto', '#ACACAC') }}>
                                     @https://youtube.com/
                                 </span>
-                                {/* Frame 21623 */}
                                 <div className="flex flex-col items-start flex-1 w-full">
                                     <input
                                         type="text"
@@ -497,7 +485,7 @@ const MyShopEdit = () => {
                                     />
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         
                         {/* Frame 217 */}
                         <div className="w-full" style={{ paddingLeft: vw(34), paddingRight: vw(34) }}>

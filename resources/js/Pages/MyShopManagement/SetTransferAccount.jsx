@@ -114,9 +114,6 @@ const SetTransferAccount = ({ bankAccount = null }) => {
                                     className="text-[#363636] font-['Noto_Sans_JP'] text-[13px] font-normal leading-[24px] bg-transparent border-none outline-none flex-1"
                                     placeholder="銀行名を入力"
                                 />
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M6.5752 1.77637L16.2985 11.4997L6.5752 21.2229" stroke="#363636" strokeWidth="2.1" />
-                                </svg>
                             </div>
                         </div>
                         <div className="flex flex-col items-start gap-[4px] w-full">
@@ -218,9 +215,6 @@ const SetTransferAccount = ({ bankAccount = null }) => {
                                         className="text-[#363636] font-['Noto_Sans_JP'] text-[18px] font-normal leading-[24px] bg-transparent border-none outline-none flex-1"
                                         placeholder="銀行名を入力"
                                     />
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M6.5752 1.77637L16.2985 11.4997L6.5752 21.2229" stroke="#363636" strokeWidth="2.1" />
-                                    </svg>
                                 </div>
                             </div>
                             <div className="flex flex-col items-start gap-[4px] w-full">

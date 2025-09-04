@@ -110,7 +110,20 @@ const ShopTop = () => {
 
                             {auth?.user && auth.user.id !== shopData?.id ? (
                                 <>                                    
-                                    <button
+                                    <span style={{ ...responsiveText(16, 16, null, 'normal', 'noto', '#000') }}>
+                                        {shopData?.follower_count || 0}人が登録
+                                    </span>
+                                    <FavoriteShopButton
+                                        shopUserId={shopData?.id}
+                                        initialIsFavorited={isFavorited}
+                                        isMobile={true}
+                                        refreshOnToggle={true}
+                                        disable={auth?.user && auth.user.id === shopData?.id}
+                                    />      
+                                </>
+                            ) : (
+                                <>
+                                <button
                                         onClick={handleShare}
                                         className="flex items-center gap-[4px] pr-[12px] cursor-pointer hover:opacity-80 transition-opacity"
                                     >
@@ -123,19 +136,7 @@ const ShopTop = () => {
                                         className="flex items-center justify-center w-[144px] h-[34px] rounded-[5px] border-[1px] border-[#E862CB]">
                                         <span className="text-[#E862CB] font-noto text-[12px] font-bold leading-[18px]">ショップ情報編集</span>
                                     </button>
-                                </>
-                            ) : (
-                                <>
-                                   <span style={{ ...responsiveText(16, 16, null, 'normal', 'noto', '#000') }}>
-                                        {shopData?.follower_count || 0}人が登録
-                                    </span>
-                                    <FavoriteShopButton
-                                        shopUserId={shopData?.id}
-                                        initialIsFavorited={isFavorited}
-                                        isMobile={true}
-                                        refreshOnToggle={true}
-                                        disable={auth?.user && auth.user.id === shopData?.id}
-                                    />         
+                                      
                                 </>
                             )}
                         </div>

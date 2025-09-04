@@ -138,19 +138,19 @@ export default function Finance() {
                                         販売者
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        ユーザータイプ
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        総収益
+                                        総販売売上
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         手数料 (15%)
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        総引き出し
+                                    総支払い
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        利用可能残高
+                                    現在収益残高
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        前月末最終残高
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         登録日
@@ -170,9 +170,6 @@ export default function Finance() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {seller.user_type}
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             {formatCurrency(seller.total_earned)}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -188,21 +185,38 @@ export default function Finance() {
                                                 {formatCurrency(seller.available_withdrawal)}
                                             </span>
                                         </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {formatCurrency(seller.previous_month_end_balance || 0)}
+                                        </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {new Date(seller.registered).toLocaleDateString('ja-JP')}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <button
-                                                onClick={() => openWithdrawalModal(seller)}
-                                                disabled={seller.available_withdrawal <= 0}
-                                                className={`px-3 py-1 rounded-md text-sm font-medium ${
-                                                    seller.available_withdrawal > 0
-                                                        ? 'bg-blue-600 text-white hover:bg-blue-700'
-                                                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                                }`}
-                                            >
-                                                引き出し記録
-                                            </button>
+                                            <div className="flex space-x-2">
+                                                <button
+                                                    onClick={() => openWithdrawalModal(seller)}
+                                                    disabled={seller.available_withdrawal <= 0}
+                                                    className={`px-3 py-1 rounded-md text-sm font-medium ${
+                                                        seller.available_withdrawal > 0
+                                                            ? 'bg-blue-600 text-white hover:bg-blue-700'
+                                                            : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                                    }`}
+                                                >
+                                                    引き出し記録
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        if (seller.bank_account) {
+                                                            alert(`振込口座情報:\n販売者: ${seller.name}\n銀行: ${seller.bank_account.bank_name}\n口座種別: ${seller.bank_account.account_type}\n口座番号: ${seller.bank_account.account_number}\n口座名義: ${seller.bank_account.account_holder_sei} ${seller.bank_account.account_holder_mei}`);
+                                                        } else {
+                                                            alert(`${seller.name} の振込口座情報は未設定です。`);
+                                                        }
+                                                    }}
+                                                    className="px-3 py-1 rounded-md text-sm font-medium bg-gray-600 text-white hover:bg-gray-700"
+                                                >
+                                                    振込口座確認
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
@@ -227,7 +241,7 @@ export default function Finance() {
                                         金額
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        引き出し日
+                                    支払い日
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         記録者

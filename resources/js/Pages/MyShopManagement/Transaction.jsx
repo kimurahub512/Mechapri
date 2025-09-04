@@ -8,8 +8,13 @@ import list_unordered from '@/assets/images/list_unordered.png';
 import money_out from '@/assets/images/money_out.png';
 import money_hand from '@/assets/images/money_hand_filled.png';
 import three_money from '@/assets/images/three_money.png';
+import money_out_m from '@/assets/images/money_out_m.png';
+import money_hand_m from '@/assets/images/money_hand_filled_m.png';
+import three_money_m from '@/assets/images/three_money_m.png';
 
 const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, paymentThreshold = 5000 }) => {
+    // Debug: Log the data to see what we're receiving
+    console.log('Transaction component data:', { currentBalance, monthlyData, bankAccount });
     const [activeFilter, setActiveFilter] = useState('all');
     const [selectedPeriod, setSelectedPeriod] = useState('all');
     const [displayedMonthCount, setDisplayedMonthCount] = useState(3);
@@ -74,16 +79,16 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     <span className="text-[#272B2B] font-medium text-[14px] leading-[21px] font-['Noto Sans JP']">{bankAccount.account_type} {bankAccount.account_number}</span>
                                     <span className="text-[#272B2B] font-medium text-[14px] leading-[21px] font-['Noto Sans JP']">{bankAccount.bank_name}</span>
                                 </div>
-                                {/* 振込先口座の指定 */}
-                                <a href='/myshop/settransferaccount' className="text-[#FF2AA1] font-medium text-[14px] leading-[21px] font-['Noto Sans JP'] cursor-pointer">振込先口座の指定</a>
+                                {/* 振込口座情報確認ボタン - NEW FEATURE */}
+                                <div className="flex items-center gap-[20px]">
+                                    
+                                    <a href='/myshop/settransferaccount' className="text-[#FF2AA1] font-medium text-[14px] leading-[21px] font-['Noto Sans JP'] cursor-pointer">振込先口座の指定</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    {/* Frame 12 (moved inside Frame 1) */}
                     <section className="hidden md:flex flex-col items-center gap-[8px] self-stretch">
-                        {/* 121: Filter Row */}
                         <div className="flex justify-center items-center gap-[10px] self-stretch">
-                            {/* 1211: Filter Buttons */}
                             <div className="flex px-[12px] py-[8px] justify-center items-start gap-[20px] rounded-[66px] bg-[#F6F6F6]">
                                 {/* 全て (active) */}
                                 <div 
@@ -148,7 +153,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     {/* 12212: 最終残高 */}
                                     {(activeFilter === 'all') && (
                                         <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
-                                            <div className="flex items-start gap-[30px]">
+                                            <div className="flex items-center justify-center gap-[30px]">
                                                 <img src={three_money} alt="最終残高" className="w-[35.088px] h-[40px]" />
                                                 <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">最終残高</span>
                                             </div>
@@ -157,16 +162,13 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                                     <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.final_balance)}</span>
                                                     <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                                 </span>
-                                                <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                </svg>
                                             </div>
                                         </div>
                                     )}
                                     {/* 12213: 販売売上 */}
                                     {(activeFilter === 'all' || activeFilter === 'sales') && (
                                         <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
-                                            <div className="flex items-start gap-[30px]">
+                                            <div className="flex items-center justify-center gap-[30px]">
                                                 <img src={money_hand} alt="販売売上" className="w-[35.088px] h-[40px]" />
                                                 <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">販売売上</span>
                                             </div>
@@ -175,16 +177,13 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                                     <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.sales_revenue)}</span>
                                                     <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                                 </span>
-                                                <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                </svg>
                                             </div>
                                         </div>
                                     )}
                                     {/* 12214: 販売手数料 */}
                                     {(activeFilter === 'all') && (
                                         <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
-                                            <div className="flex items-start gap-[30px]">
+                                            <div className="flex items-center justify-center gap-[30px]">
                                                 <img src={money_out} alt="販売手数料" className="w-[35.088px] h-[40px]" />
                                                 <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">販売手数料</span>
                                             </div>
@@ -193,16 +192,13 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                                     <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-{formatCurrency(monthData.commission)}</span>
                                                     <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                                 </span>
-                                                <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                </svg>
                                             </div>
                                         </div>
                                     )}
                                     {/* 12215: 出金 */}
                                     {(activeFilter === 'all' || activeFilter === 'withdrawal') && (
                                         <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
-                                            <div className="flex items-start gap-[30px]">
+                                            <div className="flex items-center justify-center gap-[30px]">
                                                 <img src={money_out} alt="出金" className="w-[35.088px] h-[40px]" />
                                                 <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">出金</span>
                                             </div>
@@ -211,16 +207,13 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                                     <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-{formatCurrency(monthData.withdrawal)}</span>
                                                     <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                                 </span>
-                                                <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                </svg>
                                             </div>
                                         </div>
                                     )}
                                     {/* 12216: 開始残高 */}
                                     {(activeFilter === 'all') && (
                                         <div className="flex w-[834px] h-[98px] px-[16px] pt-[34px] pb-[24px] items-start gap-[20.33px] border-b border-[#E9E9E9]">
-                                            <div className="flex items-start gap-[30px]">
+                                            <div className="flex items-center justify-center gap-[30px]">
                                                 <img src={three_money} alt="開始残高" className="w-[35.088px] h-[40px]" />
                                                 <span className="text-[#363636] font-medium text-[20px] leading-[23px] font-['Noto Sans JP']">開始残高</span>
                                             </div>
@@ -229,9 +222,6 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                                     <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.starting_balance)}</span>
                                                     <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                                 </span>
-                                                <svg className="w-[20px] h-[24px] text-black" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                </svg>
                                             </div>
                                         </div>
                                     )}
@@ -272,12 +262,16 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                             <div className="text-[#272B2B] text-center font-normal text-[12px] leading-[19.5px] font-['Noto Sans JP'] mt-1">合計金額が{paymentThreshold}円以上（お支払い基準額）の場合に、毎月支払いが行われます。</div>
                         </div>
                         {/* Frame 1131 */}
-                        <div className="flex flex-col items-center justify-center gap-[10px] border-t border-[#E9E9E9] px-[92px] py-2 w-full">
+                        <div className="flex flex-col items-center justify-center gap-[10px] border-t border-[#E9E9E9] px-[20px] py-2 w-full">
                             <div className="flex items-start gap-[10px]">
                                 <span className="text-[#272B2B] font-medium text-[14px] leading-[21px] font-['Noto Sans JP'] whitespace-nowrap">{bankAccount.account_type} {bankAccount.account_number}</span>
                                 <span className="text-[#272B2B] font-medium text-[14px] leading-[21px] font-['Noto Sans JP'] whitespace-nowrap">{bankAccount.bank_name}</span>
                             </div>
-                            <a href='/myshop/settransferaccount' className="text-[#FF2AA1] font-medium text-[14px] leading-[21px] font-['Noto Sans JP'] cursor-pointer">振込先口座の指定</a>
+                            {/* 振込口座情報確認ボタン */}
+                            <div className="flex flex-col items-center gap-[10px] w-full">
+                                
+                                <a href='/myshop/settransferaccount' className="text-[#FF2AA1] font-medium text-[14px] leading-[21px] font-['Noto Sans JP'] cursor-pointer">振込先口座の指定</a>
+                            </div>
                         </div>
                     </div>
                     {/* Frame 12 (mobile only, now inside Frame 1) */}
@@ -351,7 +345,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     {(activeFilter === 'all') && (
                                         <div className="flex w-full h-[60px] px-4 py-[10px] justify-between items-start border-b border-[#E9E9E9]">
                                             <div className="flex items-start justify-center gap-2">
-                                                <img src={three_money} alt="最終残高" className="w-[35px] h-[30px]" />
+                                                <img src={three_money_m} alt="最終残高" className="w-[35px] h-[30px]" />
                                                 <span className="text-[#363636] font-normal text-[16px] leading-[24px] pt-[6px] pb-[12px] font-['Hiragino Sans'] whitespace-nowrap">最終残高</span>
                                             </div>
                                             <div className="flex items-center ml-auto">
@@ -359,17 +353,14 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                                     <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.final_balance)}</span>
                                                     <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                                 </span>
-                                                <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                </svg>
                                             </div>
                                         </div>
-                                    )}
+                                    )}                                    
                                     {/* 12213: 販売売上 */}
                                     {(activeFilter === 'all' || activeFilter === 'sales') && (
                                         <div className="flex w-full h-[60px] px-4 py-[10px] justify-between items-start border-b border-[#E9E9E9]">
                                             <div className="flex items-start justify-center gap-2">
-                                                <img src={money_hand} alt="販売売上" className="w-[35px] h-[30px]" />
+                                                <img src={money_hand_m} alt="販売売上" className="w-[35px] h-[30px]" />
                                                 <span className="text-[#363636] font-normal text-[16px] leading-[24px] pt-[6px] pb-[12px] font-['Hiragino Sans'] whitespace-nowrap">販売売上</span>
                                             </div>
                                             <div className="flex items-center ml-auto">
@@ -377,9 +368,6 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                                     <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.sales_revenue)}</span>
                                                     <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                                 </span>
-                                                <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                </svg>
                                             </div>
                                         </div>
                                     )}
@@ -387,7 +375,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     {(activeFilter === 'all') && (
                                         <div className="flex w-full h-[60px] px-4 py-[10px] justify-between items-start border-b border-[#E9E9E9]">
                                             <div className="flex items-start justify-center gap-2">
-                                                <img src={money_out} alt="販売手数料" className="w-[35px] h-[30px]" />
+                                                <img src={money_out_m} alt="販売手数料" className="w-[35px] h-[30px]" />
                                                 <span className="text-[#363636] font-normal text-[16px] leading-[24px] pt-[6px] pb-[12px] font-['Hiragino Sans'] whitespace-nowrap">販売手数料</span>
                                             </div>
                                             <div className="flex items-center ml-auto">
@@ -395,9 +383,6 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                                     <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-{formatCurrency(monthData.commission)}</span>
                                                     <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                                 </span>
-                                                <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                </svg>
                                             </div>
                                         </div>
                                     )}
@@ -405,7 +390,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     {(activeFilter === 'all' || activeFilter === 'withdrawal') && (
                                         <div className="flex w-full h-[60px] px-4 py-[10px] justify-between items-start border-b border-[#E9E9E9]">
                                             <div className="flex items-start justify-center gap-2">
-                                                <img src={money_out} alt="出金" className="w-[35px] h-[30px]" />
+                                                <img src={money_out_m} alt="出金" className="w-[35px] h-[30px]" />
                                                 <span className="text-[#363636] font-normal text-[16px] leading-[24px] pt-[6px] pb-[12px] font-['Hiragino Sans'] whitespace-nowrap">出金</span>
                                             </div>
                                             <div className="flex items-center ml-auto">
@@ -413,9 +398,6 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                                     <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">-{formatCurrency(monthData.withdrawal)}</span>
                                                     <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                                 </span>
-                                                <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                </svg>
                                             </div>
                                         </div>
                                     )}
@@ -423,7 +405,7 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                     {(activeFilter === 'all') && (
                                         <div className="flex w-full h-[60px] px-4 py-[10px] justify-between items-start border-b border-[#E9E9E9]">
                                             <div className="flex items-start justify-center gap-2">
-                                                <img src={three_money} alt="開始残高" className="w-[35px] h-[30px]" />
+                                                <img src={three_money_m} alt="開始残高" className="w-[35px] h-[30px]" />
                                                 <span className="text-[#363636] font-normal text-[16px] leading-[24px] pt-[6px] pb-[12px] font-['Hiragino Sans'] whitespace-nowrap">開始残高</span>
                                             </div>
                                             <div className="flex items-center ml-auto">
@@ -431,9 +413,6 @@ const Transaction = ({ currentBalance = 0, monthlyData = [], bankAccount = {}, p
                                                     <span className="h-[20px] flex items-center justify-center text-[#363636] font-bold text-[18px] leading-[40px] font-noto">{formatCurrency(monthData.starting_balance)}</span>
                                                     <span className="text-[#363636] font-bold text-[12px] leading-[32px] font-noto ml-[1px]">円</span>
                                                 </span>
-                                                <svg className="w-[20px] h-[24px] text-[#2D2D2D] ml-1" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M7 4L15 12L7 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                </svg>
                                             </div>
                                         </div>
                                     )}

@@ -95,6 +95,7 @@ class TransactionController extends Controller
                 'commission' => (int)$monthlyCommission,
                 'withdrawal' => (int)$monthlyWithdrawal,
                 'starting_balance' => (int)$startingBalance,
+                'previous_month_end_balance' => (int)$startingBalance, // 前月末最終残高
             ];
         }
         
@@ -106,6 +107,17 @@ class TransactionController extends Controller
                 'account_type' => '',
                 'account_number' => '未設定',
                 'bank_name' => '',
+                'account_holder_sei' => '',
+                'account_holder_mei' => '',
+            ];
+        } else {
+            // Ensure all fields are available
+            $bankAccount = [
+                'account_type' => $bankAccount->account_type ?? '',
+                'account_number' => $bankAccount->account_number ?? '未設定',
+                'bank_name' => $bankAccount->bank_name ?? '',
+                'account_holder_sei' => $bankAccount->account_holder_sei ?? '',
+                'account_holder_mei' => $bankAccount->account_holder_mei ?? '',
             ];
         }
         

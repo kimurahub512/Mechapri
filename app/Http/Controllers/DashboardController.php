@@ -11,6 +11,7 @@ use App\Models\Withdrawal;
 use App\Services\NWPSService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Inertia\Inertia;
@@ -349,7 +350,13 @@ class DashboardController extends Controller
             });
         })->get();
         
-        $sellers = $sellers->map(function ($seller) {
+        // Also get users who have bank accounts but haven't sold anything yet
+        $usersWithBankAccounts = User::whereHas('bankAccount')->get();
+        
+        // Merge the two collections and remove duplicates
+        $allSellers = $sellers->merge($usersWithBankAccounts)->unique('id');
+        
+        $sellers = $allSellers->map(function ($seller) {
             // Calculate total earned from successful payments for products sold by this user
             $totalEarned = Payment::where('status', 'succeeded')
                 ->whereHas('productBatch', function ($query) use ($seller) {
@@ -368,7 +375,40 @@ class DashboardController extends Controller
             $remainingBalance = $totalEarned - $commission;
 
             // Calculate available withdrawal (remaining balance minus already withdrawn)
-            $availableWithdrawal = $remainingBalance - $totalWithdrawn;
+            // Should never be negative (site doesn't lend money)
+            $availableWithdrawal = max(0, $remainingBalance - $totalWithdrawn);
+
+            // Calculate previous month end balance (前月末最終残高)
+            $previousMonthEnd = Carbon::now()->subMonth()->endOfMonth();
+            $previousMonthEarned = Payment::where('status', 'succeeded')
+                ->whereHas('productBatch', function ($query) use ($seller) {
+                    $query->where('user_id', $seller->id);
+                })
+                ->where('paid_at', '<=', $previousMonthEnd)
+                ->sum('amount');
+            
+            $previousMonthCommission = $previousMonthEarned * 0.15;
+            $previousMonthWithdrawn = Withdrawal::where('seller_id', $seller->id)
+                ->where('withdrawal_date', '<=', $previousMonthEnd)
+                ->sum('amount');
+            
+            // Previous month end balance should never be negative (site doesn't lend money)
+            $previousMonthEndBalance = max(0, $previousMonthEarned - $previousMonthCommission - $previousMonthWithdrawn);
+
+            // Get bank account information
+            $bankAccount = $seller->bankAccount()->first();
+            $bankAccountData = null;
+            
+            
+            if ($bankAccount) {
+                $bankAccountData = [
+                    'bank_name' => $bankAccount->bank_name ?? '',
+                    'account_type' => $bankAccount->account_type ?? '',
+                    'account_number' => $bankAccount->account_number ?? '',
+                    'account_holder_sei' => $bankAccount->account_holder_sei ?? '',
+                    'account_holder_mei' => $bankAccount->account_holder_mei ?? '',
+                ];
+            }
 
             return [
                 'id' => $seller->id,
@@ -380,6 +420,8 @@ class DashboardController extends Controller
                 'total_withdrawn' => $totalWithdrawn,
                 'remaining_balance' => $remainingBalance,
                 'available_withdrawal' => $availableWithdrawal,
+                'previous_month_end_balance' => $previousMonthEndBalance, // 前月末最終残高
+                'bank_account' => $bankAccountData,
                 'registered' => $seller->created_at->format('Y-m-d H:i:s'),
             ];
         });

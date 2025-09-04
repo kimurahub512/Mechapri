@@ -43,11 +43,11 @@ const RankingSection = ({ topBuyers, isMobile = false }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex flex-col items-end">
+                                {/* <div className="flex flex-col items-end">
                                     <span className="text-[#000] font-noto text-[14px] font-bold leading-[18px]">
                                         PT {buyer.pt_score || 0}
                                     </span>
-                                </div>
+                                </div> */}
                             </div>
                         ))}
                     </div>
@@ -92,11 +92,11 @@ const RankingSection = ({ topBuyers, isMobile = false }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex flex-col items-end">
+                            {/* <div className="flex flex-col items-end">
                                 <span className="text-[#000] font-noto text-[18px] font-bold leading-[24px]">
                                     PT {buyer.pt_score || 0}
                                 </span>
-                            </div>
+                            </div> */}
                         </div>
                     ))}
                 </div>
