@@ -31,7 +31,7 @@ const QuantityControl = ({
           type="number"
           value={quantity}
           onChange={(e) => handleQuantityChange(parseInt(e.target.value) || 1)}
-          className="w-[40px] text-[#222] text-center font-['Red Hat Display'] font-bold text-[20px] leading-[23px] border-none outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          className="w-[44px] text-[#222] text-center font-['Red Hat Display'] font-bold text-[16px] leading-[23px] border-none outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         />
         <span className="text-[#222] font-noto font-bold text-[14px] leading-[14px]">{unit}</span>
       </div>
