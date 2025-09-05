@@ -36,12 +36,13 @@ const FavoriteShops = ({ favoriteShops }) => {
                                 />
                             </div>
                         </div>
+                        {console.log('shop', shop)}
                         <div className="flex flex-col justify-center items-start flex-1">
                             <span className={`text-[#000] font-bold ${isMobile ? 'text-[16px] leading-[20px]' : 'text-[21px] leading-[32px]'} font-noto`}>
-                                {shop.name}
+                                {shop.shop_title}
                             </span>
                             <span className={`self-stretch text-[#000] font-normal ${isMobile ? 'text-[12px] leading-[18px]' : 'text-[14px] leading-[21px]'} font-noto mt-[8px]`}>
-                                {shop.shop_description || `${shop.name}'s shop`}
+                                {shop.shop_description || ``}
                             </span>
                             <div className="md:hidden flex h-[48px] justify-end items-center mt-4">
                                 <FavoriteShopButton

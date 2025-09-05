@@ -1,6 +1,6 @@
 import React from 'react';
 import { router } from '@inertiajs/react';
-import girl from '@/assets/images/favoriteshops/girl.svg';
+import defaultUser from '@/assets/images/default-user.png';
 import question from '@/assets/images/question_cloud.svg';
 import lock from '@/assets/images/lock.svg';
 import bubble from '@/assets/images/bubble.svg';
@@ -281,7 +281,7 @@ const ProductCard = ({ product, isMobile = false, haveAccount = false, rowCnt = 
 							{haveAccount && (
 								<div className="flex flex-row items-start gap-[5px] mb-[-8px]">
 									<img 
-										src={product.user?.image ? (product.user.image.startsWith('http') ? product.user.image : product.user.image.startsWith('/storage/') ? product.user.image : `/storage/${product.user.image}`) : girl} 
+										src={product.user?.image ? (product.user.image.startsWith('http') ? product.user.image : product.user.image.startsWith('/storage/') ? product.user.image : `/storage/${product.user.image}`) : defaultUser} 
 										alt="user" 
 										className="w-[24px] h-[24px] rounded-full object-cover" 
 									/>

@@ -57,7 +57,7 @@ const Header = ({ authButton }) => {
                 )}
               </a>
               <li className='inline-block'>
-                <a href='/myshop/registerproduct' className='flex flex-row items-center rounded bg-gradient-to-r from-[#FF8D4E] to-[#EA2CE2] justify-center' style={{ ...responsiveMetricD(120, 32), paddingLeft: vwd(12), paddingRight: vwd(12) }}>
+                <a href='/myshop/registerproduct' className='flex flex-row items-center rounded bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] justify-center' style={{ ...responsiveMetricD(120, 32), paddingLeft: vwd(12), paddingRight: vwd(12) }}>
                   <img src={arrow} alt="add" className='mr-2.5' style={{ ...responsiveMetricD(16, 16) }} />
                   <span className='text-center block w-full' style={{ ...responsiveTextD(13, 19.5, null, 'black', 'noto', '#FFF') }}>
                     写真を出品

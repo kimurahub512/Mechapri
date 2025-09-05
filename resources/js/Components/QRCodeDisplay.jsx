@@ -24,20 +24,36 @@ const QRCodeDisplay = ({
         setRetryCount(prev => prev + 1);
         
         try {
-            // Trigger retry by dispatching the appropriate job for any product
-            await fetch('/api/retry-free-product-nwps', {
+            console.log('Attempting retry for product:', product.id);
+            
+            // Use fetch with proper headers like other working API calls
+            const response = await fetch('/api/retry-free-product-nwps', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
                 },
+                credentials: 'same-origin', // Include cookies for session authentication
                 body: JSON.stringify({ product_id: product.id })
             });
+            
+            console.log('Retry response status:', response.status);
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Retry failed with status:', response.status, errorData);
+                throw new Error(`HTTP ${response.status}: ${errorData.error || 'Unknown error'}`);
+            }
+            
+            const data = await response.json();
+            console.log('Retry successful:', data);
             
             // Refresh the page after a short delay to get updated data
             setTimeout(() => {
                 router.reload({ only: ['product'] });
             }, 2000);
+            
         } catch (error) {
             console.error('Retry failed:', error);
         } finally {

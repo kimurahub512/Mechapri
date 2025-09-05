@@ -1036,7 +1036,7 @@ const RegisterProduct = () => {
                             {/* 12351: Button */}
                             <button
                                 className="flex flex-col justify-center items-center"
-                                style={{ ...responsiveMetricD(802, 50), padding: vwd(15), borderRadius: vwd(8), background: 'linear-gradient(to left, #AB31D3, #FF2AA1)', boxShadow: '0 4px 8px 0 rgba(255,42,161,0.20)' }}
+                                style={{ ...responsiveMetricD(802, 50), padding: vwd(15), borderRadius: vwd(8), background: 'linear-gradient(to right, #AB31D3, #FF2AA1)', boxShadow: '0 4px 8px 0 rgba(255,42,161,0.20)' }}
                                 type="button"
                                 onClick={handleSubmit}
                                 disabled={isSubmitting}
@@ -1588,7 +1588,7 @@ const RegisterProduct = () => {
                                 <div className="flex flex-col items-start self-stretch" style={{ gap: vw(10), ...responsiveMetric('auto', 104.8), paddingTop: vw(32.8) }}>
                                     {/* 12351: Button */}
                                                                 <button
-                                className="relative z-[10] pointer-events-auto flex flex-col justify-center items-center bg-gradient-to-l from-[#AB31D3] to-[#FF2AA1] shadow-[0_4px_8px_0_rgba(255,42,161,0.20)]"
+                                className="relative z-[10] pointer-events-auto flex flex-col justify-center items-center bg-gradient-to-r from-[#AB31D3] to-[#FF2AA1] shadow-[0_4px_8px_0_rgba(255,42,161,0.20)]"
                                 type="button"
                                 onClick={handleSubmit}
                                 onTouchStart={handleSubmit}
