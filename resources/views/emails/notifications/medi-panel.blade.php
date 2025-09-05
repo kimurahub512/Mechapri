@@ -96,7 +96,7 @@
     
     <div class="footer">
         <p>このメールは自動送信されています。返信はできません。</p>
-        <p>通知設定は<a href="{{ url('/account-setting') }}">アカウント設定</a>から変更できます。</p>
+        <p>通知設定は<a href="{{ url('/accountsetting') }}">アカウント設定</a>から変更できます。</p>
     </div>
 </body>
 </html>

@@ -38,7 +38,7 @@ class ShopController extends Controller
             'xlink' => 'nullable|string|max:255',
             'instagram' => 'nullable|string|max:255',
             'youtube' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB max
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:25600', // 25MB max
         ]);
         
         // Handle image upload

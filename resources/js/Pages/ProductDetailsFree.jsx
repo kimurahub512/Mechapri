@@ -100,10 +100,16 @@ const ProductDetailsFree = () => {
 
     const handleShare = async () => {
         try {
+            // Generate the correct share URL for others to view this product
+            const ownerUserId = product?.user?.id ?? product?.user_id;
+            const shareUrl = ownerUserId 
+                ? `${window.location.origin}/user/${ownerUserId}/purchasedproduct/${product.id}`
+                : window.location.href;
+            
             const shareData = {
                 title: product?.title || 'Mechapuri',
                 text: product?.description || '',
-                url: window.location.href,
+                url: shareUrl,
             };
             if (navigator.share) {
                 await navigator.share(shareData);

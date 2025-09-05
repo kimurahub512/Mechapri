@@ -103,12 +103,12 @@
             </div>
         </div>
         
-        <a href="{{ url('/purchase-history') }}" class="button">購入履歴を確認</a>
+        <a href="{{ url('/purchasehistory') }}" class="button text-white">購入履歴を確認</a>
     </div>
     
     <div class="footer">
         <p>このメールは自動送信されています。返信はできません。</p>
-        <p>通知設定は<a href="{{ url('/account-setting') }}">アカウント設定</a>から変更できます。</p>
+        <p>通知設定は<a href="{{ url('/accountsetting') }}">アカウント設定</a>から変更できます。</p>
     </div>
 </body>
 </html>

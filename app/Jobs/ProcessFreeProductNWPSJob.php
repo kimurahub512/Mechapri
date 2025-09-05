@@ -40,17 +40,18 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
             // 1) Guest login
             // Expire should match sales_deadline for free products
             $days = (int) config('nwps.guest_token_days', 30);
-            
+            Log::info('Starting free product NWPS login');
             $login = $nwps->guestLogin([
                 'expire' => $days,
                 'model' => php_uname('n') ?: 'Server',
             ], $days);
-          
+            Log::info('Free product NWPS login response: ' . json_encode($login));
+            
             // Check for NWPS maintenance mode or other errors
-            if (isset($login['result_code']) && $login['result_code'] === 'M001') {
-                // Mark product as failed and schedule retry
-                $product->update(['nwps_upload_status' => 'failed']);
-                $this->scheduleRetry();
+            if (isset($login['_http_status']) && $login['_http_status'] === 503) {
+                Log::info('NWPS service is in maintenance mode (503)');
+                // Mark product as maintenance mode - don't schedule retry
+                $product->update(['nwps_upload_status' => 'maintenance']);
                 return;
             }
             
@@ -63,13 +64,25 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
             // 2) Register image(s) by URL (filesfromurl/image) - NO printing_limit for free products
             $fileId = null;
             foreach ($product->files as $index => $file) {
-                $data = [
-                    'url' => $file->url,
-                    'filename' => $file->original_name,
-                ];
+                Log::info('Starting free product NWPS file registration');
+                $fileUrl = $file->url;
+                $fileName = $file->original_name ?? basename($file->file_path);
                 
+                // TEMPORARY: For testing, use a public image URL to verify NWPS API works
+                // Remove this in production
+                if (str_contains($fileUrl, '172.16.5.41') || str_contains($fileUrl, 'localhost')) {
+                    Log::warning('Using local URL that may not be accessible to NWPS, using test image instead');
+                    $fileUrl = 'https://mechapri.com/storage/nwps/qrcodes/nwps_qr_68ba5da223d5f.jpg'; // Public test image
+                    $fileName = 'nwps_qr_68ba5da223d5f.jpg';
+                }
+                $data = [
+                    'file_url' => $fileUrl,
+                    'file_name' => $fileName,
+                ];
+                Log::info('Free product NWPS file registration data: ' . json_encode($data));
                 try {
                     $registered = $nwps->registerFileFromUrl($token, $data);
+                    Log::info('Free product NWPS file registration response: ' . json_encode($registered));
                     $fileId = $registered['file_id'] ?? $fileId;
                 } catch (\Exception $e) {
                     throw $e;
@@ -77,6 +90,7 @@ class ProcessFreeProductNWPSJob implements ShouldQueue
             }
 
             if (!$fileId) {
+                Log::info('No file ID received from NWPS registration for free product');
                 return;
             }
 

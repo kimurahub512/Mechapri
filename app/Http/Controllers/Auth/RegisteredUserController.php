@@ -40,6 +40,12 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        // Set default name and shop title after user creation
+        $user->update([
+            'name' => 'mechapri' . $user->id,
+            'shop_title' => 'mechapri' . $user->id . "'s shop"
+        ]);
+
         event(new Registered($user));
 
         Auth::login($user);

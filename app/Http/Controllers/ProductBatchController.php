@@ -342,15 +342,7 @@ class ProductBatchController extends Controller
         $segments = explode('/', trim($request->path(), '/'));
         $productId = end($segments);
 
-        \Illuminate\Support\Facades\Log::info('Showing purchased product', [
-            'segments' => $segments,
-            'product_id' => $productId,
-            'user_id' => $request->route('user_id'),
-            'url' => $request->url(),
-            'full_url' => $request->fullUrl(),
-            'path' => $request->path(),
-            'auth_user_id' => auth()->id()
-        ]);
+
 
         // Find the product
         $product = ProductBatch::with(['user', 'files' => function($query) {
@@ -537,15 +529,6 @@ class ProductBatchController extends Controller
         $segments = explode('/', trim($request->path(), '/'));
         $productId = end($segments);
 
-        \Illuminate\Support\Facades\Log::info('Showing purchased product expand', [
-            'segments' => $segments,
-            'product_id' => $productId,
-            'user_id' => $request->route('user_id'),
-            'url' => $request->url(),
-            'full_url' => $request->fullUrl(),
-            'path' => $request->path(),
-            'auth_user_id' => auth()->id()
-        ]);
 
         // Find the product
         $product = ProductBatch::with(['user', 'files' => function($query) {
@@ -773,6 +756,7 @@ class ProductBatchController extends Controller
                 'printed_count' => $printedCount,
                 'nwps_qr_code_url' => $product->nwps_qr_code_url,
                 'nwps_user_code' => $product->nwps_user_code,
+                'nwps_upload_status' => $product->nwps_upload_status,
                 'top_buyers' => UserPurchasedProduct::getTopBuyersForProduct($product->id)->map(function($purchase) {
                     return [
                         'user' => [
@@ -841,6 +825,7 @@ class ProductBatchController extends Controller
                 'printed_count' => $printedCount,
                 'nwps_qr_code_url' => $product->nwps_qr_code_url,
                 'nwps_user_code' => $product->nwps_user_code,
+                'nwps_upload_status' => $product->nwps_upload_status,
                 'is_owner' => $isOwner,
                 'top_buyers' => UserPurchasedProduct::getTopBuyersForProduct($product->id)->map(function($purchase) {
                     return [

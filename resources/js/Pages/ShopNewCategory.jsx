@@ -11,7 +11,7 @@ import photo3 from '@/assets/images/shoptop/photo2.png';
 import photo4 from '@/assets/images/shoptop/photo3.png';
 import pencil from '@/assets/images/pencil.svg';
 import recyclebin from '@/assets/images/recyclebin.png';
-import girl from '@/assets/images/favoriteshops/girl.svg';
+import default_user from '@/assets/images/default-user.png';
 import share from '@/assets/images/share.png';
 import arrow_left from '@/assets/images/arrow_left.svg';
 import {vwd, vw, responsiveTextD, responsiveText, vwR, responsiveMetricR, responsiveTextR} from '@/lib/utils';
@@ -77,10 +77,15 @@ const ShopNewCategory = () => {
     // Handle category sharing
     const handleShare = async () => {
         try {
+            // Generate the correct share URL for others to view this category
+            const shareUrl = category?.id 
+                ? `${window.location.origin}/shop-newcategory/${category.id}`
+                : window.location.href;
+            
             const shareData = {
                 title: category?.title || 'Mechapuri Category',
                 text: `${category?.title || 'カテゴリ'} - ${productBatches?.length || 0}点の商品`,
-                url: window.location.href,
+                url: shareUrl,
             };
 
             if (navigator.share) {
@@ -136,7 +141,7 @@ const ShopNewCategory = () => {
                 </div>
                 <div className='flex flex-col md:flex-row items-start md:items-center md:justify-between w-full' style={{gap: vwR(16, 0)}}>
                     <div className='flex flex-row items-center' style={{gap: vwR(8, 16)}}>
-                        <img src={category?.user?.image || girl} alt="user" className='rounded-full' style={{...responsiveMetricR(40, 40, 64, 64)}}/>
+                        <img src={category?.user?.image || default_user} alt="user" className='rounded-full' style={{...responsiveMetricR(40, 40, 64, 64)}}/>
                         <span style={{...responsiveTextR(16, 18, 'bold', 21, 32, 'bold', 'noto', '#000')}}>{category?.user?.shop_title || category?.user?.name || 'Shop'}</span>
                     </div>
                     <div className='flex flex-row items-center' style={{gap: vwR(28, 28)}}>

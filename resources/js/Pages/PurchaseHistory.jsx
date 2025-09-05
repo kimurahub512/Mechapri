@@ -38,6 +38,9 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
 
                 setSelectedPurchase(p);
                 
+                // On page load, show generic error message even if in maintenance mode
+                // Maintenance message will be shown only after retry attempt
+                
                 // Check if NWPS is ready (has QR code URL or status is ready)
                 const hasQrCode = p.nwps_qr_code_url && p.nwps_qr_code_url.trim() !== '';
                 const isStatusReady = p.nwps_upload_status === 'ready';
@@ -49,9 +52,13 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                 console.log('isReady:', isReady, 'hasQrCode:', hasQrCode, 'isStatusReady:', isStatusReady);
                 setShowProgress(shouldShowProgress);
 
-                // Only show QR modal if NWPS is ready
+                // Show QR modal if NWPS is ready OR if there's an error (failed/maintenance)
                 if (!shouldShowProgress) {
                     setShowQrModal(true);
+                    // Set generic error message for failed or maintenance status
+                    if (p.nwps_upload_status === 'failed' || p.nwps_upload_status === 'maintenance') {
+                        setErrorMessage('後でもう一度お試しください。');
+                    }
                 }
             } else {
                 console.log('Purchase not found in purchases array');
@@ -61,13 +68,23 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
         }
     }, [focusPurchaseId, purchases]);
 
-    // Poll purchase status if in progress
+    // Poll purchase status if in progress or in maintenance mode
     useEffect(() => {
-        if (!showProgress || !selectedPurchase?.id) return;
+        console.log('Polling useEffect triggered:', { showProgress, selectedPurchaseId: selectedPurchase?.id, showQrModal, nwpsStatus: selectedPurchase?.nwps_upload_status });
+        
+        // Allow polling if:
+        // 1. showProgress is true (normal case)
+        // 2. OR purchase is in maintenance mode (to detect status changes after retry)
+        const shouldPoll = (showProgress || selectedPurchase?.nwps_upload_status === 'maintenance') && selectedPurchase?.id;
+        
+        if (!shouldPoll) {
+            console.log('Polling stopped due to condition:', { showProgress, selectedPurchaseId: selectedPurchase?.id, showQrModal, nwpsStatus: selectedPurchase?.nwps_upload_status });
+            return;
+        }
         console.log('Starting polling for purchase:', selectedPurchase.id);
         
         let pollCount = 0;
-        const maxPolls = 20; // Maximum 20 polls (60 seconds)
+        const maxPolls = 7; // Maximum 20 polls (60 seconds)
         let intervalId = null;
         
         // Set a maximum timeout of 2 minutes as a safety net
@@ -90,8 +107,25 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                 console.log('Polling result:', data);
                 console.log('nwps_upload_status:', data.nwps_upload_status);
                 console.log('nwps_qr_code_url:', data.nwps_qr_code_url);
+                console.log('Full polling data:', JSON.stringify(data, null, 2));
+                console.log('Current errorMessage state:', errorMessage);
                 
                 setSelectedPurchase(data);
+                
+                // Check if NWPS is in maintenance mode
+                console.log('Checking maintenance status:', data.nwps_upload_status, '===', 'maintenance', '?', data.nwps_upload_status === 'maintenance');
+                if (data.nwps_upload_status === 'maintenance') {
+                    console.log('NWPS maintenance mode detected during polling, stopping polling immediately');
+                    console.log('Polling data:', data);
+                    clearTimeout(timeoutId);
+                    clearInterval(intervalId);
+                    console.log('Setting maintenance error message...');
+                    setErrorMessage('印刷サーバーがメンテナンス中です。しばらく時間をおいてからお試しください。');
+                    setShowProgress(false);
+                    setShowQrModal(true);
+                    console.log('Maintenance message set, modal should show maintenance message');
+                    return;
+                }
                 
                 // Check if NWPS is ready (has QR code URL or status is ready)
                 const isReady = data.nwps_upload_status === 'ready' || 
@@ -367,7 +401,18 @@ const PurchaseHistory = ({ purchases = [], focusPurchaseId = null }) => {
                         onClick={handleBackdropClick}
                     >
                         <div onClick={(e) => e.stopPropagation()} className="flex justify-center my-8">
-                            <QrCodeModal onClose={handleCloseModal} purchase={selectedPurchase} errorMessage={errorMessage} />
+                            <QrCodeModal 
+                                onClose={handleCloseModal} 
+                                purchase={selectedPurchase} 
+                                errorMessage={errorMessage}
+                                onMaintenanceDetected={() => {
+                                    console.log('Maintenance detected in modal, stopping progress overlay');
+                                    console.log('Current state before callback:', { showProgress, showQrModal, errorMessage });
+                                    setShowProgress(false);
+                                    setErrorMessage('印刷サーバーがメンテナンス中です。しばらく時間をおいてからお試しください。');
+                                    console.log('State updated after callback');
+                                }}
+                            />
                         </div>
                     </div>
                 )}

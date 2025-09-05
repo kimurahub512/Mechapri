@@ -93,23 +93,12 @@ Route::get('/api/watermarked-image-b64/{path}', function($path) {
         }
         
         $watermarkService = app(\App\Services\ImageWatermarkService::class);
-        $watermarkedPath = $watermarkService->createWatermarkedImage($decodedPath);
-
-        // Optionally blur the watermarked image when requested (for display_mode=blur)
-        if (request()->boolean('blur') && $watermarkedPath && Storage::disk('public')->exists($watermarkedPath)) {
-            try {
-                $fullBlurPath = Storage::disk('public')->path($watermarkedPath);
-                $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
-                $img = $manager->read($fullBlurPath)->blur(10);
-                $ext = strtolower(pathinfo($fullBlurPath, PATHINFO_EXTENSION));
-                if ($ext === 'png') {
-                    Storage::disk('public')->put($watermarkedPath, (string) $img->toPng());
-                } else {
-                    Storage::disk('public')->put($watermarkedPath, (string) $img->toJpeg(90));
-                }
-            } catch (\Exception $e) {
-                Log::error('Failed to blur watermarked image: ' . $e->getMessage());
-            }
+        
+        // For blur mode, create directly blurred watermarked image to save storage
+        if (request()->boolean('blur')) {
+            $watermarkedPath = $watermarkService->createBlurredWatermarkedImage($decodedPath);
+        } else {
+            $watermarkedPath = $watermarkService->createWatermarkedImage($decodedPath);
         }
 
         
@@ -273,8 +262,10 @@ Route::post('/myshop/category/reorder', [App\Http\Controllers\CategoryController
     Route::get('/shoplow', [App\Http\Controllers\StaticPageController::class, 'shopLow']);
     
     Route::get('/productdetailsfree', [App\Http\Controllers\StaticPageController::class, 'productDetailsFree']);
-
-
+    
+    Route::get('/productdetailsfreeexpand/{id}', [App\Http\Controllers\ProductBatchController::class, 'showProductDetailsFreeExpand'])
+        ->name('product.details.free.expand')
+        ->where('id', '[0-9]+');
 
     // Direct expand routes (for viewing own products)
     Route::get('/purchasedproductexpand/{id}', [App\Http\Controllers\ProductBatchController::class, 'showPurchasedExpand'])

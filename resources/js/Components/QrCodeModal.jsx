@@ -1,4 +1,5 @@
 import React from 'react';
+import QRCodeDisplay from './QRCodeDisplay';
 
 import photo1 from '@/assets/images/shopcontents/photo1.jpg';
 import qr from '@/assets/images/productdetails/qr.jpg';
@@ -12,7 +13,7 @@ import default_user from '@/assets/images/default-user.png';
 import complex_white from '@/assets/images/complex_white.png';
 import close from '@/assets/images/close_gray.svg';
 
-const QrCodeModal = ({ onClose, purchase, errorMessage = null }) => {
+const QrCodeModal = ({ onClose, purchase, errorMessage = null, onMaintenanceDetected = null }) => {
     // Debug logging to see what data we're getting
     console.log('QrCodeModal purchase data:', purchase);
     console.log('QR Code URL:', purchase?.nwps_qr_code_url);
@@ -58,14 +59,6 @@ const QrCodeModal = ({ onClose, purchase, errorMessage = null }) => {
                     <img src={close} alt="close" className="w-[40px] h-[40px]" />
                 </button>
 
-                {/* Error Message Display */}
-                {errorMessage && (
-                    <div className="flex flex-col items-center justify-center px-[32px] py-[16px] mx-[32px] mt-[16px] bg-red-50 border border-red-200 rounded-[8px]">
-                        <div className="text-red-600 text-center font-noto text-[16px] font-medium leading-[24px]">
-                            {errorMessage}
-                        </div>
-                    </div>
-                )}
 
                 <div className="flex pt-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[226px] mt-[32px] relative">
                     {/* <div className="flex items-center gap-[16px]"> */}
@@ -117,16 +110,19 @@ const QrCodeModal = ({ onClose, purchase, errorMessage = null }) => {
                                     </div>
                                 </div>
                                 {/*12122112*/}
-                                <div className="relative w-[358px] h-[150px] mt-[12px]">
-                                    <img
-                                        src={purchase?.nwps_qr_code_url || purchase?.product?.nwps_qr_code_url}
-                                        alt="qr"
-                                        className="absolute top-0 left-0 w-[150px] h-[150px] "
+                                <div className="mt-[12px]">
+                                    <QRCodeDisplay 
+                                        product={{
+                                            ...(purchase?.product || purchase),
+                                            nwps_upload_status: purchase?.nwps_upload_status,
+                                            nwps_qr_code_url: purchase?.nwps_qr_code_url || purchase?.product?.nwps_qr_code_url,
+                                            nwps_user_code: purchase?.nwps_user_code || purchase?.product?.nwps_user_code,
+                                        }}
+                                        isMobile={false}
+                                        onMaintenanceDetected={onMaintenanceDetected}
+                                        initialErrorMessage={errorMessage}
+                                        className=""
                                     />
-                                    <div className="absolute top-[44.5px] left-[226px]  flex flex-col items-center">
-                                        <span className="text-[#000] font-noto text-[14px] font-normal leading-[21px]">ユーザー番号</span>
-                                        <span className="text-[#363636] font-noto text-[24px] font-bold leading-[24px] text-center">{purchase?.nwps_user_code || purchase?.product?.nwps_user_code}</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -159,14 +155,6 @@ const QrCodeModal = ({ onClose, purchase, errorMessage = null }) => {
                     <img src={close} alt="close" className="w-[20px] h-[20px]" />
                 </button>
 
-                {/* Error Message Display - Mobile */}
-                {errorMessage && (
-                    <div className="flex flex-col items-center justify-center px-[16px] py-[12px] mx-[16px] mt-[12px] bg-red-50 border border-red-200 rounded-[8px]">
-                        <div className="text-red-600 text-center font-noto text-[14px] font-medium leading-[20px]">
-                            {errorMessage}
-                        </div>
-                    </div>
-                )}
                 <div className="flex flex-row pt-[16px] pb-[40px] pl-[16px] items-start gap-[16px] self-stretch border-b border-[#E9E9E9] mx-[14px] mt-[16px] relative">
                     {/* photo1 */}
                     <div className="flex w-[64px] h-[64px] p-[1.26px_11.339px_0.756px_11.339px] justify-center items-center rounded-[2.52px] bg-[#F6F6F6]">
@@ -220,16 +208,19 @@ const QrCodeModal = ({ onClose, purchase, errorMessage = null }) => {
                                         </div>
                                     </div>
                                     {/*12122112*/}
-                                    <div className="relative w-[240px] h-[100px] mt-[8px]">
-                                        <img
-                                            src={purchase?.nwps_qr_code_url || purchase?.product?.nwps_qr_code_url}
-                                            alt="qr"
-                                            className="absolute top-0 left-0 w-[100px] h-[100px]"
+                                    <div className="mt-[8px]">
+                                        <QRCodeDisplay 
+                                            product={{
+                                                ...(purchase?.product || purchase),
+                                                nwps_upload_status: purchase?.nwps_upload_status,
+                                                nwps_qr_code_url: purchase?.nwps_qr_code_url || purchase?.product?.nwps_qr_code_url,
+                                                nwps_user_code: purchase?.nwps_user_code || purchase?.product?.nwps_user_code,
+                                            }}
+                                            isMobile={true}
+                                            onMaintenanceDetected={onMaintenanceDetected}
+                                            initialErrorMessage={errorMessage}
+                                            className=""
                                         />
-                                        <div className="absolute top-[30px] left-[120px] flex flex-col items-center">
-                                            <span className="text-[#000] font-noto text-[12px] font-normal leading-[16px]">ユーザー番号</span>
-                                            <span className="text-[#363636] font-noto text-[16px] font-bold leading-[16px] text-center">{purchase?.nwps_user_code || purchase?.product?.nwps_user_code}</span>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

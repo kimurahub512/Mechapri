@@ -183,10 +183,16 @@ const PurchasedProductExpand = ({ product }) => {
                                 <div className="flex flex-col items-start pl-[4px]">
                                     <div className="flex items-center gap-[4px] cursor-pointer hover:opacity-80" onClick={async () => {
                                         try {
+                                            // Generate the correct share URL for others to view this product
+                                            const ownerUserId = product?.user?.id ?? product?.user_id;
+                                            const shareUrl = ownerUserId 
+                                                ? `${window.location.origin}/user/${ownerUserId}/purchasedproduct/${product.id}`
+                                                : window.location.href;
+                                            
                                             const shareData = {
                                                 title: product?.title || 'Mechapri',
                                                 text: product?.description || '',
-                                                url: window.location.href,
+                                                url: shareUrl,
                                             };
                                             if (navigator.share) {
                                                 await navigator.share(shareData);
@@ -225,7 +231,7 @@ const PurchasedProductExpand = ({ product }) => {
                                             <div className="flex w-[232.441px] h-[348.661px] flex-col justify-center items-center flex-shrink-0 relative">
                                                 <div className={`flex w-[232.441px] h-[348.661px] flex-col justify-center items-center flex-shrink-0 rounded-[8px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
                                                     {product.display_mode === 'normal' ? (
-                                                        <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                                        <img src={image} alt={product.title} className="max-h-full max-w-full object-contain rounded-[8px]" />
                                                     ) : product.display_mode === 'gacha' ? (
                                                         <div className="flex relative overflow-hidden h-full w-full rounded-[8px]">
                                                             <img src={image} alt="ガチャ" className="h-full w-full object-cover filter blur-[4px] rounded-[8px]" />
@@ -265,7 +271,7 @@ const PurchasedProductExpand = ({ product }) => {
                                                             </div>
                                                         </div>
                                                     ) : (
-                                                        <img src={image} alt={product.title} className="h-full w-full object-cover rounded-[8px]" />
+                                                        <img src={image} alt={product.title} className="max-h-full max-w-full object-contain rounded-[8px]" />
                                                     )}
                                                 </div>
                                             </div>
@@ -476,7 +482,7 @@ const PurchasedProductExpand = ({ product }) => {
                                         <div className="flex w-[98.142px] h-[147.213px] flex-col justify-center items-center flex-shrink-0 relative">
                                             <div className={`flex w-[98.142px] h-[147.213px] flex-col justify-center items-center flex-shrink-0 rounded-[6px] bg-[#F6F6F6] ${product.display_mode !== 'normal' ? 'overflow-hidden' : ''}`}>
                                                 {product.display_mode === 'normal' ? (
-                                                    <img src={image} alt={product.title} className="w-[98.142px] h-[147.213px] object-cover rounded-[6px]" />
+                                                    <img src={image} alt={product.title} className="max-w-[98.142px] max-h-[147.213px] object-contain rounded-[6px]" />
                                                 ) : product.display_mode === 'gacha' ? (
                                                     <div className="flex relative overflow-hidden h-full w-full rounded-[6px]">
                                                         <img src={image} alt="ガチャ" className="h-full w-full object-cover filter blur-[4px] rounded-[6px]" />
@@ -516,7 +522,7 @@ const PurchasedProductExpand = ({ product }) => {
                                                         </div>
                                                     </div>
                                                 ) : (
-                                                    <img src={image} alt={product.title} className="w-[98.142px] h-[147.213px] object-cover rounded-[6px]" />
+                                                    <img src={image} alt={product.title} className="max-w-[98.142px] max-h-[147.213px] object-contain rounded-[6px]" />
                                                 )}
                                             </div>
                                         </div>

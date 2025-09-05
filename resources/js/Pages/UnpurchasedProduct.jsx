@@ -101,7 +101,7 @@ const UnpurchasedProduct = ({ product }) => {
                                     className="flex flex-col items-start cursor-pointer hover:opacity-80 transition-opacity"
                                     onClick={() => router.visit(`/${product.user.id}`)}
                                 >
-                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.name}</span>
+                                    <span className="text-[#000] font-noto text-[21px] font-bold leading-[32px]">{product.user.title}</span>
                                 </div>
                             </div>
                             {/* 1122: Edit/Delete buttons */}
@@ -240,10 +240,16 @@ const UnpurchasedProduct = ({ product }) => {
                                 <div className="flex flex-col items-start pl-[4px]">
                                     <div className="flex items-center gap-[4px] cursor-pointer hover:opacity-80" onClick={async () => {
                                         try {
+                                            // Generate the correct share URL for others to view this product
+                                            const ownerUserId = product?.user?.id ?? product?.user_id;
+                                            const shareUrl = ownerUserId 
+                                                ? `${window.location.origin}/user/${ownerUserId}/unpurchasedproduct/${product.id}`
+                                                : window.location.href;
+                                            
                                             const shareData = {
                                                 title: product?.title || 'Mechapuri',
                                                 text: product?.description || '',
-                                                url: window.location.href,
+                                                url: shareUrl,
                                             };
                                             if (navigator.share) {
                                                 await navigator.share(shareData);

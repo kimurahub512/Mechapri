@@ -41,6 +41,11 @@ class SocialAuthController extends Controller
                     'email_verified_at' => now(), // Google users are pre-verified
                     'password' => bcrypt(Str::random(32)), // Generate random password for OAuth users
                 ]);
+                
+                // Set shop title after user creation
+                $user->update([
+                    'shop_title' => 'mechapri' . $user->id . "'s shop"
+                ]);
             }
 
             Auth::login($user); 
@@ -107,6 +112,12 @@ class SocialAuthController extends Controller
                     'email_verified_at' => now(), // LINE users are pre-verified
                     'password' => bcrypt(Str::random(32)), // Generate random password for OAuth users
                 ]);
+                
+                // Set shop title after user creation
+                $user->update([
+                    'shop_title' => 'mechapri' . $user->id . "'s shop"
+                ]);
+                
                 Log::info('New user created', ['user_id' => $user->id]);
             }
 

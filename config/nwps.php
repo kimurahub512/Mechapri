@@ -11,7 +11,7 @@ return [
     'callback_url' => env('NWPS_CALLBACK_URL', ''),
 
     // HTTP client timeout (seconds)
-    'timeout' => (int) env('NWPS_TIMEOUT', 120),
+    'timeout' => (int) env('NWPS_TIMEOUT', 300), // Increased to 5 minutes for testing
 
     // Guest token validity in days (align with print window)
     'guest_token_days' => (int) env('NWPS_GUEST_TOKEN_DAYS', 30),

@@ -25,10 +25,15 @@ const ShopTop = () => {
     // Share function
     const handleShare = async () => {
         try {
+            // Generate the correct share URL - use user ID for sharing, not the current URL
+            const shareUrl = isOwnShop 
+                ? `${window.location.origin}/${auth.user.id}` 
+                : `${window.location.origin}/${shopData?.id}`;
+            
             const shareData = {
                 title: shopData?.name || 'Mechapuri Shop',
                 text: shopData?.shop_description || '',
-                url: window.location.href,
+                url: shareUrl,
             };
             if (navigator.share) {
                 await navigator.share(shareData);

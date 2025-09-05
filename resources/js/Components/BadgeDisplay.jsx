@@ -57,13 +57,13 @@ const BadgeDisplay = ({
 
     if (displayMode === 'blur') {
       return (
-        <div 
+        <img 
           key={index}
+          src={image.src} 
+          alt={image.alt || `badge${index + 1}`} 
           style={imageStyle}
-          className={`rounded-full bg-black flex items-center justify-center ${index > 0 ? '-ml-[7px]' : ''}`}
-        >
-          <img src={question} alt="question" className="w-3 h-3" />
-        </div>
+          className={`rounded-full object-cover filter blur-[2px] ${index > 0 ? '-ml-[7px]' : ''}`}
+        />
       );
     }
 

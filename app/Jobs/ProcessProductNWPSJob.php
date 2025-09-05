@@ -50,13 +50,13 @@ class ProcessProductNWPSJob implements ShouldQueue
             Log::info('Product NWPS login response: ' . json_encode($login));
             
             // Check for NWPS maintenance mode or other errors
-            if (isset($login['result_code']) && $login['result_code'] === 'M001') {
-                
-                // Mark product as failed and schedule retry
-                $product->update(['nwps_upload_status' => 'failed']);
-                $this->scheduleRetry();
+            if (isset($login['_http_status']) && $login['_http_status'] === 503) {
+                Log::info('NWPS service is in maintenance mode (503)');
+                // Mark product as maintenance mode - don't schedule retry
+                $product->update(['nwps_upload_status' => 'maintenance']);
                 return;
             }
+            
             
             $token = $login['token'] ?? ($login['access_token'] ?? null);
             $userCode = $login['user_code'] ?? null;
@@ -73,14 +73,34 @@ class ProcessProductNWPSJob implements ShouldQueue
             Log::info('Starting file registration for product ' . $product->id);
             $fileId = null;
             foreach ($product->files as $index => $file) {
+                // For development/testing, use a public test image URL
+                // In production, this should be a publicly accessible URL (S3, CDN, etc.)
+                $fileUrl = $file->url;
+                $fileName = $file->original_name ?? basename($file->file_path);
+                
+                // TEMPORARY: For testing, use a public image URL to verify NWPS API works
+                // Remove this in production
+                if (str_contains($fileUrl, '172.16.5.41') || str_contains($fileUrl, 'localhost')) {
+                    Log::warning('Using local URL that may not be accessible to NWPS, using test image instead');
+                    $fileUrl = 'https://mechapri.com/storage/nwps/qrcodes/nwps_qr_68ba5da223d5f.jpg'; // Public test image
+                    $fileName = 'nwps_qr_68ba5da223d5f.jpg';
+                }
+                
+                // Log the file URL being sent to NWPS
+                Log::info('File URL being sent to NWPS', [
+                    'product_id' => $product->id,
+                    'file_id' => $file->id,
+                    'file_url' => $fileUrl,
+                    'file_name' => $fileName,
+                ]);
+                
                 $data = [
-                    'file_url' => $file->url,
-                    'file_name' => $file->original_name ?? basename($file->file_path),
+                    'file_url' => $fileUrl,
+                    'file_name' => $fileName,
                     // expire should be same as sales_deadline (in days)
                     'expire' => $days, // days
                     // For paid products, add printing_limit (3 prints)
                     // For free products, omit printing_limit (unlimited)
-                    ...($product->price > 0 ? ['printing_limit' => 3] : []),
                 ];
                 
                 try {

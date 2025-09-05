@@ -14,7 +14,7 @@ import x from '@/assets/images/x_black.svg';
 import instagram from '@/assets/images/instagram_black.svg';
 import close from '@/assets/images/close_gray.svg';
 
-const PostRegistrationModal = ({ onClose, productData }) => {
+const PostRegistrationModal = ({ onClose, productData, userData }) => {
     const [email, setEmail] = useState('');
     const [isSharing, setIsSharing] = useState(false);
     const [shareMessage, setShareMessage] = useState('');
@@ -176,7 +176,8 @@ ${productData.title}
                                         e.target.onerror = null;
                                     }}
                                 />
-                                <span className="ml-2 text-[#222] font-noto text-[16px] leading-[22px] font-normal">{productData?.user?.name || 'ユーザー名'}</span>
+                                {console.log('userData:', userData)}
+                                <span className="ml-2 text-[#222] font-noto text-[16px] leading-[22px] font-normal">{userData?.shop_title || 'ユーザー名'}</span>
                             </div>
                             {/* 12122: User Info */}
                             <div className="inline-flex pt-[6px] flex-row items-center rounded-[3px]">
@@ -330,7 +331,7 @@ ${productData.title}
                                         e.target.onerror = null;
                                     }}
                                 />
-                                <span className="text-[#222] font-noto text-[13px] leading-[20px] font-normal">{productData?.user?.name || 'ユーザー名'}</span>
+                                <span className="text-[#222] font-noto text-[13px] leading-[20px] font-normal">{userData?.shop_title || 'ユーザー名'}</span>
                             </div>
 
                             <span className="block text-[#363636] font-medium text-[12px] leading-[20px]">枚数：{productData?.files_count || 0}</span>

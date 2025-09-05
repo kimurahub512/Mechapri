@@ -87,11 +87,11 @@ export default function Home() {
                 <img src={logo_group} alt="logo_group" style={responsiveMetricD(303, 62)} />
               </div>
             </div>
-            <button 
+            <button
               onClick={handleListNowClick}
-              className='flex flex-col items-center justify-center bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer' 
-              style={{ 
-                ...responsiveMetricD(494, 64), 
+              className='flex flex-col items-center justify-center bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer'
+              style={{
+                ...responsiveMetricD(494, 64),
                 borderRadius: vwd(4),
               }}
             >
@@ -215,22 +215,22 @@ export default function Home() {
                   <span className="italic" style={responsiveTextD(26, 18, null, 'bold', 'general', '#E862CB')}>02</span>
                   <div className='flex flex-col items-start justify-center py-[6px] border-b-[2px] border-[#FF2AA1]'>
                     <span style={responsiveTextD(18, 18, null, 'bold', 'noto')}>
-                    ぼかしフィルター機能に対応
+                      ぼかしフィルター機能に対応
                     </span>
                   </div>
                   <span style={responsiveTextD(16, 27, null, 'normal', 'noto')}>
-                  購入前は写真にぼかしフィルターがかかっていて中身がわかりません。購入して初めて見えるドキドキ感を演出できます。
+                    購入前は写真にぼかしフィルターがかかっていて中身がわかりません。購入して初めて見えるドキドキ感を演出できます。
                   </span>
                 </div>
               </div>
             </div>
             {/*step 3*/}
             <div className='relative' style={{ ...responsiveMetricD('full', 362) }}>
-              <div className='rounded-[26px] overflow-hidden' style={{ ...responsiveMetricD(692, 362), ...responsivePositionD(0,null, 0) }}>
-                <img src={section3_3} className='overflow-hidden object-cover' style={{ ...responsiveMetricD(692, 382) }}/>
-                <div className='w-full h-full rounded-r-[18px] bg-[#586B88] opacity-65' style={{...responsivePositionD(0, null, 0)}}></div>
-                <div className='flex flex-col items-center justify-center' style={{...responsivePositionD(101, null, 223.5)}}>
-                  <img src={lock} alt="lock" style={{...responsiveMetricD(120, 120)}}/>
+              <div className='rounded-[26px] overflow-hidden' style={{ ...responsiveMetricD(692, 362), ...responsivePositionD(0, null, 0) }}>
+                <img src={section3_3} className='overflow-hidden object-cover' style={{ ...responsiveMetricD(692, 382) }} />
+                <div className='w-full h-full rounded-r-[18px] bg-[#586B88] opacity-65' style={{ ...responsivePositionD(0, null, 0) }}></div>
+                <div className='flex flex-col items-center justify-center' style={{ ...responsivePositionD(101, null, 223.5) }}>
+                  <img src={lock} alt="lock" style={{ ...responsiveMetricD(120, 120) }} />
                   <span style={responsiveTextD(32, 36, null, 'black', 'noto', '#FFF')}>Set a password</span>
                 </div>
               </div>
@@ -239,11 +239,11 @@ export default function Home() {
                   <span className="italic" style={responsiveTextD(26, 18, null, 'bold', 'general', '#E862CB')}>03</span>
                   <div className='flex flex-col items-start justify-center py-[6px] border-b-[2px] border-[#FF2AA1]'>
                     <span style={responsiveTextD(18, 18, null, 'bold', 'noto')}>
-                    写真にパスワードを設定
+                      写真にパスワードを設定
                     </span>
                   </div>
                   <span style={responsiveTextD(16, 27, null, 'normal', 'noto')}>
-                  パスワードを知っているファンだけが購入できます。ライブ配信やライブイベントでパスワードを発表すれば集客にも繋がります！
+                    パスワードを知っているファンだけが購入できます。ライブ配信やライブイベントでパスワードを発表すれば集客にも繋がります！
                   </span>
                 </div>
               </div>
@@ -251,18 +251,18 @@ export default function Home() {
             {/*step 4*/}
             <div className='relative' style={{ ...responsiveMetricD('full', 362) }}>
               <div className='rounded-[26px] overflow-hidden' style={{ ...responsiveMetricD(692, 362), ...responsivePositionD(0, 0) }}>
-                <img src={section3_4} className='object-cover' style={{ ...responsiveMetricD(692, 362) }}/>
+                <img src={section3_4} className='object-cover' style={{ ...responsiveMetricD(692, 362) }} />
               </div>
               <div className='rounded-[26px] bg-[#FFF] shadow-[0_4px_14px_0_rgba(0,0,0,0.15)]' style={{ ...responsivePositionD(171, null, 0), ...responsiveMetricD(380, 194), paddingLeft: vwd(30), paddingRight: vwd(30), }}>
                 <div className='flex flex-col items-start' style={{ ...responsiveMetricD('full', 203), marginTop: vwd(-9), gap: vwd(17) }}>
                   <span className="italic" style={responsiveTextD(26, 18, null, 'bold', 'general', '#E862CB')}>04</span>
                   <div className='flex flex-col items-start justify-center py-[6px] border-b-[2px] border-[#FF2AA1]'>
                     <span style={responsiveTextD(18, 18, null, 'bold', 'noto')}>
-                    数量・期間限定販売に対応
+                      数量・期間限定販売に対応
                     </span>
                   </div>
                   <span style={responsiveTextD(16, 27, null, 'normal', 'noto')}>
-                  「今しか買えない」「もう手に入らない」──そんな特別な写真を届けたい人に。数量・期間限定設定でレア感を演出できます。
+                    「今しか買えない」「もう手に入らない」──そんな特別な写真を届けたい人に。数量・期間限定設定でレア感を演出できます。
                   </span>
                 </div>
               </div>
@@ -272,7 +272,7 @@ export default function Home() {
         {/*section4*/}
         <div className='flex flex-col gap-[24px] py-[16px] items-center justify-center w-full'>
           <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">全国のコンビニであなたのグッズを販売しましょう！</span>
-          <button 
+          <button
             onClick={handleListNowClick}
             className='flex flex-col items-center justify-center w-[494px] h-[80px] rounded-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer'
           >
@@ -288,7 +288,7 @@ export default function Home() {
             <img src={section5_2} alt="section5_2" className='w-full h-full object-cover rounded-[24px]' />
             <div className='w-full h-full rounded-[24px] opacity-75 bg-gradient-to-l from-[#FF285E] to-[#AB31D3]' style={{ ...responsivePositionD(0, null, 0) }}></div>
             <div className='flex flex-col items-start' style={{ ...responsivePositionD(56, 80, null), ...responsiveMetricD(522), gap: vwd(20) }}>
-              <div className='flex flex-col items-start' style={{marginTop: vwd(-9)}}>
+              <div className='flex flex-col items-start' style={{ marginTop: vwd(-9) }}>
                 <span style={responsiveTextD(24, 36, null, 'bold', 'mplus', "#FFF")}>マネタイズ</span>
                 <span style={responsiveTextD(18, 24, null, 'semibold', 'general', "#FFF")}>Monetization</span>
               </div>
@@ -299,22 +299,22 @@ export default function Home() {
               <span style={responsiveTextD(18, 32, null, 'bold', 'noto', "#FFF")}>1枚売れるごとに報酬が入る新しいマネタイズ手段。販売データや履歴もマイページで管理可能。</span>
             </div>
           </div>
-          <img src={section5_1} alt="section5_1" className="object-cover" style={{...responsiveMetricD(707, 457), ...responsivePositionD(20, null, 0)}}/>
+          <img src={section5_1} alt="section5_1" className="object-cover" style={{ ...responsiveMetricD(707, 457), ...responsivePositionD(20, null, 0) }} />
         </div>
         {/*section6*/}
         <div className='flex flex-col items-center w-full h-[720px] relative' style={{ ...responsiveMetricD('full', 720) }}>
-          <img src={section6_2} alt="section6_2" className='object-cover' style={{...responsiveMetricD(740, 540), ...responsivePositionD(50, 190, null)}}/>
-          <img src={section6_1} alt="section6_1" className='object-cover' style={{...responsiveMetricD(670, 529), ...responsivePositionD(70, 0, null)}}/>
-          <img src={section6_3} alt="section6_3" className='object-cover' style={{...responsiveMetricD(650, 520), ...responsivePositionD(198, 72, null)}}/>
-          <div className='flex flex-col items-start' style={{...responsivePositionD(155, null, 125), ...responsiveMetricD(580), gap: vwd(20)}}>
-            <div className='flex flex-col items-start' style={{marginTop: vwd(-9)}}>
+          <img src={section6_2} alt="section6_2" className='object-cover' style={{ ...responsiveMetricD(740, 540), ...responsivePositionD(50, 190, null) }} />
+          <img src={section6_1} alt="section6_1" className='object-cover' style={{ ...responsiveMetricD(670, 529), ...responsivePositionD(70, 0, null) }} />
+          <img src={section6_3} alt="section6_3" className='object-cover' style={{ ...responsiveMetricD(650, 520), ...responsivePositionD(198, 72, null) }} />
+          <div className='flex flex-col items-start' style={{ ...responsivePositionD(155, null, 125), ...responsiveMetricD(580), gap: vwd(20) }}>
+            <div className='flex flex-col items-start' style={{ marginTop: vwd(-9) }}>
               <span style={responsiveTextD(24, 36, null, 'bold', 'mplus', "#222")}>クオリティー</span>
               <span style={responsiveTextD(18, 24, null, 'semibold', 'general', "#FF2AA1")}>Quality</span>
             </div>
-            <span style={{...responsiveTextD(58, 72, null, 'black', 'mplus', "#363636")}}>
-              <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{...responsiveTextD(58, 72, null, 'black', 'mplus')}}>L判／2L判</span>に対応<br />
+            <span style={{ ...responsiveTextD(58, 72, null, 'black', 'mplus', "#363636") }}>
+              <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{ ...responsiveTextD(58, 72, null, 'black', 'mplus') }}>L判／2L判</span>に対応<br />
               写真としての仕上がりも
-              <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{...responsiveTextD(58, 72, null, 'black', 'mplus')}}>高品質</span>
+              <span className="bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] bg-clip-text text-transparent" style={{ ...responsiveTextD(58, 72, null, 'black', 'mplus') }}>高品質</span>
             </span>
             <span className="text-[#363636] font-noto text-[18px] font-bold leading-[32px]">高品質写真用紙・シール紙に対応。推しの1枚が“実物”としてファンの手元に届きます。</span>
           </div>
@@ -322,7 +322,7 @@ export default function Home() {
         {/*section7*/}
         <div className='flex flex-col gap-[24px] py-[16px] items-center justify-center w-full'>
           <span className="text-[#363636] font-noto text-[21px] font-bold leading-[27px]">全国のコンビニであなたのグッズを販売しましょう！</span>
-          <button 
+          <button
             onClick={handleListNowClick}
             className='flex flex-col items-center justify-center w-[494px] h-[80px] rounded-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer'
           >
@@ -333,18 +333,20 @@ export default function Home() {
           </button>
         </div>
         {/*section8*/}
-        <div className='flex flex-col items-center bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] relative' style={{...responsiveMetricD('full', 530), marginTop: vwd(128)}}>
+        <div className='flex flex-col items-center bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] relative' style={{ ...responsiveMetricD('full', 530), marginTop: vwd(128) }}>
           <span className="italic uppercase opacity-50" style={{ WebkitTextStroke: '2px #FFF', color: 'transparent', ...responsivePositionD(96, null, 106), ...responsiveTextD(80, 84, 6, 'bold', 'general') }}>List your photos</span>
           <span className="italic uppercase opacity-50" style={{ WebkitTextStroke: '2px #FFF', color: 'transparent', ...responsivePositionD(440, null, -10), ...responsiveTextD(140, 84, 6, 'bold', 'general') }}>right now</span>
           <span className="italic uppercase opacity-50 rotate-[90deg]" style={{ WebkitTextStroke: '2px #FFF', color: 'transparent', ...responsivePositionD(352, -336, null), ...responsiveTextD(110, 84, 6, 'bold', 'general') }}>mechapuri</span>
-          <img src={section8} alt="section8" className='object-cover' style={{...responsiveMetricD(300, 614), ...responsivePositionD(-110, null, 236)}} />
-          <div className='flex flex-col items-start' style={{...responsivePositionD(164, 215, null), ...responsiveMetricD(591), gap: vwd(12)}}>
-            <span style={{...responsiveTextD(18, 25, null, 'bold', 'mplus', '#FFF')}}>1分でカンタン登録完了！</span>
-            <span style={{...responsiveTextD(60, 81, null, 'black', 'mplus', '#FFF')}}>めちゃプリで今すぐ写真を出品する</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="75" height="54" viewBox="0 0 75 54" fill="none" style={{...responsiveMetricD(75, 54)}}>
+          <img src={section8} alt="section8" className='object-cover' style={{ ...responsiveMetricD(300, 614), ...responsivePositionD(-110, null, 236) }} />
+          <div className='flex flex-col items-start' style={{ ...responsivePositionD(164, 215, null), ...responsiveMetricD(591), gap: vwd(12) }}>
+            <span style={{ ...responsiveTextD(18, 25, null, 'bold', 'mplus', '#FFF') }}>1分でカンタン登録完了！</span>
+            <span style={{ ...responsiveTextD(60, 81, null, 'black', 'mplus', '#FFF') }}>めちゃプリで今すぐ写真を出品する</span>
+            <a href='/myshop/registerproduct'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="75" height="54" viewBox="0 0 75 54" fill="none" style={{ ...responsiveMetricD(75, 54) }}>
               <path d="M47.1143 1.31641L72.7607 26.9649L47.1143 52.6134" stroke="white" strokeWidth="2" />
               <path d="M72.7601 26.9648H0.75293" stroke="white" strokeWidth="2" />
             </svg>
+            </a>
           </div>
         </div>
       </div>
@@ -353,7 +355,7 @@ export default function Home() {
         {/* section 1*/}
         <div className='flex flex-col items-center w-full  px-[32px] gap-[24px]'>
           {/*hero section*/}
-          <img src={hero_m} alt="header_image" className='object-cover ml-[32px]' style={{ ...responsiveMetric('full', 350)}} />          
+          <img src={hero_m} alt="header_image" className='object-cover ml-[32px]' style={{ ...responsiveMetric('full', 350) }} />
           <div className='flex flex-col items-center w-full relative'>
             <div className='flex flex-col items-start w-full gap-[8px]'>
               <div className='flex flex-col items-start text-center'>
@@ -397,7 +399,7 @@ export default function Home() {
               <img src={logo_group} alt="logo_group" className='w-full h-full' />
             </div>
           </div>
-          <button 
+          <button
             onClick={handleListNowClick}
             className='flex flex-col items-center justify-center w-full max-w-[311px] h-[64px] rounded-[4px] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer'
           >
@@ -583,7 +585,7 @@ export default function Home() {
         {/*section4*/}
         <div className='flex flex-col gap-[16px] py-[16px] px-[32px] items-center justify-center w-full'>
           <span className="text-[#363636] text-center font-noto text-[18px] font-bold leading-[27px]">全国のコンビニであなたのグッズを販売しましょう！</span>
-          <button 
+          <button
             onClick={handleListNowClick}
             className='flex flex-col items-center justify-center w-full rounded-[4] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer'
             style={{ height: vw(64), borderRadius: vw(4) }}
@@ -646,7 +648,7 @@ export default function Home() {
         {/*section7*/}
         <div className='flex flex-col gap-[calc(100vw*16/375)] py-[calc(100vw*16/375)] px-[calc(100vw*32/375)] items-center justify-center w-full'>
           <span className="text-center" style={{ ...responsiveText(18, 27, null, 'bold', 'noto', '#363636') }}>全国のコンビニであなたのグッズを販売しましょう！</span>
-          <button 
+          <button
             onClick={handleListNowClick}
             className='flex flex-col items-center justify-center w-full rounded-[4] bg-gradient-to-l from-[#FF2AA1] to-[#AB31D3] hover:opacity-90 transition-opacity cursor-pointer'
             style={{ ...responsiveMetric(null, 64), borderRadius: vw(4) }}
@@ -687,10 +689,12 @@ export default function Home() {
           <div className='flex flex-col items-start gap-[16px]' style={{ ...responsivePosition(566, 32), ...responsiveMetric(311) }}>
             <span style={{ ...responsiveText(18, 25, null, 'bold', 'mplus', '#FFF') }}>1分でカンタン登録完了！</span>
             <span style={{ ...responsiveText(40, 48, null, 'black', 'mplus', '#FFF') }}>めちゃプリで今すぐ写真を出品する</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 54" fill="none" style={{ ...responsiveMetric(75, 54) }}>
-              <path d="M47.1143 1.31641L72.7607 26.9649L47.1143 52.6134" stroke="white" strokeWidth="2" />
-              <path d="M72.7601 26.9648H0.75293" stroke="white" strokeWidth="2" />
-            </svg>
+            <a href='/myshop/registerproduct'>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 54" fill="none" style={{ ...responsiveMetric(75, 54) }}>
+                <path d="M47.1143 1.31641L72.7607 26.9649L47.1143 52.6134" stroke="white" strokeWidth="2" />
+                <path d="M72.7601 26.9648H0.75293" stroke="white" strokeWidth="2" />
+              </svg>
+            </a>
           </div>
         </div>
       </div>

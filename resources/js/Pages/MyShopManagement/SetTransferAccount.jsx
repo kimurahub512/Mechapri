@@ -97,7 +97,7 @@ const SetTransferAccount = ({ bankAccount = null }) => {
                 <ShopMobileTopBlock />
                 {/* Main Section */}
                 {/* MOBILE ONLY */}
-                <div className="block md:hidden px-[16px] pb-[80px] flex flex-col items-start gap-4">
+                <div className="block md:hidden pt-[24px] px-[16px] pb-[80px] flex flex-col items-start gap-4">
 
                     {/* Title */}
                     <div className="flex flex-row items-center justify-between w-full">

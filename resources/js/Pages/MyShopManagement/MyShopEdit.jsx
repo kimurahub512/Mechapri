@@ -60,9 +60,9 @@ const MyShopEdit = () => {
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
-            // Check file size (2MB limit)
-            if (file.size > 2 * 1024 * 1024) {
-                alert('ファイルサイズは2MB以下にしてください。');
+            // Check file size (25MB limit)
+            if (file.size > 25 * 1024 * 1024) {
+                alert('ファイルサイズは25MB以下にしてください。');
                 return;
             }
             
@@ -155,7 +155,7 @@ const MyShopEdit = () => {
                                         ユーザー画像
                                     </span>
                                     <span style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#ACACAC') }}>
-                                        (2MBまで)
+                                        (25MBまで)
                                     </span>
                                 </div>
                                 {/* Frame 2111 */}
@@ -337,12 +337,12 @@ const MyShopEdit = () => {
                         {/* Frame 211 */}
                         <div className="flex flex-col items-start w-full" style={{ gap: vw(4) }}>
                             {/* Text and frame 2111 */}
-                            <div className="flex flex-row items-end self-stretch" style={{ gap: vw(12) }}>
+                            <div className="flex flex-row items-center self-stretch" style={{ gap: vw(12) }}>
                                 <span style={{ ...responsiveText(14, 14, null, 'bold', 'noto', '#363636') }}>
                                 ユーザー画像
                               </span>
                                 <span style={{ ...responsiveText(14, 21, 0.7, 'normal', 'noto', '#ACACAC') }}>
-                                (2MBまで)
+                                (25MBまで)
                               </span>
                             </div>
                             {/* Frame 2111 */}

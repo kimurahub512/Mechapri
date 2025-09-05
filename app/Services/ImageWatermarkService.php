@@ -100,17 +100,16 @@ class ImageWatermarkService
                 throw new \Exception('Could not read image with any method. Last error: ' . $lastError);
             }
 
-            // Get image dimensions
-            $width = $image->width();
-            $height = $image->height();
+            // Resize to thumbnail dimensions to save storage space
+            [$newWidth, $newHeight] = $this->resizeToThumbnail($image);
 
-            // Add simple center watermark
+            // Add watermark to thumbnail
             try {
-                // $this->addCenterWatermark($image, $watermarkText, $width, $height);
-                // $this->addDiagonalWatermarks($image, $width, $height);
-                $this->addRotatedLogoRows($image, $width, $height);
+                // $this->addCenterWatermark($image, $watermarkText, $newWidth, $newHeight);
+                // $this->addDiagonalWatermarks($image, $newWidth, $newHeight);
+                $this->addRotatedLogoRows($image, $newWidth, $newHeight);
 
-                Log::info('Successfully added watermark to image');
+                Log::info('Successfully added watermark to thumbnail image');
             } catch (\Exception $e) {
                 Log::error('Error adding watermark: ' . $e->getMessage());
                 throw $e;
@@ -296,5 +295,116 @@ class ImageWatermarkService
     public function addWatermark($imagePath, $watermarkText = 'Mechari')
     {
         return $this->createWatermarkedImage($imagePath, $watermarkText);
+    }
+
+    /**
+     * Resize image to thumbnail dimensions to save storage space
+     */
+    private function resizeToThumbnail($image, $maxWidth = 400, $maxHeight = 400)
+    {
+        $originalWidth = $image->width();
+        $originalHeight = $image->height();
+        
+        // Calculate thumbnail dimensions maintaining aspect ratio
+        if ($originalWidth > $originalHeight) {
+            // Landscape image
+            $newWidth = min($maxWidth, $originalWidth);
+            $newHeight = (int)($originalHeight * $newWidth / $originalWidth);
+        } else {
+            // Portrait or square image
+            $newHeight = min($maxHeight, $originalHeight);
+            $newWidth = (int)($originalWidth * $newHeight / $originalHeight);
+        }
+        
+        // Resize image to thumbnail size
+        $image->resize($newWidth, $newHeight, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize(false); // Prevent upscaling
+        });
+        
+        Log::info("Resized image from {$originalWidth}x{$originalHeight} to {$newWidth}x{$newHeight} for thumbnail watermark");
+        
+        return [$newWidth, $newHeight];
+    }
+
+    /**
+     * Create a blurred watermarked image file and return the path (for blur mode)
+     */
+    public function createBlurredWatermarkedImage($imagePath, $watermarkText = 'Mechari')
+    {
+        try {
+            // Check if original image exists
+            if (!Storage::disk('public')->exists($imagePath)) {
+                Log::error('Original image not found: ' . $imagePath);
+                return null;
+            }
+
+            // Generate blurred watermarked file path
+            $pathInfo = pathinfo($imagePath);
+            $blurredWatermarkedPath = $pathInfo['dirname'] . '/blurred_watermarked_' . $pathInfo['basename'];
+
+            // Check if blurred watermarked version already exists
+            if (Storage::disk('public')->exists($blurredWatermarkedPath)) {
+                return $blurredWatermarkedPath;
+            }
+
+            // Get the full path to the original image and normalize it
+            $originalFullPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, Storage::disk('public')->path($imagePath));
+            
+            // Check if file is readable
+            if (!is_readable($originalFullPath)) {
+                Log::error('Original image file is not readable: ' . $originalFullPath);
+                return null;
+            }
+            
+            // Check file size
+            $fileSize = filesize($originalFullPath);
+            if ($fileSize === false || $fileSize === 0) {
+                Log::error('Original image file is empty or unreadable: ' . $originalFullPath);
+                return null;
+            }
+            
+            Log::info('Creating blurred watermarked image: ' . $originalFullPath . ' (size: ' . $fileSize . ' bytes)');
+            
+            // Check image type first
+            $imageInfo = getimagesize($originalFullPath);
+            if ($imageInfo === false) {
+                Log::error('Invalid image file: ' . $originalFullPath);
+                return null;
+            }
+            
+            $width = $imageInfo[0];
+            $height = $imageInfo[1];
+            
+            Log::info('Image dimensions: ' . $width . 'x' . $height);
+            
+            // Create image manager
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($originalFullPath);
+            
+            // Resize to thumbnail dimensions to save storage space
+            [$newWidth, $newHeight] = $this->resizeToThumbnail($image);
+            
+            // Apply blur first
+            $image->blur(10);
+            
+            // Add watermark
+            $this->addCenterWatermark($image, $watermarkText, $newWidth, $newHeight);
+            
+            // Save the blurred watermarked image
+            $ext = strtolower($pathInfo['extension']);
+            if ($ext === 'png') {
+                Storage::disk('public')->put($blurredWatermarkedPath, (string) $image->toPng());
+            } else {
+                Storage::disk('public')->put($blurredWatermarkedPath, (string) $image->toJpeg(90));
+            }
+            
+            Log::info('Blurred watermarked image created successfully: ' . $blurredWatermarkedPath);
+            return $blurredWatermarkedPath;
+            
+        } catch (\Exception $e) {
+            Log::error('Failed to create blurred watermarked image: ' . $e->getMessage());
+            return null;
+        }
     }
 }

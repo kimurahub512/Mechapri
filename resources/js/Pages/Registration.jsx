@@ -242,7 +242,7 @@ export default function Register() {
         <div className="flex flex-col items-center bg-white">
             {/* Result Message */}
             {resultMessage.type && (
-                <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg ${resultMessage.type === 'success'
+                <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-[10001] px-6 py-3 rounded-lg shadow-lg ${resultMessage.type === 'success'
                     ? 'bg-green-500 text-white'
                     : 'bg-red-500 text-white'
                     }`}>

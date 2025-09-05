@@ -59,9 +59,10 @@ class RegisterController extends Controller
                 'email_verified_at' => now(), // Mark email as verified
             ]);
 
-            // Set default name after user creation
+            // Set default name and shop title after user creation
             $user->update([
-                'name' => 'mechapri' . $user->id
+                'name' => 'mechapri' . $user->id,
+                'shop_title' => 'mechapri' . $user->id . "'s shop"
             ]);
 
             auth()->login($user);

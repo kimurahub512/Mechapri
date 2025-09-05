@@ -405,7 +405,7 @@ const RegisterProduct = () => {
             }
 
             if (!isValidSize) {
-                alert(`${file.name}は25MBを超えています。`);
+                alert(`${file.name} アップロードできるファイルの最大容量は25MBです。`);
                 return false;
             }
 
@@ -657,7 +657,7 @@ const RegisterProduct = () => {
                             <div className="flex flex-col items-start self-stretch w-full" style={{ gap: vwd(4) }}>
                                 {/* Frame 12321 */}
                                 <div className="flex items-center self-stretch" style={{ gap: vwd(12), paddingTop: vwd(25), paddingBottom: vwd(6) }}>
-                                    <span style={{ ...responsiveTextD(21, 27, null, 'bold', 'noto', '#363636') }}>印刷期限</span>
+                                    <span style={{ ...responsiveTextD(21, 27, null, 'bold', 'noto', '#363636') }}>販売期限</span>
                                     <span style={{ ...responsiveTextD(16, 24, null, 'normal', 'noto', '#ACACAC') }}>最大180日後まで</span>
                                 </div>
                                 {/* Frame 12322 */}
@@ -860,12 +860,12 @@ const RegisterProduct = () => {
                                         {displayMode === 'password' && (
                                             <input
                                                 type="text"
-                                                className="flex h-[45.99px] w-full rounded-[5.71px] bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0"
+                                                className="flex h-[45.99px] w-full rounded-[5.71px] bg-white border border-[#E9E9E9] focus:border-[#FF2AA1] focus:bg-[#FFEFF8] focus:outline-none focus:ring-0 text-[#363636] focus:text-[#C9177A] placeholder-[#ACACAC] "
                                                 placeholder="半角英数16文字まで"
                                                 value={password}
                                                 onChange={(e) => setPassword(e.target.value)}
                                                 maxLength={16}
-                                                style={{ ...responsiveMetricD(258, 45.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto', '#ACACAC'), marginTop: vwd(2) }}
+                                                style={{ ...responsiveMetricD(258, 45.99), borderRadius: vwd(5.71), ...responsiveTextD(14, 14, null, 'normal', 'noto'), marginTop: vwd(2) }}
                                             />
                                         )}
                                     </div>
@@ -1060,7 +1060,7 @@ const RegisterProduct = () => {
                         onClick={() => setShowModal(false)}
                     >
                         <div onClick={(e) => e.stopPropagation()} className="flex justify-center px-[16px]">
-                            <PostRegistrationModal onClose={() => setShowModal(false)} productData={productData} />
+                            <PostRegistrationModal onClose={() => setShowModal(false)} productData={productData} userData={auth?.user} />
                         </div>
                     </div>
                 )}
@@ -1204,7 +1204,7 @@ const RegisterProduct = () => {
                                 <div className="flex flex-col items-start self-stretch" style={{ gap: vw(4) }}>
                                     {/* 12321 */}
                                     <div className="flex items-center self-stretch" style={{ gap: vw(12), paddingTop: vw(12), paddingBottom: vw(6) }}>
-                                        <span style={{ ...responsiveText(14, 14, null, 'bold', 'noto', '#363636') }}>印刷期限</span>
+                                        <span style={{ ...responsiveText(14, 14, null, 'bold', 'noto', '#363636') }}>販売期限</span>
                                         <span style={{ ...responsiveText(14, 21, null, 'normal', 'noto', '#ACACAC') }}>最大180日後まで</span>
                                     </div>
                                     {/* 12322 */}

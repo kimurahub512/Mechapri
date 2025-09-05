@@ -110,14 +110,14 @@ class NWPSService
             $filename = 'nwps_qr_' . uniqid() . '.' . $extension;
             $path = 'nwps/qrcodes/' . $filename;
             
-            // Ensure the directory exists
-            \Illuminate\Support\Facades\Storage::makeDirectory('nwps/qrcodes');
+            // Ensure the directory exists on the public disk
+            \Illuminate\Support\Facades\Storage::disk('public')->makeDirectory('nwps/qrcodes');
             
-            // Save the image to storage
-            \Illuminate\Support\Facades\Storage::put($path, $imageData);
+            // Save the image to storage on the public disk
+            \Illuminate\Support\Facades\Storage::disk('public')->put($path, $imageData);
             
             // Return the URL to access this image
-            $url = \Illuminate\Support\Facades\Storage::url($path);
+            $url = \Illuminate\Support\Facades\Storage::disk('public')->url($path);
             
             return [
                 'success' => true,
@@ -165,13 +165,17 @@ class NWPSService
     private function postJson(string $uri, array $json, ?string $token = null): array
     {
         $headers = $this->authHeaders($token);
-        // Log::info('NWPS POST request', ['uri' => $uri, 'base_url' => $this->baseUrl, 'payload' => $json]);
         $res = $this->http->post($uri, [
             'headers' => $headers,
             'json' => $json,
         ]);
         $responseBody = (string) $res->getBody();
-        return json_decode($responseBody, true) ?: [];
+        $responseData = json_decode($responseBody, true) ?: [];
+        
+        // Add HTTP status code to response for error handling
+        $responseData['_http_status'] = $res->getStatusCode();
+        
+        return $responseData;
     }
 
     private function postMultipart(string $uri, string $token, array $multipart): array
