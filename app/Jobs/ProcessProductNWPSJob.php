@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-// use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log;
 
 class ProcessProductNWPSJob implements ShouldQueue
 {
@@ -28,55 +28,29 @@ class ProcessProductNWPSJob implements ShouldQueue
     public function handle(NWPSService $nwps): void
     {
         // Debug logging disabled for production
-        // try {
-        //     // file_put_contents(storage_path('nwps_debug.log'), 
-        //         date('Y-m-d H:i:s') . " - Product NWPS Job started for product_id: {$this->productId}\n", 
-        //         // FILE_APPEND
-        //     );
-        // } catch (\Exception $e) {
-        //     file_put_contents('/tmp/nwps_debug.log', 
-        //         date('Y-m-d H:i:s') . " - Product NWPS Job started for product_id: {$this->productId} (storage write failed)\n", 
-        //         // FILE_APPEND
-        //     );
-        // }
-        
+       
+        Log::info('Product NWPS Job started for product_id: ' . $this->productId);
         $product = ProductBatch::with('files')->find($this->productId);
         if (!$product) {
-            // // file_put_contents(storage_path('nwps_debug.log'), 
-            //     date('Y-m-d H:i:s') . " - Product not found: {$this->productId}\n", 
-            //     // FILE_APPEND
-            // );
+            Log::info('Product not found: ' . $this->productId);
             return;
         }
-
-        // // file_put_contents(storage_path('nwps_debug.log'), 
-        //     date('Y-m-d H:i:s') . " - Found product {$product->id} with {$product->files->count()} files (price: {$product->price})\n", 
-        //     // FILE_APPEND
-        // );
 
         try {
             // 1) Guest login
             // Expire should match sales_deadline for products
             $days = (int) config('nwps.guest_token_days', 30);
-            if ($product->sales_deadline) {
-                $diff = now()->diffInDays($product->sales_deadline, false);
-                // Ensure at least 1 day and fallback if negative
-                $days = $diff > 0 ? $diff : 1;
-            }
+
             $login = $nwps->guestLogin('Web', [
                 'os' => php_uname('s') ?: 'PHP',
                 'brand' => 'Mechapuri',
                 'model' => php_uname('n') ?: 'Server',
             ], $days);
           
-            //Log::info('Product NWPS login response: ' . json_encode($login));
+            Log::info('Product NWPS login response: ' . json_encode($login));
             
             // Check for NWPS maintenance mode or other errors
             if (isset($login['result_code']) && $login['result_code'] === 'M001') {
-                // file_put_contents(storage_path('nwps_debug.log'), 
-                //     date('Y-m-d H:i:s') . " - NWPS maintenance mode detected (M001) for product {$product->id}\n", 
-                //     FILE_APPEND
-                // );
                 
                 // Mark product as failed and schedule retry
                 $product->update(['nwps_upload_status' => 'failed']);
@@ -87,7 +61,7 @@ class ProcessProductNWPSJob implements ShouldQueue
             $token = $login['token'] ?? ($login['access_token'] ?? null);
             $userCode = $login['user_code'] ?? null;
             if (!$token) {
-                //Log::info('Product NWPS login failed: ' . json_encode($login));
+                Log::info('Product NWPS login failed: ' . json_encode($login));
                 
                 // Mark product as failed and schedule retry
                 $product->update(['nwps_upload_status' => 'failed']);
@@ -96,7 +70,7 @@ class ProcessProductNWPSJob implements ShouldQueue
             }
 
             // 2) Register image(s) by URL (filesfromurl/image)
-            //Log::info('Starting file registration for product ' . $product->id);
+            Log::info('Starting file registration for product ' . $product->id);
             $fileId = null;
             foreach ($product->files as $index => $file) {
                 $data = [
@@ -110,42 +84,28 @@ class ProcessProductNWPSJob implements ShouldQueue
                 ];
                 
                 try {
+                    Log::info('startingh');
                     $registered = $nwps->registerFileFromUrl($token, $data);
-                    //Log::info('File registration response: ' . json_encode($registered));
+                    Log::info('File registration response: ' . json_encode($registered));
                     $fileId = $registered['file_id'] ?? $fileId;
-                } catch (\Exception $e) {
-                    // file_put_contents(storage_path('nwps_debug.log'), 
-                    //     date('Y-m-d H:i:s') . " - File registration failed: " . $e->getMessage() . "\n", 
-                    //     FILE_APPEND
-                    // );
-                    //Log::info('File registration failed: ' . $e->getMessage());
+                } catch (\Exception $e) {      
+                    Log::info('File registration failed: ' . $e->getMessage());
                     throw $e;
                 }
             }
 
             if (!$fileId) {
-                // file_put_contents(storage_path('nwps_debug.log'), 
-                //     date('Y-m-d H:i:s') . " - No file ID received from NWPS registration for product\n", 
-                //     FILE_APPEND
-                // );
-                //Log::info('No file ID received from NWPS registration for product');
+  
+                Log::info('No file ID received from NWPS registration for product');
                 return;
             }
             
-            // file_put_contents(storage_path('nwps_debug.log'), 
-            //     date('Y-m-d H:i:s') . " - Product file registration successful, file_id: {$fileId}\n", 
-            //     FILE_APPEND
-            // );
+            Log::info('Product file registration successful, file_id: ' . $fileId);
 
-            // 3) Get QR code for convenience store login
-            // file_put_contents(storage_path('nwps_debug.log'), 
-            //     date('Y-m-d H:i:s') . " - Getting QR code for product login\n", 
-            //     FILE_APPEND
-            // );
             
             try {
                 $qrCodeData = $nwps->getLoginQrCode($token);
-                //Log::info('QR code data: ' . json_encode($qrCodeData));
+                Log::info('QR code data: ' . json_encode($qrCodeData));
                 if ($qrCodeData['success'] ?? false) {
                     $qrCodeUrl = $qrCodeData['qr_code_url'];
                     
@@ -158,28 +118,15 @@ class ProcessProductNWPSJob implements ShouldQueue
                         'nwps_qr_code_url' => $qrCodeUrl,
                         'nwps_upload_status' => 'ready',
                     ]);
-                    
-                    // file_put_contents(storage_path('nwps_debug.log'), 
-                    //     date('Y-m-d H:i:s') . " - Product NWPS upload completed successfully\n", 
-                    //     FILE_APPEND
-                    // );
+ 
                 } else {
-                    // file_put_contents(storage_path('nwps_debug.log'), 
-                    //     date('Y-m-d H:i:s') . " - Failed to get QR code for product: " . json_encode($qrCodeData) . "\n", 
-                    //     FILE_APPEND
-                    // );
+
                 }
             } catch (\Exception $e) {
-                // file_put_contents(storage_path('nwps_debug.log'), 
-                //     date('Y-m-d H:i:s') . " - Failed to get QR code for product: " . $e->getMessage() . "\n", 
-                //     FILE_APPEND
-                // );
+
             }
         } catch (\Throwable $e) {
-            // file_put_contents(storage_path('nwps_debug.log'), 
-            //     date('Y-m-d H:i:s') . " - Product NWPS upload failed: " . $e->getMessage() . "\n", 
-            //     FILE_APPEND
-            // );
+
             
             // Mark product as failed and schedule retry
             $product->update(['nwps_upload_status' => 'failed']);

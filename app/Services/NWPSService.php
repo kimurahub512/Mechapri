@@ -171,7 +171,6 @@ class NWPSService
             'json' => $json,
         ]);
         $responseBody = (string) $res->getBody();
-        // Log::info('NWPS POST response', ['uri' => $uri, 'status' => $res->getStatusCode(), 'body_length' => strlen($responseBody)]);
         return json_decode($responseBody, true) ?: [];
     }
 
